@@ -17,7 +17,6 @@ class CopiesController extends Controller
 
     public function updatecopies(Request $request)
     {
-
         if ($request->addcopies <= 0) {
             return back()->with('Error', 'It must be number or Positive number only.');
         } else {
