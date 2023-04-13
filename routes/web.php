@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\BooklistController;
-use App\Http\Controllers\BookborrowedController;
+use App\Http\Controllers\borrowpage;
 use App\Http\Controllers\CopiesController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\StudentlistController;
@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('/borrowpage',function() {
     $books = ModelsBookList::where('ishide' , false)->paginate(10);
     $copies = ModelsCopies::where('ishide' , false)->get();
+    // $borrowpage = bookborrowed::where('ishide' , false)->get();
     return view('borrowpage',compact('books'));
 })->middleware(['auth', 'verified'])->name('borrowpage');
 
@@ -66,14 +67,14 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('copies',CopiesController::class);
     Route::resource('books',BooklistController::class);
-    Route::resource('borrow',BookborrowedController::class);
+    Route::resource('borrow',borrowpage::class);
     
     //pang kuha ng data /function
     Route::get('/myPDF/{data}',[PDFController::class,'generatePDF'])->name('myPDF');
     Route::get('/book/{data}',[BooklistController::class,'get_book']);
     Route::get('/copy/{id}',[CopiesController::class,'get_copies']);
     Route::get('/student/{data}',[StudentlistController::class,'get_student']);
-    Route::get('/borrow/{data}',[BookborrowedController::class,'get_borrowedcopies']);
+    Route::get('/borrow/{data}',[borrowpage::class,'get_borrowedcopies']);
 
 
     //gumawa ng bagong function for update

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class bookborrowed extends Model
+class borrowpage extends Model
 {
     use HasFactory;
 
@@ -15,8 +15,7 @@ class bookborrowed extends Model
 
     public function get_borrowedcopies($data)
     {
-        $borrow = bookborrowed::find($data);       
+        $borrow = borrowpage::find($data);       
         return compact('borrow');     
     }
-    
 }
