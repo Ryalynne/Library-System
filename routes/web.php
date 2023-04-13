@@ -7,10 +7,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\StudentlistController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\QrCodeController;
-
 use App\Models\booklist as ModelsBookList;
-use App\Models\bookborrowed as ModelsBookBorrowed;
 use App\Models\copies as ModelsCopies;
 
 Auth::routes();
@@ -23,7 +20,6 @@ Route::get('/', function () {
 Route::get('/borrowpage',function() {
     $books = ModelsBookList::where('ishide' , false)->paginate(10);
     $copies = ModelsCopies::where('ishide' , false)->get();
-    // $borrow = ModelsBookBorrowed::where('ishide' , false)->get();
     return view('borrowpage',compact('books'));
 })->middleware(['auth', 'verified'])->name('borrowpage');
 
@@ -34,7 +30,6 @@ Route::get('/booklist', function () {
 })->middleware(['auth', 'verified'])->name('booklist');
 
 Route::get('/bookstatus', function () {
-    $borrow = ModelsBookList::where('ishide' , false)->get();
     $copies = ModelsCopies::where('ishide' , false)->get();
     $books = ModelsBookList::where('ishide' , false)->get();
     return view('bookstatus',compact('books'));
@@ -64,9 +59,6 @@ Route::get('/bookhistory',function() {
 })->middleware(['auth', 'verified'])->name('bookhistory');
 
 
-Route::get('/myPDF/{data}',[PDFController::class,'generatePDF'])->middleware(['auth', 'verified'])->name('myPDF');
-//
-
 Route::middleware('auth')->group(function () {
     
     
@@ -77,9 +69,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('borrow',BookborrowedController::class);
     
     //pang kuha ng data /function
-
+    Route::get('/myPDF/{data}',[PDFController::class,'generatePDF'])->name('myPDF');
     Route::get('/book/{data}',[BooklistController::class,'get_book']);
-    Route::get('/copy/{data}',[CopiesController::class,'get_copies']);
+    Route::get('/copy/{id}',[CopiesController::class,'get_copies']);
     Route::get('/student/{data}',[StudentlistController::class,'get_student']);
     Route::get('/borrow/{data}',[BookborrowedController::class,'get_borrowedcopies']);
 

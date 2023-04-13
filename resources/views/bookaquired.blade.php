@@ -32,7 +32,6 @@
                     <th scope="col"  class="text-center">PUBLISHER</th>
                     <th scope="col"  class="text-center">GENRE</th>
                     <th scope="col"  class="text-center">COPIES</th>
-                    <th scope="col"  class="text-center">ADDED DATE</th>
                     <th scope="col" class="text-center">ACTIONS PERFORM</th>
                 </tr>
             </thead>
@@ -63,11 +62,7 @@
                         <td class="px-6 py-3">
                             {{$book->numberofcopies()}}
                         </td>
-
-                        <td class="px-6 py-3">
-                            {{ $book->created_at }}
-                        </td>
-                        <td>              
+                        <td class="text-center">              
                             {{-- button --}}
                             <button type="button" class="btn btn-success edit-button" data-id={{ $book->id }}
                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -191,19 +186,19 @@
                                                        <label  class="form-label">AUTHOR/S</label>
                                                        <input type="text" id="disabledTextInput" class="form-control modal-book-author"
                                                             readonly>
-                                                   </div>
-                                                   <div class="mb-3">
-                                                    <label for="" class="form-label">AVAILABLE
-                                                        COPIES</label>
-                                                    <input type="text" id="" class="form-control modal-copy-copies"
-                                                        placeholder="" readonly>
-                                                </div>
+                                                   </div>                
                                                    <div class="mb-3">
                                                        <label  class="form-label">YEAR OF
                                                            PUBLISH</label>
                                                        <input type="text" id="disabledTextInput" class="form-control modal-book-datepublish"
                                                             readonly>
-                                                   </div>                                      
+                                                   </div>  
+                                                   <div class="mb-3">
+                                                    <label for="" class="form-label">AVAILABLE
+                                                        COPIES</label>
+                                                    <input type="text" id="availcopies" class="form-control modal-copy-copies"
+                                                        placeholder="" readonly>
+                                                </div>                                    
                                                <div class="mb-3">
                                                 <label for="lesscopies" class="form-label">LESS COPIES</label>
                                                 <input type="hidden" name="bookid" class="modal-book-id">

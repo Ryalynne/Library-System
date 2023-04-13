@@ -92,12 +92,12 @@ class BooklistController extends Controller
         $book = booklist::find($request->bookid);
         $book->update(['booktitle'=> $request->updatebooktitle,'author'=> $request->updateauthor,'datepublish'=> $request->updatepublish,
         'publisher'=> $request->updatepublisher,'genre'=> $request->updategenre]);
-        return back();     
-     }
+         return back();     
+    }
 
     public function get_book($data)
     {
-        $book  = booklist::find($data);
+        $book = booklist::find($data);
         return compact('book');
     }
 

@@ -154,7 +154,7 @@
     $('.edit-button').on('click', function() {
         var id = $(this).data('id');
         $.get("/copy/" + id, function(data, status) {
-            $('.modal-copy-copies').val(data.copy.copies)
+            $('.modal-copy-copies').val(data.copy)
         });
     });
 

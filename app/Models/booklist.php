@@ -13,9 +13,9 @@ class booklist extends Model
     ];
     public function numberofcopies()
     {
-      
-        return $this->hasMany(copies::class, 'bookid')->where('action', 'added')->sum('copies')- copies::where('action', 'lessen')->sum('copies');;
 
-        // return $this->hasMany(copies::class, 'bookid')->where('action', 'added')->sum('copies');
+        $data = $this->hasMany(copies::class, 'bookid')->where('action', 'lessen')->sum('copies');
+        return $this->hasMany(copies::class, 'bookid')->where('action', 'added')->sum('copies')-$data;
+        
     }  
 }

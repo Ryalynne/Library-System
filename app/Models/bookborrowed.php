@@ -10,7 +10,13 @@ class bookborrowed extends Model
     use HasFactory;
 
     protected $fillable =[
-        'borrowedcopies','dateborrowed'
+        'bookid','studentid','borrowedcopies','dateborrowed','duedate'
     ];
+
+    public function get_borrowedcopies($data)
+    {
+        $borrow = bookborrowed::find($data);       
+        return compact('borrow');     
+    }
     
 }

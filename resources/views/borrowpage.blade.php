@@ -12,8 +12,12 @@
         </nav>
     </div>
     <br>
+    <form method="POST" action="{{ route('borrow.store') }} ">
+        @csrf
     <div class="container text-center">
-        <div class="row align-items-start">
+
+      
+        <div class="row align-items-start">   
             <div class="col">
                 <div class="card">
                     <div class="card-body bg-success text-white">
@@ -21,11 +25,12 @@
                     </div>
                 </div>
                 <br>
-                {{-- data-id={{$book->id }} --}}
+             
+               
                 <div class="container text-start">
                     <div class="mb-3">
-                        <label class="form-label">BOOK ID</label>
-                        <input type="text" class="form-control bookid" data-id=id>
+                        <label class="form-label">BOOK QR-CODE</label>
+                        <input type="text" class="form-control bookid" data-id=id  name="bookid" :value="old('bookid')">
 
                     </div>
                     <div class="mb-3">
@@ -61,7 +66,7 @@
                         <input style="text-transform:uppercase" type="text" class="form-control copy-copies" disabled>
                     </div>
                 </div>
-
+              
             </div>
             <div class="col">
                 <div class="card">
@@ -70,14 +75,14 @@
                     </div>
                 </div>
                 <br>
-                <form>
+               
                 <div class="container text-start">
                     <center>
                     <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" class="img-thumbnail w-50" alt="...">
                     </center>
                     <div class="mb-3">
                         <label class="form-label">STUDENT ID</label>
-                        <input type="text" class="form-control studid" >
+                        <input type="text" class="form-control studid"  name="studid" :value="old('studid')">
                     </div>
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">FULL NAME</label>
@@ -89,33 +94,28 @@
                     </div>
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">PENDING TO RETURNED</label>
-                        <input type="text" class="form-control book-borrow" disabled>
+                        <input type="text" class="form-control" disabled>
                     </div>
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">COPIES TO BORROWED</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control" id="booktitle"
-                            name="booktitle" :value="old('booktitle')" placeholder="">
+                        <label for="borrow" class="form-label">COPIES TO BORROWED</label>
+                        <input type="text" class="form-control borrow" name="borrow" :value="old('borrow')" placeholder="">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">DATE WILL BE BORROWED</label>
-                        <input type="date" class="form-control" value="<?= date('Y-m-d') ?>" disabled>
+                        <input type="date" class="form-control duedate dateborrowed"  name="duedate dateborrowed" value="<?= date('Y-m-d') ?>" disabled>
                     </div>
-                    <div class="row justify-content-start">
+                    <div class="row justify-content-start">                       
                         <div class="col">
                             <button type="button" class="btn btn-danger  w-100 btn-lg">Cancel</button>
-                        </div>
+                        </div>                     
                         <div class="col">                        
-                          <button type="button" class="btn btn-success  w-100 btn-lg">Issued Books</button>
-                        </div>
+                          <button type="submit" class="btn btn-success  w-100 btn-lg">Issued Books</button>
+                        </div>                                  
                     </div>
-                </div>
-                </form>
-            </div>
+                </div>                      
+            </div>  
         </div>
-
-
-
-    </div>
+    </div> </form>
     <br><br>
 @section('script')
     <script>     
@@ -151,7 +151,7 @@
                 $('.copy-copies').val("")
             } else {
                 $.get("/copy/" + id, function(data, status) {
-                    $('.copy-copies').val(data.copy.copies)
+                    $('.copy-copies').val(data.copy)
                 });
             }
 
@@ -171,32 +171,6 @@
                 });           
             }
         });   
-        //  $('.studid','.bookid').blur(function() {
-              
-        //  });
-        $(function(){
-
-        $(".studid").blur(function () {
-
-            var id = $(this).val().toLowerCase();
-
-            if( $(this).val() ) {    
-
-                $.get("/borrow/" + id, function(data, status) {
-                $('.book-borrow').val(data.borrow.borrowedcopies); 
-
-            });               
-            }          
-        });
-        });
-
-     
-        //         $.get("/borrow/" + id, function(data, status) {
-        //             $('.book-borrow').val(data.borrow.borrowedcopies)
-        // });
-        
-        //logic bookid at studid = borroedcopies
-       
    </script>
 @endsection
 @endsection

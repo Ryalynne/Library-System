@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\booklist;
 use App\Models\copies;
 use Illuminate\Http\Request;
 
@@ -28,23 +29,26 @@ class CopiesController extends Controller
             return back();
         }
     }
+    
     public function updatecopiesnegative(Request $request)
     {
-        if ($request->lesscopies) {
-            return back()->with('Error', 'It must be number.');
+
+        if ($request->lesscopies>$request->availcopies) {
+            return back()->with('Error', 'It must be number or less than the available copies.');
         } else {
             copies::create([
                 'bookid' => $request->bookid,
                 'action' => 'lessen',
-                'copies' =>  $request->addcopies
+                'copies' =>  $request->lesscopies
             ]);
             return back();
         }
     }
 
-    public function get_copies($data)
+    public function get_copies($id)
     {
-        $copy = copies::find($data);
-        return compact('copy');
+         $book  = booklist::find($id);
+         $copy =  $book->numberofcopies();           
+         return compact('copy');
     }
 }
