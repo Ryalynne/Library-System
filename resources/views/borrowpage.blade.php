@@ -12,11 +12,7 @@
         </nav>
     </div>
     <br>
-    <form method="POST" action="{{ route('borrow.store') }} ">
-        @csrf
     <div class="container text-center">
-
-      
         <div class="row align-items-start">   
             <div class="col">
                 <div class="card">
@@ -24,62 +20,7 @@
                         <h2> BOOKS INFORMATION</h2>
                     </div>
                 </div>
-                <br>
-             
-               
-                <div class="container text-start">
-                    <div class="mb-3">
-                        <label class="form-label">BOOK QR-CODE</label>
-                        <input type="text" class="form-control bookid" data-id=id  name="bookid" :value="old('bookid')">     
-                    </div>
-                    @if ($errors->any())                          
-                            @foreach ($errors->all() as $error)                           
-                                {{ $error }}                  
-                            @endforeach
-                   @endif
-                    <div class="mb-3">
-                        <label class="form-label">ISBN</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control book-isbn" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">BOOK TITLE</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control book-title" disabled>                       
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">AUTHOR/S</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control book-author" disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">DATE OF PUBLISH</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control book-datepublish"
-                            disabled>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">PUBLISHER</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control book-publisher" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">GENRE</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control book-genre" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">AVAILABLE COPIES</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control copy-copies" disabled>
-                    </div>
-                </div>
-              
-            </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-body bg-success text-white">
-                        <h2> BORROWER INFORMATION</h2>
-                    </div>
-                </div>
-                <br>
-               
+                <br>      
                 <div class="container text-start">
                     <center>
                     <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png" class="img-thumbnail w-50" alt="...">
@@ -96,34 +37,57 @@
                         <label for="booktitle" class="form-label">CLASS</label>
                         <input style="text-transform:uppercase" type="text" class="form-control class" disabled>
                     </div>
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">PENDING TO RETURNED</label>
-                        <input type="text" class="form-control" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="borrow" class="form-label">COPIES TO BORROWED</label>
-                        <input type="text" class="form-control borrow" name="borrow" :value="old('borrow')" placeholder="">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">DATE WILL BE BORROWED</label>
-                        <input type="date" class="form-control duedate dateborrowed"  name="duedate dateborrowed" value="<?= date('Y-m-d') ?>" disabled>
-                    </div>
                     <div class="row justify-content-start">                       
                         <div class="col">
-                            <button type="button" class="btn btn-danger  w-100 btn-lg">Cancel</button>
+                            <button type="button" class="btn btn-danger  w-100 btn-lg">Return Book</button>
                         </div>                     
                         <div class="col">                        
-                          <button type="submit" class="btn btn-success  w-100 btn-lg">Issued Books</button>
+                          <button type="button" class="btn btn-success  w-100 btn-lg">Lend Books</button>
                         </div>                                  
                     </div>
-                </div>                      
+                </div>  
+              
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body bg-success text-white">
+                        <h2>Book Borrowed</h2>
+                    </div>
+                </div>
+                <br>
+
+                <div class="p-2">
+                    <div class="input-group">
+                        <input type="search" class="form-control rounded myInput" placeholder="Search" aria-label="Search"
+                            aria-describedby="search-addon" />
+                    </div>
+                </div>
+
+                <div class="container">
+                    <table class="table table-bordered">
+                        <thead class="bg-success text-white">
+                            <tr>
+                                <th>BOOK TITLE</th>
+                                <th>DATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John</td>
+                                <td>Doe</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <br>
+
+                <br>
+                       
             </div>  
         </div>
-    </div> </form>
+    </div>
     <br><br>
 @section('script')
     <script>     
-
     $(".bookid").on("keyup", function() {
             var id = $(this).val().toLowerCase();
             if (id == "") {               
@@ -146,9 +110,7 @@
                     $('.book-addeddate').val(data.book.addeddate)
                 });
             }
-
         });
-
         $('.bookid').on('keyup', function() {
             var id = $(this).val().toLowerCase();
             if (id == "") {
@@ -158,12 +120,9 @@
                     $('.copy-copies').val(data.copy)
                 });
             }
-
         });
-
         $('.studid').on('keyup', function() {
             var id = $(this).val().toLowerCase();
-
             if (id == "") {            
                 $('.full-name').val("")
                 $('.class').val("")

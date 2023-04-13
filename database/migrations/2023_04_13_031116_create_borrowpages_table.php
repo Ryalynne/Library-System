@@ -17,8 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('studentid');
             $table->foreign('bookid')->references('id')->on('booklists');
             $table->foreign('studentid')->references('id')->on('studentlists');
-            $table->integer('borrowedcopies');
-            $table->date('dateborrowed');
+            $table->string('bookstatus');
             $table->date('duedate');
             $table->boolean('ishide')->default(0);
             $table->timestamps();
