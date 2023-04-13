@@ -32,8 +32,8 @@ class CopiesController extends Controller
     
     public function updatecopiesnegative(Request $request)
     {
-
-        if ($request->lesscopies>$request->availcopies) {
+        $avail = $request->availcopies;
+        if ($request->lesscopies<=0 || $request->lesscopies>$avail) {
             return back()->with('Error', 'It must be number or less than the available copies.');
         } else {
             copies::create([

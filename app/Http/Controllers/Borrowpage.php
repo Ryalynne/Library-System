@@ -31,20 +31,19 @@ class borrowpage extends Controller
     {
         $request->validate([
             'bookid'=>'required',
-            'studentid'=> 'required',
-            'borrowedcopies'=> 'required',
+            'studid'=> 'required',
+            'borrow'=> 'required',
             'dateborrowed'=> 'required',
             'duedate'=> 'required',
         ]);
-
-        ModelsBorrowpage::create([
+        return view()->ModelsBorrowpage::create([
            'bookid'=>$request->bookid,
            'studentid'=>$request->studid,
            'borrowedcopies'=> $request->borrow,
            'dateborrowed'=> $request->dateborrowed,
            'duedate'=> $request->duedate  
         ]);     
-        return back();
+        
     }
 
     /**

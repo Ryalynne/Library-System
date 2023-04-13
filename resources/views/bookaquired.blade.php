@@ -196,7 +196,7 @@
                                                    <div class="mb-3">
                                                     <label for="" class="form-label">AVAILABLE
                                                         COPIES</label>
-                                                    <input type="text" id="availcopies" class="form-control modal-copy-copies"
+                                                    <input type="text" id="availcopies" class="form-control modal-copy-copies" name="availcopies" :value="old('availcopies')"
                                                         placeholder="" readonly>
                                                 </div>                                    
                                                <div class="mb-3">

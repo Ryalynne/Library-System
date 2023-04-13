@@ -16,6 +16,5 @@ class booklist extends Model
 
         $data = $this->hasMany(copies::class, 'bookid')->where('action', 'lessen')->sum('copies');
         return $this->hasMany(copies::class, 'bookid')->where('action', 'added')->sum('copies')-$data;
-        
     }  
 }

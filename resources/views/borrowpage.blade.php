@@ -30,17 +30,22 @@
                 <div class="container text-start">
                     <div class="mb-3">
                         <label class="form-label">BOOK QR-CODE</label>
-                        <input type="text" class="form-control bookid" data-id=id  name="bookid" :value="old('bookid')">
-
+                        <input type="text" class="form-control bookid" data-id=id  name="bookid" :value="old('bookid')">     
                     </div>
+                    @if ($errors->any())                          
+                            @foreach ($errors->all() as $error)                           
+                                {{ $error }}                  
+                            @endforeach
+                   @endif
                     <div class="mb-3">
                         <label class="form-label">ISBN</label>
                         <input style="text-transform:uppercase" type="text" class="form-control book-isbn" disabled>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">BOOK TITLE</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control book-title" disabled>
-                    </div>{{ $error }} 
+                        <input style="text-transform:uppercase" type="text" class="form-control book-title" disabled>                       
+                    </div>
+                    
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">AUTHOR/S</label>
                         <input style="text-transform:uppercase" type="text" class="form-control book-author" disabled>
