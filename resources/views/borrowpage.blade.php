@@ -40,8 +40,7 @@
                     <div class="mb-3">
                         <label class="form-label">BOOK TITLE</label>
                         <input style="text-transform:uppercase" type="text" class="form-control book-title" disabled>
-                    </div>
-
+                    </div>{{ $error }} 
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">AUTHOR/S</label>
                         <input style="text-transform:uppercase" type="text" class="form-control book-author" disabled>

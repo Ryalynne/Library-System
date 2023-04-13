@@ -29,19 +29,22 @@ class borrowpage extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $request->validate([
             'bookid'=>'required',
             'studentid'=> 'required',
             'borrowedcopies'=> 'required',
             'dateborrowed'=> 'required',
             'duedate'=> 'required',
         ]);
-       ModelsBorrowpage::create([
+
+        ModelsBorrowpage::create([
+           'bookid'=>$request->bookid,
            'studentid'=>$request->studid,
            'borrowedcopies'=> $request->borrow,
            'dateborrowed'=> $request->dateborrowed,
            'duedate'=> $request->duedate  
         ]);     
+        return back();
     }
 
     /**
