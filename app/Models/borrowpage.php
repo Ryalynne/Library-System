@@ -10,12 +10,14 @@ class borrowpage extends Model
     use HasFactory;
 
     protected $fillable =[
-        'bookid','studentid','borrowedcopies','dateborrowed','duedate'
+        'bookid','studentid','bookstatus','duedate'
     ];
 
-    public function get_borrowedcopies($data)
+    public function get_borrowedstatus($studentid,$bookid)
     {
-        $borrow = borrowpage::find($data);       
-        return compact('borrow');     
+          studentlist::find($studentid)->where('borrowpages.bookid',$bookid)
+          ->join('borrowpages','borrowpages.student_id','studentlists.id')
+          ->join('booklists','booklists.id','borrowpages.bookid')->get();      
     }
+    
 }

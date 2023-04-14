@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\booklist;
 use App\Models\borrowpage as ModelsBorrowpage;
+use App\Models\studentlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,20 +31,20 @@ class borrowpage extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'bookid'=>'required',
-            'studid'=> 'required',
-            'borrow'=> 'required',
-            'dateborrowed'=> 'required',
-            'duedate'=> 'required',
-        ]);
-        return view()->ModelsBorrowpage::create([
-           'bookid'=>$request->bookid,
-           'studentid'=>$request->studid,
-           'borrowedcopies'=> $request->borrow,
-           'dateborrowed'=> $request->dateborrowed,
-           'duedate'=> $request->duedate  
-        ]);     
+        // $request->validate([
+        //     'bookid'=>'required',
+        //     'studid'=> 'required',
+        //     'borrow'=> 'required',
+        //     'dateborrowed'=> 'required',
+        //     'duedate'=> 'required',
+        // ]);
+        // return view()->ModelsBorrowpage::create([
+        //    'bookid'=>$request->bookid,
+        //    'studentid'=>$request->studid,
+        //    'borrowedcopies'=> $request->borrow,
+        //    'dateborrowed'=> $request->dateborrowed,
+        //    'duedate'=> $request->duedate  
+        // ]);     
         
     }
 

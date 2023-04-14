@@ -74,12 +74,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/book/{data}',[BooklistController::class,'get_book']);
     Route::get('/copy/{id}',[CopiesController::class,'get_copies']);
     Route::get('/student/{data}',[StudentlistController::class,'get_student']);
-    Route::get('/borrow/{data}',[borrowpage::class,'get_borrowedcopies']);
-
 
     //gumawa ng bagong function for update
     Route::get('/generate-pdf/{data}', [PDFController::class, 'generatePDF']);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
     Route::post('/book/update',[BooklistController::class,'updatebooks'])->name('books.update-book');
     Route::post('/copy/update',[CopiesController::class,'updatecopies'])->name('books.update-copy');
     Route::post('/copy/negativeupdate',[CopiesController::class,'updatecopiesnegative'])->name('books.updatenegative-copy');
