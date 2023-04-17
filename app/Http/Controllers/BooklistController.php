@@ -98,8 +98,8 @@ class BooklistController extends Controller
     public function get_book($data)
     {
         $book = booklist::find($data);
-        $status =  $book->getstatus();    
-        return compact('book','status');
+        $bookstatus =  $book->getstatus(request()->input('student'));    
+        return compact('book','bookstatus');
     }
 
 }

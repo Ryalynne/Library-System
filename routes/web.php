@@ -16,13 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware(['auth', 'verified'])->name('/');
 
-
-Route::get('/borrowpage',function() {
-    $books = ModelsBookList::where('ishide' , false)->paginate(10);
-    $copies = ModelsCopies::where('ishide' , false)->get();
-    // $borrowpage = bookborrowed::where('ishide' , false)->get();
-    return view('borrowpage',compact('books'));
-})->middleware(['auth', 'verified'])->name('borrowpage');
+Route::get('/borrowpage',[borrowpage::class,'index'])->middleware(['auth', 'verified'])->name('borrowpage');
 
 Route::get('/booklist', function () {
     $copies = ModelsCopies::where('ishide' , false)->get();
