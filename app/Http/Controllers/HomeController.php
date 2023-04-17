@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\copies;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $totaladded = copies::where('action', 'added')->get();
+        $totaldata1 = $totaladded->sum('copies');
+        
+        $totalless = copies::where('action', 'lessen')->get();
+        $totaldata2 = $totalless->sum('copies');
+        $totaldata  =  $totaldata1-$totaldata2;
+        return view('home', compact('totaldata'));
     }
 }

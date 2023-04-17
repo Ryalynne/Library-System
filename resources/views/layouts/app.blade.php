@@ -19,8 +19,8 @@
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <div id="app" class="sticky-top shadow ">
-        <nav class="navbar navbar-expand-md navbar-light bg-success shadow-sm">
+    <div id="app" class="sticky-top ">
+        <nav class="navbar navbar-expand-md navbar-light bg-success">
             <div class="container-fluid">
 
                 <a class="navbar-brand text-white" href="{{ url('/home') }}">
@@ -52,7 +52,7 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item dropdown-active-success" href="booklist">Books Entry</a>
                                     <a class="dropdown-item" href="bookaquired">Books Adjustment</a>
-                                    <a class="dropdown-item" href="bookstatus">Books Issued / Returned</a>
+                                    <a class="dropdown-item" href="bookstatus">Borrow Books / Return Books</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -106,24 +106,13 @@
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 {{-- dropdownlist --}}
-
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                  document.getElementById('settings-form').submit();">
-                                    {{ __('Settings') }}
-                                </a>
+                                <a class="dropdown-item dropdown-active-success" href="setting">Settings</a>
 
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-
-                                <form id="settings-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none  text-white">
-                                    @csrf
-                                </form>
-
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     class="d-none  text-white">
                                     @csrf

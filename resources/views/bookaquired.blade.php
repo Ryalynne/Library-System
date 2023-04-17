@@ -62,7 +62,7 @@
                         <td class="px-6 py-3">
                             {{$book->numberofcopies()}}
                         </td>
-                        <td class="text-center">              
+                        <td class="text-center col-2">              
                             {{-- button --}}
                             <button type="button" class="btn btn-success edit-button" data-id={{ $book->id }}
                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop">

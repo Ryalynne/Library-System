@@ -15,5 +15,8 @@ class booklist extends Model
     {
         $data = $this->hasMany(copies::class, 'bookid')->where('action', 'lessen')->sum('copies');
         return $this->hasMany(copies::class, 'bookid')->where('action', 'added')->sum('copies')-$data;
-    }  
+    }
+    public function getstatus(){
+      return $this->hasMany(borrowpage::class, 'bookid')->where('updated_at','2023-04-13 08:32:09')->value('bookstatus');
+    }
 }

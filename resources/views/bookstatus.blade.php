@@ -6,7 +6,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">      
           <li class="breadcrumb-item active text-success" aria-current="page">Book Management</li>
-          <li class="breadcrumb-item active text-success" aria-current="page">Books Issued / Returned</li>
+          <li class="breadcrumb-item active text-success" aria-current="page">Borrow Books /Return Books</li>
         </ol>
       </nav>
 </div>
@@ -15,11 +15,11 @@
     <div class="row align-items-start">
         <div class="col">
             <a href = "borrowpage">
-            <button type="button"  class="btn btn-outline-success w-100 btn-lg">Issued Books</button></a>
+            <button type="button"  class="btn btn-outline-success w-100 btn-lg">Borrow Books</button></a>
         </div>
         <div class="col">
             <a href = "returnpage">
-            <button type="button" class="btn btn-outline-success w-100 btn-lg">Returned Books</button></a>
+            <button type="button" class="btn btn-outline-success w-100 btn-lg">Return Books</button></a>
         </div>
       </div>
       <br>

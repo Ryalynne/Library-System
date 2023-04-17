@@ -59,8 +59,13 @@ Route::get('/bookhistory',function() {
     return view('bookhistory',compact('books'));
 })->middleware(['auth', 'verified'])->name('bookhistory');
 
+Route::get('/setting',function() {
+    $books = ModelsBookList::where('ishide' , false)->paginate(10);
+    $copies = ModelsCopies::where('ishide' , false)->get();
+    return view('setting');
+})->middleware(['auth', 'verified'])->name('setting');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','verified')->group(function () {
     
     
     //para maaccess lahat ng resource
@@ -69,15 +74,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('books',BooklistController::class);
     Route::resource('borrow',borrowpage::class);
     
-    //pang kuha ng data /function
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/myPDF/{data}',[PDFController::class,'generatePDF'])->name('myPDF');
     Route::get('/book/{data}',[BooklistController::class,'get_book']);
     Route::get('/copy/{id}',[CopiesController::class,'get_copies']);
     Route::get('/student/{data}',[StudentlistController::class,'get_student']);
-
-    //gumawa ng bagong function for update
     Route::get('/generate-pdf/{data}', [PDFController::class, 'generatePDF']);
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+  
+    //Route::get('/home',[ModelsBookList::class,'totalofcopies']);
+    // Route::get('/borrowpage',[ModelsBookList::class,'studentborrow']);
 
     Route::post('/book/update',[BooklistController::class,'updatebooks'])->name('books.update-book');
     Route::post('/copy/update',[CopiesController::class,'updatecopies'])->name('books.update-copy');

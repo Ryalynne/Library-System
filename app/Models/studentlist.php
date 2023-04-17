@@ -11,4 +11,8 @@ class studentlist extends Model
     protected $fillable =[
         'name','middle','lastname','class'
     ];
+
+    public function bookborrow(){
+        return $this->hasMany(borrowpage::class , 'studentid');
+    }
 }
