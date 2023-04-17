@@ -53,10 +53,20 @@
                                     <a class="dropdown-item dropdown-active-success" href="booklist">Books Entry</a>
                                     <a class="dropdown-item" href="bookaquired">Books Adjustment</a>
                                     <a class="dropdown-item" href="bookstatus">Books Issued / Returned</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="bookhistory">Books History</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Books Archived</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Books History
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Books Action History</a>
+                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Adjustment History</a>
+                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Onlend History</a>
+                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Returned History</a>
+                                    <hr>
+                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Books Archived</a>
                                 </div>
                             </li>
                             <li class="nav-item active">

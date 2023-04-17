@@ -42,10 +42,7 @@
                 </div>
             </div>
             <div class="col">
-
-             
-                
-                <div class="card">
+             <div class="card">
                     <div class="card-body bg-success text-white">
                         <h2>BORROWED BOOK</h2>
                     </div>
@@ -56,47 +53,51 @@
                     <div class="row align-items-start">
                       <div class="col">
                         <button type="button" class="btn btn-success  w-50" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop">
-                        Add Book
+                        data-bs-target="#staticBackdrop" id="myBtn">
+                        Search Book
                         </button> 
                       </div>
                       <div class="col">
                         <div class="mb-3">
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="email" class="form-control bookid" id="exampleInputEmail1" aria-describedby="emailHelp">
                             <div id="emailHelp" class="form-text">Scan QR Here...</div>
                           </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="tbl">
                     <thead class="bg-success text-white">
-                        <tr>
+                        <tr><th>ISBN</th>
                             <th>BOOK TITLE</th>
-                            <th>DATE</th>
+                            <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td> a</td>
-                            <td> a</td>        
-                        </tr>
+
                     </tbody>
                 </table>
+                <br>
+                <div class="text-end">
+                    <button type="button"  class="btn btn-success  w-50 btn-lg">Borrow Books</button></a>
+                </div>
                 <br>
                 <br>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
+
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Search Bar</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
+
             <div class="modal-body">
                 <div class="container">
                     <table class="table table-bordered">
@@ -114,43 +115,46 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>  @foreach ($books as $book) 
-                                <td>{{$book->id}}</td>   
-                                <td>{{$book->isbn}}</td>                          
-                                <td>{{$book->booktitle}}</td>
-                                <td>{{$book->author}}</td>
-                                <td>{{$book->datepublish}}</td>
-                                <td>{{$book->publisher}}</td>
-                                <td>{{$book->genre}}</td>
-                                <td>{{$book->get_borrowedstatus()}}</td>                  
+                            <tr> 
+                             
+                                    
+                                <td></td>   
+                                <td></td>                  
                                 <td>
+                                
                                 <button type="button" class="btn btn-success edit-button btn-sm btn-circle"
-                                data-id={{ $book->id }} data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                   </svg>
-                                 </button></td>                 
-                            </tr>@endforeach
+                                 </button>
+                             </td>                 
+                            </tr>
                         </tbody>
                     </table>
                     <div class="pagination justify-content-center">
-                        {{ $books->links() }}
+                       
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Lend Book</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>       
             </div>
-        </div>
-    </div>
+        </div>       
+    </div>  
 </div>
+
     <br><br>
+
+
 @section('script')
     <script>
-        $(".bookid").on("keyup", function() {
+
+document.getElementById('myBtn').disabled = true;
+
+
+      $(".bookid").on("keyup", function() {
             var id = $(this).val().toLowerCase();
             if (id == "") {
                 $('.book-title').val("")
@@ -162,40 +166,39 @@
                 $('.book-addeddate').val("")
             } else {
                 $.get("/book/" + id, function(data, status) {
-                    $('.book-title').val(data.book.booktitle)
-                    $('.book-author').val(data.book.author)
-                    $('.book-datepublish').val(data.book.datepublish)
-                    $('.book-isbn').val(data.book.isbn)
-                    $('.book-genre').val(data.book.genre)
-                    $('.book-publisher').val(data.book.publisher)
-                    $('.book-addeddate').val(data.book.addeddate)
+                   
+                    var tr = document.createElement('tr');      
+                    var td1 = tr.appendChild(document.createElement('td'));
+                    var td2 = tr.appendChild(document.createElement('td'));
+                    var td3 = tr.appendChild(document.createElement('td'));
+                 
+                    td1.innerHTML=data.book.isbn;
+                    td2.innerHTML=data.book.booktitle;
+                    td3.innerHTML='<input type="button" name="up" value="Remove" class="btn btn-success">';
+                    document.getElementById("tbl").appendChild(tr);
+                    $('.bookid').val("");
+
                 });
             }
         });
-        $('.bookid').on('keyup', function() {
-            var id = $(this).val().toLowerCase();
-            if (id == "") {
-                $('.copy-copies').val("")
-            } else {
-                $.get("/copy/" + id, function(data, status) {
-                    $('.copy-copies').val(data.copy)
-                });
-            }
-        });
+
         $('.studid').on('keyup', function() {
             var id = $(this).val().toLowerCase();
             if (id == "") {
                 $('.full-name').val("")
                 $('.class').val("")
+                document.getElementById('myBtn').disabled = true;
             } else {
                 $.get("/student/" + id, function(data, status) {
                     $('.full-name').val(data.student.name + " " + data.student.middle + ", " + data.student
                         .lastname);
                     $('.class').val(data.student.class);
-
+                    document.getElementById('myBtn').disabled = false;
                 });
             }
         });
+
+
     </script>
 @endsection
 @endsection

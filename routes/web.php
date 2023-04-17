@@ -14,7 +14,7 @@ Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware(['auth', 'verified'])->name('/');
 
 
 Route::get('/borrowpage',function() {
