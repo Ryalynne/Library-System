@@ -317,7 +317,6 @@
 
 @section('script')
     <script>
-
         $('.btn-qr').on('click', function() {
             var id = $(this).data('id');
 

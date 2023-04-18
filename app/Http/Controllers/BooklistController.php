@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\booklist;
+use App\Models\borrowpage;
 use App\Models\copies;
+use App\Models\studentlist;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,11 +18,9 @@ class BooklistController extends Controller
      */
     public function index()
     {
-  
     }
     public function create()
     {
-       
     }
 
     public function store(Request $request)
@@ -35,14 +35,13 @@ class BooklistController extends Controller
             'copies' => 'required|numeric|min:1'
         ]);
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json([
-                'status'=>400,
-                'errors'=>$validator->messages()
+                'status' => 400,
+                'errors' => $validator->messages()
             ]);
         }
-                     
+
         $book = booklist::create([
             'booktitle' => $request->booktitle,
             'author' => $request->author,
@@ -52,14 +51,14 @@ class BooklistController extends Controller
             'genre' => $request->genre,
         ]);
         copies::create([
-            'bookid'=> $book->id,
-            'action'=> "added",
-            'copies'=> $request->copies
-        ]);     
+            'bookid' => $book->id,
+            'action' => "added",
+            'copies' => $request->copies
+        ]);
         return response()->json([
-            'status'=>200,
-            'message'=>'Book Added Successfully.'  
-        ]);       
+            'status' => 200,
+            'message' => 'Book Added Successfully.'
+        ]);
     }
     public function show(booklist $booklist)
     {
@@ -68,7 +67,7 @@ class BooklistController extends Controller
 
     public function edit(booklist $booklist)
     {
-       
+
         //
     }
 
@@ -77,7 +76,6 @@ class BooklistController extends Controller
      */
     public function update(Request $request, booklist $booklist)
     {
-
     }
 
     /**
@@ -88,18 +86,19 @@ class BooklistController extends Controller
         //
     }
 
-    public function updatebooks(Request $request){
-        $book = booklist::find($request->bookid);
-        $book->update(['booktitle'=> $request->updatebooktitle,'author'=> $request->updateauthor,'datepublish'=> $request->updatepublish,
-        'publisher'=> $request->updatepublisher,'genre'=> $request->updategenre]);
-         return back();     
-    }
-
-    public function get_book($data)
+    public function updatebooks(Request $request)
     {
-        $book = booklist::find($data);
-        $bookstatus =  $book->getstatus(request()->input('student'));    
-        return compact('book','bookstatus');
+        $book = booklist::find($request->bookid);
+        $book->update([
+            'booktitle' => $request->updatebooktitle, 'author' => $request->updateauthor, 'datepublish' => $request->updatepublish,
+            'publisher' => $request->updatepublisher, 'genre' => $request->updategenre
+        ]);
+        return back();
     }
 
+    public function get_book($data, $studentid)
+    {
+        $book = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')->where('borrowpages.studentid', $studentid)->where('borrowpages.bookid', $data)->orderBy('borrowpages.id','desc')->first();
+        return compact('book');
+    }
 }

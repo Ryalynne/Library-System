@@ -12,12 +12,4 @@ class borrowpage extends Model
     protected $fillable =[
         'bookid','studentid','bookstatus','duedate'
     ];
-
-    // public function get_borrowedstatus($studentid,$bookid)
-    // {
-    //       studentlist::find($studentid)->where('borrowpages.bookid',$bookid)
-    //       ->join('borrowpages','borrowpages.student_id','studentlists.id')
-    //       ->join('booklists','booklists.id','borrowpages.bookid')->get();      
-    // }
-    
 }

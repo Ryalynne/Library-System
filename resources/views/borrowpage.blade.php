@@ -28,10 +28,10 @@
                     </center>
                     <div class="mb-3">
                         <label class="form-label">STUDENT ID</label>
-                        <form action="{{ route('borrowpage') }}" method="get">
-                            <input type="text" class="form-control studid" name="student" :value="old('student')"
-                                value="{{ request()->input('student') ? $student->id : ' ' }}">
-                        </form>
+                        {{-- <form action="{{ route('borrowpage') }}" method="get"> --}}
+                        <input type="text" class="form-control studid" name="student" :value="old('student')"
+                            value="{{ request()->input('student') ? $student->id : ' ' }}">
+                        {{-- </form> --}}
                     </div>
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">FULL NAME</label>
@@ -65,10 +65,11 @@
                             </div>
                             <div class="col">
                                 <div class="mb-3">
-                                    <form action="{{ route('borrowpage') }}" method="get">
-                                        <input type="email" class="form-control bookid" id="exampleInputEmail1">
-                                        <div class="form-text">Scan QR Here...</div>
-                                    </form>
+                                    {{-- <form action="{{ route('borrowpage') }}" method="get"> --}}
+                                    <input type="text" class="form-control bookid" id="exampleInputEmail1"
+                                        data-student="{{ $student ? $student->id : '' }}">
+                                    <div class="form-text">Scan QR Here...</div>
+                                    {{-- </form> --}}
                                 </div>
                             </div>
                         </div>
@@ -188,59 +189,63 @@
 
 @section('script')
     <script>
-        //  $(".bookid").on("keyup", function() {
-        //      var id = $(this).val().toLowerCase();
-        //      if (id == "") {
-        //          $('.book-title').val("")
-        //          $('.book-author').val("")
-        //          $('.book-datepublish').val("")
-        //          $('.book-isbn').val("")
-        //          $('.book-genre').val("")
-        //          $('.book-publisher').val("")
-        //          $('.book-addeddate').val("")
-        //      } else {
-        //          $.get("/book/" + id, function(data, status) {
-        //              if (data.bookstatus == "onlend") {
-        //                  console.log('onlend');
-        //                 // $('.bookid').val("");
-        //              } else {
-        //                  var tr = document.createElement('tr');
-        //                  var td1 = tr.appendChild(document.createElement('td'));
-        //                  var td2 = tr.appendChild(document.createElement('td'));
-        //                  var td3 = tr.appendChild(document.createElement('td'));
+        $(".bookid").on("keyup", function() {
+            var id = $(this).val().toLowerCase();
+            let studentId = $(this).data('student')
+            if (id == "") {
+                $('.book-title').val("")
+                $('.book-author').val("")
+                $('.book-datepublish').val("")
+                $('.book-isbn').val("")
+                $('.book-genre').val("")
+                $('.book-publisher').val("")
+                $('.book-addeddate').val("")
+            } else {
+                $.get("/book/" + id + "/" + studentId, function(data, status) {
 
-        //                  td1.innerHTML = data.book.isbn;
-        //                  td2.innerHTML = data.book.booktitle;
-        //                  td3.innerHTML =
-        //                      '<input type="button" name="up" value="Remove" class="btn btn-success">';
-        //                  document.getElementById("tbl").appendChild(tr);
-        //                  $('.bookid').val("");
-        //              }
-        //          });
-        //      }
-        //  });
-        //   $('.studid').on('keyup', function() {
-        //       var id = $(this).val().toLowerCase();
-        //       if (id == "") {
-        //         //   $('.full-name').val("")
-        //         //   $('.class').val("")
-        //         //   document.getElementById('myBtn').disabled = true;
-        //       } else {
-        //         $.ajax({
-        //             headers: {
-        //                 'X-CSRF-Token': '{{ csrf_token() }}',
-        //             },
-        //             type: "POST",
-        //             url: "{{ route('borrowpage') }}",
-        //          });
-        //         //   $.get("/student/" + id, function(data, status) {
-        //             //   $('.full-name').val(data.student.name + " " + data.student.middle + ", " + data.student
-        //             //       .lastname);
-        //             //   $('.class').val(data.student.class);
-        //             //   document.getElementById('myBtn').disabled = false;
-        //         //   });
-        //       }
-        //   });
+                    if (data.book.bookstatus == "onlend") {
+                        console.log('onlend');
+                        $('.bookid').val("");
+                    } else {
+                        var tr = document.createElement('tr');
+                        var td1 = tr.appendChild(document.createElement('td'));
+                        var td2 = tr.appendChild(document.createElement('td'));
+                        var td3 = tr.appendChild(document.createElement('td'));
+
+                        td1.innerHTML = data.book.isbn;
+                        td2.innerHTML = data.book.booktitle;
+                        td3.innerHTML =
+                            '<input type="button" name="up" value="Remove" class="btn btn-success">';
+                        document.getElementById("tbl").appendChild(tr);
+                        $('.bookid').val("");
+                    }
+                });
+            }
+        });
+
+        $('.studid').on('keyup', function() {
+            var id = $(this).val().toLowerCase();
+            if (id == "") {
+                $('.full-name').val("")
+                $('.class').val("")
+                document.location.href = "borrowpage";
+                document.getElementById('myBtn').disabled = true;
+            } else {
+                $.get("/student/" + id, function(data, status) {
+
+                    try {
+                        if (id == data.student.id) {
+                            document.location.href = "borrowpage" + '?student=' + data.student.id;
+                            console.log('true');
+                        }
+                    } catch (err_value) {
+                        document.location.href = "borrowpage";
+                        console.log('false');
+                    }
+
+                });
+            }
+        });
     </script>
 @endsection
 @endsection
