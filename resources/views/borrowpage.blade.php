@@ -65,17 +65,15 @@
                             </div>
                             <div class="col">
                                 <div class="mb-3">
-                                    {{-- <form action="{{ route('borrowpage') }}" method="get"> --}}
                                     <input type="text" class="form-control bookid" id="exampleInputEmail1"
                                         data-student="{{ $student ? $student->id : '' }}">
                                     <div class="form-text">Scan QR Here...</div>
-                                    {{-- </form> --}}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered" id="tbl">
+                <table class="table table-bordered myTable" id="tbl">
                     <thead class="bg-success text-white">
                         <tr>
                             <th>ISBN</th>
@@ -88,7 +86,7 @@
                 </table>
                 <br>
                 <div class="text-end">
-                    <button type="button" class="btn btn-success  w-50 btn-lg">Borrow Books</button></a>
+                    <button type="button" class="btn btn-success  w-50 btn-lg example">Borrow Books</button></a>
                 </div>
                 <br>
                 <br>
@@ -190,39 +188,63 @@
 @section('script')
     <script>
         $(".bookid").on("keyup", function() {
-            var id = $(this).val().toLowerCase();
-            let studentId = $(this).data('student')
-            if (id == "") {
-                $('.book-title').val("")
-                $('.book-author').val("")
-                $('.book-datepublish').val("")
-                $('.book-isbn').val("")
-                $('.book-genre').val("")
-                $('.book-publisher').val("")
-                $('.book-addeddate').val("")
-            } else {
-                $.get("/book/" + id + "/" + studentId, function(data, status) {
+            let id = $(this).val().toLowerCase();
+            let studentId = $(this).data('student');
+            $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
 
-                    if (data.book.bookstatus == "onlend") {
+
+                try {
+                    if (data.bookstatus.bookstatus == "onlend" || data.bookstatus.id == null) {
                         console.log('onlend');
+                        console.log(id + studentId);
                         $('.bookid').val("");
                     } else {
+                        // var table = document.getElementById("tbl");
+                        // tbody = table.tBodies[0];
+                        // for (var i = 0, row; row = table.cells[1].rows[i]; i++) {
+                        //     rowtb = row;
+                        //     console.log(rowtb);
+                        // }
+                        $.get("/book/" + id, function(data, status) {
+                            if (data.book.isbn.includes("sasdas")) {
+                                console.log("true");
+                                $('.bookid').val("");
+                            } else {
+                                var tr = document.createElement('tr');
+                                var td1 = tr.appendChild(document.createElement('td'));
+                                var td2 = tr.appendChild(document.createElement('td'));
+                                var td3 = tr.appendChild(document.createElement('td'));
+                                td1.innerHTML = data.book.isbn;
+                                td2.innerHTML = data.book.booktitle;
+                                td3.innerHTML =
+                                    '<input type="button" name="up" value="Remove" class="btn btn-success">';
+                                document.getElementById("tbl").appendChild(tr);
+                                $('.bookid').val("");
+                                console.log('Available');
+                                console.log(id + studentId);
+                                $('.bookid').val("");
+                            }
+                        });
+                    }
+                } catch (err_value) {
+                    $.get("/book/" + id, function(data, status) {
                         var tr = document.createElement('tr');
                         var td1 = tr.appendChild(document.createElement('td'));
                         var td2 = tr.appendChild(document.createElement('td'));
                         var td3 = tr.appendChild(document.createElement('td'));
-
                         td1.innerHTML = data.book.isbn;
                         td2.innerHTML = data.book.booktitle;
                         td3.innerHTML =
                             '<input type="button" name="up" value="Remove" class="btn btn-success">';
                         document.getElementById("tbl").appendChild(tr);
                         $('.bookid').val("");
-                    }
-                });
-            }
+                        console.log('Available');
+                        console.log(id + studentId);
+                        $('.bookid').val("");
+                    });
+                }
+            });
         });
-
         $('.studid').on('keyup', function() {
             var id = $(this).val().toLowerCase();
             if (id == "") {

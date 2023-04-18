@@ -70,7 +70,8 @@ Route::middleware('auth','verified')->group(function () {
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/myPDF/{data}',[PDFController::class,'generatePDF'])->name('myPDF');
-    Route::get('/book/{data}/{studentid}',[BooklistController::class,'get_book']);
+    Route::get('/bookstatus/{data}/{studentid}',[BooklistController::class,'get_status']);
+    Route::get('/book/{data}',[BooklistController::class,'get_book']);
     Route::get('/copy/{id}',[CopiesController::class,'get_copies']);
     Route::get('/student/{data}',[StudentlistController::class,'get_student']);
     Route::get('/generate-pdf/{data}', [PDFController::class, 'generatePDF']);

@@ -96,9 +96,15 @@ class BooklistController extends Controller
         return back();
     }
 
-    public function get_book($data, $studentid)
+    public function get_book($data)
     {
-        $book = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')->where('borrowpages.studentid', $studentid)->where('borrowpages.bookid', $data)->orderBy('borrowpages.id','desc')->first();
+        $book = booklist::find($data);
         return compact('book');
+    }
+
+    public function get_status($data, $studentid)
+    {  
+        $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid', 'copies.bookid')->where('borrowpages.studentid', $studentid)->where('borrowpages.bookid', $data)->orderBy('borrowpages.id', 'desc')->first();
+        return compact('bookstatus');
     }
 }
