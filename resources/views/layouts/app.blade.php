@@ -61,8 +61,10 @@
                                     Books History
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Books Action History</a>
-                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Adjustment History</a>
+                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Books Action
+                                        History</a>
+                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Adjustment
+                                        History</a>
                                     <a class="dropdown-item dropdown-active-success" href="bookhistory">Onlend History</a>
                                     <a class="dropdown-item dropdown-active-success" href="bookhistory">Returned History</a>
                                     <hr>
@@ -80,13 +82,15 @@
                     @guest
                         @if (Route::has('login'))
                             <li class="nav-item nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                LOGIN 
-                            </a>
+                                <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    LOGIN
+                                </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item text-success" href="{{ route('login') }}">{{ __('STUDENT') }}</a>
-                                    <a class="dropdown-item text-success" href="{{ route('login') }}">{{ __('FACULTY') }}</a>
+                                    <a class="dropdown-item text-success"
+                                        href="{{ route('login') }}">{{ __('STUDENT') }}</a>
+                                    <a class="dropdown-item text-success"
+                                        href="{{ route('login') }}">{{ __('FACULTY') }}</a>
                                 </div>
                             </li>
                         @endif
@@ -149,7 +153,6 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 <script>
-
     $('.edit-button').on('click', function() {
         var id = $(this).data('id');
         $.get("/copy/" + id, function(data, status) {
@@ -163,27 +166,25 @@
             $(".myTable .tr").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
-    });
-});
-
-$('.edit-button').on('click', function() {
-            var id = $(this).data('id');
-            //$.get('url')
-            $.get("/book/" + id, function(data, status) {
-                $('.modal-book-id').val(data.book.id)
-                $('.modal-book-title').val(data.book.booktitle)
-                $('.modal-book-author').val(data.book.author)
-                // $('.modal-book-copies').val(data.book.copies)
-                $('.modal-book-datepublish').val(data.book.datepublish)
-                $('.modal-book-isbn').val(data.book.isbn)
-                $('.modal-book-genre').val(data.book.genre)
-                $('.modal-book-publisher').val(data.book.publisher)
-                $('.modal-book-addeddate').val(data.book.addeddate)
-                // console.log(data)
-            });
         });
+    });
 
-        
+    $('.edit-button').on('click', function() {
+        var id = $(this).data('id');
+        //$.get('url')
+        $.get("/book/" + id, function(data, status) {
+            $('.modal-book-id').val(data.book.id)
+            $('.modal-book-title').val(data.book.booktitle)
+            $('.modal-book-author').val(data.book.author)
+            // $('.modal-book-copies').val(data.book.copies)
+            $('.modal-book-datepublish').val(data.book.datepublish)
+            $('.modal-book-isbn').val(data.book.isbn)
+            $('.modal-book-genre').val(data.book.genre)
+            $('.modal-book-publisher').val(data.book.publisher)
+            $('.modal-book-addeddate').val(data.book.addeddate)
+            // console.log(data)
+        });
+    });
 </script>
 
 @yield('script')
