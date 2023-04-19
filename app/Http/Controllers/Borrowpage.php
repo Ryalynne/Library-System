@@ -28,7 +28,6 @@ class borrowpage extends Controller
 
     public function store(Request $request)
     {
-
     }
     public function show(string $id)
     {
@@ -59,4 +58,14 @@ class borrowpage extends Controller
         //
     }
 
+    public function updatestatus(Request $request)
+    {
+        // for ($i = 0; $i < count($request->booklist); $i++) {
+        //     ModelsBorrowpage::table('permission')
+        //         ->where('bookid','1')->where('studentid', '1')
+        //         ->update(['bookstatus' => 'Returned']);
+        // }
+        // return back();
+        return $this->hasMany(borrowpage::class, 'bookid')->where('studentid','1')->where('bookstatus', 'onlend')->value('bookstatus');
+    }
 }

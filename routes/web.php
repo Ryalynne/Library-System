@@ -78,7 +78,7 @@ Route::middleware('auth','verified')->group(function () {
   
     //Route::get('/home',[ModelsBookList::class,'totalofcopies']);
     // Route::get('/borrowpage',[ModelsBookList::class,'studentborrow']);
-
+    Route::post('/bookstatus/update',[borrowpage::class, 'updatestatus'])->name('books.updatestatus');
     Route::post('/book/update',[BooklistController::class,'updatebooks'])->name('books.update-book');
     Route::post('/copy/update',[CopiesController::class,'updatecopies'])->name('books.update-copy');
     Route::post('/copy/negativeupdate',[CopiesController::class,'updatecopiesnegative'])->name('books.updatenegative-copy');

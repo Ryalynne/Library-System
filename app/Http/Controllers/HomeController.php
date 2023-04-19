@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -19,8 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         $totaladded = copies::where('action', 'added')->get();
-        $totaldata1 = $totaladded->sum('copies');
-        
+        $totaldata1 = $totaladded->sum('copies');    
         $totalless = copies::where('action', 'lessen')->get();
         $totaldata2 = $totalless->sum('copies');
         $totaldata  =  $totaldata1-$totaldata2;

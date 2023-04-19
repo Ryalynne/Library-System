@@ -98,7 +98,7 @@ class BooklistController extends Controller
 
     public function get_book($data)
     {
-        $book = booklist::find($data);
+        $book = booklist::find($data);       
         return compact('book');
     }
 

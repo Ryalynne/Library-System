@@ -86,7 +86,10 @@
                 </table>
                 <br>
                 <div class="text-end">
-                    <button type="button" class="btn btn-success  w-50 btn-lg example">Borrow Books</button></a>
+                    <form method="POST" action="{{ route('books.updatestatus') }}" > 
+                        @csrf
+                    <button type="submit" class="btn btn-success  w-50 btn-lg borrowbtn">Borrow Books</button></a>
+                    </form>
                 </div>
                 <br>
                 <br>
@@ -123,14 +126,14 @@
                             <tbody>
                                 @foreach ($books as $book)
                                     @if ($book->numberofcopies() > 0)
-                                        <tr>
-                                            <th scope="row">
+                                        <tr class="trtr">
+                                            <th scope="row" class="getid">
                                                 {{ $book->id }}
                                             </th>
-                                            <td>
+                                            <td class="getisbn">
                                                 {{ $book->isbn }}
                                             </td>
-                                            <td>
+                                            <td class="getbooktitle">
                                                 {{ $book->booktitle }}
                                             </td>
                                             <td>
@@ -145,7 +148,7 @@
                                             <td>
                                                 {{ $book->genre }}
                                             </td>
-                                            <td>
+                                            <td class="getstatus">
                                                 @if (request()->input('student'))
                                                     {{ $book->getstatus(request()->input('student')) }}
                                                     @if (empty($book->getstatus(request()->input('student'))))
@@ -154,8 +157,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-success edit-button btn-sm btn-circle"
-                                                    data-bs-target="#staticBackdrop">
+                                                <button type="button" class="btn btn-success btn-sm btn-circle getdata">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                                                         <path
@@ -183,68 +185,94 @@
     </div>
 
     <br><br>
-
-
 @section('script')
     <script>
+
+        const bookdata = [];
+        const bookList = [];
+
+        $(".borrowbtn").on('click', function() {
+       
+            console.log(bookList);
+        });
+        var _changeInterval = null;
         $(".bookid").on("keyup", function() {
+
             let id = $(this).val().toLowerCase();
+
             let studentId = $(this).data('student');
-            $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
 
+            clearInterval(_changeInterval)
+            _changeInterval = setInterval(function() {
 
-                try {
-                    if (data.bookstatus.bookstatus == "onlend" || data.bookstatus.id == null) {
-                        console.log('onlend');
-                        console.log(id + studentId);
-                        $('.bookid').val("");
-                    } else {
-                        // var table = document.getElementById("tbl");
-                        // tbody = table.tBodies[0];
-                        // for (var i = 0, row; row = table.cells[1].rows[i]; i++) {
-                        //     rowtb = row;
-                        //     console.log(rowtb);
-                        // }
+                $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
+                    try {
+                        if (data.bookstatus.bookstatus == "onlend") {
+                            console.log('onlend');
+                            alert('The Book Already Borrowed')
+                            $('.bookid').val("");
+                        } else {
+                            $.get("/book/" + id, function(data, status) {
+                                if (!bookList.includes(data.book.id)) {
+                                    bookList.push(data.book.id)
+                                    bookdata.push(data.book.id)
+                                    console.log(bookdata)
+                                    if (data.book.id == null) {
+                                        $('.bookid').val("");
+                                    } else {
+                                        var tr = document.createElement('tr');
+                                        var td1 = tr.appendChild(document.createElement(
+                                            'td'));
+                                        var td2 = tr.appendChild(document.createElement(
+                                            'td'));
+                                        var td3 = tr.appendChild(document.createElement(
+                                            'td'));
+                                        td1.innerHTML = data.book.isbn;
+                                        td2.innerHTML = data.book.booktitle;
+                                        td3.innerHTML =
+                                            '<button type="button" class="btn btn-success" onclick="deleteRow(this);">Remove</button>';
+                                        document.getElementById("tbl").appendChild(tr);
+                                        $('.bookid').val("");
+                                        console.log('Available');
+                                    }
+                                } else {
+                                    alert("The Book Already in the list");
+                                    $('.bookid').val("");
+                                }
+                            });
+                        }
+                    } catch (error) {
                         $.get("/book/" + id, function(data, status) {
-                            if (data.book.isbn.includes("sasdas")) {
-                                console.log("true");
-                                $('.bookid').val("");
+                            if (!bookList.includes(data.book.id)) {
+                                bookList.push(data.book.id)
+                                bookdata.push(data.book.id)
+                                if (data.book.id == null) {
+                                    $('.bookid').val("");
+                                } else {
+                                    var tr = document.createElement('tr');
+                                    var td1 = tr.appendChild(document.createElement('td'));
+                                    var td2 = tr.appendChild(document.createElement('td'));
+                                    var td3 = tr.appendChild(document.createElement('td'));
+                                    td1.innerHTML = data.book.isbn;
+                                    td2.innerHTML = data.book.booktitle;
+                                    td3.innerHTML =
+                                        '<button type="button" class="btn btn-success" onclick="deleteRow(this);">Remove</button>';
+                                    document.getElementById("tbl").appendChild(tr);
+                                    $('.bookid').val("");
+                                }
                             } else {
-                                var tr = document.createElement('tr');
-                                var td1 = tr.appendChild(document.createElement('td'));
-                                var td2 = tr.appendChild(document.createElement('td'));
-                                var td3 = tr.appendChild(document.createElement('td'));
-                                td1.innerHTML = data.book.isbn;
-                                td2.innerHTML = data.book.booktitle;
-                                td3.innerHTML =
-                                    '<input type="button" name="up" value="Remove" class="btn btn-success">';
-                                document.getElementById("tbl").appendChild(tr);
-                                $('.bookid').val("");
-                                console.log('Available');
-                                console.log(id + studentId);
+                                alert("The Book Already in the list");
                                 $('.bookid').val("");
                             }
                         });
+                    } finally {
+                        $('.bookid').val("");
                     }
-                } catch (err_value) {
-                    $.get("/book/" + id, function(data, status) {
-                        var tr = document.createElement('tr');
-                        var td1 = tr.appendChild(document.createElement('td'));
-                        var td2 = tr.appendChild(document.createElement('td'));
-                        var td3 = tr.appendChild(document.createElement('td'));
-                        td1.innerHTML = data.book.isbn;
-                        td2.innerHTML = data.book.booktitle;
-                        td3.innerHTML =
-                            '<input type="button" name="up" value="Remove" class="btn btn-success">';
-                        document.getElementById("tbl").appendChild(tr);
-                        $('.bookid').val("");
-                        console.log('Available');
-                        console.log(id + studentId);
-                        $('.bookid').val("");
-                    });
-                }
-            });
+                });
+                clearInterval(_changeInterval)
+            }, 900);
         });
+
         $('.studid').on('keyup', function() {
             var id = $(this).val().toLowerCase();
             if (id == "") {
@@ -268,6 +296,46 @@
                 });
             }
         });
+        var $iddata = "";
+
+        $(".getdata").on('click', function() {
+
+            var $row = $(this).closest(".trtr");
+            $iddata = $row.find(".getid").text();
+            var $status = $row.find(".getstatus").text();
+
+            $.get("/book/" + $iddata, function(data, status) {
+                if ($status.includes("onlend")) {
+                    alert('The Book Already Borrowed');
+                } else if (!bookList.includes(data.book.id)) {
+                    bookList.push(data.book.id)
+                    var tr = document.createElement('tr');
+                    var td1 = tr.appendChild(document.createElement(
+                        'td'));
+                    var td2 = tr.appendChild(document.createElement(
+                        'td'));
+                    var td3 = tr.appendChild(document.createElement(
+                        'td'));
+                    td1.innerHTML = data.book.isbn;
+                    td2.innerHTML = data.book.booktitle;
+                    td3.innerHTML =
+                        '<button type="button" class="btn btn-success" onclick="deleteRow(this);">Remove</button>';
+                    document.getElementById("tbl").appendChild(tr);
+                    $('.bookid').val("");
+                    alert('Added Successfully');
+                } else {
+                    alert('The Book Already in the list');
+                }
+            });
+        });
+
+        function deleteRow(el) {
+            if (!confirm("Are you sure you want to remove this?")) return;
+            var tbl = el.parentNode.parentNode.parentNode;
+            var row = el.parentNode.parentNode.rowIndex;
+            tbl.deleteRow(row);
+            bookList.pop(row)
+        }
     </script>
 @endsection
 @endsection
