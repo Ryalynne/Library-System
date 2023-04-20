@@ -86,10 +86,12 @@
                 </table>
                 <br>
                 <div class="text-end">
-                    <form method="POST" action="{{ route('books.updatestatus') }}" > 
-                        @csrf
-                    <button type="submit" class="btn btn-success  w-50 btn-lg borrowbtn">Borrow Books</button></a>
-                    </form>
+                    {{-- <form method="POST" action="{{ route('books.updatestatus') }}">
+                        @csrf --}}
+                    <button type="button" class="btn btn-success  w-50 btn-lg borrowbtn"
+                        data-student="{{ $student ? $student->id : '' }}" data-token="{{ csrf_token() }}">Borrow
+                        Books</button></a>
+                    {{-- </form> --}}
                 </div>
                 <br>
                 <br>
@@ -100,7 +102,6 @@
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
-
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Search Bar</h1>
@@ -173,7 +174,6 @@
                             </tbody>
                         </table>
                         <div class="pagination justify-content-center">
-
                         </div>
                     </div>
                 </div>
@@ -183,16 +183,26 @@
             </div>
         </div>
     </div>
-
     <br><br>
 @section('script')
     <script>
-
         const bookdata = [];
         const bookList = [];
 
         $(".borrowbtn").on('click', function() {
-       
+            let studentId = $(this).data('student');
+            let token = $(this).data('token');
+            const formData = new FormData();
+            formData.append('student', studentId);
+            formData.append('bookBorrowed', bookList);
+            formData.append('_token', token);
+            $.post('/book/borrow', {
+                'booklist': bookList,
+                'student': studentId,
+                '_token' : token
+            }, function(response) {
+
+            })
             console.log(bookList);
         });
         var _changeInterval = null;

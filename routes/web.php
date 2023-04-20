@@ -14,7 +14,7 @@ Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware(['auth', 'verified'])->name('/');
+});
 
 Route::get('/borrowpage',[borrowpage::class,'index'])->middleware(['auth', 'verified'])->name('borrowpage');
 
@@ -68,6 +68,7 @@ Route::middleware('auth','verified')->group(function () {
     Route::resource('books',BooklistController::class);
     Route::resource('borrow',borrowpage::class);
     
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/myPDF/{data}',[PDFController::class,'generatePDF'])->name('myPDF');
     Route::get('/bookstatus/{data}/{studentid}',[BooklistController::class,'get_status']);
@@ -78,7 +79,7 @@ Route::middleware('auth','verified')->group(function () {
   
     //Route::get('/home',[ModelsBookList::class,'totalofcopies']);
     // Route::get('/borrowpage',[ModelsBookList::class,'studentborrow']);
-    Route::post('/bookstatus/update',[borrowpage::class, 'updatestatus'])->name('books.updatestatus');
+    Route::post('/book/borrow',[borrowpage::class ,'storebookborrow']);
     Route::post('/book/update',[BooklistController::class,'updatebooks'])->name('books.update-book');
     Route::post('/copy/update',[CopiesController::class,'updatecopies'])->name('books.update-copy');
     Route::post('/copy/negativeupdate',[CopiesController::class,'updatecopiesnegative'])->name('books.updatenegative-copy');

@@ -58,14 +58,16 @@ class borrowpage extends Controller
         //
     }
 
-    public function updatestatus(Request $request)
+    public function storebookborrow(Request $request)
     {
-        // for ($i = 0; $i < count($request->booklist); $i++) {
-        //     ModelsBorrowpage::table('permission')
-        //         ->where('bookid','1')->where('studentid', '1')
-        //         ->update(['bookstatus' => 'Returned']);
-        // }
-        // return back();
-        return $this->hasMany(borrowpage::class, 'bookid')->where('studentid','1')->where('bookstatus', 'onlend')->value('bookstatus');
+        $student = $request->student;
+        foreach ($request->booklist as $bookId) {
+            ModelsBorrowpage::create([
+                'bookid' => $request->$bookId,
+                'studentid' => $request->$student,
+                'bookstatus' => 'onlend',
+                'duedate' => '2023-04-13',
+            ]);
+        }
     }
 }

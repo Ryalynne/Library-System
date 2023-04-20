@@ -7,12 +7,58 @@
 
 </head>
 <body>
+    <center><h1>QR CODE GENERATOR</h1>
     <table border="1" style="border-collapse: collapse;">
-        <tr>   @for ($i = 0; $i < $book->numberofcopies(); $i++)
-            <td> <img src="data:image/png;base64, {!! $qrcode !!}"></td>
-            {{-- <td>  {{ $book->booktitle }}</td>     --}}
+        <tr> 
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td> <img src="data:image/png;base64, {!! $qrcode !!}"></td>          
             @endfor
         </tr>  
+        <tr>
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td>  {{ $book->booktitle }}</td>
+            @endfor
+        </tr>
+        <tr> 
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td> <img src="data:image/png;base64, {!! $qrcode !!}"></td>          
+            @endfor
+        </tr>  
+        <tr>
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td>  {{ $book->booktitle }}</td>
+            @endfor
+        </tr>
+        <tr> 
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td> <img src="data:image/png;base64, {!! $qrcode !!}"></td>          
+            @endfor
+        </tr>  
+        <tr>
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td>  {{ $book->booktitle }}</td>
+            @endfor
+        </tr>
+        <tr> 
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td> <img src="data:image/png;base64, {!! $qrcode !!}"></td>          
+            @endfor
+        </tr>  
+        <tr>
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td>  {{ $book->booktitle }}</td>
+            @endfor
+        </tr>
+        <tr> 
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td> <img src="data:image/png;base64, {!! $qrcode !!}"></td>          
+            @endfor
+        </tr>  
+        <tr>
+            @for ($i = 13; $i < $book->numberofcopies(); $i++)
+            <td>  {{ $book->booktitle }}</td>
+            @endfor
+        </tr>
     </table>
 </body>
 </html>

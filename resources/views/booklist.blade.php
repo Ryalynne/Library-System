@@ -317,6 +317,30 @@
 
 @section('script')
     <script>
+        // $(document).ready(function() {
+
+        //     $(document).on('click', '.pagination a', function(event) {
+        //         event.preventDefault();
+        //         $('li').removeClass('active');
+        //         $(this).parent('li').addClass('active');
+        //         var page = $(this).attr('href').split('page=')[1];
+        //         let page = page.replace("#", "?");
+        //         getData(page);
+        //     });
+        //     function getData(page) {
+        //         $.ajax({
+        //             url: 'booklist',
+        //             type: "get",
+        //             datatype: "html"
+        //         }).done(function(data) {
+        //             $(".card-footer").empty().html(data);
+        //             location.hash = "page=" + page;
+        //         }).fail(function(jqXHR, ajaxOptions, thrownError) {
+        //             alert('No response from server');
+        //         });
+        //     }
+        // });
+
         $('.btn-qr').on('click', function() {
             var id = $(this).data('id');
 
