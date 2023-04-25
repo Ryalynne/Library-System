@@ -97,17 +97,7 @@
 
 @section('script')
     <script>
-        const someCheckbox = document.getElementById('flexCheckDefault');
-
-        someCheckbox.addEventListener('change', e => {
-            if (e.target.checked === true) {
-                console.log("Checkbox is checked - boolean value: ", e.target.checked)
-            }
-            if (e.target.checked === false) {
-                console.log("Checkbox is not checked - boolean value: ", e.target.checked)
-            }
-        })
-
+     
         $('.studid').on('keyup', function() {
             var id = $(this).val().toLowerCase();
             if (id == "") {
