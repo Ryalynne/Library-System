@@ -193,18 +193,25 @@
             let studentId = $(this).data('student');
             let token = $(this).data('token');
             const formData = new FormData();
-            formData.append('student', studentId);
-            formData.append('bookBorrowed', bookList);
+            formData.append('studentId', studentId);
+            formData.append('bookList', bookList);
             formData.append('_token', token);
-            $.post('/book/borrow', {
-                'booklist': bookList,
-                'student': studentId,
-                '_token' : token
-            }, function(response) {
 
-            })
-            console.log(bookList);
+            if (bookList.length == 0) {
+                alert('You need to add a book to the table to borrow!');
+            } else {
+                $.post('/book/borrow', {
+                    'studentId': studentId,
+                    'bookList': bookList,
+                    '_token': token
+                }, function(response) {
+                    console.log(response);
+                    alert('successfully borrowed');
+                    location.reload();
+                })
+            }
         });
+
         var _changeInterval = null;
         $(".bookid").on("keyup", function() {
 
@@ -341,10 +348,10 @@
 
         function deleteRow(el) {
             if (!confirm("Are you sure you want to remove this?")) return;
-            var tbl = el.parentNode.parentNode.parentNode;
             var row = el.parentNode.parentNode.rowIndex;
             tbl.deleteRow(row);
             bookList.pop(row)
+            // console.log(bookList);
         }
     </script>
 @endsection

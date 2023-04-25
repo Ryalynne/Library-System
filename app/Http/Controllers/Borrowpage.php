@@ -19,7 +19,7 @@ class borrowpage extends Controller
         $books = booklist::where('ishide', false)->paginate(10);
         $student = studentlist::find($request->student);
         $copies = copies::where('ishide', false)->get();
-        return view('borrowpage', compact('books', 'student'));
+        return view('borrowpage', compact('books', 'student', 'copies'));
     }
     public function create()
     {
@@ -60,14 +60,14 @@ class borrowpage extends Controller
 
     public function storebookborrow(Request $request)
     {
-        $student = $request->student;
-        foreach ($request->booklist as $bookId) {
-            ModelsBorrowpage::create([
-                'bookid' => $request->$bookId,
-                'studentid' => $request->$student,
-                'bookstatus' => 'onlend',
-                'duedate' => '2023-04-13',
-            ]);
-        }
+         $student = $request->studentId;
+         foreach ($request->bookList as $key => $value) {
+             ModelsBorrowpage::create([
+                 'bookid' =>  $value,
+                 'studentid' => $student,
+                 'bookstatus' => 'onlend',
+                 'duedate' => '2023-04-13',
+             ]);
+         }
     }
 }
