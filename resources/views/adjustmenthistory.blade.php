@@ -36,11 +36,12 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr class="bg-success text-white">
-                            <th scope="col">BOOK ID</th>
+                            <th scope="col">QR CODE</th>
                             <th scope="col">ISBN</th>
                             <th scope="col">BOOK TITLE</th>
                             <th scope="col">DATE OF ACTION</th>
                             <th scope="col">ACTION PERFORM</th>
+                            <th scope="col">NUMBER ADJUSTED</th>
                             <th scope="col">PERFORM BY</th>
                             <th scope="col">COMMENT</th>
                         </tr>
@@ -58,8 +59,9 @@
                                     {{ $adjust->book->booktitle }}
                                 </td>
                                 <td>{{ date('Y-m-d', strtotime($adjust->created_at))}}</td>                               
-                                <td>{{ $adjust->action }}</td>                    
-                                <td>{{ $adjust->performby }}</td>                     
+                                <td class="col-1">{{ $adjust->action }}</td>    
+                                <td class="col-1">{{ $adjust->number_adjust }}</td>                             
+                                <td>{{ $adjust->performby }}</td>               
                                 <td>{{ $adjust->comment }}</td>
                         </tr>
                     </tbody>
