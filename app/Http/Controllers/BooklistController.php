@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bookaction;
 use App\Models\booklist;
 use App\Models\borrowpage;
 use App\Models\copies;
 use App\Models\studentlist;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -55,6 +57,13 @@ class BooklistController extends Controller
             'action' => "added",
             'copies' => $request->copies
         ]);
+
+        bookaction::create([
+            'bookid' => $book->id,
+            'action' => "added",
+            'performby' => Auth::user()->name
+        ]);
+
         return response()->json([
             'status' => 200,
             'message' => 'Book Added Successfully.'

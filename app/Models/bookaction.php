@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class borrowpage extends Model
+class bookaction extends Model
 {
     use HasFactory;
-
-    protected $fillable =[
-        'bookid','studentid','bookstatus','duedate'
+    protected $fillable = [
+        'bookid', 'action', 'performby'
     ];
 
     public function book()
@@ -18,8 +17,4 @@ class borrowpage extends Model
         return $this->belongsTo(booklist::class, 'bookid');
     }
 
-    public function student()
-    {
-        return $this->belongsTo(studentlist::class, 'studentid');
-    }
 }

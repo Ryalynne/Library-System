@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bookadjusment;
 use App\Models\booklist;
 use App\Models\copies;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CopiesController extends Controller
 {
@@ -26,6 +28,13 @@ class CopiesController extends Controller
                 'action' => 'added',
                 'copies' =>  $request->addcopies
             ]);
+            bookadjusment::create([
+                'bookid' =>  $request->bookid,
+                'action' => 'added',
+                'performby'=> Auth::user()->name,
+                'number_adjust' => $request->addcopies,
+                'comment' => 'added successfully'
+            ]);
             return back();
         }
     }
@@ -40,6 +49,13 @@ class CopiesController extends Controller
                 'bookid' => $request->bookid,
                 'action' => 'lessen',
                 'copies' =>  $request->lesscopies
+            ]);
+            bookadjusment::create([
+                'bookid' =>  $request->bookid,
+                'action' => 'lessen',
+                'performby'=> Auth::user()->name,
+                'number_adjust' => $request->lesscopies,
+                'comment' => $request->comment
             ]);
             return back();
         }

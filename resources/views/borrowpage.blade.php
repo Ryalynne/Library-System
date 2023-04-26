@@ -86,12 +86,9 @@
                 </table>
                 <br>
                 <div class="text-end">
-                    {{-- <form method="POST" action="{{ route('books.updatestatus') }}">
-                        @csrf --}}
                     <button type="button" class="btn btn-success  w-50 btn-lg borrowbtn"
                         data-student="{{ $student ? $student->id : '' }}" data-token="{{ csrf_token() }}">Borrow
                         Books</button></a>
-                    {{-- </form> --}}
                 </div>
                 <br>
                 <br>
@@ -168,12 +165,13 @@
                                                     </svg>
                                                 </button>
                                             </td>
-                                    @endif
-                                @endforeach
-                                </tr>
+                                        </tr>
                             </tbody>
+                            @endif
+                            @endforeach
                         </table>
                         <div class="pagination justify-content-center">
+                            {{ $books->links() }}
                         </div>
                     </div>
                 </div>
@@ -196,7 +194,6 @@
             formData.append('studentId', studentId);
             formData.append('bookList', bookList);
             formData.append('_token', token);
-
             if (bookList.length == 0) {
                 alert('You need to add a book to the table to borrow!');
             } else {
@@ -247,7 +244,7 @@
                                         td1.innerHTML = data.book.isbn;
                                         td2.innerHTML = data.book.booktitle;
                                         td3.innerHTML =
-                                            '<button type="button" class="btn btn-success" onclick="deleteRow(this);">Remove</button>';
+                                            '<button type="button" class="btn btn-outline-success" onclick="deleteRow(this);">Remove</button>';
                                         document.getElementById("tbl").appendChild(tr);
                                         $('.bookid').val("");
                                         console.log('Available');
@@ -273,7 +270,7 @@
                                     td1.innerHTML = data.book.isbn;
                                     td2.innerHTML = data.book.booktitle;
                                     td3.innerHTML =
-                                        '<button type="button" class="btn btn-success" onclick="deleteRow(this);">Remove</button>';
+                                        '<button type="button" class="btn btn-outline-success" onclick="deleteRow(this);">Remove</button>';
                                     document.getElementById("tbl").appendChild(tr);
                                     $('.bookid').val("");
                                 }
@@ -336,7 +333,7 @@
                     td1.innerHTML = data.book.isbn;
                     td2.innerHTML = data.book.booktitle;
                     td3.innerHTML =
-                        '<button type="button" class="btn btn-success" onclick="deleteRow(this);">Remove</button>';
+                        '<button type="button" class="btn btn-outline-success" onclick="deleteRow(this);">Remove</button>';
                     document.getElementById("tbl").appendChild(tr);
                     $('.bookid').val("");
                     alert('Added Successfully');
@@ -348,10 +345,12 @@
 
         function deleteRow(el) {
             if (!confirm("Are you sure you want to remove this?")) return;
-            var row = el.parentNode.parentNode.rowIndex;
-            tbl.deleteRow(row);
-            bookList.pop(row)
-            // console.log(bookList);
+            // var id = $(this).data('id');
+            // data-id = "{{ $book->id }}";
+            // bookdata.pop(id);
+            // var row = el.parentNode.parentNode.rowIndex;
+            // tbl.deleteRow(row);
+            // console.log(row);
         }
     </script>
 @endsection

@@ -12,26 +12,36 @@
     </div>
     <div class="container">
         <br>
-        
-        <div class="d-flex mb-1 ">
-            <div class="me-auto p-2"> 
-        </div>
 
-        <div class="p-2"> <div class="input-group">                              
-            <input type="search" class="form-control rounded myInput" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>                
-         </div></div>
+        <div class="d-flex mb-1 ">
+            <div class="me-auto p-2">
+                <button type="button" class="btn btn-success bg-success border-success">
+                    Print Book List with Copies
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+                        <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
+                        <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="p-2">
+                <div class="input-group">
+                    <input type="search" class="form-control rounded myInput" placeholder="Search" aria-label="Search"
+                        aria-describedby="search-addon" />
+                </div>
+            </div>
         </div>
         <table class="table table-bordered myTable">
             <thead>
                 <tr class="bg-success text-white">
-                    <th scope="col"  class="text-center">BOOK ID</th>
-                    <th scope="col"  class="text-center">ISBN</th>
-                    <th scope="col"  class="text-center">BOOK TITLE</th>
-                    <th scope="col"  class="text-center">AUTHOR/S</th>
-                    <th scope="col"  class="text-center">DATE PUBLISH</th>
-                    <th scope="col"  class="text-center">PUBLISHER</th>
-                    <th scope="col"  class="text-center">GENRE</th>
-                    <th scope="col"  class="text-center">COPIES</th>
+                    <th scope="col" class="text-center">BOOK ID</th>
+                    <th scope="col" class="text-center">ISBN</th>
+                    <th scope="col" class="text-center">BOOK TITLE</th>
+                    <th scope="col" class="text-center">AUTHOR/S</th>
+                    <th scope="col" class="text-center">DATE PUBLISH</th>
+                    <th scope="col" class="text-center">PUBLISHER</th>
+                    <th scope="col" class="text-center">GENRE</th>
+                    <th scope="col" class="text-center">COPIES</th>
                     <th scope="col" class="text-center">ACTIONS PERFORM</th>
                 </tr>
             </thead>
@@ -60,9 +70,9 @@
                             {{ $book->genre }}
                         </td>
                         <td class="px-6 py-3">
-                            {{$book->numberofcopies()}}
+                            {{ $book->numberofcopies() }}
                         </td>
-                        <td class="text-center col-2">              
+                        <td class="text-center col-2">
                             {{-- button --}}
                             <button type="button" class="btn btn-success edit-button" data-id={{ $book->id }}
                                 data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -74,162 +84,170 @@
                                 </svg>
                             </button>
 
-                            <button type="button" class="btn btn-danger edit-button" data-bs-toggle="modal" data-id={{ $book->id }}
-                                data-bs-target="#back"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                  </svg></button>  
-                                </td>
-                            {{-- modal --}}          
-                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">AJUST COPIES</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        {{-- MODAL BODY --}}                      
-                                        <div class="modal-body ">
-                                            <form method="POST" action="{{ route('books.update-copy') }}">
-                                                
-                                                <fieldset>
-                                                    <div class="mb-3">                   
-                                                        <label for="disabledTextInput" class="form-label">BOOK ID</label>
-                                                        <input type="text" id="disabledTextInput"
-                                                            class="form-control modal-book-id" placeholder="Disabled input" readonly>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="disabledTextInput" class="form-label">BOOK TITLE</label>
-                                                        <input type="text" id="disabledTextInput"
-                                                            class="form-control modal-book-title"
-                                                            placeholder="Disabled input" readonly>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="disabledTextInput" class="form-label">AUTHOR/S</label>
-                                                        <input type="text" id="disabledTextInput" class="form-control modal-book-author"
-                                                            placeholder="Disabled input" readonly>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="disabledTextInput" class="form-label">DATE
-                                                            PUBLISH</label>
-                                                        <input type="text" id="disabledTextInput" class="form-control modal-book-datepublish"
-                                                            placeholder="Disabled input" readonly>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="disabledTextInput" class="form-label">PUBLISHER</label>
-                                                        <input type="text" id="disabledTextInput" class="form-control modal-book-publisher"
-                                                            placeholder="Disabled input" readonly>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">AVAILABLE
-                                                            COPIES</label>
-                                                        <input type="text" id="" class="form-control modal-copy-copies"
-                                                            placeholder="" readonly>
-                                                    </div>
-                                                </fieldset>
-                                                <div class="mb-3">
-                                                    <label for="addcopies" class="form-label">ADD NEW COPIES</label>
-                                                    <input type="hidden" name="bookid" class="modal-book-id">
-                                                    <input input type="text" class="form-control" id="addcopies" name="addcopies" :value="old('addcopies')"
-                                                        placeholder="ex.10">
-                                                </div>
-                                                @if (session('Error'))              
-                                                <div class="alert alert-danger">
-                                                    {{ session('Error') }}                             
-                                                </div>                                    
-                                                @endif
-                                        </div>
-                                   
-                                        <div class="modal-footer">           
-                                            @csrf
-                                            <button type="button" class="btn btn-danger"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success">Add copies</button>
-                                        </div>
-                                    </form>
+                            <button type="button" class="btn btn-danger edit-button" data-bs-toggle="modal"
+                                data-id={{ $book->id }} data-bs-target="#back"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" fill="currentColor" class="bi bi-dash-circle"
+                                    viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                </svg></button>
+                        </td>
+                        {{-- modal --}}
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">AJUST COPIES</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                     </div>
-                                </div> 
-                            </div>
-                            
+                                    {{-- MODAL BODY --}}
+                                    <div class="modal-body ">
+                                        <form method="POST" action="{{ route('books.update-copy') }}">
 
-                            {{-- button --}}
-                     
-
-                               {{-- modal --}}          
-                               <div class="modal fade" id="back" data-bs-backdrop="static" data-bs-keyboard="false"
-                               tabindex="-1" aria-labelledby="backrop" aria-hidden="true">
-                               <div class="modal-dialog modal-dialog-centered">
-                                   <div class="modal-content">
-                                       <div class="modal-header">
-                                           <h1 class="modal-title fs-5" id="back">ADJUST COPIES</h1>
-                                           <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                               aria-label="Close"></button>
-                                       </div>
-                                       {{-- MODAL BODY --}}                      
-                                       <div class="modal-body ">
-                                           <form method="POST" action="{{ route('books.updatenegative-copy') }}">                      
-                                               <fieldset>
-                                                   <div class="mb-3">                   
-                                                       <label  class="form-label">BOOK ID</label>
-                                                       <input type="text" id="disabledTextInput"
-                                                           class="form-control modal-book-id" readonly>
-                                                   </div>
-                                                   <div class="mb-3">
-                                                       <label  class="form-label">BOOK TITLE</label>
-                                                       <input type="text" id="disabledTextInput"
-                                                           class="form-control modal-book-title"
-                                                            readonly>
-                                                   </div>
-                                                   <div class="mb-3">
-                                                       <label  class="form-label">AUTHOR/S</label>
-                                                       <input type="text" id="disabledTextInput" class="form-control modal-book-author"
-                                                            readonly>
-                                                   </div>                
-                                                   <div class="mb-3">
-                                                       <label  class="form-label">YEAR OF
-                                                           PUBLISH</label>
-                                                       <input type="text" id="disabledTextInput" class="form-control modal-book-datepublish"
-                                                            readonly>
-                                                   </div>  
-                                                   <div class="mb-3">
+                                            <fieldset>
+                                                <div class="mb-3">
+                                                    <label for="disabledTextInput" class="form-label">BOOK ID</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-id" placeholder="Disabled input"
+                                                        readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="disabledTextInput" class="form-label">BOOK TITLE</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-title" placeholder="Disabled input"
+                                                        readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="disabledTextInput" class="form-label">AUTHOR/S</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-author"
+                                                        placeholder="Disabled input" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="disabledTextInput" class="form-label">DATE
+                                                        PUBLISH</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-datepublish"
+                                                        placeholder="Disabled input" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="disabledTextInput" class="form-label">PUBLISHER</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-publisher"
+                                                        placeholder="Disabled input" readonly>
+                                                </div>
+                                                <div class="mb-3">
                                                     <label for="" class="form-label">AVAILABLE
                                                         COPIES</label>
-                                                    <input type="text" id="availcopies" class="form-control modal-copy-copies" name="availcopies" :value="old('availcopies')"
-                                                        placeholder="" readonly>
-                                                </div>                                    
-                                               <div class="mb-3">
-                                                <label for="lesscopies" class="form-label">LESS COPIES</label>
-                                                <input type="hidden" name="bookid" class="modal-book-id">
-                                                <input input type="text" class="form-control" id="lesscopies" name="lesscopies" :value="old('lesscopies')"
-                                                    placeholder="ex.10">
-                                               </div>
-                                               @if (session('Error'))              
-                                               <div class="alert alert-danger">
-                                                   {{ session('Error') }}                             
-                                               </div>                                    
-                                               @endif
-                                               <div class="mb-3">
-                                                <label for="exampleFormControlTextarea1" class="form-label">REASON</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                              </div>
+                                                    <input type="text" id=""
+                                                        class="form-control modal-copy-copies" placeholder="" readonly>
+                                                </div>
                                             </fieldset>
-                                       </div>
+                                            <div class="mb-3">
+                                                <label for="addcopies" class="form-label">ADD NEW COPIES</label>
+                                                <input type="hidden" name="bookid" class="modal-book-id">
+                                                <input input type="text" class="form-control" id="addcopies"
+                                                    name="addcopies" :value="old('addcopies')" placeholder="ex.10">
+                                            </div>
+                                            @if (session('Error'))
+                                                <div class="alert alert-danger">
+                                                    {{ session('Error') }}
+                                                </div>
+                                            @endif
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        @csrf
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success">Add copies</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {{-- button --}}
+
+
+                        {{-- modal --}}
+                        <div class="modal fade" id="back" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="backrop" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="back">ADJUST COPIES</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    {{-- MODAL BODY --}}
+                                    <div class="modal-body ">
+                                        <form method="POST" action="{{ route('books.updatenegative-copy') }}">
+                                            <fieldset>
+                                                <div class="mb-3">
+                                                    <label class="form-label">BOOK ID</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-id" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">BOOK TITLE</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-title" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">AUTHOR/S</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-author" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">YEAR OF
+                                                        PUBLISH</label>
+                                                    <input type="text" id="disabledTextInput"
+                                                        class="form-control modal-book-datepublish" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="" class="form-label">AVAILABLE
+                                                        COPIES</label>
+                                                    <input type="text" id="availcopies"
+                                                        class="form-control modal-copy-copies" name="availcopies"
+                                                        :value="old('availcopies')" placeholder="" readonly>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="lesscopies" class="form-label">LESS COPIES</label>
+                                                    <input type="hidden" name="bookid" class="modal-book-id">
+                                                    <input input type="text" class="form-control" id="lesscopies"
+                                                        name="lesscopies" :value="old('lesscopies')" placeholder="ex.10">
+                                                </div>
+                                                @if (session('Error'))
+                                                    <div class="alert alert-danger">
+                                                        {{ session('Error') }}
+                                                    </div>
+                                                @endif
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlTextarea1"
+                                                        class="form-label">REASON</label>
+                                                    <textarea class="form-control" id="comment" rows="3"
+                                                    name="comment" :value="old('comment')"></textarea>
+                                                </div>
+                                            </fieldset>
+                                    </div>
                                     {{-- footermodal --}}
-                                       <div class="modal-footer">           
-                                           @csrf
-                                           <button type="button" class="btn btn-danger"
-                                               data-bs-dismiss="modal">Close</button>
-                                           <button type="submit" class="btn btn-success">Less copies</button>
-                                       </div>
-                                   </form>
-                                   {{-- end of form --}}
-                                   </div>
-                               </div> 
-                           </div> 
-                           {{-- end of div --}}
-                       
+                                    <div class="modal-footer">
+                                        @csrf
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success">Less copies</button>
+                                    </div>
+                                    </form>
+                                    {{-- end of form --}}
+                                </div>
+                            </div>
+                        </div>
+                        {{-- end of div --}}
+
                     </tr>
                 @endforeach
             </tbody>
@@ -237,14 +255,12 @@
             </tfoot>
 
         </table>
-        
-        <div class="d-flex justify-content-center">
-            {{ $books->links() }}
-          </div>
-        <br>
-        <br>
-        
-    </div>
-  
 
+        <div class="d-flex justify-content-center">
+            {{ $books->links()}}
+        </div>
+        <br>
+        <br>
+
+    </div>
 @endsection

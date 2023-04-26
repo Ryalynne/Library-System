@@ -63,12 +63,12 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item dropdown-active-success" href="bookhistory">Books Action
                                         History</a>
-                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Adjustment
+                                    <a class="dropdown-item dropdown-active-success" href="adjustmenthistory">Adjustment
                                         History</a>
-                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Onlend History</a>
-                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Returned History</a>
+                                    <a class="dropdown-item dropdown-active-success" href="onlendhistory">Onlend History</a>
+                                    <a class="dropdown-item dropdown-active-success" href="returnhistory">Returned History</a>
                                     <hr>
-                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Books Archived</a>
+                                    <a class="dropdown-item dropdown-active-success" href="archivedhistory">Books Archived</a>
                                 </div>
                             </li>
                             <li class="nav-item active">
@@ -188,5 +188,13 @@
 </script>
 
 @yield('script')
+
+
+<style>
+    .myInput:focus {
+       border-color: 0 0 0 0.2rem rgba(5, 158, 0, 0.25);
+       box-shadow: 0 0 0 0.2rem rgba(5, 158, 0, 0.25);
+     } 
+</style>
 
 </html>

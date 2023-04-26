@@ -7,32 +7,41 @@ use App\Models\borrowpage;
 use App\Models\studentlist;
 use Illuminate\Http\Request;
 
-class Returnpage extends Controller
+class returnhistory extends Controller
 {
-    public function index(Request $request)
-    {
+    /**
+     * Show the form for creating the resource.
+     */
+    public function index(){
         $books = booklist::where('ishide', false)->paginate(10);
-        $student = studentlist::find($request->student);
-        $borrowbook = borrowpage::where('ishide', false)->where('bookstatus', 'onlend')->where('studentid', $request->student)->paginate(10);
-        return view('returnpage', compact('books', 'student', 'borrowbook'));
+        $return = borrowpage::where('ishide', false)->where('bookstatus', 'returned')->paginate(10);
+        $student = studentlist::where('ishide', false)->paginate(10);
+        return view('returnhistory', compact('books','return','student'));
     }
-
     public function create(): never
     {
+        abort(404);
     }
 
-
+    /**
+     * Store the newly created resource in storage.
+     */
     public function store(Request $request): never
     {
+        abort(404);
     }
 
-
+    /**
+     * Display the resource.
+     */
     public function show()
     {
         //
     }
 
-
+    /**
+     * Show the form for editing the resource.
+     */
     public function edit()
     {
         //
@@ -43,13 +52,7 @@ class Returnpage extends Controller
      */
     public function update(Request $request)
     {
-        $student = $request->studentId;
-        foreach ($request->bookdata as $key => $value) {
-            $bookid = borrowpage::where('bookid', $value)->where('studentid', $student);
-            $bookid->update([
-                'bookstatus' => 'returned',
-            ]);
-        }
+        //
     }
 
     /**
@@ -57,5 +60,6 @@ class Returnpage extends Controller
      */
     public function destroy(): never
     {
+        abort(404);
     }
 }

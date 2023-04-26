@@ -59,34 +59,50 @@
                         <tr>
                             <th>ISBN</th>
                             <th>BOOK TITLE</th>
+                            <th>BORROW DATE</th>
+                            <th>DUE DATE</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($borrowbook as $book)
-                            @foreach ($books as $item)
-                                @if ($book->bookid == $item->id)
-                                    <td> {{ $item->isbn }}</td>
-                                @endif
-                                @if ($book->bookid == $item->id)
-                                    <td>
-                                        {{ $item->booktitle }}
-                                    </td>
-                                @endif
-                            @endforeach
-                            <td>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" value="check" id="flexCheckDefault"
-                                        checked>
-                                    <label for="flexCheckDefault" class="form-check-label">Return</label>
-                                </div>
-                            </td>
+                        <tr class="row-select">
+                            @foreach ($borrowbook as $book)
+                                @foreach ($books as $item)
+                                    @if ($book->bookid == $item->id)
+                                        <td> {{ $item->isbn }}</td>
+                                    @endif
+                                    @if ($book->bookid == $item->id)
+                                        <td>
+                                            {{ $item->booktitle }}
+                                        </td>
+                                    @endif
+                                    @if ($book->bookid == $item->id)
+                                        <td>
+                                            {{ date('Y-m-d', strtotime($book->created_at)) }}
+                                        </td>
+                                    @endif
+                                    @if ($book->bookid == $item->id)
+                                        <td>
+                                            {{ $book->duedate }}
+                                        </td>
+                                    @endif
+                                @endforeach
+                                <td>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input getbook"
+                                            id="checkbox-{{ $book->bookid }}" data-id="{{ $book->bookid }}">
+                                        <label for="flexCheckDefault" class="form-check-label">Return</label>
+                                    </div>
+                                </td>
+                        </tr>
                     </tbody>
                     @endforeach
                 </table>
                 <br>
                 <div class="text-end">
-                    <button type="button" class="btn btn-success  w-50 btn-lg">Return Books</button></a>
+                    <button type="button" class="btn btn-success  w-50 btn-lg returnbook"
+                        data-student="{{ $student ? $student->id : '' }}" data-token="{{ csrf_token() }}">Return
+                        Books</button></a>
                 </div>
                 <br>
                 <br>
@@ -97,7 +113,50 @@
 
 @section('script')
     <script>
-     
+        const bookdata = [];
+
+        $(".returnbook").on('click', function() {
+            let token = $(this).data('token');
+            let studentId = $(this).data('student');
+            const formData = new FormData();
+            formData.append('bookdata', bookdata);
+            formData.append('_token', token);
+            formData.append('studentId', studentId);
+            if (bookdata.length == 0) {
+                alert('You need to add a book to the table to borrow!');
+            } else {
+                $.post('/return/book', {
+                    'studentId': studentId,
+                    'bookdata': bookdata,
+                    '_token': token
+                }, function(response) {
+                    console.log(response);
+                    alert('successfully Return');
+                    location.reload();
+                })
+            }
+
+        });
+
+
+        $('.getbook').on('click', function() {
+
+            var id = $(this).data('id');
+            let check = $('#checkbox-' + id).is(':checked');
+
+            if (check) {
+                bookdata.push(id)
+
+            } else {
+                if (bookdata.includes(id)) {
+                    bookdata.pop(id);
+                }
+            }
+            console.log(bookdata);
+
+        });
+
+
         $('.studid').on('keyup', function() {
             var id = $(this).val().toLowerCase();
             if (id == "") {

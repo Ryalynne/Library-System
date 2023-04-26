@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\booklist;
+use App\Models\borrowpage;
 use App\Models\copies;
 use Illuminate\Http\Request;
 
@@ -18,6 +20,9 @@ class HomeController extends Controller
         $totalless = copies::where('action', 'lessen')->get();
         $totaldata2 = $totalless->sum('copies');
         $totaldata  =  $totaldata1-$totaldata2;
-        return view('home', compact('totaldata'));
+        $totaloflend = borrowpage::where('bookstatus','onlend')->count();
+        $totalofbooklist = booklist::where('ishide', false)->count();
+        $totalofreturn = borrowpage::where('bookstatus','returned')->count();
+        return view('home', compact('totaldata','totaloflend','totalofbooklist','totalofreturn'));
     }
 }

@@ -35,7 +35,7 @@
                 <br>
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="bg-success text-white">
                             <th scope="col">Book Title</th>
                             <th scope="col">Name of Borrower</th>
                             <th scope="col">Date Borrowed</th>
@@ -45,22 +45,18 @@
                     <tbody>
                         <tr>
                             @foreach ($borrow as $item)
-                                @foreach ($books as $booklist)
-                                    @if ($booklist->id == $item->bookid)
-                                        <td>{{ $booklist->booktitle }}</td>
-                                    @endif
-                                @endforeach
-                                @foreach ($student as $studname)
-                                    @if ($item->studentid == $studname->id)
-                                        <td>{{ $studname->name }} {{ $studname->middle }} {{ $studname->lastname }}</td>
-                                    @endif
-                                @endforeach
-                                <td>{{ $item->created_at }}</td>
+                                <td>{{ $item->book->booktitle }}</td>
+                                <td>{{ $item->student->name }} {{ $item->student->middle }} {{ $item->student->lastname }}
+                                </td>
+                                <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>{{ $item->duedate }}</td>
                         </tr>
                     </tbody>
                     @endforeach
                 </table>
+                <div class="pagination justify-content-center">
+                    {!! $borrow->links() !!}
+                </div>
             </div>
             <div class="col">
                 <div class="card">
@@ -71,7 +67,7 @@
                 <br>
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="bg-success text-white">
                             <th scope="col">Book Title</th>
                             <th scope="col">Name of Borrower</th>
                             <th scope="col">Date Borrowed</th>
@@ -83,24 +79,21 @@
                     <tbody>
                         <tr>
                             @foreach ($return as $item)
-                                @foreach ($books as $booklist)
-                                    @if ($booklist->id == $item->bookid)
-                                        <td>{{ $booklist->booktitle }}</td>
-                                    @endif
-                                @endforeach
-                                @foreach ($student as $studname)
-                                    @if ($item->studentid == $studname->id)
-                                        <td>{{ $studname->name }} {{ $studname->middle }} {{ $studname->lastname }}</td>
-                                    @endif
-                                @endforeach
-                                <td>{{ $item->created_at }}</td>
+                                <td>{{ $item->book->booktitle }}</td>
+                                <td>{{ $item->student->name }} {{ $item->student->middle }} {{ $item->student->lastname }}
+                                </td>
+                                <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>{{ $item->duedate }}</td>
+                                <td>{{ date('Y-m-d', strtotime($item->updated_at)) }}</td>
                         </tr>
                     </tbody>
                     @endforeach
                 </table>
+                <div class="pagination justify-content-center">
+                    {!! $return->links() !!}
+                </div>
             </div>
         </div>
-
+        <br><br>
     </div>
 @endsection
