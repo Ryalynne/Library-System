@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered myTable">
                         <thead>
                             <tr class="bg-success text-white">
                                 <th scope="col">BOOK ID</th>
@@ -46,12 +46,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                @foreach ($action as $item)    
-                                    <td>{{ $item->book->id }}</td>    
-                                    <td>{{ $item->book->isbn }}</td>                           
-                                    <td>{{ $item->book->booktitle}}</td>                                                                                                                                                                                                
-                                    <td>{{ date('Y-m-d', strtotime($item->created_at))}}</td>
+                            <tr class="tr">
+                                @foreach ($action as $item)
+                                    <td>{{ $item->book->id }}</td>
+                                    <td>{{ $item->book->isbn }}</td>
+                                    <td>{{ $item->book->booktitle }}</td>
+                                    <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                     <td>{{ $item->action }}</td>
                                     <td>{{ $item->performby }}</td>
                             </tr>
@@ -64,4 +64,4 @@
                 </div>
             </div>
         </div>
-    @endsection
+@endsection

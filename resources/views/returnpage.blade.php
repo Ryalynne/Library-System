@@ -140,17 +140,15 @@
 
 
         $('.getbook').on('click', function() {
-
             var id = $(this).data('id');
             let check = $('#checkbox-' + id).is(':checked');
 
             if (check) {
                 bookdata.push(id)
-
+7
             } else {
-                if (bookdata.includes(id)) {
-                    bookdata.pop(id);
-                }
+                let index = bookdata.indexOf(id);
+                bookdata.splice(index, 1);
             }
             console.log(bookdata);
 

@@ -70,6 +70,9 @@ Route::middleware('auth','verified')->group(function () {
     Route::get('/copy/{id}',[CopiesController::class,'get_copies']);
     Route::get('/student/{data}',[StudentlistController::class,'get_student']);
     Route::get('/generate-pdf/{data}', [PDFController::class, 'generatePDF']);
+    Route::get('/generate-table', [PDFController::class, 'generateReports']);
+    Route::get('/generate-tblcopies', [PDFController::class, 'generateCopies']);
+    Route::get('/generate-tblborrow/{id}', [PDFController::class, 'generateBorrow']);
 
     Route::post('/return/book',[Returnpage::class, 'update']);
     Route::post('/book/borrow',[borrowpage::class ,'storebookborrow']);

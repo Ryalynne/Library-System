@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered">
+                <table class="table table-bordered myTable">
                     <thead>
                         <tr class="bg-success text-white">
                             <th scope="col">QR CODE</th>
@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="tr">
                             @foreach ($adjustment as $adjust)
                                 <td>
                                     {{ $adjust->bookid }}

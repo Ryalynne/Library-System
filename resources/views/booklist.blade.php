@@ -21,7 +21,8 @@
                         data-bs-target="#modal_addbook">
                         Register Books
                     </button>
-                    <button type="button" class="btn btn-success bg-success border-success">
+                    <button type="button" class="btn btn-success bg-success border-success print-tbl " data-bs-toggle="modal"
+                    data-bs-target="#tablemodal">
                         Print Book List
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-printer-fill" viewBox="0 0 16 16">
@@ -39,8 +40,6 @@
                     </div>
                 </div>
             </div>
-            {{-- method="POST" action="{{ route('books.store') }} --}}
-            <!-- Modal -->
             <form>
                 @csrf
                 <div class="modal fade AddStudentModal" id="modal_addbook" tabindex="-1"
@@ -54,7 +53,7 @@
                             </div>
                             <div class="modal-body">
 
-                                {{-- textfield --}}
+
                                 <div class="mb-3">
                                     <label for="isbn" class="form-label">ISBN</label>
                                     <input type="text" class="form-control t-isbn" id="isbn" name="isbn"
@@ -299,14 +298,29 @@
 
     <div class="modal fade" id="qrcodemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="p1"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <embed id="qrcode-frame" src="" frameborder="0" width="100%" height="400px">
+                    <embed id="qrcode-frame" src="" frameborder="0" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">PRINT BOOK LIST</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <embed id="table-frame" src="" frameborder="0" width="100%" height="100%">
                 </div>
             </div>
         </div>
@@ -338,6 +352,17 @@
             frame.attr('src', link)
 
         });
+
+        $('.print-tbl').on('click', function() {
+
+            const frame = $('#table-frame')
+            const link = '/generate-table/'
+            frame.attr('src', link)
+            console.log('button clicked');
+            
+        });
+
+
 
         $(document).on('click', '.btn-tr-submit', function(e) {
             e.preventDefault();

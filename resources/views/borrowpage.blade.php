@@ -87,7 +87,8 @@
                 <br>
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg borrowbtn"
-                        data-student="{{ $student ? $student->id : '' }}" data-token="{{ csrf_token() }}">Borrow
+                        data-student="{{ $student ? $student->id : '' }}" data-token="{{ csrf_token() }}"
+                        data-bs-toggle="modal" data-bs-target="#tablemodal">Borrow
                         Books</button></a>
                 </div>
                 <br>
@@ -182,9 +183,25 @@
         </div>
     </div>
     <br><br>
+
+    <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">PRINT BORRROW</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <embed id="table-frame" src="" frameborder="0" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @section('script')
     <script>
-        const bookdata = [];
         const bookList = [];
 
         $(".borrowbtn").on('click', function() {
@@ -203,9 +220,12 @@
                     '_token': token
                 }, function(response) {
                     console.log(response);
-                    alert('successfully borrowed');
-                    location.reload();
+                    alert('successfully borrowed');       
                 })
+                const frame = $('#table-frame')
+                const link = '/generate-tblborrow/' + JSON.stringify(bookList)
+                frame.attr('src', link)
+                // location.reload();
             }
         });
 
@@ -229,8 +249,7 @@
                             $.get("/book/" + id, function(data, status) {
                                 if (!bookList.includes(data.book.id)) {
                                     bookList.push(data.book.id)
-                                    bookdata.push(data.book.id)
-                                    console.log(bookdata)
+
                                     if (data.book.id == null) {
                                         $('.bookid').val("");
                                     } else {
@@ -244,7 +263,10 @@
                                         td1.innerHTML = data.book.isbn;
                                         td2.innerHTML = data.book.booktitle;
                                         td3.innerHTML =
-                                            '<button type="button" class="btn btn-outline-success" onclick="deleteRow(this);">Remove</button>';
+                                            '<button type="button" class="btn btn-outline-success" data-id = "' +
+                                            data.book.id +
+                                            '" onclick="deleteRow(this, ' + data.book.id +
+                                            ');">Remove</button>';
                                         document.getElementById("tbl").appendChild(tr);
                                         $('.bookid').val("");
                                         console.log('Available');
@@ -259,7 +281,7 @@
                         $.get("/book/" + id, function(data, status) {
                             if (!bookList.includes(data.book.id)) {
                                 bookList.push(data.book.id)
-                                bookdata.push(data.book.id)
+
                                 if (data.book.id == null) {
                                     $('.bookid').val("");
                                 } else {
@@ -270,7 +292,10 @@
                                     td1.innerHTML = data.book.isbn;
                                     td2.innerHTML = data.book.booktitle;
                                     td3.innerHTML =
-                                        '<button type="button" class="btn btn-outline-success" onclick="deleteRow(this);">Remove</button>';
+                                        '<button type="button" class="btn btn-outline-success" data-id = "' +
+                                        data.book.id +
+                                        '" onclick="deleteRow(this, ' + data.book.id +
+                                        ');">Remove</button>';
                                     document.getElementById("tbl").appendChild(tr);
                                     $('.bookid').val("");
                                 }
@@ -333,7 +358,8 @@
                     td1.innerHTML = data.book.isbn;
                     td2.innerHTML = data.book.booktitle;
                     td3.innerHTML =
-                        '<button type="button" class="btn btn-outline-success" onclick="deleteRow(this);">Remove</button>';
+                        '<button type="button" class="btn btn-outline-success" data-id= "' + data.book.id +
+                        '" onclick="deleteRow(this, ' + data.book.id + ');">Remove</button>';
                     document.getElementById("tbl").appendChild(tr);
                     $('.bookid').val("");
                     alert('Added Successfully');
@@ -343,14 +369,20 @@
             });
         });
 
-        function deleteRow(el) {
+
+        function deleteRow(el, id) {
             if (!confirm("Are you sure you want to remove this?")) return;
-            // var id = $(this).data('id');
-            // data-id = "{{ $book->id }}";
-            // bookdata.pop(id);
-            // var row = el.parentNode.parentNode.rowIndex;
-            // tbl.deleteRow(row);
-            // console.log(row);
+            var bookID = $(el).data('id')
+            var row = el.parentNode.parentNode.rowIndex;
+            var tbl = el.parentNode.parentNode.parentNode;
+            let index = bookList.indexOf(bookID);
+            bookList.splice(index, 1);
+            tbl.deleteRow(row);
+
+
+            console.log(id);
+            console.log(bookList);
+
         }
     </script>
 @endsection

@@ -19,6 +19,30 @@ class PDFController extends Controller
         $pdf = PDF::loadView('myPDF', compact('qrcode', 'book'));
         return $pdf->stream();
         //$pdf = PDF::loadView('myPDF');
-        // return $pdf->download('itsolutionstuff.pdf');
+        //return $pdf->download('itsolutionstuff.pdf');
+    }
+
+    public function generateReports()
+    {
+        $books = booklist::where('ishide', false)->get();
+        $pdf = PDF::loadView('myPDFtbl', compact('books'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+    public function generateCopies()
+    {
+        $books = booklist::where('ishide', false)->get();
+        $pdf = PDF::loadView('myPDFtblcopies', compact('books'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+    public function generateBorrow($bookData)
+    {
+        $bookList = [];
+        foreach (json_decode($bookData) as $book) {
+          $bookList[] = booklist::find($book);
+        }
+         $pdf = PDF::loadView('myPDFborrow', compact('bookList'));
+         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 }

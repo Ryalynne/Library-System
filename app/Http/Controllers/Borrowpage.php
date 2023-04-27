@@ -70,4 +70,5 @@ class borrowpage extends Controller
              ]);
          }
     }
+
 }

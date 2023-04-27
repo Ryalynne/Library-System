@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered">
+                <table class="table table-bordered myTable">
                     <thead>
                         <tr class="bg-success text-white">
                             <th scope="col">Qr Code</th>
@@ -43,7 +43,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="tr">
                             @foreach ($return as $item)
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->book->booktitle }}</td>
