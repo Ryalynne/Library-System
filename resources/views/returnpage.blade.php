@@ -67,26 +67,17 @@
                     <tbody>
                         <tr class="row-select">
                             @foreach ($borrowbook as $book)
-                                @foreach ($books as $item)
-                                    @if ($book->bookid == $item->id)
-                                        <td> {{ $item->isbn }}</td>
-                                    @endif
-                                    @if ($book->bookid == $item->id)
-                                        <td>
-                                            {{ $item->booktitle }}
-                                        </td>
-                                    @endif
-                                    @if ($book->bookid == $item->id)
-                                        <td>
-                                            {{ date('Y-m-d', strtotime($book->created_at)) }}
-                                        </td>
-                                    @endif
-                                    @if ($book->bookid == $item->id)
-                                        <td>
-                                            {{ $book->duedate }}
-                                        </td>
-                                    @endif
-                                @endforeach
+                                <td> {{ $book->book->isbn }}</td>
+                                <td>
+                                    {{ $book->book->booktitle }}
+                                </td>
+                                <td>
+                                    {{ date('Y-m-d', strtotime($book->created_at)) }}
+                                </td>
+                                <td>
+                                    {{ $book->duedate }}
+                                </td>
+
                                 <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input getbook"
@@ -100,8 +91,9 @@
                 </table>
                 <br>
                 <div class="text-end">
-                    <button type="button" class="btn btn-success  w-50 btn-lg returnbook"
-                        data-student="{{ $student ? $student->id : '' }}" data-token="{{ csrf_token() }}">Return
+                    <button type="button" class="btn btn-success  w-50 btn-lg returnbook" data-bs-toggle="modal"
+                        data-bs-target="#tablemodal" data-student="{{ $student ? $student->id : '' }}"
+                        data-token="{{ csrf_token() }}">Return
                         Books</button></a>
                 </div>
                 <br>
@@ -110,6 +102,21 @@
         </div>
     </div>
     <br><br>
+
+    <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">PRINT RETURN</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <embed id="table-frame" src="" frameborder="0" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
+    </div>
 
 @section('script')
     <script>
@@ -125,17 +132,23 @@
             if (bookdata.length == 0) {
                 alert('You need to add a book to the table to borrow!');
             } else {
-                $.post('/return/book', {
-                    'studentId': studentId,
-                    'bookdata': bookdata,
-                    '_token': token
-                }, function(response) {
-                    console.log(response);
-                    alert('successfully Return');
-                    location.reload();
-                })
-            }
+                 $.post('/return/book', {
+                     'studentId': studentId,
+                     'bookdata': bookdata,
+                     '_token': token
+                 }, function(response) {
+                     console.log(response);            
+                 })
+                const frame = $('#table-frame')
+                const link = '/generate-tblreturn/' + JSON.stringify(bookdata)
+                frame.attr('src', link)
+                bookdata.splice(0, bookdata.length);
 
+                $('input:checked').parents("tr").remove();
+                alert('successfully borrowed');
+                console.log(bookdata);
+
+            }
         });
 
 
@@ -145,7 +158,6 @@
 
             if (check) {
                 bookdata.push(id)
-7
             } else {
                 let index = bookdata.indexOf(id);
                 bookdata.splice(index, 1);

@@ -7,7 +7,8 @@
     <br>
 </head>
 <center>
-    <h1>BMA LIBRARY BOOK LIST AND COPIES</h1>
+    <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
+   <h3>BMA LIBRARY BOOK LIST WITH COPIES</h3>
 </center>
 <table class="table table-bordered myTable">
     <thead>
@@ -79,7 +80,11 @@
 
     th {
         border: 1px solid #727272;
-        background-color: #1f9d60;
+        background-color: #20462c;
         color: white;
     }
+    h3{
+        color: #20462c;
+    }
+</styl
 </style>

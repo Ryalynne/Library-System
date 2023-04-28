@@ -82,6 +82,7 @@
                         </tr>
                     </thead>
                     <tbody>
+
                     </tbody>
                 </table>
                 <br>
@@ -108,24 +109,34 @@
 
                 <div class="modal-body">
                     <div class="container">
-                        <table class="table table-bordered">
+                        <div class="d-flex mb-1">
+                            <div class="me-auto p-2">
+                            </div>
+                            <div class="p-2">
+                                <div class="input-group">
+                                    <input type="search" class="form-control rounded myInput" placeholder="Search"
+                                        aria-label="Search" aria-describedby="search-addon" />
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered myTable" id="data">
                             <thead class="bg-success text-white">
                                 <tr>
-                                    <th>BOOK QR</th>
-                                    <th>ISBN</th>
-                                    <th>BOOK TITLE</th>
-                                    <th>AUTHOR/S</th>
-                                    <th>DATE PUBLISH</th>
-                                    <th>PUBLISHER</th>
-                                    <th>GENRE</th>
-                                    <th>STATUS</th>
-                                    <th>ACTION</th>
+                                    <th class="text-center">BOOK QR</th>
+                                    <th class="text-center">ISBN</th>
+                                    <th class="text-center">BOOK TITLE</th>
+                                    <th class="text-center">AUTHOR/S</th>
+                                    <th class="text-center">DATE PUBLISH</th>
+                                    <th class="text-center">PUBLISHER</th>
+                                    <th class="text-center">GENRE</th>
+                                    <th class="text-center">STATUS</th>
+                                    <th class="text-center">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($books as $book)
                                     @if ($book->numberofcopies() > 0)
-                                        <tr class="trtr">
+                                        <tr class="trtr tr">
                                             <th scope="row" class="getid">
                                                 {{ $book->id }}
                                             </th>
@@ -158,7 +169,8 @@
                                             <td>
                                                 <button type="button" class="btn btn-success btn-sm btn-circle getdata">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                                        fill="currentColor" class="bi bi-plus-circle"
+                                                        viewBox="0 0 16 16">
                                                         <path
                                                             d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                                                         <path
@@ -172,7 +184,7 @@
                             @endforeach
                         </table>
                         <div class="pagination justify-content-center">
-                            {{ $books->links() }}
+                            {{-- {{ $books->links() }} --}}
                         </div>
                     </div>
                 </div>
@@ -184,7 +196,7 @@
     </div>
     <br><br>
 
-    <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
             <div class="modal-content">
@@ -199,7 +211,6 @@
         </div>
     </div>
 
-
 @section('script')
     <script>
         const bookList = [];
@@ -207,6 +218,7 @@
         $(".borrowbtn").on('click', function() {
             let studentId = $(this).data('student');
             let token = $(this).data('token');
+
             const formData = new FormData();
             formData.append('studentId', studentId);
             formData.append('bookList', bookList);
@@ -220,12 +232,19 @@
                     '_token': token
                 }, function(response) {
                     console.log(response);
-                    alert('successfully borrowed');       
                 })
                 const frame = $('#table-frame')
                 const link = '/generate-tblborrow/' + JSON.stringify(bookList)
                 frame.attr('src', link)
-                // location.reload();
+
+                var table = document.getElementById("tbl");
+                for (var i = table.rows.length - 1; i > 0; i--) {
+                    table.deleteRow(i);
+                }
+                bookList.splice(0, bookList.length);
+                
+                alert('successfully borrowed');
+                console.log(bookList);
             }
         });
 
@@ -328,6 +347,7 @@
                             console.log('true');
                         }
                     } catch (err_value) {
+                        alert('No Student that have ' + id);
                         document.location.href = "borrowpage";
                         console.log('false');
                     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\bookaction;
 use App\Models\booklist;
 use App\Models\copies;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -11,6 +12,8 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class PDFController extends Controller
 
 {
+
+    //BookList REPORTS
 
     public function generatePDF($data)
     {
@@ -36,13 +39,33 @@ class PDFController extends Controller
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
+    //REPORTS ALL
+    public function generateAction()
+    {
+        $books = bookaction::where('ishide', false)->get();
+        $pdf = PDF::loadView('myPDFaction', compact('books'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+    //Process Reports
+
     public function generateBorrow($bookData)
     {
         $bookList = [];
         foreach (json_decode($bookData) as $book) {
-          $bookList[] = booklist::find($book);
+            $bookList[] = booklist::find($book);
         }
-         $pdf = PDF::loadView('myPDFborrow', compact('bookList'));
-         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+        $pdf = PDF::loadView('myPDFborrow', compact('bookList'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+    public function generateReturn($bookData)
+    {
+        $bookList = [];
+        foreach (json_decode($bookData) as $book) {
+            $bookList[] = booklist::find($book);
+        }
+        $pdf = PDF::loadView('myPDFreturn', compact('bookList'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 }

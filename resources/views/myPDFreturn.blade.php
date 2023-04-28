@@ -10,7 +10,7 @@
 <body>
     <center> 
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-        <h3>STUDENT BORROWED BOOK</h3>
+        <h3>STUDENT RETURN BOOK</h3>
       </center>
     <table class="table table-bordered myTable">
         <thead>
@@ -23,12 +23,13 @@
                 <th scope="col" class="text-center">PUBLISHER</th>
                 <th scope="col" class="text-center">GENRE</th>
                 <th scope="col" class="text-center">ADDED DATE</th>
+                <th scope="col" class="text-center">DUE DATE</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($bookList as $book)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
-                    <td scope="row">
+                    <td>
                         {{ $book->id }}
                     </td>
                     <td>
@@ -49,8 +50,11 @@
                     <td>
                         {{ $book->genre }}
                     </td>
-                    <td class="col-1">
-                        {{ date('Y-m-d', strtotime($book->created_at)) }}
+                    <td>
+                        {{ date('Y-m-d', strtotime($book->created_at)) }} 
+                    </td>
+                    <td>
+                        {{ date('Y-m-d', strtotime( $book->duedate)) }} 
                     </td>
                 </tr>
         </tbody>

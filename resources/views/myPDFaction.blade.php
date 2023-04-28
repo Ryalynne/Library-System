@@ -8,7 +8,7 @@
 </head>
 <center>
    <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-   <h3>BMA LIBRARY BOOK LIST</h3>
+   <h3>BMA LIBRARY ACTION LIST</h3>
 </center>
 <table class="table table-bordered myTable">
     <thead>
@@ -16,39 +16,31 @@
             <th scope="col" class="text-center">QR CODE</th>
             <th scope="col" class="text-center">ISBN</th>
             <th scope="col" class="text-center">BOOK TITLE</th>
-            <th scope="col" class="text-center">AUTHOR/S</th>
-            <th scope="col" class="text-center">DATE PUBLISH</th>
-            <th scope="col" class="text-center">PUBLISHER</th>
-            <th scope="col" class="text-center">GENRE</th>
-            <th scope="col" class="text-center">ADDED DATE</th>
+            <th scope="col" class="text-center">DATE OF ACTION</th>
+            <th scope="col" class="text-center">ACTION PERFORM</th>
+            <th scope="col" class="text-center">PERFORM BY</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($books as $book)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
                 <td scope="row">
-                    {{ $book->id }}
+                    {{ $book->id}}
                 </td>
                 <td>
-                    {{ $book->isbn }}
+                    {{ $book->book->isbn }}
                 </td>
                 <td>
-                    {{ $book->booktitle }}
+                    {{ $book->book->booktitle }}
                 </td>
                 <td>
-                    {{ $book->author }}
+                    {{date('Y-m-d', strtotime($book->created_at))}}
                 </td>
                 <td>
-                    {{ $book->datepublish }}
+                    {{ $book->action}}
                 </td>
                 <td>
-                    {{ $book->publisher }}
-                </td>
-                <td>
-                    {{ $book->genre }}
-                </td>
-                <td class="col-1">
-                    {{ date('Y-m-d', strtotime($book->created_at)) }}
+                    {{ $book->performby }}
                 </td>
             </tr>
     </tbody>
