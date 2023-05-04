@@ -21,8 +21,8 @@
                         data-bs-target="#modal_addbook">
                         Register Books
                     </button>
-                    <button type="button" class="btn btn-success bg-success border-success print-tbl " data-bs-toggle="modal"
-                    data-bs-target="#tablemodal">
+                    <button type="button" class="btn btn-success bg-success border-success print-tbl "
+                        data-bs-toggle="modal" data-bs-target="#tablemodal">
                         Print Book List
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-printer-fill" viewBox="0 0 16 16">
@@ -53,16 +53,13 @@
                             </div>
                             <div class="modal-body">
 
-
                                 <div class="mb-3">
                                     <label for="isbn" class="form-label">ISBN</label>
                                     <input type="text" class="form-control t-isbn" id="isbn" name="isbn"
                                         :value="old('isbn')" placeholder="ex.4092752">
-
                                 </div>
                                 <p id="msgisbn"> </p>
                                 {{-- textfield --}}
-
 
                                 <div class="mb-3">
                                     <label for="booktitle" class="form-label">BOOK TITLE</label>
@@ -227,9 +224,9 @@
                                         name="bookid" :value="old('bookid')" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="bookid" class="form-label">ISBN</label>
-                                    <input type="text" class="form-control modal-book-isbn" id="bookid"
-                                        name="bookid" :value="old('bookid')" readonly>
+                                    <label for="isbn" class="form-label">ISBN</label>
+                                    <input type="text" class="form-control modal-book-isbn" id="isbn"
+                                        name="isbn" :value="old('isbn')" >
                                 </div>
                                 <div class="mb-3">
                                     <label for="updatebooktitle" class="form-label">BOOK TITLE</label>
@@ -359,7 +356,7 @@
             const link = '/generate-table/'
             frame.attr('src', link)
             console.log('button clicked');
-            
+
         });
 
 
@@ -389,49 +386,45 @@
                 success: function(response) {
                     // console.log(response);         
                     if (response.status == 400) {
-
-                        $('#msgisbn').html("");
-                        $('#msgisbn').addClass('alert alert-danger');
-
-                        $('#msgbooktitle').html("");
-                        $('#msgbooktitle').addClass('alert alert-danger');
-
-                        $('#msgauthor').html("");
-                        $('#msgauthor').addClass('alert alert-danger');
-
-                        $('#msgdatepublish').html("");
-                        $('#msgdatepublish').addClass('alert alert-danger');
-
-                        $('#msggenre').html("");
-                        $('#msggenre').addClass('alert alert-danger');
-
-                        $('#msgcopies').html("");
-                        $('#msgcopies').addClass('alert alert-danger');
-
-                        $('#msgpublisher').html("");
-                        $('#msgpublisher').addClass('alert alert-danger');
-
-
                         $.each(response.errors, function(key, err_value) {
                             if (key == "isbn") {
+                                $('#msgisbn').html("");                       
                                 $('#msgisbn').append(err_value);
+                                console.log(key);
                             }
+                            else{
+                                console.log(false);
+                            }
+
                             if (key == "booktitle") {
+                                $('#msgbooktitle').html("");
+                                $('#msgbooktitle').addClass('alert alert-danger');
                                 $('#msgbooktitle').append(err_value);
                             }
                             if (key == "author") {
+                                $('#msgauthor').html("");
+                                $('#msgauthor').addClass('alert alert-danger');
                                 $('#msgauthor').append(err_value);
                             }
                             if (key == "datepublish") {
+
+                                $('#msgdatepublish').html("");
+                                $('#msgdatepublish').addClass('alert alert-danger');
                                 $('#msgdatepublish').append(err_value);
                             }
                             if (key == "genre") {
+                                $('#msggenre').html("");
+                                $('#msggenre').addClass('alert alert-danger');
                                 $('#msggenre').append(err_value);
                             }
                             if (key == "copies") {
+                                $('#msgcopies').html("");
+                                $('#msgcopies').addClass('alert alert-danger');
                                 $('#msgcopies').append(err_value);
                             }
                             if (key == "publisher") {
+                                $('#msgpublisher').html("");
+                                $('#msgpublisher').addClass('alert alert-danger');
                                 $('#msgpublisher').append(err_value);
                             }
                         });

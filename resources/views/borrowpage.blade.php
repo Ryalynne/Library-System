@@ -183,9 +183,9 @@
                             @endif
                             @endforeach
                         </table>
-                        <div class="pagination justify-content-center">
-                            {{-- {{ $books->links() }} --}}
-                        </div>
+                        {{-- <div class="pagination justify-content-center">
+                           {{ $books->links() }} 
+                        </div> --}}
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -196,8 +196,8 @@
     </div>
     <br><br>
 
-    <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static"
+        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
@@ -242,12 +242,13 @@
                     table.deleteRow(i);
                 }
                 bookList.splice(0, bookList.length);
-                
+
                 alert('successfully borrowed');
                 console.log(bookList);
             }
         });
 
+        //QR CODE
         var _changeInterval = null;
         $(".bookid").on("keyup", function() {
 
@@ -259,6 +260,7 @@
             _changeInterval = setInterval(function() {
 
                 $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
+
                     try {
                         if (data.bookstatus.bookstatus == "onlend") {
                             console.log('onlend');
@@ -269,7 +271,7 @@
                                 if (!bookList.includes(data.book.id)) {
                                     bookList.push(data.book.id)
 
-                                    if (data.book.id == null) {
+                                    if (data.book.id == "") {
                                         $('.bookid').val("");
                                     } else {
                                         var tr = document.createElement('tr');
@@ -296,65 +298,16 @@
                                 }
                             });
                         }
-                    } catch (error) {
-                        $.get("/book/" + id, function(data, status) {
-                            if (!bookList.includes(data.book.id)) {
-                                bookList.push(data.book.id)
-
-                                if (data.book.id == null) {
-                                    $('.bookid').val("");
-                                } else {
-                                    var tr = document.createElement('tr');
-                                    var td1 = tr.appendChild(document.createElement('td'));
-                                    var td2 = tr.appendChild(document.createElement('td'));
-                                    var td3 = tr.appendChild(document.createElement('td'));
-                                    td1.innerHTML = data.book.isbn;
-                                    td2.innerHTML = data.book.booktitle;
-                                    td3.innerHTML =
-                                        '<button type="button" class="btn btn-outline-success" data-id = "' +
-                                        data.book.id +
-                                        '" onclick="deleteRow(this, ' + data.book.id +
-                                        ');">Remove</button>';
-                                    document.getElementById("tbl").appendChild(tr);
-                                    $('.bookid').val("");
-                                }
-                            } else {
-                                alert("The Book Already in the list");
-                                $('.bookid').val("");
-                            }
-                        });
-                    } finally {
+                    } catch (err_value) {
+                        alert("No Available Book");
                         $('.bookid').val("");
                     }
+
                 });
                 clearInterval(_changeInterval)
             }, 900);
         });
 
-        $('.studid').on('keyup', function() {
-            var id = $(this).val().toLowerCase();
-            if (id == "") {
-                $('.full-name').val("")
-                $('.class').val("")
-                document.location.href = "borrowpage";
-                document.getElementById('myBtn').disabled = true;
-            } else {
-                $.get("/student/" + id, function(data, status) {
-
-                    try {
-                        if (id == data.student.id) {
-                            document.location.href = "borrowpage" + '?student=' + data.student.id;
-                            console.log('true');
-                        }
-                    } catch (err_value) {
-                        alert('No Student that have ' + id);
-                        document.location.href = "borrowpage";
-                        console.log('false');
-                    }
-
-                });
-            }
-        });
         var $iddata = "";
 
         $(".getdata").on('click', function() {
@@ -364,7 +317,9 @@
             var $status = $row.find(".getstatus").text();
 
             $.get("/book/" + $iddata, function(data, status) {
-                if ($status.includes("onlend")) {
+                if ($status.includes("")) {
+                    alert('Enter Student ID Before adding');
+                } else if ($status.includes("onlend")) {
                     alert('The Book Already Borrowed');
                 } else if (!bookList.includes(data.book.id)) {
                     bookList.push(data.book.id)
@@ -398,12 +353,36 @@
             let index = bookList.indexOf(bookID);
             bookList.splice(index, 1);
             tbl.deleteRow(row);
-
-
-            console.log(id);
-            console.log(bookList);
-
         }
+
+        var time = null;
+        clearInterval(time)
+
+        $('.studid').on('keyup', function() {
+            var id = $(this).val().toLowerCase();
+            time = setInterval(function() {
+                if (id == "") {
+                    $('.full-name').val("")
+                    $('.class').val("")
+                    document.location.href = "borrowpage";
+                } else {
+                    $.get("/student/" + id, function(data, status) {
+                        try {
+                            if (id == data.student.id) {
+                                document.location.href = "borrowpage" + '?student=' + data.student
+                                    .id;
+
+                                document.getElementById("myBtn").disabled = false;
+                            }
+                        } catch (err_value) {
+                            alert('No Student that have ' + id);
+                            document.location.href = "borrowpage";
+                        }
+                    });
+                }
+                clearInterval(time)
+            }, 900);
+        });
     </script>
 @endsection
 @endsection

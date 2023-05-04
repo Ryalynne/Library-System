@@ -87,9 +87,6 @@ class BooklistController extends Controller
     {
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(booklist $booklist)
     {
         //
@@ -99,7 +96,7 @@ class BooklistController extends Controller
     {
         $book = booklist::find($request->bookid);
         $book->update([
-            'booktitle' => $request->updatebooktitle, 'author' => $request->updateauthor, 'datepublish' => $request->updatepublish,
+            'isbn' => $request->isbn,'booktitle' => $request->updatebooktitle, 'author' => $request->updateauthor, 'datepublish' => $request->updatepublish,
             'publisher' => $request->updatepublisher, 'genre' => $request->updategenre
         ]);
         return back();
@@ -113,7 +110,11 @@ class BooklistController extends Controller
 
     public function get_status($data, $studentid)
     {  
-        $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid', 'copies.bookid')->where('borrowpages.studentid', $studentid)->where('borrowpages.bookid', $data)->orderBy('borrowpages.id', 'desc')->first();
+         $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
+        ->join('copies','copies.bookid', 'borrowpages.bookid')
+        ->where('borrowpages.studentid', $studentid)
+        ->where('borrowpages.bookid', $data)
+        ->orderBy('borrowpages.id', 'desc')->first();
         return compact('bookstatus');
     }
 }

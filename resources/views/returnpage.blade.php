@@ -62,6 +62,7 @@
                             <th>BORROW DATE</th>
                             <th>DUE DATE</th>
                             <th>ACTION</th>
+                            <th>PENALTY</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,6 +85,9 @@
                                             id="checkbox-{{ $book->bookid }}" data-id="{{ $book->bookid }}">
                                         <label for="flexCheckDefault" class="form-check-label">Return</label>
                                     </div>
+                                </td>
+                                <td>
+                                    
                                 </td>
                         </tr>
                     </tbody>
@@ -132,13 +136,13 @@
             if (bookdata.length == 0) {
                 alert('You need to add a book to the table to borrow!');
             } else {
-                 $.post('/return/book', {
-                     'studentId': studentId,
-                     'bookdata': bookdata,
-                     '_token': token
-                 }, function(response) {
-                     console.log(response);            
-                 })
+                $.post('/return/book', {
+                    'studentId': studentId,
+                    'bookdata': bookdata,
+                    '_token': token
+                }, function(response) {
+                    console.log(response);
+                })
                 const frame = $('#table-frame')
                 const link = '/generate-tblreturn/' + JSON.stringify(bookdata)
                 frame.attr('src', link)
