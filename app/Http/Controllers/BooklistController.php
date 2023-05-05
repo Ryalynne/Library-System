@@ -27,47 +27,54 @@ class BooklistController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'isbn' => 'required|numeric|min:1',
-            'author' => 'required',
-            'publisher' => 'required',
-            'datepublish' => 'required|date',
-            'booktitle' => 'required',
-            'genre' => 'required',
-            'copies' => 'required|numeric|min:1'
-        ]);
+        try {
 
-        if ($validator->fails()) {
+            $validator = Validator::make($request->all(), [
+                'isbn' => 'required|numeric|min:1',
+                'author' => 'required',
+                'publisher' => 'required',
+                'datepublish' => 'required|date',
+                'booktitle' => 'required',
+                'genre' => 'required',
+                'copies' => 'required|numeric|min:1'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $validator->messages()
+                ]);
+            }
+            
+            $book = booklist::create([
+                'booktitle' => $request->booktitle,
+                'author' => $request->author,
+                'datepublish' => $request->datepublish,
+                'publisher' => $request->publisher,
+                'isbn' => $request->isbn,
+                'genre' => $request->genre,
+            ]);
+            copies::create([
+                'bookid' => $book->id,
+                'action' => "added",
+                'copies' => $request->copies
+            ]);
+
+            bookaction::create([
+                'bookid' => $book->id,
+                'action' => "added",
+                'performby' => Auth::user()->name
+            ]);
+
             return response()->json([
-                'status' => 400,
-                'errors' => $validator->messages()
+                'status' => 200,
+                'message' => 'Book Added Successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
             ]);
         }
-
-        $book = booklist::create([
-            'booktitle' => $request->booktitle,
-            'author' => $request->author,
-            'datepublish' => $request->datepublish,
-            'publisher' => $request->publisher,
-            'isbn' => $request->isbn,
-            'genre' => $request->genre,
-        ]);
-        copies::create([
-            'bookid' => $book->id,
-            'action' => "added",
-            'copies' => $request->copies
-        ]);
-
-        bookaction::create([
-            'bookid' => $book->id,
-            'action' => "added",
-            'performby' => Auth::user()->name
-        ]);
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Book Added Successfully.'
-        ]);
     }
     public function show(booklist $booklist)
     {
@@ -96,7 +103,7 @@ class BooklistController extends Controller
     {
         $book = booklist::find($request->bookid);
         $book->update([
-            'isbn' => $request->isbn,'booktitle' => $request->updatebooktitle, 'author' => $request->updateauthor, 'datepublish' => $request->updatepublish,
+            'isbn' => $request->isbn, 'booktitle' => $request->updatebooktitle, 'author' => $request->updateauthor, 'datepublish' => $request->updatepublish,
             'publisher' => $request->updatepublisher, 'genre' => $request->updategenre
         ]);
         return back();
@@ -104,17 +111,17 @@ class BooklistController extends Controller
 
     public function get_book($data)
     {
-        $book = booklist::find($data);       
+        $book = booklist::find($data);
         return compact('book');
     }
 
     public function get_status($data, $studentid)
-    {  
-         $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
-        ->join('copies','copies.bookid', 'borrowpages.bookid')
-        ->where('borrowpages.studentid', $studentid)
-        ->where('borrowpages.bookid', $data)
-        ->orderBy('borrowpages.id', 'desc')->first();
+    {
+        $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
+            ->join('copies', 'copies.bookid', 'borrowpages.bookid')
+            ->where('borrowpages.studentid', $studentid)
+            ->where('borrowpages.bookid', $data)
+            ->orderBy('borrowpages.id', 'desc')->first();
         return compact('bookstatus');
     }
 }

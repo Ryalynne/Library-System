@@ -51,7 +51,7 @@ Route::middleware('auth','verified')->group(function () {
     Route::resource('books',BooklistController::class);
     Route::resource('borrow',borrowpage::class);
     
-    Route::get('/', function () {return view('welcome');});
+    // Route::get('/', function () {return view('welcome');});
     Route::get('/returnpage',[Returnpage::class,'index'])->name('returnpage');
     Route::get('/borrowpage',[borrowpage::class,'index'])->name('borrowpage');
     Route::get('/bookstatus',[Bookstatus::class, 'index'])->name('bookstatus');

@@ -226,7 +226,7 @@
                                 <div class="mb-3">
                                     <label for="isbn" class="form-label">ISBN</label>
                                     <input type="text" class="form-control modal-book-isbn" id="isbn"
-                                        name="isbn" :value="old('isbn')" >
+                                        name="isbn" :value="old('isbn')">
                                 </div>
                                 <div class="mb-3">
                                     <label for="updatebooktitle" class="form-label">BOOK TITLE</label>
@@ -388,14 +388,10 @@
                     if (response.status == 400) {
                         $.each(response.errors, function(key, err_value) {
                             if (key == "isbn") {
-                                $('#msgisbn').html("");                       
+                                $('#msgisbn').html("");
+                                $('#msgisbn').addClass('alert alert-danger');
                                 $('#msgisbn').append(err_value);
-                                console.log(key);
                             }
-                            else{
-                                console.log(false);
-                            }
-
                             if (key == "booktitle") {
                                 $('#msgbooktitle').html("");
                                 $('#msgbooktitle').addClass('alert alert-danger');
@@ -428,6 +424,7 @@
                                 $('#msgpublisher').append(err_value);
                             }
                         });
+                        
                         $('.btn-tr-submit').text('Register');
                     } else {
                         location.reload();

@@ -28,16 +28,14 @@
                     </center>
                     <div class="mb-3">
                         <label class="form-label">STUDENT ID</label>
-                        {{-- <form action="{{ route('borrowpage') }}" method="get"> --}}
                         <input type="text" class="form-control studid" name="student" :value="old('student')"
                             value="{{ request()->input('student') ? $student->id : ' ' }}">
-                        {{-- </form> --}}
                     </div>
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">FULL NAME</label>
                         <input style="text-transform:uppercase" type="text" class="form-control full-name"
                             value="{{ request()->input('student') ? $student->name . ' ' . $student->middle . ' ' . $student->lastname : ' ' }}"
-                            disabled>
+                            disabled id="student">
                     </div>
 
                     <div class="mb-3">
@@ -89,7 +87,7 @@
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg borrowbtn"
                         data-student="{{ $student ? $student->id : '' }}" data-token="{{ csrf_token() }}"
-                        data-bs-toggle="modal" data-bs-target="#tablemodal">Borrow
+                        data-bs-toggle="modal" data-bs-target="#tablemodal" id="bor">Borrow
                         Books</button></a>
                 </div>
                 <br>
@@ -309,17 +307,16 @@
         });
 
         var $iddata = "";
+        let $status = "";
+        var studentid = "";
 
         $(".getdata").on('click', function() {
 
             var $row = $(this).closest(".trtr");
             $iddata = $row.find(".getid").text();
-            var $status = $row.find(".getstatus").text();
-
+            $status = $row.find(".getstatus").text();
             $.get("/book/" + $iddata, function(data, status) {
-                if ($status.includes("")) {
-                    alert('Enter Student ID Before adding');
-                } else if ($status.includes("onlend")) {
+                if ($status.includes("onlend")) {
                     alert('The Book Already Borrowed');
                 } else if (!bookList.includes(data.book.id)) {
                     bookList.push(data.book.id)
@@ -333,11 +330,13 @@
                     td1.innerHTML = data.book.isbn;
                     td2.innerHTML = data.book.booktitle;
                     td3.innerHTML =
-                        '<button type="button" class="btn btn-outline-success" data-id= "' + data.book.id +
+                        '<button type="button" class="btn btn-outline-success" data-id= "' + data.book
+                        .id +
                         '" onclick="deleteRow(this, ' + data.book.id + ');">Remove</button>';
                     document.getElementById("tbl").appendChild(tr);
                     $('.bookid').val("");
                     alert('Added Successfully');
+                    console.log($status)
                 } else {
                     alert('The Book Already in the list');
                 }
@@ -371,8 +370,6 @@
                             if (id == data.student.id) {
                                 document.location.href = "borrowpage" + '?student=' + data.student
                                     .id;
-
-                                document.getElementById("myBtn").disabled = false;
                             }
                         } catch (err_value) {
                             alert('No Student that have ' + id);
@@ -383,6 +380,19 @@
                 clearInterval(time)
             }, 900);
         });
+
+
+        var stud = document.getElementById("student").value;;
+
+        if (stud.length > 1) {
+            document.getElementById("myBtn").disabled = false;
+            document.getElementById("bor").disabled = false;       
+        } else {
+            document.getElementById("myBtn").disabled = true;
+            document.getElementById("bor").disabled = true;
+        }
+
+        console.log(stud);
     </script>
 @endsection
 @endsection
