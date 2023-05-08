@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'laravel') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -50,9 +50,19 @@
                                     Books Management
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item dropdown-active-success" href="booklist">Books Entry</a>
-                                    <a class="dropdown-item" href="bookaquired">Books Adjustment</a>
-                                    <a class="dropdown-item" href="bookstatus">Borrow Books / Return Books</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="booklist">Books Entry</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="bookaquired">Books Adjustment</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="bookstatus">Borrow Books / Return
+                                        Books</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -61,14 +71,31 @@
                                     Books History
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item dropdown-active-success" href="bookhistory">Books Action
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="bookhistory">Books Action
                                         History</a>
-                                    <a class="dropdown-item dropdown-active-success" href="adjustmenthistory">Adjustment
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="adjustmenthistory">Adjustment
                                         History</a>
-                                    <a class="dropdown-item dropdown-active-success" href="onlendhistory">Onlend History</a>
-                                    <a class="dropdown-item dropdown-active-success" href="returnhistory">Returned History</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="onlendhistory">Onlend History</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="returnhistory">Returned
+                                        History</a>
                                     <hr>
-                                    <a class="dropdown-item dropdown-active-success" href="archivedhistory">Books Archived</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="archivedhistory">Books
+                                        Archived</a>
                                 </div>
                             </li>
                             <li class="nav-item active">
@@ -102,19 +129,23 @@
                         @endif
                     @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#"
+                                role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                v-pre>
                                 {{ Auth::user()->name }}
                             </a>
                             {{-- name ng profile --}}
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 {{-- dropdownlist --}}
-                                <a class="dropdown-item dropdown-active-success" href="setting">Settings</a>
+                                <a class="dropdown-item dropdown-active-success "
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="setting">Settings</a>
 
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item dropdown-active-success" onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -192,9 +223,15 @@
 
 <style>
     .myInput:focus {
-       border-color: 0 0 0 0.2rem rgba(5, 158, 0, 0.25);
-       box-shadow: 0 0 0 0.2rem rgba(5, 158, 0, 0.25);
-     } 
+        border-color: 0 0 0 0.2rem rgba(5, 158, 0, 0.25);
+        box-shadow: 0 0 0 0.2rem rgba(5, 158, 0, 0.25);
+    }
+
+    .dropdown-item.dropdown-active-success:hover,
+    .dropdown-item.dropdown-active-success:focus,
+    .dropdown-item.dropdown-active-success.active {
+        color: rgb(255, 255, 255);
+    }
 </style>
 
 </html>

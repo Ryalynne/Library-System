@@ -21,7 +21,7 @@ class booklistFactory extends Factory
             'author' => fake()->firstNameMale(), 
             'datepublish' => fake()->date(),
             'publisher' => fake()->address(),
-            'isbn' => fake()->name(),
+            'isbn' => fake()->numberBetween(1000000000, 9999999999),
             'genre' => fake()->name()
         ];
     }

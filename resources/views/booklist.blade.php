@@ -147,7 +147,7 @@
                                     <td>
                                         {{ $book->isbn }}
                                     </td>
-                                    <td>
+                                    <td class="col-md-1 col-md-max-1">
                                         {{ $book->booktitle }}
                                     </td>
                                     <td>
@@ -159,7 +159,7 @@
                                     <td>
                                         {{ $book->publisher }}
                                     </td>
-                                    <td>
+                                    <td class="col-md-1 col-md-max-1"> 
                                         {{ $book->genre }}
                                     </td>
                                     <td>
