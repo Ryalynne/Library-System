@@ -14,13 +14,13 @@
 
             <div class="col-xl-3 col-md-6 mb-5">
                 <div
-                class="card border-left-primary shadow h-100 py-1 border-success border-3 border-bottom-0 border-end-0  border-top-0">
-                    <div class="card-body">
+                    class="card border-left-primary shadow h-100 py-1 border-success border-3 border-bottom-0 border-end-0  border-top-0">
+                    <div class="card-body" onclick="booklist()">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Number of Booklist</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$totalofbooklist}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalofbooklist }}</div>
                             </div>
                             <div class="col-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor"
@@ -37,10 +37,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-xl-3 col-md-6 mb-5">
                 <div class="card  shadow h-100 py-1 border-success border-bottom-0 border-end-0  border-top-0">
-                    <div class="card-body">
+                    <div class="card-body" onclick="adjustment()">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-success font-weight-bold text-primary text-uppercase mb-1">
@@ -68,13 +68,13 @@
 
             <div class="col-xl-3 col-md-6 mb-5">
                 <div
-                     class="card border-left-primary shadow h-100 py-1 border-success border-3 border-bottom-0 border-end-0  border-top-0">
-                    <div class="card-body">
+                    class="card border-left-primary shadow h-100 py-1 border-success border-3 border-bottom-0 border-end-0  border-top-0">
+                    <div class="card-body" onclick="onlendhistory()">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Number of Lend</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$totaloflend}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totaloflend }}</div>
                             </div>
                             <div class="col-auto">
                                 <br>
@@ -90,16 +90,16 @@
                     </div>
                 </div>
             </div>
-        
+
             <div class="col-xl-3 col-md-6 mb-5">
                 <div
                     class="card border-left-primary shadow h-100 py-1 border-success border-3 border-bottom-0 border-end-0  border-top-0">
-                    <div class="card-body">
+                    <div class="card-body" onclick="returnhistory()">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Number of Returned</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$totalofreturn}}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalofreturn }}</div>
                             </div>
                             <div class="col-auto">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor"
@@ -115,4 +115,22 @@
 
         </div>
     </div>
+
+    <script>
+        function booklist() {
+            location.assign('/booklist');
+        }
+        function adjustment() {
+            location.assign('/bookaquired');
+        }
+
+        function onlendhistory() {
+            location.assign('/onlendhistory');
+        }
+
+        function returnhistory() {
+            location.assign('/returnhistory');
+        }
+    </script>
+    
 @endsection

@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <br>
 </head>
-<center>
-   <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-   <h3>BMA LIBRARY BOOK LIST</h3>
-</center>
+
 
 <body>
-    <div class="container-center">
+    <center>
+        <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
+        <h3>BMA LIBRARY BOOK LIST</h3>
+     </center>
+     
         <table class="table table-bordered myTable">
             <thead>
                 <tr class="bg-success text-white">
                     <th>QR CODE</th>
                     <th>ISBN</th>
-                    <th>BOOK TITLE</th>
+                    <th style="max-width: 50%">BOOK TITLE</th>
                     <th>AUTHOR/S</th>
                     <th>DATE PUBLISH</th>
                     <th>PUBLISHER</th>
@@ -57,7 +58,7 @@
             </tbody>
             @endforeach
         </table>
-        </div>
+    </center>
 </body>
 
 </html>

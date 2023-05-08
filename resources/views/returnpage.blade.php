@@ -37,7 +37,7 @@
                         <label for="booktitle" class="form-label">FULL NAME</label>
                         <input style="text-transform:uppercase" type="text" class="form-control full-name"
                             value="{{ request()->input('student') ? $student->name . ' ' . $student->middle . ' ' . $student->lastname : ' ' }}"
-                            disabled>
+                            disabled id="student">
                     </div>
 
                     <div class="mb-3">
@@ -86,8 +86,7 @@
                                         <label for="flexCheckDefault" class="form-check-label">Return</label>
                                     </div>
                                 </td>
-                                <td>
-                                    
+                                <td> {{$book->penalty($book->duedate)}}
                                 </td>
                         </tr>
                     </tbody>
@@ -97,7 +96,7 @@
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg returnbook" data-bs-toggle="modal"
                         data-bs-target="#tablemodal" data-student="{{ $student ? $student->id : '' }}"
-                        data-token="{{ csrf_token() }}">Return
+                        data-token="{{ csrf_token() }}" id="myBtn">Return
                         Books</button></a>
                 </div>
                 <br>
@@ -123,6 +122,7 @@
     </div>
 
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         const bookdata = [];
 
@@ -149,7 +149,7 @@
                 bookdata.splice(0, bookdata.length);
 
                 $('input:checked').parents("tr").remove();
-                alert('successfully borrowed');
+                alert('successfully Returned');
                 console.log(bookdata);
 
             }
@@ -184,17 +184,26 @@
                     try {
                         if (id == data.student.id) {
                             document.location.href = "returnpage" + '?student=' + data.student.id;
-                            console.log('true');
                         }
                     } catch (err_value) {
-                        alert('No Student that have ' + id);
+                        alert('No Student that have student ID:' + id);
                         document.location.href = "returnpage";
-                        console.log('false');
                     }
 
                 });
             }
         });
+
+        var stud = document.getElementById("student").value;
+
+        if (stud.length > 1) {
+            document.getElementById("myBtn").disabled = false;
+        } else {
+            document.getElementById("myBtn").disabled = true;
+        }
+
+      
+
     </script>
 @endsection
 @endsection

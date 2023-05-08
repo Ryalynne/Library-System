@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>How to Generate QR Code Using Simple QRcode In Laravel 8</title>
+    <title>GENERATE QR CODE</title>
     <br>
 </head>
 

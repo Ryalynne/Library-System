@@ -38,7 +38,7 @@
                     <table class="table table-bordered myTable">
                         <thead>
                             <tr class="bg-success text-white">
-                                <th scope="col">BOOK ID</th>
+                                <th scope="col">QR CODE</th>
                                 <th scope="col">ISBN</th>
                                 <th scope="col">BOOK TITLE</th>
                                 <th scope="col">DATE OF ACTION</th>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <br>
 </head>
+<body>
 <center>
     <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
    <h3>BMA LIBRARY BOOK LIST WITH COPIES</h3>
@@ -55,7 +56,7 @@
     @endforeach
 </table>
 
-<body>
+
 
 </body>
 

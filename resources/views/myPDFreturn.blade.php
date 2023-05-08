@@ -22,7 +22,7 @@
                 <th scope="col" class="text-center">DATE PUBLISH</th>
                 <th scope="col" class="text-center">PUBLISHER</th>
                 <th scope="col" class="text-center">GENRE</th>
-                <th scope="col" class="text-center">ADDED DATE</th>
+                <th scope="col" class="text-center">BORROW DATE</th>
                 <th scope="col" class="text-center">DUE DATE</th>
             </tr>
         </thead>

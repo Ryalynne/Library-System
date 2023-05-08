@@ -58,7 +58,7 @@
                                     <input type="text" class="form-control t-isbn" id="isbn" name="isbn"
                                         :value="old('isbn')" placeholder="ex.4092752">
                                 </div>
-                                <p id="msgisbn"> </p>
+                                <p id="msgisbn" class="text-danger"> </p>
                                 {{-- textfield --}}
 
                                 <div class="mb-3">
@@ -68,7 +68,7 @@
                                         placeholder="ex.Math with Friends">
 
                                 </div>
-                                <p id="msgbooktitle"> </p>
+                                <p id="msgbooktitle"  class="text-danger"> </p>
 
                                 {{-- textfield --}}
                                 <div class="mb-3">
@@ -77,7 +77,7 @@
                                         id="author" name="author" :value="old('author')" placeholder="ex.Camille Pura">
 
                                 </div>
-                                <p id="msgauthor"> </p>
+                                <p id="msgauthor"  class="text-danger"> </p>
                                 {{-- textfield --}}
                                 <div class="mb-3">
                                     <label for="datepublish" class="form-label">DATE PUBLISH</label>
@@ -85,7 +85,7 @@
                                         name="datepublish" :value="old('datepublish')" placeholder="ex.BMA">
 
                                 </div>
-                                <p id="msgdatepublish"> </p>
+                                <p id="msgdatepublish"  class="text-danger"> </p>
                                 {{-- textfield --}}
                                 <div class="mb-3">
                                     <label for="publisher" class="form-label">PUBLISHER</label>
@@ -93,7 +93,7 @@
                                         id="publisher" name="publisher" :value="old('publisher')" placeholder="ex.BMA">
 
                                 </div>
-                                <p id="msgpublisher"> </p>
+                                <p id="msgpublisher"  class="text-danger"> </p>
                                 {{-- textfield --}}
                                 <div class="mb-3">
                                     <label for="genre" class="form-label">GENRE</label>
@@ -101,14 +101,14 @@
                                         id="genre" name="genre" :value="old('genre')"placeholder="ex.Math">
 
                                 </div>
-                                <p id="msggenre"> </p>
+                                <p id="msggenre"  class="text-danger"> </p>
                                 {{-- textfield --}}
                                 <div class="mb-3">
                                     <label for="copies" class="form-label">COPIES</label>
                                     <input type="text" class="form-control t-copies" id="copies" name="copies"
                                         :value="old('copies')" placeholder="ex.20">
                                 </div>
-                                <p id="msgcopies"> </p>
+                                <p id="msgcopies"  class="text-danger"> </p>
                             </div>
 
 
@@ -126,22 +126,22 @@
                     <table class="table table-bordered myTable">
                         <thead>
                             <tr class="bg-success text-white">
-                                <th scope="col" class="text-center">BOOK ID</th>
-                                <th scope="col" class="text-center">ISBN</th>
-                                <th scope="col" class="text-center">BOOK TITLE</th>
-                                <th scope="col" class="text-center">AUTHOR/S</th>
-                                <th scope="col" class="text-center">DATE PUBLISH</th>
-                                <th scope="col" class="text-center">PUBLISHER</th>
-                                <th scope="col" class="text-center">GENRE</th>
-                                <th scope="col" class="text-center">ADDED DATE</th>
-                                <th scope="col" class="text-center">BARCODE</th>
-                                <th scope="col" class="text-center ">ACTIONS PERFORM</th>
+                                <th class="text-center">QR CODE</th>
+                                <th class="text-center">ISBN</th>
+                                <th class="text-center" >BOOK TITLE</th>
+                                <th class="text-center">AUTHOR/S</th>
+                                <th class="text-center">DATE PUBLISH</th>
+                                <th class="text-center">PUBLISHER</th>
+                                <th class="text-center">GENRE</th>
+                                <th class="text-center">ADDED DATE</th>
+                                <th class="text-center">BARCODE</th>
+                                <th class="text-center ">ACTIONS PERFORM</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($books as $book)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
-                                    <th scope="row">
+                                    <th >
                                         {{ $book->id }}
                                     </th>
                                     <td>
@@ -162,7 +162,7 @@
                                     <td>
                                         {{ $book->genre }}
                                     </td>
-                                    <td class="col-1">
+                                    <td>
                                         {{ date('Y-m-d', strtotime($book->created_at)) }}
                                     </td>
                                     <td class="text-center">
@@ -384,56 +384,37 @@
                 data: data,
                 dataType: "json",
                 success: function(response) {
-                    // console.log(response);         
                     if (response.status == 400) {
-                        $.each(response.errors, function(key, err_value) {
-                            if (key == "isbn") {
-                                $('#msgisbn').html("");
-                                $('#msgisbn').addClass('alert alert-danger');
-                                $('#msgisbn').append(err_value);
-                            }
-                            if (key == "booktitle") {
-                                $('#msgbooktitle').html("");
-                                $('#msgbooktitle').addClass('alert alert-danger');
-                                $('#msgbooktitle').append(err_value);
-                            }
-                            if (key == "author") {
-                                $('#msgauthor').html("");
-                                $('#msgauthor').addClass('alert alert-danger');
-                                $('#msgauthor').append(err_value);
-                            }
-                            if (key == "datepublish") {
+                        $('#msgisbn').html("");
+                        $('#msgisbn').append(response.errors.isbn);
 
-                                $('#msgdatepublish').html("");
-                                $('#msgdatepublish').addClass('alert alert-danger');
-                                $('#msgdatepublish').append(err_value);
-                            }
-                            if (key == "genre") {
-                                $('#msggenre').html("");
-                                $('#msggenre').addClass('alert alert-danger');
-                                $('#msggenre').append(err_value);
-                            }
-                            if (key == "copies") {
-                                $('#msgcopies').html("");
-                                $('#msgcopies').addClass('alert alert-danger');
-                                $('#msgcopies').append(err_value);
-                            }
-                            if (key == "publisher") {
-                                $('#msgpublisher').html("");
-                                $('#msgpublisher').addClass('alert alert-danger');
-                                $('#msgpublisher').append(err_value);
-                            }
-                        });
-                        
+                        $('#msgbooktitle').html("");
+                        $('#msgbooktitle').append(response.errors.booktitle);
+
+                        $('#msgauthor').html("");
+                        $('#msgauthor').append(response.errors.msgauthor);
+
+                        $('#msgdatepublish').html("");
+                        $('#msgdatepublish').append(response.errors.datepublish);
+
+                        $('#msgpublisher').html("");
+                        $('#msgpublisher').append(response.errors.publisher);
+
+                        $('#msggenre').html("");
+                        $('#msggenre').append(response.errors.genre);
+
+                        $('#msgcopies').html("");
+                        $('#msgcopies').append(response.errors.copies);
+
                         $('.btn-tr-submit').text('Register');
                     } else {
-                        location.reload();
                         $('#success_message').html("");
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $('.AddStudentModal').find('input').val('');
                         $('.btn-tr-submit').text('Register');
                         $('.AddStudentModal').modal('hide');
+                        location.reload();
                     }
                 }
             });

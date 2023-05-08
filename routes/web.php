@@ -63,6 +63,7 @@ Route::middleware('auth','verified')->group(function () {
     
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/myPDF/{data}',[PDFController::class,'generatePDF'])->name('myPDF');
     Route::get('/bookstatus/{data}/{studentid}',[BooklistController::class,'get_status']);
     
