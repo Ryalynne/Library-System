@@ -7,8 +7,10 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'laravel') }}</title>
+   
+    <title>
+        {{ config('app.name', 'Laravel') }}
+      </title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -207,13 +209,11 @@
             $('.modal-book-id').val(data.book.id)
             $('.modal-book-title').val(data.book.booktitle)
             $('.modal-book-author').val(data.book.author)
-            // $('.modal-book-copies').val(data.book.copies)
             $('.modal-book-datepublish').val(data.book.datepublish)
             $('.modal-book-isbn').val(data.book.isbn)
             $('.modal-book-genre').val(data.book.genre)
             $('.modal-book-publisher').val(data.book.publisher)
             $('.modal-book-addeddate').val(data.book.addeddate)
-            // console.log(data)
         });
     });
 </script>

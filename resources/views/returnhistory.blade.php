@@ -19,7 +19,8 @@
                     </div>
                     <div class="d-flex mb-1 ">
                         <div class="me-auto p-2">
-                            <button type="button" class="btn btn-success bg-success border-success">
+                            <button type="button" class="btn btn-success bg-success border-success printbtn"
+                            data-bs-toggle="modal" data-bs-target="#tablemodal">
                                 Print Return
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
                                     <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"/>
@@ -56,6 +57,7 @@
                                     <td>{{ date('Y-m-d', strtotime($item->created_at))}}</td>
                                     <td>{{ $item->duedate }}</td>
                                     <td>{{ date('Y-m-d', strtotime($item->updated_at))}}</td>
+                                    <td>{{ $item->penalty($item->duedate) }}</td>
                             </tr>
                         </tbody>
                         @endforeach
@@ -68,4 +70,31 @@
             </div>
         </div>
     </body>
+
+    <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">PRINT ACTION</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <embed id="table-frame" src="" frameborder="0" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section('script')
+    <script>
+        $(".printbtn").on('click', function() {
+            const frame = $('#table-frame')
+            const link = '/generate-tblreturnhistory'
+            frame.attr('src', link)
+        });
+    </script>
+@endsection
+
 @endsection

@@ -48,7 +48,7 @@ class Returnpage extends Controller
         foreach ($request->bookdata as $key => $value) {
             $bookid = borrowpage::where('bookid', $value)->where('studentid', $student);
             $bookid->update([
-                'bookstatus' => 'returned',
+                'bookstatus' => 'returned'
             ]);
         }
     }
@@ -58,5 +58,6 @@ class Returnpage extends Controller
      */
     public function destroy(): never
     {
+
     }
 }

@@ -86,7 +86,8 @@
                                         <label for="flexCheckDefault" class="form-check-label">Return</label>
                                     </div>
                                 </td>
-                                <td> {{$book->penalty($book->duedate)}}
+                                <td>
+                                    {{ $book->penalty($book->duedate) }}
                                 </td>
                         </tr>
                     </tbody>
@@ -151,7 +152,6 @@
                 $('input:checked').parents("tr").remove();
                 alert('successfully Returned');
                 console.log(bookdata);
-
             }
         });
 
@@ -159,15 +159,12 @@
         $('.getbook').on('click', function() {
             var id = $(this).data('id');
             let check = $('#checkbox-' + id).is(':checked');
-
             if (check) {
                 bookdata.push(id)
             } else {
                 let index = bookdata.indexOf(id);
                 bookdata.splice(index, 1);
             }
-            console.log(bookdata);
-
         });
 
 
@@ -201,9 +198,6 @@
         } else {
             document.getElementById("myBtn").disabled = true;
         }
-
-      
-
     </script>
 @endsection
 @endsection

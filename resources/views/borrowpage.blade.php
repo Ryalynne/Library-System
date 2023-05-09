@@ -262,7 +262,7 @@
                     try {
                         if (data.bookstatus.bookstatus == "onlend") {
                             console.log('onlend');
-                            alert('The Book Already Borrowed')
+                            alert('The Book is Already Borrowed')
                             $('.bookid').val("");
                         } else {
                             $.get("/book/" + id, function(data, status) {

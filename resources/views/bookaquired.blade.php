@@ -12,7 +12,6 @@
     </div>
     <div class="container">
         <br>
-
         <div class="d-flex mb-1 ">
             <div class="me-auto p-2">
                 <button type="button" class="btn btn-success bg-success border-success print-tbl" data-bs-toggle="modal"
@@ -110,7 +109,6 @@
                                     {{-- MODAL BODY --}}
                                     <div class="modal-body ">
                                         <form method="POST" action="{{ route('books.update-copy') }}">
-
                                             <fieldset>
                                                 <div class="mb-3">
                                                     <label for="disabledTextInput" class="form-label">BOOK ID</label>
@@ -156,9 +154,9 @@
                                                 <input input type="text" class="form-control" id="addcopies"
                                                     name="addcopies" :value="old('addcopies')" placeholder="ex.10">
                                             </div>
-                                            @if (session('Error'))
+                                            @if ($errors->has('addcopies'))
                                                 <div class="alert alert-danger">
-                                                    {{ session('Error') }}
+                                                    {{ $errors->first('addcopies') }}
                                                 </div>
                                             @endif
                                     </div>
@@ -174,11 +172,6 @@
                             </div>
                         </div>
 
-
-                        {{-- button --}}
-
-
-                        {{-- modal --}}
                         <div class="modal fade" id="back" data-bs-backdrop="static" data-bs-keyboard="false"
                             tabindex="-1" aria-labelledby="backrop" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -189,53 +182,62 @@
                                             aria-label="Close"></button>
                                     </div>
                                     {{-- MODAL BODY --}}
+
                                     <div class="modal-body ">
                                         <form method="POST" action="{{ route('books.updatenegative-copy') }}">
                                             <fieldset>
                                                 <div class="mb-3">
-                                                    <label class="form-label">BOOK ID</label>
+                                                    <label class="form-label">BOOK ID:</label>
                                                     <input type="text" id="disabledTextInput"
                                                         class="form-control modal-book-id" readonly>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label">BOOK TITLE</label>
+                                                    <label class="form-label">BOOK TITLE:</label>
                                                     <input type="text" id="disabledTextInput"
                                                         class="form-control modal-book-title" readonly>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label">AUTHOR/S</label>
+                                                    <label class="form-label">AUTHOR/S:</label>
                                                     <input type="text" id="disabledTextInput"
                                                         class="form-control modal-book-author" readonly>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">YEAR OF
-                                                        PUBLISH</label>
+                                                        PUBLISH:</label>
                                                     <input type="text" id="disabledTextInput"
                                                         class="form-control modal-book-datepublish" readonly>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="" class="form-label">AVAILABLE
-                                                        COPIES</label>
+                                                        COPIES:</label>
                                                     <input type="text" id="availcopies"
                                                         class="form-control modal-copy-copies" name="availcopies"
                                                         :value="old('availcopies')" placeholder="" readonly>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="lesscopies" class="form-label">LESS COPIES</label>
+                                                    <label for="lesscopies" class="form-label">NUMBER OF COPIES TO BE
+                                                        REMOVED:</label>
                                                     <input type="hidden" name="bookid" class="modal-book-id">
-                                                    <input input type="text" class="form-control" id="lesscopies"
+                                                    <input type="text" class="form-control" id="lesscopies"
                                                         name="lesscopies" :value="old('lesscopies')" placeholder="ex.10">
                                                 </div>
-                                                @if (session('Error'))
+
+                                                @if ($errors->has('lesscopies'))
                                                     <div class="alert alert-danger">
-                                                        {{ session('Error') }}
+                                                        {{ $errors->first('lesscopies') }}
                                                     </div>
                                                 @endif
+
                                                 <div class="mb-3">
-                                                    <label for="exampleFormControlTextarea1"
-                                                        class="form-label">REASON</label>
-                                                    <textarea class="form-control" id="comment" rows="3" name="comment" :value="old('comment')"></textarea>
+                                                    <label for="comment" class="form-label">REASON</label>
+                                                    <input type="text" class="form-control" id="comment"
+                                                        name="comment" :value="old('comment')" placeholder="ex.damage">
                                                 </div>
+                                                @if ($errors->has('comment'))
+                                                    <div class="alert alert-danger">
+                                                        {{ $errors->first('comment') }}
+                                                    </div>
+                                                @endif
                                             </fieldset>
                                     </div>
                                     {{-- footermodal --}}
@@ -250,8 +252,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- end of div --}}
-
                     </tr>
                 @endforeach
             </tbody>

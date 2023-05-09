@@ -85,6 +85,7 @@
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>{{ $item->duedate }}</td>
                                 <td>{{ date('Y-m-d', strtotime($item->updated_at)) }}</td>
+                                <td>{{$item->penalty($item->duedate)}}</td>
                         </tr>
                     </tbody>
                     @endforeach

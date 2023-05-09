@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\bookaction;
+use App\Models\bookadjusment;
 use App\Models\booklist;
+use App\Models\borrowpage;
 use App\Models\copies;
+use App\Models\studentlist;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -66,6 +69,27 @@ class PDFController extends Controller
             $bookList[] = booklist::find($book);
         }
         $pdf = PDF::loadView('myPDFreturn', compact('bookList'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+    public function generateAdjustment()
+    {
+        $adjustment = bookadjusment::where('ishide', false)->get();
+        $pdf = PDF::loadView('myPDFadjustment', compact('adjustment'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+    public function generateOnlend()
+    {
+        $borrow = borrowpage::where('ishide', false)->where('bookstatus', 'onlend')->get();
+        $pdf = PDF::loadView('myPDFonlend', compact('borrow'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+    public function generatereturnhistory()
+    {
+        $books = booklist::where('ishide', false)->get();
+        $return = borrowpage::where('ishide', false)->where('bookstatus', 'returned')->get();
+        $student = studentlist::where('ishide', false)->get();
+        $pdf = PDF::loadView('myPDFreturnhistory', compact('books','return','student'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 }

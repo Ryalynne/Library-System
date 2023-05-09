@@ -76,6 +76,9 @@ Route::middleware('auth','verified')->group(function () {
     Route::get('/generate-tblcopies', [PDFController::class, 'generateCopies']);
     Route::get('/generate-tblborrow/{id}', [PDFController::class, 'generateBorrow']);
     Route::get('/generate-tblreturn/{id}', [PDFController::class, 'generateReturn']);
+    Route::get('/generate-tbladjustment', [PDFController::class, 'generateAdjustment']);
+    Route::get('/generate-tblonlend', [PDFController::class, 'generateOnlend']);
+    Route::get('/generate-tblreturnhistory', [PDFController::class, 'generatereturnhistory']);
 
     Route::post('/return/book',[Returnpage::class, 'update']);
     Route::post('/book/borrow',[borrowpage::class ,'storebookborrow']);
