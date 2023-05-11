@@ -20,6 +20,8 @@ class BooklistController extends Controller
      */
     public function index()
     {
+        $books = booklist::where('ishide' , false)->paginate(10); 
+        return view('booklist',compact('books'));
     }
     public function create()
     {
@@ -30,7 +32,7 @@ class BooklistController extends Controller
         try {
 
             $validator = Validator::make($request->all(), [
-                'isbn' => 'required|numeric|min:1',
+                'isbn' => 'required|numeric',
                 'author' => 'required',
                 'publisher' => 'required',
                 'datepublish' => 'required|date',
@@ -45,7 +47,7 @@ class BooklistController extends Controller
                     'errors' => $validator->messages()
                 ]);
             }
-            
+
             $book = booklist::create([
                 'booktitle' => $request->booktitle,
                 'author' => $request->author,
@@ -101,12 +103,42 @@ class BooklistController extends Controller
 
     public function updatebooks(Request $request)
     {
-        $book = booklist::find($request->bookid);
-        $book->update([
-            'isbn' => $request->isbn, 'booktitle' => $request->updatebooktitle, 'author' => $request->updateauthor, 'datepublish' => $request->updatepublish,
-            'publisher' => $request->updatepublisher, 'genre' => $request->updategenre
-        ]);
-        return back();
+        try {
+            $validator = Validator::make($request->all(), [
+                'isbn' => 'required|numeric',
+                'booktitle' => 'required',
+                'author' => 'required',
+                'datepublish' => 'required|date',
+                'publisher' => 'required',
+                'genre' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $validator->messages()
+                ]);
+            }
+
+            $book = booklist::find($request->id);
+            $book->update([
+                'isbn' => $request->isbn,
+                'booktitle' => $request->booktitle,
+                'author' => $request->author,
+                'datepublish' => $request->datepublish,
+                'publisher' => $request->publisher,
+                'genre' => $request->genre
+            ]);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Book updated successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     public function get_book($data)

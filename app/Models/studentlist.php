@@ -13,6 +13,7 @@ class studentlist extends Model
     ];
 
     public function bookborrow(){
-        return $this->hasMany(borrowpage::class , 'studentid');
+        return $this->hasMany(borrowpage::class , 'studentid')->where('bookstatus', 'onlend')->where('ishide',false);
     }
+
 }

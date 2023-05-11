@@ -15,7 +15,6 @@
     <table class="table table-bordered myTable">
         <thead>
             <tr class="bg-success text-white">
-                <th scope="col" class="text-center">QR CODE</th>
                 <th scope="col" class="text-center">ISBN</th>
                 <th scope="col" class="text-center">BOOK TITLE</th>
                 <th scope="col" class="text-center">AUTHOR/S</th>
@@ -24,38 +23,38 @@
                 <th scope="col" class="text-center">GENRE</th>
                 <th scope="col" class="text-center">BORROW DATE</th>
                 <th scope="col" class="text-center">DUE DATE</th>
+                <th scope="col" class="text-center">PENALTY</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($bookList as $book)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
-                    <td>
-                        {{ $book->id }}
+                    <td>{{$book->book->isbn}}</td>
                     </td>
                     <td>
-                        {{ $book->isbn }}
+                        {{ $book->book->booktitle }}
                     </td>
                     <td>
-                        {{ $book->booktitle }}
+                        {{ $book->book->author}}
+                    </td>
+                     <td>
+                        {{ $book->book->datepublish }}
+                    </td>
+                  <td>
+                        {{ $book->book->publisher }}
                     </td>
                     <td>
-                        {{ $book->author }}
-                    </td>
-                    <td>
-                        {{ $book->datepublish }}
-                    </td>
-                    <td>
-                        {{ $book->publisher }}
-                    </td>
-                    <td>
-                        {{ $book->genre }}
+                        {{ $book->book->genre }}
                     </td>
                     <td>
                         {{ date('Y-m-d', strtotime($book->created_at)) }} 
                     </td>
                     <td>
-                        {{ date('Y-m-d', strtotime( $book->duedate)) }} 
-                    </td>
+                         {{$book->duedate}}
+                    </td> 
+                    <td>
+                        {{ $book->penalty($book->duedate) }}
+                   </td>  
                 </tr>
         </tbody>
         @endforeach

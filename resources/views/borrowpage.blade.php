@@ -63,9 +63,9 @@
                             </div>
                             <div class="col">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control bookid" id="exampleInputEmail1"
+                                    <input type="text" class="form-control bookid myInput" id="exampleInputEmail1"
                                         data-student="{{ $student ? $student->id : '' }}">
-                                    <div class="form-text">Scan QR Here...</div>
+                                    <div class="form-text ">Scan QR Here...</div>
                                 </div>
                             </div>
                         </div>

@@ -40,10 +40,6 @@
             @endforeach
         </tbody>
     </table>
-    <footer>
-        <hr>
-        <h5>Signature over Printed Name</h5>
-    </footer>
 </body>
 
 </html>

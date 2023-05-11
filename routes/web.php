@@ -19,11 +19,7 @@ use App\Models\copies as ModelsCopies;
 
 Auth::routes();
 
-Route::get('/booklist', function () {
-    $copies = ModelsCopies::where('ishide' , false)->get();
-    $books = ModelsBookList::where('ishide' , false)->paginate(10); 
-    return view('booklist',compact('books'));
-})->middleware(['auth', 'verified'])->name('booklist');
+
 
 Route::get('/usermanual', function () {
     $books = ModelsBookList::where('ishide' , false)->get();
@@ -50,8 +46,12 @@ Route::middleware('auth','verified')->group(function () {
     Route::resource('copies',CopiesController::class);
     Route::resource('books',BooklistController::class);
     Route::resource('borrow',borrowpage::class);
+   
+    // return view
     
-    // Route::get('/', function () {return view('welcome');});
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+    Route::get('/booklist', [BooklistController::class,'index'])->name('booklist');;
     Route::get('/returnpage',[Returnpage::class,'index'])->name('returnpage');
     Route::get('/borrowpage',[borrowpage::class,'index'])->name('borrowpage');
     Route::get('/bookstatus',[Bookstatus::class, 'index'])->name('bookstatus');
@@ -61,12 +61,8 @@ Route::middleware('auth','verified')->group(function () {
     Route::get('/returnhistory',[returnhistory::class, 'index'])->name('returnhistory'); 
     Route::get('/archivedhistory',[archivedcontroller::class, 'index'])->name('archivedhistory'); 
     
-
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/myPDF/{data}',[PDFController::class,'generatePDF'])->name('myPDF');
     Route::get('/bookstatus/{data}/{studentid}',[BooklistController::class,'get_status']);
-    
     Route::get('/book/{data}',[BooklistController::class,'get_book']);
     Route::get('/copy/{id}',[CopiesController::class,'get_copies']);
     Route::get('/student/{data}',[StudentlistController::class,'get_student']);
@@ -75,7 +71,7 @@ Route::middleware('auth','verified')->group(function () {
     Route::get('/generate-action', [PDFController::class, 'generateAction']);
     Route::get('/generate-tblcopies', [PDFController::class, 'generateCopies']);
     Route::get('/generate-tblborrow/{id}', [PDFController::class, 'generateBorrow']);
-    Route::get('/generate-tblreturn/{id}', [PDFController::class, 'generateReturn']);
+    Route::get('/generate-tblreturn/{bookData}/{studentid}', [PDFController::class, 'generateReturn']);
     Route::get('/generate-tbladjustment', [PDFController::class, 'generateAdjustment']);
     Route::get('/generate-tblonlend', [PDFController::class, 'generateOnlend']);
     Route::get('/generate-tblreturnhistory', [PDFController::class, 'generatereturnhistory']);

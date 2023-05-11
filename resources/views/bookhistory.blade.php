@@ -35,6 +35,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="table-responsive">
                     <table class="table table-bordered myTable">
                         <thead>
                             <tr class="bg-success text-white">
@@ -59,6 +60,8 @@
                         </tbody>
                         @endforeach
                     </table>
+                    </div>
+                    <br>
                     <div class="pagination justify-content-center">
                         {{ $action->links() }}
                     </div>

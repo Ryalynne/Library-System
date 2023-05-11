@@ -22,7 +22,8 @@
                 <th scope="col" class="text-center">DATE PUBLISH</th>
                 <th scope="col" class="text-center">PUBLISHER</th>
                 <th scope="col" class="text-center">GENRE</th>
-                <th scope="col" class="text-center">ADDED DATE</th>
+                <th scope="col" class="text-center">BORROWED DATE</th>
+                <th scope="col" class="text-center">DUE DATE</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +51,10 @@
                         {{ $book->genre }}
                     </td>
                     <td class="col-1">
-                        {{ date('Y-m-d', strtotime($book->created_at)) }}
+                        {{ date('Y-m-d', strtotime(now())) }}
+                    </td>
+                    <td>
+                        {{ date('Y-m-d', strtotime('+3 days', strtotime(now()))) }}
                     </td>
                 </tr>
         </tbody>

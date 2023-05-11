@@ -28,10 +28,8 @@
                     </center>
                     <div class="mb-3">
                         <label class="form-label">STUDENT ID</label>
-                        {{-- <form action="{{ route('borrowpage') }}" method="get"> --}}
                         <input type="text" class="form-control studid" name="student" :value="old('student')"
                             value="{{ request()->input('student') ? $student->id : ' ' }}">
-                        {{-- </form> --}}
                     </div>
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">FULL NAME</label>
@@ -66,8 +64,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="row-select">
+
+                        @if (count($borrowbook) > 0)
                             @foreach ($borrowbook as $book)
+
                                 <td> {{ $book->book->isbn }}</td>
                                 <td>
                                     {{ $book->book->booktitle }}
@@ -82,16 +82,23 @@
                                 <td>
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input getbook"
-                                            id="checkbox-{{ $book->bookid }}" data-id="{{ $book->bookid }}">
+                                            id="checkbox-{{ $book->id }}" data-id="{{ $book->id }}">
                                         <label for="flexCheckDefault" class="form-check-label">Return</label>
                                     </div>
                                 </td>
                                 <td>
                                     {{ $book->penalty($book->duedate) }}
                                 </td>
+                                </tr>
+                            @endforeach
+                        @else
+                        <tr>
+                            <td colspan="5">NO BORROW BOOK</td>
                         </tr>
+                        @endif
+
                     </tbody>
-                    @endforeach
+
                 </table>
                 <br>
                 <div class="text-end">
@@ -145,10 +152,9 @@
                     console.log(response);
                 })
                 const frame = $('#table-frame')
-                const link = '/generate-tblreturn/' + JSON.stringify(bookdata)
+                const link = '/generate-tblreturn/' + JSON.stringify(bookdata) + '/' + studentId;
                 frame.attr('src', link)
                 bookdata.splice(0, bookdata.length);
-
                 $('input:checked').parents("tr").remove();
                 alert('successfully Returned');
                 console.log(bookdata);

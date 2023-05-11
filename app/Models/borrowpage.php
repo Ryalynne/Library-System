@@ -12,7 +12,7 @@ class borrowpage extends Model
     use HasFactory;
 
     protected $fillable = [
-        'bookid', 'studentid', 'bookstatus', 'duedate','penalty'
+        'bookid', 'studentid', 'bookstatus', 'duedate', 'penalty'
     ];
 
     public function book()
@@ -29,18 +29,22 @@ class borrowpage extends Model
     {
         $startDate = new DateTime($duedate);
         $endDate = new DateTime(now());
-
+        
+        if ($startDate > $endDate) { // book is not overdue yet
+            return '0 Day';
+        }
+        
         $interval = $startDate->diff($endDate);
-        $days = $interval->days;
-
+        $days = $interval->days + 1; // add 1 day for initial due date
+        
         for ($i = 0; $i <= $interval->days; $i++) {
             $date = $startDate->modify('+1 day');
             $dayOfWeek = $date->format('N');
-            if ($dayOfWeek >= 6) {
+            if ($dayOfWeek == 6 || $dayOfWeek == 7) { // subtract days only for Saturdays and Sundays
                 $days--;
             }
         }
-
+        
         if ($days > 1) {
             return $days . ' Days';
         } else {

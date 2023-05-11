@@ -29,12 +29,11 @@ class CopiesController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator)
-                    ->withInput();
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $validator->messages()
+                ]);
             }
-
             copies::create([
                 'bookid' => $request->bookid,
                 'action' => 'added',
@@ -49,26 +48,25 @@ class CopiesController extends Controller
                 'comment' => 'added successfully'
             ]);
 
-            return back()->with('success', 'Copies added successfully.');
+            return response()->json(['status' => 200, 'message' => 'Copies added successfully.']);
         } catch (Exception $e) {
-            return back()->with('Error', $e->getMessage());
+            return response()->json(['status' => 500, 'message' => $e->getMessage()]);
         }
     }
 
     public function updatecopiesnegative(Request $request)
     {
         try {
-
             $validator = Validator::make($request->all(), [
                 'lesscopies' => 'required|numeric|between:1,' . $request->availcopies,
                 'comment' => 'required',
             ]);
 
             if ($validator->fails()) {
-                return redirect()
-                    ->back()
-                    ->withErrors($validator)
-                    ->withInput();
+                return response()->json([
+                    'status' => 400,
+                    'errors' => $validator->messages()
+                ]);
             }
 
             copies::create([
@@ -84,11 +82,10 @@ class CopiesController extends Controller
                 'number_adjust' => $request->lesscopies,
                 'comment' => $request->comment
             ]);
-
-            return back()->with('success', 'Copies lessen successfully.');
-
+            
+            return response()->json(['status' => 200, 'message' => 'Copies Remove successfully.']);
         } catch (Exception $e) {
-            return back()->with('Error', $e->getMessage());
+            return response()->json(['status' => 500, 'message' => $e->getMessage()]);
         }
     }
 

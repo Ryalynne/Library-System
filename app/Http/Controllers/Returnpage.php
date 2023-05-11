@@ -12,10 +12,17 @@ class Returnpage extends Controller
 {
     public function index(Request $request)
     {
-        $books = booklist::where('ishide', false)->paginate(10);
-        $student = studentlist::find($request->student);
-        $borrowbook = borrowpage::where('ishide', false)->where('bookstatus', 'onlend')->where('studentid', $request->student)->paginate(10);
-        return view('returnpage', compact('books', 'student','borrowbook'));
+        $books = booklist::where('ishide', false)->get();
+        if ($request->student) {
+            $student = studentlist::find($request->student);
+            $borrowbook = $student->bookborrow;
+        } else {
+            $student = [];
+            $borrowbook = [];
+        }
+        // $borrowbook = borrowpage::where('ishide', false)->where('bookstatus', 'onlend')->where('studentid', $request->student)->get();
+
+        return view('returnpage', compact('books', 'student', 'borrowbook'));
     }
 
     public function create(): never
@@ -46,7 +53,7 @@ class Returnpage extends Controller
     {
         $student = $request->studentId;
         foreach ($request->bookdata as $key => $value) {
-            $bookid = borrowpage::where('bookid', $value)->where('studentid', $student);
+            $bookid = borrowpage::where('id', $value)->where('studentid', $student);
             $bookid->update([
                 'bookstatus' => 'returned'
             ]);
@@ -58,6 +65,5 @@ class Returnpage extends Controller
      */
     public function destroy(): never
     {
-
     }
 }
