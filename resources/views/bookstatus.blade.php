@@ -15,11 +15,11 @@
         <div class="row align-items-start">
             <div class="col">
                 <a href="borrowpage">
-                    <button type="button" class="btn btn-outline-success w-100 btn-lg">Borrow Books</button></a>
+                    <button type="button" class="btn btn-success  w-100 btn-lg">BORROW BOOK</button></a>
             </div>
             <div class="col">
                 <a href="returnpage">
-                    <button type="button" class="btn btn-outline-success w-100 btn-lg">Return Books</button></a>
+                    <button type="button" class="btn btn-success  w-100 btn-lg">RETURN BOOK</button></a>
             </div>
         </div>
         <br>

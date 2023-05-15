@@ -28,6 +28,7 @@ class PDFController extends Controller
         //return $pdf->download('itsolutionstuff.pdf');
     }
 
+
     public function generateReports()
     {
         $books = booklist::where('ishide', false)->get();
@@ -92,6 +93,23 @@ class PDFController extends Controller
         $return = borrowpage::where('ishide', false)->where('bookstatus', 'returned')->get();
         $student = studentlist::where('ishide', false)->get();
         $pdf = PDF::loadView('myPDFreturnhistory', compact('books', 'return', 'student'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+    public function generatereturndamage($bookData)
+    {
+        $bookList = [];
+        foreach (json_decode($bookData) as $book) {
+            $bookList[] = borrowpage::find($book);
+        }
+        $pdf = PDF::loadView('myPDFfined', compact('bookList'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+    public function generatefinehistory()
+    {
+        $fine = borrowpage::where('bookstatus', 'fine')->get();
+        $pdf = PDF::loadView('myPDFfinedhistory', compact('fine'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 }

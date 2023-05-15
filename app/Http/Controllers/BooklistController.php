@@ -129,7 +129,11 @@ class BooklistController extends Controller
                 'publisher' => $request->publisher,
                 'genre' => $request->genre
             ]);
-
+            bookaction::create([
+                'bookid' => $book->id,
+                'action' => "updated the book",
+                'performby' => Auth::user()->name
+            ]);
             return response()->json([
                 'status' => 200,
                 'message' => 'Book updated successfully'

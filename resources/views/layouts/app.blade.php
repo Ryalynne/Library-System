@@ -16,8 +16,11 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Scripts -->
-
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{asset('build/assets/app-67dcdfd2.css')}}">
+    <script src="{{ asset('build/assets/app-1e58d95a.js') }}"></script>
+    
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -65,6 +68,12 @@
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="bookstatus">Borrow Books / Return
                                         Books</a>
+
+                                        <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="fined">Damage / Lost
+                                        Books</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -91,6 +100,12 @@
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="returnhistory">Returned
+                                        History</a>
+                                        {{-- finehistory --}}
+                                        <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="finedhistory">Book Lost / Damage
                                         History</a>
                                     <hr>
                                     <a class="dropdown-item dropdown-active-success"

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\booklist;
-use App\Models\borrowpage as ModelsBorrowpage;
-use App\Models\copies;
+use App\Models\borrowpage;
+use App\Models\finesbooks;
 use App\Models\studentlist;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-class borrowpage extends Controller
+class finedController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,18 +16,41 @@ class borrowpage extends Controller
     public function index(Request $request)
     {
         $books = booklist::where('ishide', false)->get();
-        $student = studentlist::find($request->student);
-        $copies = copies::where('ishide', false)->get();
-        return view('borrowpage', compact('books', 'student', 'copies'));
+        if ($request->student) {
+            $student = studentlist::find($request->student);
+            $borrowbook = $student->bookborrow;
+        } else {
+            $student = [];
+            $borrowbook = [];
+        }
+       return view('fined', compact('books', 'student', 'borrowbook'));
     }
+
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
+        $student = $request->studentId;
+        foreach ($request->bookdata as $key => $value) {
+            $bookid = borrowpage::where('id', $value)->where('studentid', $student);
+            $bookid->update([
+                'bookstatus' => 'fine',
+            ]);
+        }
     }
+
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         //
@@ -57,19 +79,4 @@ class borrowpage extends Controller
     {
         //
     }
-
-    public function storebookborrow(Request $request)
-    {
-         $student = $request->studentId;
-         $date = date('Y:m:d', strtotime('+3 weekdays'));
-         foreach ($request->bookList as $key => $value) {
-             ModelsBorrowpage::create([
-                 'bookid' =>  $value,
-                 'studentid' => $student,
-                 'bookstatus' => 'onlend',
-                 'duedate' => $date,
-             ]);
-         }
-    }
-
 }

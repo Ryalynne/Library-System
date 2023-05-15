@@ -6,8 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item text-success">Books Management</li>
-                <li class="breadcrumb-item text-success" aria-current="page">Books Issued / Returned</li>
-                <li class="breadcrumb-item active text-success" aria-current="page">Books Issued</li>
+                <li class="breadcrumb-item text-success" aria-current="page">Damage / Lost Books</li>
             </ol>
         </nav>
     </div>
@@ -48,7 +47,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2>RETURNING BOOK</h2>
+                        <h2>DAMAGE / LOST BOOK</h2>
                     </div>
                 </div>
                 <br>
@@ -83,7 +82,7 @@
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input getbook"
                                             id="checkbox-{{ $book->id }}" data-id="{{ $book->id }}">
-                                        <label for="flexCheckDefault" class="form-check-label">Return</label>
+                                        <label for="flexCheckDefault" class="form-check-label">Fine</label>
                                     </div>
                                 </td>
                                 <td>
@@ -104,7 +103,7 @@
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg returnbook" data-bs-toggle="modal"
                         data-bs-target="#tablemodal" data-student="{{ $student ? $student->id : '' }}"
-                        data-token="{{ csrf_token() }}" id="myBtn">Return
+                        data-token="{{ csrf_token() }}" id="myBtn">Fines
                         Books</button></a>
                 </div>
                 <br>
@@ -119,7 +118,7 @@
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">PRINT RETURN</h1>
+                    <h1 class="modal-title fs-5">PRINT FINES</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -144,7 +143,7 @@
             if (bookdata.length == 0) {
                 alert('You need to add a book to the table to borrow!');
             } else {
-                $.post('/return/book', {
+                $.post('/returndamage/book', {
                     'studentId': studentId,
                     'bookdata': bookdata,
                     '_token': token
@@ -152,7 +151,7 @@
                     console.log(response);
                 })
                 const frame = $('#table-frame')
-                const link = '/generate-tblreturn/' + JSON.stringify(bookdata) + '/' + studentId;
+                const link = '/generate-tblreturndamage/' + JSON.stringify(bookdata) + '/' + studentId;
                 frame.attr('src', link)
                 bookdata.splice(0, bookdata.length);
                 $('input:checked').parents("tr").remove();
@@ -179,18 +178,18 @@
             if (id == "") {
                 $('.full-name').val("")
                 $('.class').val("")
-                document.location.href = "returnpage";
+                document.location.href = "fined";
                 document.getElementById('myBtn').disabled = true;
             } else {
                 $.get("/student/" + id, function(data, status) {
 
                     try {
                         if (id == data.student.id) {
-                            document.location.href = "returnpage" + '?student=' + data.student.id;
+                            document.location.href = "fined" + '?student=' + data.student.id;
                         }
                     } catch (err_value) {
                         alert('No Student that have student ID:' + id);
-                        document.location.href = "returnpage";
+                        document.location.href = "fined";
                     }
 
                 });

@@ -46,6 +46,36 @@ class borrowpage extends Model
         }
         
         if ($days > 1) {
+            $days--;
+            return $days . ' Days';
+        } else {
+            return $days . ' Day';
+        }
+    }
+
+
+    public function returnpenalty($duedate, $endDate){
+   
+        $startDate = new DateTime($duedate);
+        $endDate = new DateTime($endDate);
+        
+        if ($startDate > $endDate) { // book is not overdue yet
+            return '0 Day';
+        }
+        
+        $interval = $startDate->diff($endDate);
+        $days = $interval->days + 1; // add 1 day for initial due date
+        
+        for ($i = 0; $i <= $interval->days; $i++) {
+            $date = $startDate->modify('+1 day');
+            $dayOfWeek = $date->format('N');
+            if ($dayOfWeek == 6 || $dayOfWeek == 7) { // subtract days only for Saturdays and Sundays
+                $days--;
+            }
+        }
+        
+        if ($days > 1) {
+            $days--;
             return $days . ' Days';
         } else {
             return $days . ' Day';

@@ -42,9 +42,6 @@
                    <label class="form-label" for="form1Example13">Password</label>
                 </div>
 
-
-
-
                 <div class="d-flex justify-content-around align-items-center mb-4">
                   <!-- Checkbox -->
                   <div class="form-check">

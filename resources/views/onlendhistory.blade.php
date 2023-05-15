@@ -43,6 +43,7 @@
                             <th scope="col">Name of Borrower</th>
                             <th scope="col">Date Borrowed</th>
                             <th scope="col">Due Date</th>
+                            <th scope="col">Penalty</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +55,7 @@
                                 </td>
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>{{ $item->duedate }}</td>
+                                <td>{{ $item->penalty($item->duedate) }}</td>
                         </tr>
                     </tbody>
                     @endforeach
@@ -73,7 +75,7 @@
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">PRINT ACTION</h1>
+                    <h1 class="modal-title fs-5">PRINT ONLEND HISTORY</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

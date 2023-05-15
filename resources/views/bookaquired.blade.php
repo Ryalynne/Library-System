@@ -307,7 +307,12 @@
                 success: function(response) {
                     if (response.status == 400) {
                         $('#msgcopies').html("");
-                        $('#msgcopies').append(response.errors.addcopies);
+                        if(response.errors.addcopies){
+                            $('#msgcopies').append(response.errors.addcopies);
+                            $('#msgcopies').addClass('alert alert-danger');
+                        }else{
+                            $('#msgcopies').removeClass('alert alert-danger');
+                        }
                         $('.add-copies-btn').text('Add Copies');
                     } else {
                         $('#success_message').html("");
@@ -349,9 +354,21 @@
                 success: function(response) {
                     if (response.status == 400) {
                         $('#msglesscopies').html("");
-                        $('#msglesscopies').append(response.errors.lesscopies);
                         $('#msgcomment').html("");
-                        $('#msgcomment').append(response.errors.comment);
+
+                        if (response.errors.lesscopies) {
+                            $('#msglesscopies').append(response.errors.lesscopies);
+                            $('#msglesscopies').addClass('alert alert-danger');
+                        } else {
+                            $('#msglesscopies').removeClass('alert alert-danger');
+                        }
+                        if (response.errors.comment) {
+                            $('#msgcomment').append(response.errors.comment);
+                            $('#msgcomment').addClass('alert alert-danger');
+                        } else {
+                            $('#msgcomment').removeClass('alert alert-danger');
+                        }
+
                         $('.less-copies-btn').text('Less Copies');
                     } else {
                         $('#success_message_copies').html("");

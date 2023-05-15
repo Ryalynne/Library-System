@@ -4,11 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PRINT ACTION LIST</title>
     <br>
 </head>
 <center>
    <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-   <h3>BMA LIBRARY ACTION LIST</h3>
+   <h3>PRINT ACTION LIST</h3>
 </center>
 <table class="table table-bordered myTable">
     <thead>

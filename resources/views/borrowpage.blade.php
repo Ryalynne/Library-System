@@ -17,7 +17,7 @@
             <div class="col border-end">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2> BOOKS INFORMATION</h2>
+                        <h2> STUDENT INFORMATION</h2>
                     </div>
                 </div>
                 <br>
@@ -48,7 +48,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2>BORROWED BOOK</h2>
+                        <h2>BORROWING BOOK</h2>
                     </div>
                 </div>
                 <br>
@@ -80,7 +80,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
                 <br>
@@ -181,9 +180,6 @@
                             @endif
                             @endforeach
                         </table>
-                        {{-- <div class="pagination justify-content-center">
-                           {{ $books->links() }} 
-                        </div> --}}
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -208,7 +204,11 @@
             </div>
         </div>
     </div>
-
+    <style>
+        .custom-button {
+            background-color: green;
+        }
+    </style>
 @section('script')
     <script>
         const bookList = [];
@@ -281,11 +281,15 @@
                                             'td'));
                                         td1.innerHTML = data.book.isbn;
                                         td2.innerHTML = data.book.booktitle;
+                                        // td3.innerHTML =
+                                        //     '<button type="button" class="btn btn-outline-success btn-success custom-button" data-id = "' +
+                                        //     data.book.id +
+                                        //     '" onclick="deleteRow(this, ' + data.book.id +
+                                        //     ');">Remove</button>';
                                         td3.innerHTML =
-                                            '<button type="button" class="btn btn-outline-success" data-id = "' +
-                                            data.book.id +
-                                            '" onclick="deleteRow(this, ' + data.book.id +
-                                            ');">Remove</button>';
+                                            '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
+                                            data.book.id + '" onclick="deleteRow(this, ' +
+                                            data.book.id + ');">Remove</button>';
                                         document.getElementById("tbl").appendChild(tr);
                                         $('.bookid').val("");
                                         console.log('Available');
@@ -330,9 +334,12 @@
                     td1.innerHTML = data.book.isbn;
                     td2.innerHTML = data.book.booktitle;
                     td3.innerHTML =
-                        '<button type="button" class="btn btn-outline-success" data-id= "' + data.book
-                        .id +
-                        '" onclick="deleteRow(this, ' + data.book.id + ');">Remove</button>';
+                        '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
+                        data.book.id + '" onclick="deleteRow(this, ' + data.book.id + ');">Remove</button>';
+                    // td3.innerHTML =
+                    //     '<button type="button" class="btn btn-outline-success btn-success custom-button" data-id= "' + data.book
+                    //     .id +
+                    //     '" onclick="deleteRow(this, ' + data.book.id + ');">Remove</button>';
                     document.getElementById("tbl").appendChild(tr);
                     $('.bookid').val("");
                     alert('Added Successfully');
@@ -386,7 +393,7 @@
 
         if (stud.length > 1) {
             document.getElementById("myBtn").disabled = false;
-            document.getElementById("bor").disabled = false;       
+            document.getElementById("bor").disabled = false;
         } else {
             document.getElementById("myBtn").disabled = true;
             document.getElementById("bor").disabled = true;

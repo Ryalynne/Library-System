@@ -16,7 +16,8 @@ class booklist extends Model
     {
         $data = $this->hasMany(copies::class, 'bookid')->where('action', 'lessen')->sum('copies');
         $borrow = $this->hasMany(borrowpage::class, 'bookid')->where('bookstatus', 'onlend')->count();
-        $minis = $data + $borrow;
+        $fine = $this->hasMany(borrowpage::class, 'bookid')->where('bookstatus', 'fine')->count();
+        $minis = $data + $borrow + $fine;
         // return  $this->hasMany(copies::class, 'bookid')->where('action', 'added')->sum('copies') - $borrow + $data;
         return  $this->hasMany(copies::class, 'bookid')->where('action', 'added')->sum('copies') - $minis;
     }

@@ -4,13 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PRINT RETURN HISTORY</title>
     <br>
 </head>
 
 <body>
     <center>
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-        <h3>BOOK ADJUSTMENT</h3>
+        <h3>PRINT RETURN HISTORY</h3>
     </center>
     <table class="table table-bordered myTable">
         <thead>
@@ -34,7 +35,7 @@
                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                     <td>{{ $item->duedate }}</td>
                     <td>{{ date('Y-m-d', strtotime($item->updated_at)) }}</td>
-                    <td>{{ $item->penalty($item->duedate) }}</td>
+                    <td>{{ $item->returnpenalty($item->duedate,$item->updated_at) }}</td>
                 </tr>
             @endforeach
         </tbody>

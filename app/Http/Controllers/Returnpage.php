@@ -20,8 +20,6 @@ class Returnpage extends Controller
             $student = [];
             $borrowbook = [];
         }
-        // $borrowbook = borrowpage::where('ishide', false)->where('bookstatus', 'onlend')->where('studentid', $request->student)->get();
-
         return view('returnpage', compact('books', 'student', 'borrowbook'));
     }
 

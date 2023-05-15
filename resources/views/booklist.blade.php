@@ -400,23 +400,70 @@
                 success: function(response) {
                     if (response.status == 400) {
                         $('#msg1isbn').html("");
-                        $('#msg1isbn').append(response.errors.isbn);
-
                         $('#msg1booktitle').html("");
-                        $('#msg1booktitle').append(response.errors.booktitle);
-
                         $('#msg1author').html("");
-                        $('#msg1author').append(response.errors.msgauthor);
-
                         $('#msg1datepublish').html("");
-                        $('#msg1datepublish').append(response.errors.datepublish);
-
                         $('#msg1publisher').html("");
-                        $('#msg1publisher').append(response.errors.publisher);
-
                         $('#msg1genre').html("");
-                        $('#msg1genre').append(response.errors.genre);
+                        switch (true) {
+                            case (response.errors.isbn !== undefined):
+                                $('#msg1isbn').append(response.errors.isbn);
+                                $('#msg1isbn').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msg1isbn').removeClass('alert alert-danger');
+                                break;
+                        }
 
+                        switch (true) {
+                            case (response.errors.booktitle !== undefined):
+                                $('#msg1booktitle').append(response.errors.booktitle);
+                                $('#msg1booktitle').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msg1booktitle').removeClass('alert alert-danger');
+                                break;
+                        }
+
+                        switch (true) {
+                            case (response.errors.author !== undefined):
+                                $('#msg1author').append(response.errors.author);
+                                $('#msg1author').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msg1author').removeClass('alert alert-danger');
+                                break;
+                        }
+
+                        switch (true) {
+                            case (response.errors.datepublish !== undefined):
+                                $('#msg1datepublish').append(response.errors.datepublish);
+                                $('#msg1datepublish').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msg1datepublish').removeClass('alert alert-danger');
+                                break;
+                        }
+
+                        switch (true) {
+                            case (response.errors.publisher !== undefined):
+                                $('#msg1publisher').append(response.errors.publisher);
+                                $('#msg1publisher').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msg1publisher').removeClass('alert alert-danger');
+                                break;
+                        }
+
+                        switch (true) {
+                            case (response.errors.genre !== undefined):
+                                $('#msg1genre').append(response.errors.genre);
+                                $('#msg1genre').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msg1genre').removeClass('alert alert-danger');
+                                break;
+                        }
                         $('.btn-tr-update').text('Update');
                     } else {
                         $('#success_message').html("");
@@ -457,25 +504,69 @@
                 success: function(response) {
                     if (response.status == 400) {
                         $('#msgisbn').html("");
-                        $('#msgisbn').append(response.errors.isbn);
-
                         $('#msgbooktitle').html("");
-                        $('#msgbooktitle').append(response.errors.booktitle);
-
                         $('#msgauthor').html("");
-                        $('#msgauthor').append(response.errors.msgauthor);
-
                         $('#msgdatepublish').html("");
-                        $('#msgdatepublish').append(response.errors.datepublish);
-
                         $('#msgpublisher').html("");
-                        $('#msgpublisher').append(response.errors.publisher);
-
                         $('#msggenre').html("");
-                        $('#msggenre').append(response.errors.genre);
-
                         $('#msgcopies').html("");
-                        $('#msgcopies').append(response.errors.copies);
+
+                        switch (true) {
+                            case !!response.errors.isbn:
+                                $('#msgisbn').append(response.errors.isbn);
+                                $('#msgisbn').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msgisbn').removeClass('alert alert-danger');
+                        }
+                        switch (true) {
+                            case !!response.errors.booktitle:
+                                $('#msgbooktitle').append(response.errors.booktitle);
+                                $('#msgbooktitle').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msgbooktitle').removeClass('alert alert-danger');
+                        }
+                        switch (true) {
+                            case !!response.errors.author:
+                                $('#msgauthor').append(response.errors.author);
+                                $('#msgauthor').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msgauthor').removeClass('alert alert-danger');
+                        }
+                        switch (true) {
+                            case !!response.errors.datepublish:
+                                $('#msgdatepublish').append(response.errors.datepublish);
+                                $('#msgdatepublish').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msgdatepublish').removeClass('alert alert-danger');
+                        }
+                        switch (true) {
+                            case !!response.errors.publisher:
+                                $('#msgpublisher').append(response.errors.publisher);
+                                $('#msgpublisher').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msgpublisher').removeClass('alert alert-danger');
+                        }
+                        switch (true) {
+                            case !!response.errors.genre:
+                                $('#msggenre').append(response.errors.genre);
+                                $('#msggenre').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msggenre').removeClass('alert alert-danger');
+                        }
+                        switch (true) {
+                            case !!response.errors.copies:
+                                $('#msgcopies').append(response.errors.copies);
+                                $('#msgcopies').addClass('alert alert-danger');
+                                break;
+                            default:
+                                $('#msgcopies').removeClass('alert alert-danger');
+                        }
 
                         $('.btn-tr-submit').text('Register');
                     } else {

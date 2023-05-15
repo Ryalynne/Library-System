@@ -4,14 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PRINT ONLEND HISTORY</title>
+    <title>PRINT STUDENT LOST OR DAMAGE BOOK</title>
     <br>
 </head>
 
 <body>
     <center>
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-        <h3>ONLEND BOOK</h3>
+        <h3>STUDENT LOST OR DAMAGE BOOK</h3>
+        <p>Printed at : {{ date('F d, Y') }} and Printed by : {{ auth()->user()->name }}</p>
     </center>
     <table class="table table-bordered myTable">
         <thead>
@@ -21,25 +22,25 @@
                 <th scope="col">Name of Borrower</th>
                 <th scope="col">Date Borrowed</th>
                 <th scope="col">Due Date</th>
-                <th scope="col">PENALTY</th>
+                <th scope="col">Book Fine</th>
+                <th scope="col">Penalty</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="tr">
-                @foreach ($borrow as $item)
-                    <td>{{ $item->book->id }}</td>
+            @foreach ($fine as $item)
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
+                    <td>{{ $item->id }}</td>
                     <td>{{ $item->book->booktitle }}</td>
                     <td>{{ $item->student->name }} {{ $item->student->middle }} {{ $item->student->lastname }}</td>
                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                     <td>{{ $item->duedate }}</td>
-                    <td>{{ $item->penalty($item->duedate) }}</td>
-            </tr>
+                    <td>{{ date('Y-m-d', strtotime($item->updated_at)) }}</td>
+                    <td>{{ $item->returnpenalty($item->duedate, $item->updated_at) }}</td>
+                </tr>
         </tbody>
         @endforeach
-        </tbody>
     </table>
 </body>
-
 </html>
 
 <style>
@@ -53,7 +54,7 @@
 
     footer {
         position: fixed;
-        bottom: -60px;
+        bottom: -30px;
         left: 0px;
         right: 0px;
         height: 120px;
@@ -63,6 +64,11 @@
     table {
         border-collapse: collapse;
         width: 100%;
+    }
+
+    p {
+        font-size: 90%;
+        color: #20462c;
     }
 
     th,

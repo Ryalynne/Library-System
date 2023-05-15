@@ -14,7 +14,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body bg-success text-white">
-                            <h2>Return History</h2>
+                            <h2>Book Lost / Damage History</h2>
                         </div>
                     </div>
                     <div class="d-flex mb-1 ">
@@ -45,7 +45,7 @@
                                 <th scope="col">Name of Borrower</th>
                                 <th scope="col">Date Borrowed</th>
                                 <th scope="col">Due Date</th>
-                                <th scope="col">Book Returned</th>
+                                <th scope="col">Book Fine</th>
                                 <th scope="col">Penalty</th>
                             </tr>
                         </thead>
@@ -79,7 +79,7 @@
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">PRINT RETURN HISTORY</h1>
+                    <h1 class="modal-title fs-5">PRINT LOST OR DAMAGE BOOK</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -94,7 +94,7 @@
     <script>
         $(".printbtn").on('click', function() {
             const frame = $('#table-frame')
-            const link = '/generate-tblreturnhistory'
+            const link = '/generate-tblfinehistory'
             frame.attr('src', link)
         });
     </script>
