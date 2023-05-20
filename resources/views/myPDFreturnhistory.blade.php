@@ -16,21 +16,22 @@
     <table class="table table-bordered myTable">
         <thead>
             <tr class="bg-success text-white">
-                <th scope="col">Qr Code</th>
-                <th scope="col">Book Title</th>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author/s</th>
                 <th scope="col">Name of Borrower</th>
                 <th scope="col">Date Borrowed</th>
                 <th scope="col">Due Date</th>
-                <th scope="col">Book Returned</th>
+                <th scope="col">Returned</th>
                 <th scope="col">Penalty</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($return as $item)
                 <tr>
-
-                    <td>{{ $item->id }}</td>
-                    <td>{{ $item->book->booktitle }}</td>
+                    <td>{{ $item->book->id }}</td>
+                    <td>{{ $item->book->title }}</td>
+                    <td>{{ $item->book->author }}</td>
                     <td>{{ $item->student->name }} {{ $item->student->middle }} {{ $item->student->lastname }}</td>
                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                     <td>{{ $item->duedate }}</td>
@@ -43,7 +44,17 @@
         </tbody>
     </table>
 </body>
-
+<div style="display: flex; justify-content: space-between; margin-top: 20px;">
+    <div>
+        <span>Date Printed: </span>
+        <span>{{ date('Y-m-d') }}</span>
+    </div>
+    <br>
+    <div>
+        <span>Prepared by: </span>
+        <span contenteditable="true" style="border-bottom: 1px solid #727272;">{{ auth()->user()->name }}</span>
+    </div>
+</div>
 </html>
 
 <style>

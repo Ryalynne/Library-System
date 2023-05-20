@@ -7,20 +7,20 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-   
+
     <title>
         {{ config('app.name', 'Laravel') }}
-      </title>
+    </title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Scripts -->
-    <link rel="stylesheet" href="{{asset('build/assets/app-67dcdfd2.css')}}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-67dcdfd2.css') }}">
     <script src="{{ asset('build/assets/app-1e58d95a.js') }}"></script>
-    
+
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
-    
+
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -63,13 +63,17 @@
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="bookaquired">Books Adjustment</a>
+                                    <hr>
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
-                                        onmouseout="this.style.backgroundColor=''" href="bookstatus">Borrow Books / Return
-                                        Books</a>
-
+                                        onmouseout="this.style.backgroundColor=''" href="borrowpage">Borrow Book</a>
                                         <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="returnpage">Return Book</a>
+                                    <hr>
+                                    <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="fined">Damage / Lost
@@ -101,8 +105,8 @@
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="returnhistory">Returned
                                         History</a>
-                                        {{-- finehistory --}}
-                                        <a class="dropdown-item dropdown-active-success"
+                                    {{-- finehistory --}}
+                                    <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="finedhistory">Book Lost / Damage
@@ -124,26 +128,26 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
                     @guest
-                        @if (Route::has('login'))
+                        {{-- @if (Route::has('login'))
                             <li class="nav-item nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     LOGIN
                                 </a>
-                                <div class="dropdown-menu">
+                                {{-- <div class="dropdown-menu">
                                     <a class="dropdown-item text-success"
                                         href="{{ route('login') }}">{{ __('STUDENT') }}</a>
                                     <a class="dropdown-item text-success"
                                         href="{{ route('login') }}">{{ __('FACULTY') }}</a>
-                                </div>
+                                </div> 
                             </li>
-                        @endif
+                        @endif --}}
 
-                        @if (Route::has('register'))
+                        {{-- @if (Route::has('register'))
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('register') }}">{{ __('REGISTER') }}</a>
                             </li>
-                        @endif
+                        @endif --}}
                     @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#"
@@ -160,7 +164,8 @@
                                     onmouseover="this.style.backgroundColor='#198754'"
                                     onmouseout="this.style.backgroundColor=''" href="setting">Settings</a>
 
-                                <a class="dropdown-item dropdown-active-success" onmouseover="this.style.backgroundColor='#198754'"
+                                <a class="dropdown-item dropdown-active-success"
+                                    onmouseover="this.style.backgroundColor='#198754'"
                                     onmouseout="this.style.backgroundColor=''" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();  document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -219,18 +224,15 @@
 
     $('.edit-button').on('click', function() {
         var id = $(this).data('id');
-        //$.get('url')
         $.get("/book/" + id, function(data, status) {
-            $('.modal-book-id').val(data.book.id)
-            $('.modal-book-title').val(data.book.booktitle)
-            $('.modal-book-author').val(data.book.author)
-            $('.modal-book-datepublish').val(data.book.datepublish)
-            $('.modal-book-isbn').val(data.book.isbn)
-            $('.modal-book-genre').val(data.book.genre)
-            $('.modal-book-publisher').val(data.book.publisher)
-            $('.modal-book-addeddate').val(data.book.addeddate)
+            $('.modal-book-id').val(id);
+            $('.modal-book-title').val(data.book.title);
+            $('.modal-book-author').val(data.book.author);
+            $('.modal-book-copyright').val(data.book.copyright);
+            $('.modal-book-accession').val(data.book.accession);
         });
     });
+    
 </script>
 
 @yield('script')

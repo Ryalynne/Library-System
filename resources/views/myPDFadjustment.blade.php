@@ -15,12 +15,12 @@
     <table class="table table-bordered myTable">
         <thead>
             <tr class="bg-success text-white">
-                <th scope="col">QR CODE</th>
-                <th scope="col">ISBN</th>
-                <th scope="col">BOOK TITLE</th>
+                <th scope="col">ID</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">AUTHOR/S</th>
                 <th scope="col">DATE OF ACTION</th>
-                <th scope="col">ACTION PERFORM</th>
-                <th scope="col">NUMBER ADJUSTED</th>
+                <th scope="col">ACTION</th>
+                <th scope="col">ADJUSTED</th>
                 <th scope="col">PERFORM BY</th>
                 <th scope="col">COMMENT</th>
             </tr>
@@ -28,9 +28,9 @@
         <tbody>
             @foreach ($adjustment as $adjust)
                 <tr>
-                    <td>{{ $adjust->bookid }}</td>
-                    <td>{{ $adjust->book->isbn }}</td>
-                    <td>{{ $adjust->book->booktitle }}</td>
+                    <td>{{ $adjust->book->id }}</td>
+                    <td>{{ $adjust->book->title }}</td>
+                    <td>{{ $adjust->book->author }}</td>
                     <td>{{ date('Y-m-d', strtotime($adjust->created_at)) }}</td>
                     <td>{{ $adjust->action }}</td>
                     <td>{{ $adjust->number_adjust }}</td>
@@ -41,7 +41,17 @@
         </tbody>
     </table>
 </body>
-
+<div style="display: flex; justify-content: space-between; margin-top: 20px;">
+    <div>
+        <span>Date Printed: </span>
+        <span>{{ date('Y-m-d') }}</span>
+    </div>
+    <br>
+    <div>
+        <span>Prepared by: </span>
+        <span contenteditable="true" style="border-bottom: 1px solid #727272;">{{ auth()->user()->name }}</span>
+    </div>
+</div>
 </html>
 
 <style>

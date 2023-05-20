@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('studentlists', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('studentno')->unique();
-            $table->string('name');
-            $table->string('middle');
-            $table->string('lastname');
-            $table->string('class');
-            $table->string('studimg');
-            $table->boolean('ishide')->default(0);
+            $table->string('transaction_number');
             $table->timestamps();
         });
     }
@@ -29,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('studentlists');
+        Schema::dropIfExists('transactions');
     }
 };

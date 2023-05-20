@@ -5,9 +5,8 @@
     <div class="px-4 bg-white text-dark border border-success border-top-0 border-end-0">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item text-success">Books Management</li>
-                <li class="breadcrumb-item text-success" aria-current="page">Books Issued / Returned</li>
-                <li class="breadcrumb-item active text-success" aria-current="page">Books Issued</li>
+                <li class="breadcrumb-item text-success">Book Management</li>
+                <li class="breadcrumb-item text-success" aria-current="page">Return Book</li>
             </ol>
         </nav>
     </div>
@@ -17,29 +16,35 @@
             <div class="col border-end">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2> STUDENT INFORMATION</h2>
+                        <h2> BORROWER INFORMATION</h2>
                     </div>
                 </div>
                 <br>
                 <div class="container text-start">
                     <center>
-                        <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                            class="img-thumbnail w-50" alt="...">
+                        <div class="image-container">
+                            @if (request()->input('student') && $student->studentno == request()->input('student'))
+                                <img src="{{ $student->studimg }}" class="img-thumbnail img-fluid" alt="...">
+                            @else
+                                <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+                                    class="img-thumbnail img-fluid" alt="...">
+                            @endif
+                        </div>
                     </center>
                     <div class="mb-3">
-                        <label class="form-label">STUDENT ID</label>
+                        <label class="form-label">ENTER ID: </label>
                         <input type="text" class="form-control studid" name="student" :value="old('student')"
-                            value="{{ request()->input('student') ? $student->id : ' ' }}">
+                            value="{{ request()->input('student') ? $student->studentno : ' ' }}">
                     </div>
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">FULL NAME</label>
+                        <label for="booktitle" class="form-label">FULL NAME:</label>
                         <input style="text-transform:uppercase" type="text" class="form-control full-name"
                             value="{{ request()->input('student') ? $student->name . ' ' . $student->middle . ' ' . $student->lastname : ' ' }}"
                             disabled id="student">
                     </div>
 
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">CLASS</label>
+                        <label for="booktitle" class="form-label">CLASS:</label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
                             value="{{ request()->input('student') ? $student->class : ' ' }}" disabled>
                     </div>
@@ -52,53 +57,42 @@
                     </div>
                 </div>
                 <br>
-                <table class="table table-bordered" id="tbl">
-                    <thead class="bg-success text-white">
-                        <tr>
-                            <th>ISBN</th>
-                            <th>BOOK TITLE</th>
-                            <th>BORROW DATE</th>
-                            <th>DUE DATE</th>
-                            <th>ACTION</th>
-                            <th>PENALTY</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @if (count($borrowbook) > 0)
-                            @foreach ($borrowbook as $book)
-
-                                <td> {{ $book->book->isbn }}</td>
-                                <td>
-                                    {{ $book->book->booktitle }}
-                                </td>
-                                <td>
-                                    {{ date('Y-m-d', strtotime($book->created_at)) }}
-                                </td>
-                                <td>
-                                    {{ $book->duedate }}
-                                </td>
-
-                                <td>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input getbook"
-                                            id="checkbox-{{ $book->id }}" data-id="{{ $book->id }}">
-                                        <label for="flexCheckDefault" class="form-check-label">Return</label>
-                                    </div>
-                                </td>
-                                <td>
-                                    {{ $book->penalty($book->duedate) }}
-                                </td>
+                    <table class="table table-bordered table-striped" id="tbl">
+                        <thead class="bg-success text-white">
+                            <tr>
+                                <th>ID</th>
+                                <th>TITLE</th>
+                                <th>BORROW DATE</th>
+                                <th>DUE DATE</th>
+                                <th>ACTION</th>
+                                <th>PENALTY</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (count($borrowbook) > 0)
+                                @foreach ($borrowbook as $book)
+                                    <tr>
+                                        <td>{{ $book->book->id }}</td>
+                                        <td>{{ $book->book->title }}</td>
+                                        <td class="col-2">{{ date('Y-m-d', strtotime($book->created_at)) }}</td>
+                                        <td class="col-2">{{ $book->duedate }}</td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input getbook"
+                                                    id="checkbox-{{ $book->id }}" data-id="{{ $book->id }}">
+                                                <label class="form-check-label"
+                                                    for="checkbox-{{ $book->id }}">Return</label>
+                                            </div>
+                                        </td>
+                                        <td>{{ $book->penalty($book->duedate) }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="6">NO BORROWED BOOKS</td>
                                 </tr>
-                            @endforeach
-                        @else
-                        <tr>
-                            <td colspan="6">NO BORROW BOOK</td>
-                        </tr>
-                        @endif
-
-                    </tbody>
-
+                            @endif
+                        </tbody>
                 </table>
                 <br>
                 <div class="text-end">
@@ -128,7 +122,18 @@
             </div>
         </div>
     </div>
+    <style>
+        .custom-button {
+            background-color: green;
+        }
 
+        .image-container {
+            width: 200px;
+            /* Adjust the width as per your needs */
+            height: 200px;
+            /* Adjust the height as per your needs */
+        }
+    </style>
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
@@ -174,28 +179,32 @@
         });
 
 
-        $('.studid').on('keyup', function() {
-            var id = $(this).val().toLowerCase();
-            if (id == "") {
-                $('.full-name').val("")
-                $('.class').val("")
-                document.location.href = "returnpage";
-                document.getElementById('myBtn').disabled = true;
-            } else {
-                $.get("/student/" + id, function(data, status) {
-
-                    try {
-                        if (id == data.student.id) {
-                            document.location.href = "returnpage" + '?student=' + data.student.id;
-                        }
-                    } catch (err_value) {
-                        alert('No Student that have student ID:' + id);
-                        document.location.href = "returnpage";
-                    }
-
-                });
+        $('.studid').on('keyup', function(event) {
+            if (event.keyCode === 13) {
+                var id = $(this).val().trim().toLowerCase();
+                if (id === "") {
+                    $('.full-name').val("");
+                    $('.class').val("");
+                    document.location.href = "returnpage";
+                } else {
+                    validateStudent(id);
+                }
             }
         });
+
+        function validateStudent(id) {
+            $.get("/getid/" + id, function(data, status) {
+                if (data && data.studentno && data.studentno.studentno === id) {
+                    document.location.href = "returnpage?student=" + id;
+                } else {
+                    alert('No student found with student ID: ' + id);
+                    document.location.href = "returnpage";
+                }
+            }).fail(function() {
+                alert('Error occurred while fetching student information.');
+                document.location.href = "returnpage";
+            });
+        }
 
         var stud = document.getElementById("student").value;
 

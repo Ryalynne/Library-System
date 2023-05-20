@@ -12,7 +12,7 @@ class borrowpage extends Model
     use HasFactory;
 
     protected $fillable = [
-        'bookid', 'studentid', 'bookstatus', 'duedate', 'penalty'
+        'bookid', 'studentid', 'bookstatus', 'duedate', 'penalty','transaction'
     ];
 
     public function book()
@@ -45,11 +45,11 @@ class borrowpage extends Model
             }
         }
         
-        if ($days > 1) {
+        if ($days > 0) {
             $days--;
-            return $days . ' Days';
-        } else {
             return $days . ' Day';
+        } else {
+            return $days . ' Days';
         }
     }
 
@@ -74,11 +74,11 @@ class borrowpage extends Model
             }
         }
         
-        if ($days > 1) {
+        if ($days > 0) {
             $days--;
-            return $days . ' Days';
-        } else {
             return $days . ' Day';
+        } else {
+            return $days . ' Days';
         }
     }
 }

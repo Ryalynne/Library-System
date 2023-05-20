@@ -14,7 +14,8 @@ class Returnpage extends Controller
     {
         $books = booklist::where('ishide', false)->get();
         if ($request->student) {
-            $student = studentlist::find($request->student);
+            $studentid = studentlist::where('studentno', $request->student)->value('id');
+            $student = studentlist::find($studentid);
             $borrowbook = $student->bookborrow;
         } else {
             $student = [];

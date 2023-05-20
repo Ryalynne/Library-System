@@ -5,9 +5,8 @@
     <div class="px-4 bg-white text-dark border border-success border-top-0 border-end-0">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item text-success">Books Management</li>
-                <li class="breadcrumb-item text-success" aria-current="page">Books Issued / Returned</li>
-                <li class="breadcrumb-item active text-success" aria-current="page">Books Issued</li>
+                <li class="breadcrumb-item text-success">Book Management</li>
+                <li class="breadcrumb-item text-success" aria-current="page">Borrow Book</li>
             </ol>
         </nav>
     </div>
@@ -17,29 +16,35 @@
             <div class="col border-end">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2> STUDENT INFORMATION</h2>
+                        <h2> BORROWER INFORMATION</h2>
                     </div>
                 </div>
                 <br>
                 <div class="container text-start">
                     <center>
-                        <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                            class="img-thumbnail w-50" alt="...">
+                        <div class="image-container">
+                            @if (request()->input('student') && $student->studentno == request()->input('student'))
+                                <img src="{{ $student->studimg }}" class="img-thumbnail img-fluid" alt="...">
+                            @else
+                                <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+                                    class="img-thumbnail img-fluid" alt="...">
+                            @endif
+                        </div>
                     </center>
                     <div class="mb-3">
-                        <label class="form-label">STUDENT ID</label>
+                        <label class="form-label">ENTER ID:</label>
                         <input type="text" class="form-control studid" name="student" :value="old('student')"
-                            value="{{ request()->input('student') ? $student->id : ' ' }}">
+                            value="{{ request()->input('student') ? $student->studentno : ' ' }}">
                     </div>
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">FULL NAME</label>
+                        <label for="booktitle" class="form-label">FULL NAME: </label>
                         <input style="text-transform:uppercase" type="text" class="form-control full-name"
                             value="{{ request()->input('student') ? $student->name . ' ' . $student->middle . ' ' . $student->lastname : ' ' }}"
                             disabled id="student">
                     </div>
 
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">CLASS</label>
+                        <label for="booktitle" class="form-label">CLASS: </label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
                             value="{{ request()->input('student') ? $student->class : ' ' }}" disabled>
                     </div>
@@ -64,18 +69,18 @@
                             <div class="col">
                                 <div class="mb-3">
                                     <input type="text" class="form-control bookid myInput" id="exampleInputEmail1"
-                                        data-student="{{ $student ? $student->id : '' }}">
+                                        data-student="{{ $student ? $student->studentno : '' }}">
                                     <div class="form-text ">Scan QR Here...</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered myTable" id="tbl">
+                <table class="table table-bordered table-striped myTable" id="tbl">
                     <thead class="bg-success text-white">
                         <tr>
-                            <th>ISBN</th>
-                            <th>BOOK TITLE</th>
+                            <th>ID</th>
+                            <th>TITLE</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
@@ -85,7 +90,7 @@
                 <br>
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg borrowbtn"
-                        data-student="{{ $student ? $student->id : '' }}" data-token="{{ csrf_token() }}"
+                        data-student="{{ $student ? $student->studentno : '' }}" data-token="{{ csrf_token() }}"
                         data-bs-toggle="modal" data-bs-target="#tablemodal" id="bor">Borrow
                         Books</button></a>
                 </div>
@@ -119,13 +124,11 @@
                         <table class="table table-bordered myTable" id="data">
                             <thead class="bg-success text-white">
                                 <tr>
-                                    <th class="text-center">BOOK QR</th>
-                                    <th class="text-center">ISBN</th>
-                                    <th class="text-center">BOOK TITLE</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">TITLE</th>
                                     <th class="text-center">AUTHOR/S</th>
-                                    <th class="text-center">DATE PUBLISH</th>
-                                    <th class="text-center">PUBLISHER</th>
-                                    <th class="text-center">GENRE</th>
+                                    <th class="text-center">COPYRIGHT</th>
+                                    <th class="text-center">ACCCESSION NO</th>
                                     <th class="text-center">STATUS</th>
                                     <th class="text-center">ACTION</th>
                                 </tr>
@@ -134,26 +137,20 @@
                                 @foreach ($books as $book)
                                     @if ($book->numberofcopies() > 0)
                                         <tr class="trtr tr">
-                                            <th scope="row" class="getid">
+                                            <th scope="row" class="getidd">
                                                 {{ $book->id }}
                                             </th>
                                             <td class="getisbn">
-                                                {{ $book->isbn }}
-                                            </td>
-                                            <td class="getbooktitle">
-                                                {{ $book->booktitle }}
+                                                {{ $book->title }}
                                             </td>
                                             <td>
                                                 {{ $book->author }}
                                             </td>
                                             <td>
-                                                {{ $book->datepublish }}
+                                                {{ $book->copyright }}
                                             </td>
                                             <td>
-                                                {{ $book->genre }}
-                                            </td>
-                                            <td>
-                                                {{ $book->genre }}
+                                                {{ $book->accession }}
                                             </td>
                                             <td class="getstatus">
                                                 @if (request()->input('student'))
@@ -208,6 +205,13 @@
         .custom-button {
             background-color: green;
         }
+
+        .image-container {
+            width: 200px;
+            /* Adjust the width as per your needs */
+            height: 200px;
+            /* Adjust the height as per your needs */
+        }
     </style>
 @section('script')
     <script>
@@ -231,8 +235,9 @@
                 }, function(response) {
                     console.log(response);
                 })
+                console.log(studentId);
                 const frame = $('#table-frame')
-                const link = '/generate-tblborrow/' + JSON.stringify(bookList)
+                const link = '/generate-tblborrow/' + JSON.stringify(bookList) +'/'+ studentId
                 frame.attr('src', link)
 
                 var table = document.getElementById("tbl");
@@ -246,69 +251,59 @@
             }
         });
 
-        //QR CODE
+
         var _changeInterval = null;
+
         $(".bookid").on("keyup", function() {
-
-            let id = $(this).val().toLowerCase();
-
+            var id = $(this).val().trim().toLowerCase();
             let studentId = $(this).data('student');
 
-            clearInterval(_changeInterval)
+            clearInterval(_changeInterval);
             _changeInterval = setInterval(function() {
-
                 $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
-
                     try {
                         if (data.bookstatus.bookstatus == "onlend") {
                             console.log('onlend');
-                            alert('The Book is Already Borrowed')
+                            alert('The Book is Already Borrowed');
                             $('.bookid').val("");
                         } else {
-                            $.get("/book/" + id, function(data, status) {
-                                if (!bookList.includes(data.book.id)) {
-                                    bookList.push(data.book.id)
-
-                                    if (data.book.id == "") {
-                                        $('.bookid').val("");
-                                    } else {
-                                        var tr = document.createElement('tr');
-                                        var td1 = tr.appendChild(document.createElement(
-                                            'td'));
-                                        var td2 = tr.appendChild(document.createElement(
-                                            'td'));
-                                        var td3 = tr.appendChild(document.createElement(
-                                            'td'));
-                                        td1.innerHTML = data.book.isbn;
-                                        td2.innerHTML = data.book.booktitle;
-                                        // td3.innerHTML =
-                                        //     '<button type="button" class="btn btn-outline-success btn-success custom-button" data-id = "' +
-                                        //     data.book.id +
-                                        //     '" onclick="deleteRow(this, ' + data.book.id +
-                                        //     ');">Remove</button>';
-                                        td3.innerHTML =
-                                            '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
-                                            data.book.id + '" onclick="deleteRow(this, ' +
-                                            data.book.id + ');">Remove</button>';
-                                        document.getElementById("tbl").appendChild(tr);
-                                        $('.bookid').val("");
-                                        console.log('Available');
-                                    }
-                                } else {
-                                    alert("The Book Already in the list");
-                                    $('.bookid').val("");
-                                }
-                            });
+                            checkBookAvailability(id);
                         }
-                    } catch (err_value) {
-                        alert("No Available Book");
-                        $('.bookid').val("");
+                    } catch (err) {
+                        checkBookAvailability(id);
                     }
-
                 });
-                clearInterval(_changeInterval)
+                clearInterval(_changeInterval);
             }, 900);
         });
+
+        function checkBookAvailability(id) {
+            $.get("/book/" + id, function(data, status) {
+                if (data.book.id == "") {
+                    alert("The Book Does Not Exist");
+                    $('.bookid').val("");
+                } else {
+                    if (!bookList.includes(id)) {
+                        bookList.push(id);
+                        var tr = document.createElement('tr');
+                        var td1 = tr.appendChild(document.createElement('td'));
+                        var td2 = tr.appendChild(document.createElement('td'));
+                        var td3 = tr.appendChild(document.createElement('td'));
+                        td1.innerHTML = data.book.id;
+                        td2.innerHTML = data.book.title;
+                        td3.innerHTML =
+                            '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
+                            id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>';
+                        document.getElementById("tbl").appendChild(tr);
+                        $('.bookid').val("");
+                        console.log('Available');
+                    } else {
+                        alert("The Book Already in the list");
+                        $('.bookid').val("");
+                    }
+                }
+            });
+        }
 
         var $iddata = "";
         let $status = "";
@@ -317,13 +312,14 @@
         $(".getdata").on('click', function() {
 
             var $row = $(this).closest(".trtr");
-            $iddata = $row.find(".getid").text();
+            $iddata = $row.find(".getidd").text().trim().toLowerCase();;
             $status = $row.find(".getstatus").text();
             $.get("/book/" + $iddata, function(data, status) {
                 if ($status.includes("onlend")) {
                     alert('The Book Already Borrowed');
-                } else if (!bookList.includes(data.book.id)) {
-                    bookList.push(data.book.id)
+                } else if (!bookList.includes($iddata)) {
+                    bookList.push($iddata)
+                    console.log(bookList);
                     var tr = document.createElement('tr');
                     var td1 = tr.appendChild(document.createElement(
                         'td'));
@@ -331,15 +327,12 @@
                         'td'));
                     var td3 = tr.appendChild(document.createElement(
                         'td'));
-                    td1.innerHTML = data.book.isbn;
-                    td2.innerHTML = data.book.booktitle;
+                    td1.innerHTML = $iddata ;
+                    td2.innerHTML = data.book.title;
                     td3.innerHTML =
                         '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
-                        data.book.id + '" onclick="deleteRow(this, ' + data.book.id + ');">Remove</button>';
-                    // td3.innerHTML =
-                    //     '<button type="button" class="btn btn-outline-success btn-success custom-button" data-id= "' + data.book
-                    //     .id +
-                    //     '" onclick="deleteRow(this, ' + data.book.id + ');">Remove</button>';
+                        $iddata  + '" onclick="deleteRow(this, ' + $iddata  +
+                        ');">Remove</button>';
                     document.getElementById("tbl").appendChild(tr);
                     $('.bookid').val("");
                     alert('Added Successfully');
@@ -361,33 +354,33 @@
             tbl.deleteRow(row);
         }
 
-        var time = null;
-        clearInterval(time)
 
-        $('.studid').on('keyup', function() {
-            var id = $(this).val().toLowerCase();
-            time = setInterval(function() {
-                if (id == "") {
-                    $('.full-name').val("")
-                    $('.class').val("")
+        $('.studid').on('keyup', function(event) {
+            if (event.keyCode === 13) {
+                var id = $(this).val().trim().toLowerCase();
+                if (id === "") {
+                    $('.full-name').val("");
+                    $('.class').val("");
                     document.location.href = "borrowpage";
                 } else {
-                    $.get("/student/" + id, function(data, status) {
-                        try {
-                            if (id == data.student.id) {
-                                document.location.href = "borrowpage" + '?student=' + data.student
-                                    .id;
-                            }
-                        } catch (err_value) {
-                            alert('No Student that have ' + id);
-                            document.location.href = "borrowpage";
-                        }
-                    });
+                    validateStudent(id);
                 }
-                clearInterval(time)
-            }, 900);
+            }
         });
 
+        function validateStudent(id) {
+            $.get("/getid/" + id, function(data, status) {
+                if (data && data.studentno && data.studentno.studentno === id) {
+                    document.location.href = "borrowpage?student=" + id;
+                } else {
+                    alert('No student found with student ID: ' + id);
+                    document.location.href = "borrowpage";
+                }
+            }).fail(function() {
+                alert('Error occurred while fetching student information.');
+                document.location.href = "borrowpage";
+            });
+        }
 
         var stud = document.getElementById("student").value;;
 
@@ -399,7 +392,7 @@
             document.getElementById("bor").disabled = true;
         }
 
-        console.log(stud);
+        // console.log(stud);
     </script>
 @endsection
 @endsection

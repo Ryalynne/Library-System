@@ -41,13 +41,11 @@
             <table class="table table-bordered myTable">
                 <thead>
                     <tr class="bg-success text-white">
-                        <th scope="col" class="text-center">QR CODE</th>
-                        <th scope="col" class="text-center">ISBN</th>
-                        <th scope="col" class="text-center">BOOK TITLE</th>
+                        <th scope="col" class="text-center">ID</th>
+                        <th scope="col" class="text-center">TITLE</th>
                         <th scope="col" class="text-center">AUTHOR/S</th>
-                        <th scope="col" class="text-center">DATE PUBLISH</th>
-                        <th scope="col" class="text-center">PUBLISHER</th>
-                        <th scope="col" class="text-center">GENRE</th>
+                        <th scope="col" class="text-center">COPYRIGHT</th>
+                        <th scope="col" class="text-center">ACCESSION NO</th>
                         <th scope="col" class="text-center">COPIES</th>
                         <th scope="col" class="text-center">ACTIONS PERFORM</th>
                     </tr>
@@ -59,22 +57,16 @@
                                 {{ $book->id }}
                             </th>
                             <td class="px-6 py-3">
-                                {{ $book->isbn }}
-                            </td>
-                            <td class="px-6 py-3">
-                                {{ $book->booktitle }}
+                                {{ $book->title }}
                             </td>
                             <td class="px-6 py-3">
                                 {{ $book->author }}
                             </td>
                             <td class="px-6 py-3">
-                                {{ $book->datepublish }}
+                                {{ $book->copyright }}
                             </td>
                             <td class="px-6 py-3">
-                                {{ $book->publisher }}
-                            </td>
-                            <td class="px-6 py-3">
-                                {{ $book->genre }}
+                                {{ $book->accession }}
                             </td>
                             <td class="px-6 py-3">
                                 {{ $book->numberofcopies() }}
@@ -121,7 +113,7 @@
                                                     readonly>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="disabledTextInput" class="form-label">BOOK
+                                                <label for="disabledTextInput" class="form-label">
                                                     TITLE</label>
                                                 <input type="text" id="disabledTextInput"
                                                     class="form-control modal-book-title" placeholder="Disabled input"
@@ -134,16 +126,15 @@
                                                     readonly>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="disabledTextInput" class="form-label">DATE
-                                                    PUBLISH</label>
+                                                <label for="disabledTextInput" class="form-label">COPYRIGHT</label>
                                                 <input type="text" id="disabledTextInput"
-                                                    class="form-control modal-book-datepublish"
-                                                    placeholder="Disabled input" readonly>
+                                                    class="form-control modal-book-copyright" placeholder="Disabled input"
+                                                    readonly>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="disabledTextInput" class="form-label">PUBLISHER</label>
+                                                <label for="disabledTextInput" class="form-label">ACCESSION</label>
                                                 <input type="text" id="disabledTextInput"
-                                                    class="form-control modal-book-publisher" placeholder="Disabled input"
+                                                    class="form-control modal-book-accession" placeholder="Disabled input"
                                                     readonly>
                                             </div>
                                             <div class="mb-3">
@@ -190,25 +181,31 @@
                                             {{-- <form method="POST" action="{{ route('books.updatenegative-copy') }}">
                                                 <fieldset> --}}
                                             <div class="mb-3">
-                                                <label class="form-label">BOOK ID:</label>
+                                                <label class="form-label">BOOK ID</label>
                                                 <input type="text" id="disabledTextInput"
                                                     class="form-control modal-book-id" readonly>
                                             </div>
                                             <div class="mb-3">
-                                                <label class="form-label">BOOK TITLE:</label>
+                                                <label class="form-label">TITLE</label>
                                                 <input type="text" id="disabledTextInput"
                                                     class="form-control modal-book-title" readonly>
                                             </div>
                                             <div class="mb-3">
-                                                <label class="form-label">AUTHOR/S:</label>
+                                                <label class="form-label">AUTHOR/S</label>
                                                 <input type="text" id="disabledTextInput"
                                                     class="form-control modal-book-author" readonly>
                                             </div>
                                             <div class="mb-3">
-                                                <label class="form-label">YEAR OF
-                                                    PUBLISH:</label>
+                                                <label for="disabledTextInput" class="form-label">COPYRIGHT</label>
                                                 <input type="text" id="disabledTextInput"
-                                                    class="form-control modal-book-datepublish" readonly>
+                                                    class="form-control modal-book-copyright" placeholder="Disabled input"
+                                                    readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="disabledTextInput" class="form-label">ACCESSION</label>
+                                                <input type="text" id="disabledTextInput"
+                                                    class="form-control modal-book-accession" placeholder="Disabled input"
+                                                    readonly>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="" class="form-label">AVAILABLE
@@ -219,7 +216,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="lesscopies" class="form-label">NUMBER OF COPIES TO BE
-                                                    REMOVED:</label>
+                                                    REMOVED</label>
                                                 <input type="hidden" name="bookid" class="modal-book-id">
                                                 <input type="text" class="form-control less-copies" id="lesscopies"
                                                     name="lesscopies" :value="old('lesscopies')" placeholder="ex.10">
@@ -307,10 +304,10 @@
                 success: function(response) {
                     if (response.status == 400) {
                         $('#msgcopies').html("");
-                        if(response.errors.addcopies){
+                        if (response.errors.addcopies) {
                             $('#msgcopies').append(response.errors.addcopies);
                             $('#msgcopies').addClass('alert alert-danger');
-                        }else{
+                        } else {
                             $('#msgcopies').removeClass('alert alert-danger');
                         }
                         $('.add-copies-btn').text('Add Copies');

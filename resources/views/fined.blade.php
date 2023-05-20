@@ -5,8 +5,8 @@
     <div class="px-4 bg-white text-dark border border-success border-top-0 border-end-0">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item text-success">Books Management</li>
-                <li class="breadcrumb-item text-success" aria-current="page">Damage / Lost Books</li>
+                <li class="breadcrumb-item text-success">Book Management</li>
+                <li class="breadcrumb-item text-success" aria-current="page">Damage - Lost Book</li>
             </ol>
         </nav>
     </div>
@@ -16,29 +16,35 @@
             <div class="col border-end">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2> STUDENT INFORMATION</h2>
+                        <h2> BORROWER INFORMATION</h2>
                     </div>
                 </div>
                 <br>
                 <div class="container text-start">
                     <center>
-                        <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                            class="img-thumbnail w-50" alt="...">
+                        <div class="image-container">
+                            @if (request()->input('student') && $student->studentno == request()->input('student'))
+                                <img src="{{ $student->studimg }}" class="img-thumbnail img-fluid" alt="...">
+                            @else
+                                <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+                                    class="img-thumbnail img-fluid" alt="...">
+                            @endif
+                        </div>
                     </center>
                     <div class="mb-3">
-                        <label class="form-label">STUDENT ID</label>
+                        <label class="form-label">ENTER ID:</label>
                         <input type="text" class="form-control studid" name="student" :value="old('student')"
-                            value="{{ request()->input('student') ? $student->id : ' ' }}">
+                            value="{{ request()->input('student') ? $student->studentno : ' ' }}">
                     </div>
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">FULL NAME</label>
+                        <label for="booktitle" class="form-label">FULL NAME:</label>
                         <input style="text-transform:uppercase" type="text" class="form-control full-name"
                             value="{{ request()->input('student') ? $student->name . ' ' . $student->middle . ' ' . $student->lastname : ' ' }}"
                             disabled id="student">
                     </div>
 
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">CLASS</label>
+                        <label for="booktitle" class="form-label">CLASS:</label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
                             value="{{ request()->input('student') ? $student->class : ' ' }}" disabled>
                     </div>
@@ -66,7 +72,6 @@
 
                         @if (count($borrowbook) > 0)
                             @foreach ($borrowbook as $book)
-
                                 <td> {{ $book->book->isbn }}</td>
                                 <td>
                                     {{ $book->book->booktitle }}
@@ -91,9 +96,9 @@
                                 </tr>
                             @endforeach
                         @else
-                        <tr>
-                            <td colspan="6">NO BORROW BOOK</td>
-                        </tr>
+                            <tr>
+                                <td colspan="6">NO BORROW BOOK</td>
+                            </tr>
                         @endif
 
                     </tbody>
@@ -102,7 +107,7 @@
                 <br>
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg returnbook" data-bs-toggle="modal"
-                        data-bs-target="#tablemodal" data-student="{{ $student ? $student->id : '' }}"
+                        data-bs-target="#tablemodal" data-student="{{ $student ? $student->studentno : '' }}"
                         data-token="{{ csrf_token() }}" id="myBtn">Fines
                         Books</button></a>
                 </div>
@@ -127,7 +132,18 @@
             </div>
         </div>
     </div>
+    <style>
+        .custom-button {
+            background-color: green;
+        }
 
+        .image-container {
+            width: 200px;
+            /* Adjust the width as per your needs */
+            height: 200px;
+            /* Adjust the height as per your needs */
+        }
+    </style>
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
@@ -155,7 +171,7 @@
                 frame.attr('src', link)
                 bookdata.splice(0, bookdata.length);
                 $('input:checked').parents("tr").remove();
-                alert('successfully Returned');
+                alert('successfully list as damage/lost');
                 console.log(bookdata);
             }
         });
@@ -173,28 +189,58 @@
         });
 
 
-        $('.studid').on('keyup', function() {
-            var id = $(this).val().toLowerCase();
-            if (id == "") {
-                $('.full-name').val("")
-                $('.class').val("")
-                document.location.href = "fined";
-                document.getElementById('myBtn').disabled = true;
-            } else {
-                $.get("/student/" + id, function(data, status) {
+        // $('.studid').on('keyup', function() {
+        //     var id = $(this).val().toLowerCase();
+        //     if (id == "") {
+        //         $('.full-name').val("")
+        //         $('.class').val("")
+        //         document.location.href = "fined";
+        //         document.getElementById('myBtn').disabled = true;
+        //     } else {
+        //         $.get("/student/" + id, function(data, status) {
 
-                    try {
-                        if (id == data.student.id) {
-                            document.location.href = "fined" + '?student=' + data.student.id;
-                        }
-                    } catch (err_value) {
-                        alert('No Student that have student ID:' + id);
-                        document.location.href = "fined";
-                    }
+        //             try {
+        //                 if (id == data.student.id) {
+        //                     document.location.href = "fined" + '?student=' + data.student.studentno;
+        //                 }
+        //             } catch (err_value) {
+        //                 alert('No Student that have student ID:' + id);
+        //                 document.location.href = "fined";
+        //             }
 
-                });
+        //         });
+        //     }
+        // });
+
+        // var stud = document.getElementById("student").value;
+
+
+        $('.studid').on('keyup', function(event) {
+            if (event.keyCode === 13) {
+                var id = $(this).val().trim().toLowerCase();
+                if (id === "") {
+                    $('.full-name').val("");
+                    $('.class').val("");
+                    document.location.href = "fined";
+                } else {
+                    validateStudent(id);
+                }
             }
         });
+
+        function validateStudent(id) {
+            $.get("/getid/" + id, function(data, status) {
+                if (data && data.studentno && data.studentno.studentno === id) {
+                    document.location.href = "fined?student=" + id;
+                } else {
+                    alert('No student found with student ID: ' + id);
+                    document.location.href = "fined";
+                }
+            }).fail(function() {
+                alert('Error occurred while fetching student information.');
+                document.location.href = "fined";
+            });
+        }
 
         var stud = document.getElementById("student").value;
 

@@ -38,6 +38,16 @@
                                 d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
                         </svg>
                     </button>
+                    <button type="button" class="btn btn-success bg-success border-success" data-bs-toggle="modal"
+                        data-bs-target="#modal_import">
+                        IMPORT
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-file-earmark-spreadsheet-fill" viewBox="0 0 16 16">
+                            <path d="M6 12v-2h3v2H6z" />
+                            <path
+                                d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z" />
+                        </svg>
+                    </button>
                 </div>
                 <div class="p-2">
                     <div class="input-group">
@@ -53,61 +63,45 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header bg-success">
-                                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Register Books</h1>
+                                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Register Book</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
 
-                                <div class="mb-3">
-                                    <label for="isbn" class="form-label">ISBN</label>
-                                    <input type="text" class="form-control t-isbn" id="isbn" name="isbn"
-                                        :value="old('isbn')" placeholder="ex.4092752">
-                                </div>
-                                <p id="msgisbn" class="text-danger"> </p>
-                                {{-- textfield --}}
 
                                 <div class="mb-3">
-                                    <label for="booktitle" class="form-label">BOOK TITLE</label>
-                                    <input style="text-transform:uppercase" type="text" class="form-control t-booktitle"
-                                        id="booktitle" name="booktitle" :value="old('booktitle')"
-                                        placeholder="ex.Math with Friends">
-
+                                    <label for="title" class="form-label">TITLE</label>
+                                    <input style="text-transform:uppercase" type="text" class="form-control t-title"
+                                        id="title" name="title" :value="old('title')"
+                                        placeholder="ex.IAMSAR Manual Vol.1 Organization and Management">
                                 </div>
-                                <p id="msgbooktitle" class="text-danger"> </p>
+                                <p id="msgtitle" class="text-danger"> </p>
 
                                 {{-- textfield --}}
                                 <div class="mb-3">
                                     <label for="author" class="form-label">AUTHOR/S</label>
                                     <input style="text-transform:uppercase" type="text" class="form-control t-author"
-                                        id="author" name="author" :value="old('author')" placeholder="ex.Camille Pura">
+                                        id="author" name="author" :value="old('author')" placeholder="ex.IMO">
 
                                 </div>
                                 <p id="msgauthor" class="text-danger"> </p>
-                                {{-- textfield --}}
-                                <div class="mb-3">
-                                    <label for="datepublish" class="form-label">DATE PUBLISH</label>
-                                    <input type="date" class="form-control t-datepublish" id="datepublish"
-                                        name="datepublish" :value="old('datepublish')" placeholder="ex.BMA">
 
-                                </div>
-                                <p id="msgdatepublish" class="text-danger"> </p>
-                                {{-- textfield --}}
                                 <div class="mb-3">
-                                    <label for="publisher" class="form-label">PUBLISHER</label>
-                                    <input style="text-transform:uppercase" type="text" class="form-control t-publisher"
-                                        id="publisher" name="publisher" :value="old('publisher')" placeholder="ex.BMA">
-
+                                    <label for="copyright" class="form-label">COPYRIGHT</label>
+                                    <input type="text" class="form-control t-copyright" id="copyright" name="copyright"
+                                        :value="old('copyright')" placeholder="ex.2023">
                                 </div>
-                                <p id="msgpublisher" class="text-danger"> </p>
-                                {{-- textfield --}}
+                                <p id="msgcopyright" class="text-danger"> </p>
+
                                 <div class="mb-3">
-                                    <label for="genre" class="form-label">GENRE</label>
-                                    <input style="text-transform:uppercase" type="text" class="form-control t-genre"
-                                        id="genre" name="genre" :value="old('genre')"placeholder="ex.Math">
-
+                                    <label for="accession" class="form-label">ACCESSION NO.</label>
+                                    <input type="number" class="form-control t-accession" id="accession" name="accession"
+                                        :value="old('accession')" placeholder="ex.04313">
                                 </div>
-                                <p id="msggenre" class="text-danger"> </p>
+
+
+                                <p id="msgaccession" class="text-danger"> </p>
                                 {{-- textfield --}}
                                 <div class="mb-3">
                                     <label for="copies" class="form-label">COPIES</label>
@@ -133,47 +127,36 @@
                         <table class="table table-bordered myTable">
                             <thead>
                                 <tr class="bg-success text-white">
+                                    <th class="text-center">ID</th>
                                     <th class="text-center">QR CODE</th>
-                                    <th class="text-center">ISBN</th>
-                                    <th class="text-center">BOOK TITLE</th>
-                                    <th class="text-center">AUTHOR/S</th>
-                                    <th class="text-center">DATE PUBLISH</th>
-                                    <th class="text-center">PUBLISHER</th>
-                                    <th class="text-center">GENRE</th>
-                                    <th class="text-center">ADDED DATE</th>
-                                    <th class="text-center">QR CODE</th>
+                                    <th class="text-center">TITLE</th>
+                                    <th class="text-center">AUTHOR</th>
+                                    <th class="text-center">COPYRIGHT</th>
+                                    <th class="text-center">ACCESSION NO</th>
+                                    <th class="text-center">ADDED AT</th>
                                     <th class="text-center ">ACTIONS PERFORM</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($books as $book)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
-                                        <th>
+                                        <th class="text-center">
                                             {{ $book->id }}
                                         </th>
-                                        <td>
-                                            {{ $book->isbn }}
+                                        <td class="text-center">{!! QrCode::size(40, 50)->generate($book->id) !!}
                                         </td>
-                                        <td class="col-md-1 col-md-max-1">
-                                            {{ $book->booktitle }}
+                                        <td>
+                                            {{ $book->title }}
                                         </td>
                                         <td>
                                             {{ $book->author }}
                                         </td>
+                                        <td>{{ $book->copyright }}</td>
                                         <td>
-                                            {{ $book->datepublish }}
-                                        </td>
-                                        <td>
-                                            {{ $book->publisher }}
-                                        </td>
-                                        <td class="col-md-1 col-md-max-1">
-                                            {{ $book->genre }}
+                                            {{ $book->accession }}
                                         </td>
                                         <td>
                                             {{ date('Y-m-d', strtotime($book->created_at)) }}
-                                        </td>
-                                        <td class="text-center">
-                                            {!! QrCode::size(40, 50)->generate($book->id) !!}
                                         </td>
                                         <td class="text-center col-2">
                                             <button type="button" class="btn btn-success edit-button btn-sm"
@@ -232,18 +215,12 @@
                                     :value="old('bookid')" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="isbn" class="form-label">ISBN</label>
-                                <input type="text" class="form-control modal-book-isbn" id="updateisbn"
-                                    name="updateisbn" :value="old('updateisbn')">
-                            </div>
-                            <p id="msg1isbn" class="text-danger"> </p>
-                            <div class="mb-3">
-                                <label for="updatebooktitle" class="form-label">BOOK TITLE</label>
+                                <label for="updatetitle" class="form-label">TITLE</label>
                                 <input style="text-transform:uppercase" type="text"
-                                    class="form-control modal-book-title" id="updatebooktitle" name="updatebooktitle"
-                                    :value="old('updatebooktitle')">
+                                    class="form-control modal-book-title" id="updatetitle" name="updatetitle"
+                                    :value="old('updatetitle')">
                             </div>
-                            <p id="msg1booktitle" class="text-danger"> </p>
+                            <p id="msg1title" class="text-danger"> </p>
                             <div class="mb-3">
                                 <label for="updateauthor" class="form-label">AUTHOR/S</label>
                                 <input style="text-transform:uppercase" type="text"
@@ -251,27 +228,22 @@
                                     :value="old('updateauthor')">
                             </div>
                             <p id="msg1author" class="text-danger"> </p>
+
                             <div class="mb-3">
-                                <label for="updatepublish" class="form-label">DATE
-                                    PUBLISH</label>
-                                <input type="date" class="form-control modal-book-datepublish" id="updatepublish"
-                                    name="updatepublish" :value="old('updatepublish')">
-                            </div>
-                            <p id="msg1publish" class="text-danger"> </p>
-                            <div class="mb-3">
-                                <label for="updatepublisher" class="form-label">PUBLISHER</label>
+                                <label for="updatecopyright" class="form-label">COPYRIGHT</label>
                                 <input style="text-transform:uppercase" type="text"
-                                    class="form-control modal-book-publisher" id="updatepublisher" name="updatepublisher"
-                                    :value="old('updatepublisher')">
+                                    class="form-control modal-book-copyright" id="updatecopyright" name="updatecopyright"
+                                    :value="old('updatecopyright')">
                             </div>
-                            <p id="msg1publisher" class="text-danger"> </p>
+                            <p id="msg1copyright" class="text-danger"> </p>
+
                             <div class="mb-3">
-                                <label for="updategenre" class="form-label">GENRE</label>
+                                <label for="updateaccession" class="form-label">ACCESSION NO.</label>
                                 <input style="text-transform:uppercase" type="text"
-                                    class="form-control modal-book-genre" id="updategenre" name="updategenre"
-                                    :value="old('updategenre')">
+                                    class="form-control modal-book-accession" id="updateaccession" name="updateaccession"
+                                    :value="old('updateaccession')">
                             </div>
-                            <p id="msg1genre" class="text-danger"> </p>
+                            <p id="msg1accession" class="text-danger"> </p>
 
                         </div>
 
@@ -341,6 +313,27 @@
         </tbody>
         @endforeach
         </table>
+
+        <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">IMPORT EXCEL FILE</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="file" id="fileInput" accept=".xlsx, .xls" />
+                        <button type="button" class="btn btn-success" onclick="importExcelFile()">Import</button>
+                        <button type="button" class="btn btn-success" onclick="insertData()">Register</button>
+                        <br><br>
+                        <table id="importTable" class="table table-bordered">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <br>
     <div class="pagination justify-content-center">
@@ -349,8 +342,129 @@
     </div>
     <br>
     <br>
+
+
+
+@section('style')
+    <style>
+        #importTable {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #importTable th,
+        #importTable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #importTable th {
+            background-color: #f2f2f2;
+        }
+
+        #importTable td input[type="text"] {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .removeButton {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+@endsection
+
 @section('script')
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <script>
+        // function importExcelFile() {
+        //     var fileInput = document.getElementById('fileInput');
+        //     var table = document.getElementById('importTable');
+        //     table.innerHTML = '';
+
+        //     if (fileInput.files.length === 0) {
+        //         alert('Please select an Excel file.');
+        //         return;
+        //     }
+
+        //     var file = fileInput.files[0];
+        //     var reader = new FileReader();
+
+        //     reader.onload = function(e) {
+        //         var data = new Uint8Array(e.target.result);
+        //         var workbook = XLSX.read(data, {
+        //             type: 'array'
+        //         });
+
+        //         var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        //         var jsonData = XLSX.utils.sheet_to_json(worksheet, {
+        //             header: 1
+        //         });
+
+        //         // Define the column headers
+        //         var columnHeaders = ['ID', 'TITLE', 'AUTHOR', 'COPYRIGHT', 'ACCESSION NO.', 'COPIES', ''];
+
+        //         // Add column headers
+        //         var headerRow = document.createElement('tr');
+
+        //         for (var j = 0; j < columnHeaders.length; j++) {
+        //             var cellHeader = document.createElement('th');
+        //             cellHeader.textContent = columnHeaders[j];
+        //             headerRow.appendChild(cellHeader);
+        //         }
+
+        //         table.appendChild(headerRow);
+
+        //         for (var i = 1; i < jsonData.length; i++) {
+        //             (function() {
+        //                 var row = document.createElement('tr');
+
+        //                 for (var j = 0; j < jsonData[i].length; j++) {
+        //                     var cell = document.createElement('td');
+        //                     var input = document.createElement('input');
+        //                     input.type = 'text';
+        //                     input.value = jsonData[i][j];
+        //                     cell.appendChild(input);
+        //                     row.appendChild(cell);
+        //                 }
+
+        //                 // Add an input column for "COPIES"
+        //                 var copiesCell = document.createElement('td');
+        //                 var copiesInput = document.createElement('input');
+        //                 copiesInput.type = 'text';
+        //                 copiesInput.value = '0'; // Set the default value to 0
+        //                 copiesCell.appendChild(copiesInput);
+        //                 row.appendChild(copiesCell);
+
+        //                 // Add a remove button column
+        //                 var removeButtonCell = document.createElement('td');
+        //                 var removeButton = document.createElement('button');
+        //                 removeButton.textContent = 'Remove';
+        //                 removeButton.className = 'removeButton';
+        //                 removeButton.addEventListener('click', function() {
+        //                     table.removeChild(row); // Remove the row when the button is clicked
+        //                 });
+        //                 removeButtonCell.appendChild(removeButton);
+        //                 row.appendChild(removeButtonCell);
+
+        //                 table.appendChild(row);
+        //             })();
+        //         }
+        //     };
+
+        //     reader.readAsArrayBuffer(file);
+        // }
+
+
         $('.btn-qr').on('click', function() {
             var id = $(this).data('id');
 
@@ -380,12 +494,10 @@
             $(this).text('Checking');
             var data = {
                 'id': $('.modal-book-id').val(),
-                'isbn': $('.modal-book-isbn').val(),
+                'title': $('.modal-book-title').val(),
                 'author': $('.modal-book-author').val(),
-                'publisher': $('.modal-book-publisher').val(),
-                'datepublish': $('.modal-book-datepublish').val(),
-                'booktitle': $('.modal-book-title').val(),
-                'genre': $('.modal-book-genre').val(),
+                'copyright': $('.modal-book-copyright').val(),
+                'accession': $('.modal-book-accession').val(),
             }
             $.ajaxSetup({
                 headers: {
@@ -399,29 +511,17 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.status == 400) {
-                        $('#msg1isbn').html("");
-                        $('#msg1booktitle').html("");
+                        $('#msg1title').html("");
                         $('#msg1author').html("");
-                        $('#msg1datepublish').html("");
-                        $('#msg1publisher').html("");
-                        $('#msg1genre').html("");
+                        $('#msgcopyright').html("");
+                        $('#msg1accession').html("");
                         switch (true) {
-                            case (response.errors.isbn !== undefined):
-                                $('#msg1isbn').append(response.errors.isbn);
-                                $('#msg1isbn').addClass('alert alert-danger');
+                            case (response.errors.title !== undefined):
+                                $('#msg1title').append(response.errors.title);
+                                $('#msg1title').addClass('alert alert-danger');
                                 break;
                             default:
-                                $('#msg1isbn').removeClass('alert alert-danger');
-                                break;
-                        }
-
-                        switch (true) {
-                            case (response.errors.booktitle !== undefined):
-                                $('#msg1booktitle').append(response.errors.booktitle);
-                                $('#msg1booktitle').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msg1booktitle').removeClass('alert alert-danger');
+                                $('#msg1title').removeClass('alert alert-danger');
                                 break;
                         }
 
@@ -436,32 +536,22 @@
                         }
 
                         switch (true) {
-                            case (response.errors.datepublish !== undefined):
-                                $('#msg1datepublish').append(response.errors.datepublish);
-                                $('#msg1datepublish').addClass('alert alert-danger');
+                            case (response.errors.copyright !== undefined):
+                                $('#msg1copyright').append(response.errors.copyright);
+                                $('#msg1copyright').addClass('alert alert-danger');
                                 break;
                             default:
-                                $('#msg1datepublish').removeClass('alert alert-danger');
+                                $('#msg1copyright').removeClass('alert alert-danger');
                                 break;
                         }
 
                         switch (true) {
-                            case (response.errors.publisher !== undefined):
-                                $('#msg1publisher').append(response.errors.publisher);
-                                $('#msg1publisher').addClass('alert alert-danger');
+                            case (response.errors.accession !== undefined):
+                                $('#msg1accession').append(response.errors.accession);
+                                $('#msg1accession').addClass('alert alert-danger');
                                 break;
                             default:
-                                $('#msg1publisher').removeClass('alert alert-danger');
-                                break;
-                        }
-
-                        switch (true) {
-                            case (response.errors.genre !== undefined):
-                                $('#msg1genre').append(response.errors.genre);
-                                $('#msg1genre').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msg1genre').removeClass('alert alert-danger');
+                                $('#msg1accession').removeClass('alert alert-danger');
                                 break;
                         }
                         $('.btn-tr-update').text('Update');
@@ -483,12 +573,10 @@
             e.preventDefault();
             $(this).text('Checking');
             var data = {
-                'isbn': $('.t-isbn').val(),
+                'title': $('.t-title').val(),
                 'author': $('.t-author').val(),
-                'publisher': $('.t-publisher').val(),
-                'datepublish': $('.t-datepublish').val(),
-                'booktitle': $('.t-booktitle').val(),
-                'genre': $('.t-genre').val(),
+                'copyright': $('.t-copyright').val(),
+                'accession': $('.t-accession').val(),
                 'copies': $('.t-copies').val(),
             }
             $.ajaxSetup({
@@ -503,29 +591,19 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.status == 400) {
-                        $('#msgisbn').html("");
-                        $('#msgbooktitle').html("");
+                        $('#msgtitle').html("");
                         $('#msgauthor').html("");
-                        $('#msgdatepublish').html("");
-                        $('#msgpublisher').html("");
-                        $('#msggenre').html("");
+                        $('#msgcopyright').html("");
+                        $('#msgaccession').html("");
                         $('#msgcopies').html("");
 
                         switch (true) {
-                            case !!response.errors.isbn:
-                                $('#msgisbn').append(response.errors.isbn);
-                                $('#msgisbn').addClass('alert alert-danger');
+                            case !!response.errors.title:
+                                $('#msgtitle').append(response.errors.title);
+                                $('#msgtitle').addClass('alert alert-danger');
                                 break;
                             default:
-                                $('#msgisbn').removeClass('alert alert-danger');
-                        }
-                        switch (true) {
-                            case !!response.errors.booktitle:
-                                $('#msgbooktitle').append(response.errors.booktitle);
-                                $('#msgbooktitle').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msgbooktitle').removeClass('alert alert-danger');
+                                $('#msgtitle').removeClass('alert alert-danger');
                         }
                         switch (true) {
                             case !!response.errors.author:
@@ -536,28 +614,20 @@
                                 $('#msgauthor').removeClass('alert alert-danger');
                         }
                         switch (true) {
-                            case !!response.errors.datepublish:
-                                $('#msgdatepublish').append(response.errors.datepublish);
-                                $('#msgdatepublish').addClass('alert alert-danger');
+                            case !!response.errors.copyright:
+                                $('#msgcopyright').append(response.errors.copyright);
+                                $('#msgcopyright').addClass('alert alert-danger');
                                 break;
                             default:
-                                $('#msgdatepublish').removeClass('alert alert-danger');
+                                $('#msgcopyright').removeClass('alert alert-danger');
                         }
                         switch (true) {
-                            case !!response.errors.publisher:
-                                $('#msgpublisher').append(response.errors.publisher);
-                                $('#msgpublisher').addClass('alert alert-danger');
+                            case !!response.errors.accession:
+                                $('#msgaccession').append(response.errors.accession);
+                                $('#msgaccession').addClass('alert alert-danger');
                                 break;
                             default:
-                                $('#msgpublisher').removeClass('alert alert-danger');
-                        }
-                        switch (true) {
-                            case !!response.errors.genre:
-                                $('#msggenre').append(response.errors.genre);
-                                $('#msggenre').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msggenre').removeClass('alert alert-danger');
+                                $('#msgaccession').removeClass('alert alert-danger');
                         }
                         switch (true) {
                             case !!response.errors.copies:
@@ -567,7 +637,6 @@
                             default:
                                 $('#msgcopies').removeClass('alert alert-danger');
                         }
-
                         $('.btn-tr-submit').text('Register');
                     } else {
                         $('#success_message').html("");
@@ -583,6 +652,149 @@
                 }
             });
         })
+
+
+        var importedData = []; // Array to store the imported data
+
+        function importExcelFile() {
+            var fileInput = document.getElementById('fileInput');
+            var table = document.getElementById('importTable');
+            table.innerHTML = '';
+
+            if (fileInput.files.length === 0) {
+                alert('Please select an Excel file.');
+                return;
+            }
+
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var data = new Uint8Array(e.target.result);
+                var workbook = XLSX.read(data, {
+                    type: 'array'
+                });
+
+                var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, {
+                    header: 1
+                });
+
+                // Define the column headers
+                var columnHeaders = ['ID', 'TITLE', 'AUTHOR', 'COPYRIGHT', 'ACCESSION NO.', 'COPIES', ''];
+
+                // Add column headers
+                var headerRow = document.createElement('tr');
+
+                for (var j = 0; j < columnHeaders.length; j++) {
+                    var cellHeader = document.createElement('th');
+                    cellHeader.textContent = columnHeaders[j];
+                    headerRow.appendChild(cellHeader);
+                }
+
+                table.appendChild(headerRow);
+
+                for (var i = 1; i < jsonData.length; i++) {
+                    (function() {
+                        var row = document.createElement('tr');
+
+                        for (var j = 0; j < jsonData[i].length; j++) {
+                            var cell = document.createElement('td');
+                            var input = document.createElement('input');
+                            input.type = 'text';
+                            input.value = jsonData[i][j];
+                            cell.appendChild(input);
+                            row.appendChild(cell);
+                        }
+
+                        // Add an input column for "COPIES"
+                        var copiesCell = document.createElement('td');
+                        var copiesInput = document.createElement('input');
+                        copiesInput.type = 'text';
+                        copiesInput.value = '0'; // Set the default value to 0
+                        copiesCell.appendChild(copiesInput);
+                        row.appendChild(copiesCell);
+
+                        // Add a remove button column
+                        var removeButtonCell = document.createElement('td');
+                        var removeButton = document.createElement('button');
+                        removeButton.textContent = 'Remove';
+                        removeButton.className = 'removeButton';
+                        removeButton.addEventListener('click', function() {
+                            removeImportedRow(rowData);
+                            table.removeChild(row);
+                        });
+                        removeButtonCell.appendChild(removeButton);
+                        row.appendChild(removeButtonCell);
+
+                        table.appendChild(row);
+
+                        // Push the row data into the importedData array
+                        var rowData = {
+                            id: jsonData[i][0],
+                            title: jsonData[i][1],
+                            author: jsonData[i][2],
+                            copyright: jsonData[i][3],
+                            accession: jsonData[i][4],
+                            copies: copiesInput
+                        };
+
+                        importedData.push(rowData);
+                    })();
+                }
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+
+        function removeImportedRow(rowData) {
+            var index = importedData.indexOf(rowData);
+            if (index > -1) {
+                importedData.splice(index, 1);
+            }
+        }
+
+        function insertData() {
+            if (importedData.length === 0) {
+                alert('No data to register. Please import an Excel file first.');
+                return;
+            }
+
+            for (var i = 0; i < importedData.length; i++) {
+                var rowData = importedData[i];
+                var dataToInsert = {
+                    title: rowData.title,
+                    author: rowData.author,
+                    copyright: rowData.copyright,
+                    accession: rowData.accession,
+                    copies: rowData.copies.value
+                };
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: '/test',
+                    type: 'POST',
+                    data: dataToInsert,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the headers
+                    },
+                    success: function(response) {
+                        console.log(response.message);
+                        // Handle success, if needed
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                        // Handle error, if needed
+                    }
+                });
+            }
+
+            // Clear the imported data and the table
+            importedData = [];
+            var table = document.getElementById('importTable');
+            table.innerHTML = '';
+
+            alert('Data registered successfully.');
+        }
     </script>
 @endsection
 @endsection

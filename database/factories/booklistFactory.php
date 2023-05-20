@@ -17,12 +17,11 @@ class booklistFactory extends Factory
     public function definition(): array
     {
         return [
-            'booktitle' => fake()->lastName(),
+            'title' => fake()->lastName(),
             'author' => fake()->firstNameMale(), 
-            'datepublish' => fake()->date(),
-            'publisher' => fake()->address(),
-            'isbn' => fake()->numberBetween(1000000000, 9999999999),
-            'genre' => fake()->name()
+            'copyright' => fake()->date(),
+            'accession' => fake()->numberBetween(100, 100),
+            // 'copies' => fake()->numberBetween(1, 100),
         ];
     }
 }

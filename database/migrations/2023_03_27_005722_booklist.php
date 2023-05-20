@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('booklists', function (Blueprint $table) {
             $table->id();
-            $table->string('booktitle');
+            $table->string('title');
             $table->string('author');
-            $table->date('datepublish');
-            $table->string('publisher');
-            $table->string('isbn');
-            $table->string('genre');
+            $table->string('copyright');
+            $table->string('accession');
             $table->boolean('ishide')->default(0);
             $table->timestamps();
         });

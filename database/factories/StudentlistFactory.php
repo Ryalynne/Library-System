@@ -17,7 +17,12 @@ class StudentlistFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'studentno' => fake()->numberBetween(1000000000, 9999999999),
+            'name' => fake()->firstNameMale(), 
+            'middle' => fake()->lastName(),
+            'lastname' => fake()->firstNameMale(), 
+            'class' => fake()->lastName(),
+            'studimg' => fake()->imageUrl(200, 200), 
         ];
     }
 }

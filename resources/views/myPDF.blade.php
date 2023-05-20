@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GENERATE QR CODE</title>
+    <title>BOOK QR</title>
     <br>
 </head>
 
@@ -15,7 +15,7 @@
         @for ($i = 1; $i <= $book->numberofcopies(); $i++)
           <div class="book-item">
             <img src="data:image/png;base64, {!! $qrcode !!}">
-            <div>{{ $book->booktitle }}</div>
+            <div>{{ $book->title }}</div>
           </div>
         @endfor
       </div>

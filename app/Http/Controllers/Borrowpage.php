@@ -7,6 +7,7 @@ use App\Models\borrowpage as ModelsBorrowpage;
 use App\Models\copies;
 use App\Models\studentlist;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Validator;
 
 class borrowpage extends Controller
@@ -17,59 +18,32 @@ class borrowpage extends Controller
     public function index(Request $request)
     {
         $books = booklist::where('ishide', false)->get();
-        $student = studentlist::find($request->student);
         $copies = copies::where('ishide', false)->get();
+        $student = studentlist::where('studentno', $request->student)->first();
         return view('borrowpage', compact('books', 'student', 'copies'));
-    }
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-    }
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function storebookborrow(Request $request)
     {
-         $student = $request->studentId;
-         $date = date('Y:m:d', strtotime('+3 weekdays'));
-         foreach ($request->bookList as $key => $value) {
-             ModelsBorrowpage::create([
-                 'bookid' =>  $value,
-                 'studentid' => $student,
-                 'bookstatus' => 'onlend',
-                 'duedate' => $date,
-             ]);
-         }
+        $student = $request->studentId;
+        $studentno = studentlist::where('studentno', $student)->value('id');
+        $date = date('Y:m:d', strtotime('+3 weekdays'));
+    
+        // Create a new transaction record with a unique transaction number
+        $transaction = Transaction::create([
+            'transaction_number' => uniqid(),
+        ]);
+    
+        foreach ($request->bookList as $key => $value) {
+            // Duplicate the same transaction number in each entry
+            ModelsBorrowpage::create([
+                'bookid' =>  $value,
+                'studentid' => $studentno,
+                'bookstatus' => 'onlend',
+                'duedate' => $date,
+                'transaction' => $transaction->transaction_number,
+            ]);
+        }
     }
-
+    
 }

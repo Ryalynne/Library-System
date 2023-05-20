@@ -38,28 +38,26 @@
                 <table class="table table-bordered myTable">
                     <thead>
                         <tr class="bg-success text-white">
-                            <th scope="col">QR CODE</th>
-                            <th scope="col">ISBN</th>
-                            <th scope="col">BOOK TITLE</th>
-                            <th scope="col">DATE OF ACTION</th>
-                            <th scope="col">ACTION PERFORM</th>
-                            <th scope="col">NUMBER ADJUSTED</th>
-                            <th scope="col">PERFORM BY</th>
-                            <th scope="col">COMMENT</th>
+                            <th scope="col"  class="text-center">ID</th>
+                            <th scope="col"  class="text-center">TITLE</th>
+                            <th scope="col"  class="text-center">AUTHOR/S</th>
+                            <th scope="col"  class="text-center">DATE OF ACTION</th>
+                            <th scope="col"  class="text-center">ACTION</th>
+                            <th scope="col"  class="text-center">ADJUSTED</th>
+                            <th scope="col"  class="text-center">PERFORM BY</th>
+                            <th scope="col"  class="text-center">COMMENT</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="tr">
                             @foreach ($adjustment as $adjust)
                                 <td>
-                                    {{ $adjust->bookid }}
+                                    {{ $adjust->book->id }}
                                 </td>
                                 <td>
-                                    {{ $adjust->book->isbn }}
+                                    {{ $adjust->book->title }}
                                 </td>
-                                <td>
-                                    {{ $adjust->book->booktitle }}
-                                </td>
+                                <td>{{ $adjust->book->author}}</td>
                                 <td>{{ date('Y-m-d', strtotime($adjust->created_at))}}</td>                               
                                 <td class="col-1">{{ $adjust->action }}</td>    
                                 <td class="col-1">{{ $adjust->number_adjust }}</td>                             

@@ -10,7 +10,7 @@ class booklist extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'booktitle', 'author', 'datepublish', 'publisher', 'isbn', 'genre'
+        'title', 'author', 'copyright', 'accession'
     ];
     public function numberofcopies()
     {
@@ -23,6 +23,8 @@ class booklist extends Model
     }
     public function getstatus($id)
     {
-        return $this->hasMany(borrowpage::class, 'bookid')->where('studentid',$id)->where('bookstatus', 'onlend')->value('bookstatus');
+            $studentno = studentlist::where('studentno', $id)->value('id');
+            return $this->hasMany(borrowpage::class, 'bookid')->where('studentid',$studentno)->where('bookstatus', 'onlend')->value('bookstatus');
+        
     }
 }

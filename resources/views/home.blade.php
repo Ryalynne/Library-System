@@ -120,6 +120,7 @@
         function booklist() {
             location.assign('/booklist');
         }
+
         function adjustment() {
             location.assign('/bookaquired');
         }
@@ -132,5 +133,4 @@
             location.assign('/returnhistory');
         }
     </script>
-    
 @endsection

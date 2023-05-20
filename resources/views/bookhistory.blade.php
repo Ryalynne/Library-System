@@ -39,9 +39,11 @@
                     <table class="table table-bordered myTable">
                         <thead>
                             <tr class="bg-success text-white">
-                                <th scope="col">QR CODE</th>
-                                <th scope="col">ISBN</th>
-                                <th scope="col">BOOK TITLE</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">TITLE</th>
+                                <th scope="col">AUTHRO/S</th>
+                                <th scope="col">COPYRIGHT</th>
+                                <th scope="col">ACCESSION NO</th>
                                 <th scope="col">DATE OF ACTION</th>
                                 <th scope="col">ACTION PERFORM</th>
                                 <th scope="col">PERFORM BY</th>
@@ -50,9 +52,11 @@
                         <tbody>
                             <tr class="tr">
                                 @foreach ($action as $item)
-                                    <td>{{ $item->book->id }}</td>
-                                    <td>{{ $item->book->isbn }}</td>
-                                    <td>{{ $item->book->booktitle }}</td>
+                                    <td>{{ $item->book->id }}</td>       
+                                    <td>{{ $item->book->title }}</td>
+                                    <td>{{ $item->book->author }}</td>
+                                    <td>{{ $item->book->copyright }}</td>
+                                    <td>{{ $item->book->accession }}</td>
                                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                     <td>{{ $item->action }}</td>
                                     <td>{{ $item->performby }}</td>
