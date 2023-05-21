@@ -51,17 +51,6 @@ class PDFController extends Controller
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
-    //Process Reports
-
-    // public function generateBorrow($bookData)
-    // {
-    //     $bookList = [];
-    //     foreach (json_decode($bookData) as $book) {
-    //         $bookList[] = booklist::find($book);
-    //     }
-    //     $pdf = PDF::loadView('myPDFborrow', compact('bookList'));
-    //     return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
-    // }
     public function generateBorrow($bookData , $studentId)
     {
         $bookList = [];
@@ -79,16 +68,38 @@ class PDFController extends Controller
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
-
-
-
-    public function generateReturn($bookData)
+    public function generatereturndamage($bookData, $studentId)
     {
         $bookList = [];
+        $student = studentlist::where('studentno', $studentId)->value('id');
+        $name = studentlist::where('studentno', $studentId)->value('name');
+        $middle = studentlist::where('studentno', $studentId)->value('middle');
+        $lastname = studentlist::where('studentno', $studentId)->value('lastname');
+
         foreach (json_decode($bookData) as $book) {
             $bookList[] = borrowpage::find($book);
+            $transaction = borrowpage::where('bookid', $book)
+            ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
         }
-        $pdf = PDF::loadView('myPDFreturn', compact('bookList'));
+        $pdf = PDF::loadView('myPDFfined', compact('bookList','transaction','name','middle','lastname'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+
+    public function generateReturn($bookData, $studentId)
+    {
+        $bookList = [];
+        $student = studentlist::where('studentno', $studentId)->value('id');
+        $name = studentlist::where('studentno', $studentId)->value('name');
+        $middle = studentlist::where('studentno', $studentId)->value('middle');
+        $lastname = studentlist::where('studentno', $studentId)->value('lastname');
+
+        foreach (json_decode($bookData) as $book) {
+            $bookList[] = borrowpage::find($book);
+            $transaction = borrowpage::where('bookid', $book)
+            ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
+        }
+        $pdf = PDF::loadView('myPDFreturn', compact('bookList','transaction','name','middle','lastname'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -116,15 +127,6 @@ class PDFController extends Controller
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
-    public function generatereturndamage($bookData)
-    {
-        $bookList = [];
-        foreach (json_decode($bookData) as $book) {
-            $bookList[] = borrowpage::find($book);
-        }
-        $pdf = PDF::loadView('myPDFfined', compact('bookList'));
-        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
-    }
 
     public function generatefinehistory()
     {

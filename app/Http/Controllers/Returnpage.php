@@ -51,8 +51,9 @@ class Returnpage extends Controller
     public function update(Request $request)
     {
         $student = $request->studentId;
+        $studentid = studentlist::where('studentno', $student)->value('id');
         foreach ($request->bookdata as $key => $value) {
-            $bookid = borrowpage::where('id', $value)->where('studentid', $student);
+            $bookid = borrowpage::where('id', $value)->where('studentid', $studentid);
             $bookid->update([
                 'bookstatus' => 'returned'
             ]);

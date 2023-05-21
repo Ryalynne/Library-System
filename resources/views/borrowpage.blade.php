@@ -85,6 +85,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <td colspan="6">ENTER STUDENT ID FIRST</td>
                     </tbody>
                 </table>
                 <br>
@@ -237,7 +238,7 @@
                 })
                 console.log(studentId);
                 const frame = $('#table-frame')
-                const link = '/generate-tblborrow/' + JSON.stringify(bookList) +'/'+ studentId
+                const link = '/generate-tblborrow/' + JSON.stringify(bookList) + '/' + studentId
                 frame.attr('src', link)
 
                 var table = document.getElementById("tbl");
@@ -245,7 +246,6 @@
                     table.deleteRow(i);
                 }
                 bookList.splice(0, bookList.length);
-
                 alert('successfully borrowed');
                 console.log(bookList);
             }
@@ -327,11 +327,11 @@
                         'td'));
                     var td3 = tr.appendChild(document.createElement(
                         'td'));
-                    td1.innerHTML = $iddata ;
+                    td1.innerHTML = $iddata;
                     td2.innerHTML = data.book.title;
                     td3.innerHTML =
                         '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
-                        $iddata  + '" onclick="deleteRow(this, ' + $iddata  +
+                        $iddata + '" onclick="deleteRow(this, ' + $iddata +
                         ');">Remove</button>';
                     document.getElementById("tbl").appendChild(tr);
                     $('.bookid').val("");
@@ -387,6 +387,9 @@
         if (stud.length > 1) {
             document.getElementById("myBtn").disabled = false;
             document.getElementById("bor").disabled = false;
+            var table = document.getElementById("tbl");
+            var tbody = table.getElementsByTagName("tbody")[0];
+            tbody.innerHTML = ""; // Remove all content from the tbody
         } else {
             document.getElementById("myBtn").disabled = true;
             document.getElementById("bor").disabled = true;

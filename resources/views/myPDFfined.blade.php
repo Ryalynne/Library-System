@@ -8,62 +8,71 @@
 </head>
 
 <body>
-    <center> 
+    <center>
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
         <h3>STUDENT LOST OR DAMAGE BOOK</h3>
-        <p>Printed at : {{ date('F d, Y') }} and Printed by : {{ auth()->user()->name }}</p>
-      </center>
+    </center>
     <table class="table table-bordered myTable">
         <thead>
             <tr class="bg-success text-white">
-                <th scope="col" class="text-center">ISBN</th>
-                <th scope="col" class="text-center">BOOK TITLE</th>
+                <th scope="col" class="text-center">TRANSACTION</th>
+                <th scope="col" class="text-center">TITLE</th>
                 <th scope="col" class="text-center">AUTHOR/S</th>
-                <th scope="col" class="text-center">DATE PUBLISH</th>
-                <th scope="col" class="text-center">PUBLISHER</th>
-                <th scope="col" class="text-center">GENRE</th>
+                <th scope="col" class="text-center">COPYRIGHT</th>
                 <th scope="col" class="text-center">BORROW DATE</th>
                 <th scope="col" class="text-center">DUE DATE</th>
                 <th scope="col" class="text-center">PENALTY</th>
             </tr>
         </thead>
+        @foreach ($bookList as $book)
         <tbody>
-            @foreach ($bookList as $book)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
-                    <td>{{$book->book->isbn}}</td>
+                    <td>{{ $book->transaction }}</td>
+                    <td>{{ $book->book->title }}</td>
+                    <td>
+                        {{ $book->book->author }}
                     </td>
                     <td>
-                        {{ $book->book->booktitle }}
+                        {{ $book->book->copyright }}
                     </td>
                     <td>
-                        {{ $book->book->author}}
-                    </td>
-                     <td>
-                        {{ $book->book->datepublish }}
-                    </td>
-                  <td>
-                        {{ $book->book->publisher }}
+                        {{ date('Y-m-d', strtotime($book->created_at)) }}
                     </td>
                     <td>
-                        {{ $book->book->genre }}
+                        {{ $book->duedate }}
                     </td>
-                    <td>
-                        {{ date('Y-m-d', strtotime($book->created_at)) }} 
-                    </td>
-                    <td>
-                         {{$book->duedate}}
-                    </td> 
                     <td>
                         {{ $book->penalty($book->duedate) }}
-                   </td>  
+                    </td>
                 </tr>
         </tbody>
         @endforeach
     </table>
-    <footer>
-        <hr>
-        <h5>Signature over Printed Name</h5>
-    </footer>
+    <br>
+    <div class="footer-row">
+        <span>Date Printed: {{ date('Y-m-d') }}</span>
+        <br>
+    </div>
+    <div class="footer-row">
+        <span>Prepared by: {{ auth()->user()->name }}</span>
+        <br>
+        <span
+            class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Librarian</span>
+    </div>
+    <div class="footer-row">
+        <span>Verified by: ____________</span>
+        <br>
+        <span
+            class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;School
+            Director</span>
+    </div>
+    <div class="footer-row">
+        <span>Return by: {{ $name }} {{ $middle }} {{ $lastname }}</span>
+        <br>
+        <span
+            class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borrower</span>
+    </div>
+    </div>
 </body>
 
 </html>
@@ -90,7 +99,8 @@
         border-collapse: collapse;
         width: 100%;
     }
-    p{
+
+    p {
         font-size: 90%;
         color: #20462c;
     }
@@ -111,7 +121,8 @@
         background-color: #20462c;
         color: white;
     }
-    h3{
+
+    h3 {
         color: #20462c;
     }
 </style>

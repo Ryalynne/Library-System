@@ -57,11 +57,11 @@
                     </div>
                 </div>
                 <br>
-                <table class="table table-bordered" id="tbl">
+                <table class="table table-bordered table-striped"  id="tbl">
                     <thead class="bg-success text-white">
                         <tr>
-                            <th>ISBN</th>
-                            <th>BOOK TITLE</th>
+                            <th>ID</th>
+                            <th>TITLE</th>
                             <th>BORROW DATE</th>
                             <th>DUE DATE</th>
                             <th>ACTION</th>
@@ -72,9 +72,9 @@
 
                         @if (count($borrowbook) > 0)
                             @foreach ($borrowbook as $book)
-                                <td> {{ $book->book->isbn }}</td>
+                                <td> {{ $book->book->id }}</td>
                                 <td>
-                                    {{ $book->book->booktitle }}
+                                    {{ $book->book->title }}
                                 </td>
                                 <td>
                                     {{ date('Y-m-d', strtotime($book->created_at)) }}
@@ -97,7 +97,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="6">NO BORROW BOOK</td>
+                                <td id = "messageRow" colspan="6">NO BORROWED BOOK</td>
                             </tr>
                         @endif
 
@@ -108,8 +108,8 @@
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg returnbook" data-bs-toggle="modal"
                         data-bs-target="#tablemodal" data-student="{{ $student ? $student->studentno : '' }}"
-                        data-token="{{ csrf_token() }}" id="myBtn">Fines
-                        Books</button></a>
+                        data-token="{{ csrf_token() }}" id="myBtn">Fine
+                        Book</button></a>
                 </div>
                 <br>
                 <br>
@@ -248,6 +248,8 @@
             document.getElementById("myBtn").disabled = false;
         } else {
             document.getElementById("myBtn").disabled = true;
+            var tableRow = document.getElementById('messageRow');
+            tableRow.innerHTML = '<td colspan="6">ENTER STUDENT ID FIRST</td>';
         }
     </script>
 @endsection

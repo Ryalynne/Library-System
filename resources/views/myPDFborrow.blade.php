@@ -104,7 +104,9 @@
                 <p>No transaction found</p>
             @endif
         </div>
-        <div><p>Please be reminded that the following books/library resources are overdue:</p></div>
+        <div>
+            <p>Please be reminded that the following books/library resources are overdue:</p>
+        </div>
         <div class="table-container">
             <table class="table table-bordered">
                 <thead>
@@ -139,16 +141,17 @@
             <span>Prepared by: {{ auth()->user()->name }}</span>
             <br>
             <span
-            class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Librarian</span>
+                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Librarian</span>
         </div>
         <div class="footer-row">
             <span>Verified by: ____________</span>
             <br>
-            <span class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;School
+            <span
+                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;School
                 Director</span>
         </div>
         <div class="footer-row">
-            <span>Received by: {{$name}} {{$middle}}  {{$lastname}}</span>
+            <span>Received by: {{ $name }} {{ $middle }} {{ $lastname }}</span>
             <br>
             <span
                 class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borrower</span>

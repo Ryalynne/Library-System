@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item text-success">Book Management</li>
-                <li class="breadcrumb-item active text-success" aria-current="page">Book List</li>
+                <li class="breadcrumb-item active text-success" aria-current="page">Book Entry</li>
             </ol>
         </nav>
     </div>

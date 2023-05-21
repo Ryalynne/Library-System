@@ -89,7 +89,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="6">NO BORROWED BOOKS</td>
+                                    <td id="messageRow" colspan="6">NO BORROWED BOOK</td>
                                 </tr>
                             @endif
                         </tbody>
@@ -97,7 +97,7 @@
                 <br>
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg returnbook" data-bs-toggle="modal"
-                        data-bs-target="#tablemodal" data-student="{{ $student ? $student->id : '' }}"
+                        data-bs-target="#tablemodal" data-student="{{ $student ? $student->studentno : '' }}"
                         data-token="{{ csrf_token() }}" id="myBtn">Return
                         Books</button></a>
                 </div>
@@ -212,6 +212,8 @@
             document.getElementById("myBtn").disabled = false;
         } else {
             document.getElementById("myBtn").disabled = true;
+            var tableRow = document.getElementById('messageRow');
+            tableRow.innerHTML = '<td colspan="6">ENTER STUDENT ID FIRST</td>';
         }
     </script>
 @endsection
