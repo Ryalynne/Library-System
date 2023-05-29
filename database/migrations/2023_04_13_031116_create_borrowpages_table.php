@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('bookid');
             $table->unsignedBigInteger('studentid');
             $table->foreign('bookid')->references('id')->on('booklists');
-            $table->foreign('studentid')->references('id')->on('studentlists');
+            $table->foreign('studentid')->references('id')->on(new Expression('bma_portal.student_details'));
             $table->string('transaction');
             $table->string('bookstatus');
             $table->date('duedate');

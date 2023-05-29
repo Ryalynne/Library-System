@@ -8,6 +8,8 @@ use App\Models\booklist;
 use App\Models\borrowpage;
 use App\Models\copies;
 use App\Models\purchasemodel;
+use App\Models\StudentAccount;
+use App\Models\StudentDetails;
 use App\Models\studentlist;
 use App\Models\vendortable;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -48,10 +50,10 @@ class PDFController extends Controller
         $quantitylist = [];
 
         foreach (json_decode($bookid) as $book) {
-            $bookList [] = purchasemodel::find($book);
+            $bookList[] = purchasemodel::find($book);
         }
         foreach (json_decode($quantity) as $qty) {
-            $quantitylist [] = $qty;
+            $quantitylist[] = $qty;
         }
 
         // $transaction = purchasemodel::where('bookid', $book)->where('bookstatus', 'onlend')->value('transaction');
@@ -96,23 +98,20 @@ class PDFController extends Controller
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
-    public function generateBorrow($bookData, $studentId)
+    public function generateBorrow($bookData, $student_number)
     {
         $bookList = [];
-        $student = studentlist::where('studentno', $studentId)->value('id');
-        $name = studentlist::where('studentno', $studentId)->value('name');
-        $middle = studentlist::where('studentno', $studentId)->value('middle');
-        $lastname = studentlist::where('studentno', $studentId)->value('lastname');
-
+        $student = StudentAccount::where('student_number', $student_number)->first();
+        $student = $student->student;
         foreach (json_decode($bookData) as $book) {
             $bookList[] = booklist::find($book);
             $transaction = borrowpage::where('bookid', $book)
-                ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
+                ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('transaction');
             $duedate = borrowpage::where('bookid', $book)
-                ->where('studentid', $student)->where('bookstatus', 'onlend')->value('duedate');
+                ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('duedate');
         }
         ///duedate need kuhain
-        $pdf = PDF::loadView('myPDFborrow', compact('bookList', 'transaction', 'name', 'middle', 'lastname', 'duedate'));
+        $pdf = PDF::loadView('myPDFborrow', compact('bookList', 'transaction', 'student', 'duedate'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -135,20 +134,22 @@ class PDFController extends Controller
     }
 
 
-    public function generateReturn($bookData, $studentId)
+    public function generateReturn($bookData, $student_number)
     {
         $bookList = [];
-        $student = studentlist::where('studentno', $studentId)->value('id');
+        $account = StudentAccount::where('student_number', $student_number)->first();
+        $student = $account->student;
+        /*  $student = studentlist::where('studentno', $studentId)->value('id');
         $name = studentlist::where('studentno', $studentId)->value('name');
         $middle = studentlist::where('studentno', $studentId)->value('middle');
-        $lastname = studentlist::where('studentno', $studentId)->value('lastname');
+        $lastname = studentlist::where('studentno', $studentId)->value('lastname'); */
 
         foreach (json_decode($bookData) as $book) {
             $bookList[] = borrowpage::find($book);
             $transaction = borrowpage::where('bookid', $book)
-                ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
+                ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('transaction');
         }
-        $pdf = PDF::loadView('myPDFreturn', compact('bookList', 'transaction', 'name', 'middle', 'lastname'));
+        $pdf = PDF::loadView('myPDFreturn', compact('bookList', 'transaction', 'student'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 

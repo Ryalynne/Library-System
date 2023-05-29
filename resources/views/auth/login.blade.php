@@ -17,6 +17,7 @@
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
+                                <label class="form-label" for="form1Example13">Email address</label>
                                 <input id="email" type="email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -26,13 +27,10 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                <br>
-                                <label class="form-label" for="form1Example13">Email address</label>
                             </div>
-
-
                             <!-- Password input -->
                             <div class="form-outline mb-4">
+                                <label class="form-label" for="form1Example13">Password</label>
                                 <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password" required
                                     autocomplete="current-password"> @error('password')
@@ -40,8 +38,6 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                <br>
-                                <label class="form-label" for="form1Example13">Password</label>
                             </div>
 
                             <div class="d-flex justify-content-around align-items-center mb-4">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StudentDetails;
 use App\Models\studentlist;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,8 @@ class accountController extends Controller
     public function index()
     {
 
-        $account = studentlist::where('ishide', false)->paginate(10);
+        // $account = studentlist::where('ishide', false)->paginate(10);
+        $account = StudentDetails::where('is_removed', false)->orderBy('last_name')->paginate(20);
         return view('account', compact('account'));
     }
 

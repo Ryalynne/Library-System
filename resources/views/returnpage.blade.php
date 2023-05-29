@@ -23,8 +23,8 @@
                 <div class="container text-start">
                     <center>
                         <div class="image-container">
-                            @if (request()->input('student') && $student->studentno == request()->input('student'))
-                                <img src="{{ $student ? asset('images/' . $student->studimg) : 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png' }}"
+                            @if (request()->input('student') || $student)
+                                <img src="http://bma.edu.ph/img/student-picture/{{ $student ? $student->student_number : 'midshipman' }}.png"
                                     class="img-thumbnail img-fluid student-image" alt="No Image">
                             @else
                                 <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
@@ -32,22 +32,30 @@
                             @endif
                         </div>
                     </center>
+                    <form action="">
+                        @if (!$student && request()->input('student'))
+                            <span class="badge bg-danger w-100">No Student Found.</span>
+                        @endif
+                        <div class="mb-3">
+                            <label class="form-label">ENTER ID:</label>
+                            <input type="text" class="form-control "  name="student" :value="old('student')"
+                                value="{{ request()->input('student') ? ($student ? $student->student_number : '') : '' }}">
+                        </div>
+                        <input type="hidden" id="student"
+                            value="{{ $student && request()->input('student') ? $student->student->id : '' }}">
+                    </form>
                     <div class="mb-3">
-                        <label class="form-label">ENTER ID: </label>
-                        <input type="text" class="form-control studid" name="student" :value="old('student')"
-                            value="{{ request()->input('student') ? $student->studentno : ' ' }}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">FULL NAME:</label>
-                        <input style="text-transform:uppercase" type="text" class="form-control full-name"
-                            value="{{ request()->input('student') ? $student->name . ' ' . $student->middle . ' ' . $student->lastname : ' ' }}"
-                            disabled id="student">
+                        <label for="booktitle" class="form-label">FULL NAME: </label>
+                        <input style="text-transform:uppercase" type="text" class="form-control full-name" disabled
+                            value="{{ request()->input('student') ? ($student ? $student->student->last_name . ' ' . $student->student->first_name . ' ' . $student->student->middle_name : '') : '' }}">
                     </div>
 
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">DESIGNATED:</label>
+                        <label for="booktitle" class="form-label">DESIGNATED: </label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
-                            value="{{ request()->input('student') ? $student->class : ' ' }}" disabled>
+                            value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : '') : '') : '' }}"
+                            disabled>
+
                     </div>
                 </div>
             </div>
@@ -104,7 +112,7 @@
                 <br>
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg returnbook" data-bs-toggle="modal"
-                        data-bs-target="#tablemodal" data-student="{{ $student ? $student->studentno : '' }}"
+                        data-bs-target="#tablemodal" data-student="{{ $student ? $student->student_number : '' }}"
                         data-token="{{ csrf_token() }}" id="myBtn">Return
                         Books</button></a>
                 </div>
@@ -158,10 +166,6 @@
         $(".returnbook").on('click', function() {
             let token = $(this).data('token');
             let studentId = $(this).data('student');
-            const formData = new FormData();
-            formData.append('bookdata', bookdata);
-            formData.append('_token', token);
-            formData.append('studentId', studentId);
             if (bookdata.length == 0) {
                 alert('You need to add a book to the table to borrow!');
             } else {
@@ -194,34 +198,7 @@
             }
         });
 
-
-        $('.studid').on('keyup', function(event) {
-            if (event.keyCode === 13) {
-                var id = $(this).val().trim().toLowerCase();
-                if (id === "") {
-                    $('.full-name').val("");
-                    $('.class').val("");
-                    document.location.href = "returnpage";
-                } else {
-                    validateStudent(id);
-                }
-            }
-        });
-
-        function validateStudent(id) {
-            $.get("/getid/" + id, function(data, status) {
-                if (data && data.studentno && data.studentno.studentno === id) {
-                    document.location.href = "returnpage?student=" + id;
-                } else {
-                    alert('No student found with student ID: ' + id);
-                    document.location.href = "returnpage";
-                }
-            }).fail(function() {
-                alert('Error occurred while fetching student information.');
-                document.location.href = "returnpage";
-            });
-        }
-
+      
         var stud = document.getElementById("student").value;
 
         if (stud.length > 1) {

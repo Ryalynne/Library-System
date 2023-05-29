@@ -73,7 +73,7 @@
             Director</span>
     </div>
     <div class="footer-row">
-        <span>Return by: <u>{{ $name }} {{ $middle }} {{ $lastname }}</u></span>
+        <span>Return by: <u>{{strtoupper($student->last_name. ', '.$student->first_name . ' '. $student->middle_name)}}</u></span>
         <br>
         <span
             class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borrower</span>

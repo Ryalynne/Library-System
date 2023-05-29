@@ -24,6 +24,7 @@ use App\Http\Controllers\Returnpage;
 use App\Http\Controllers\StudentlistController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\vendorController;
+use App\Models\StudentDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -113,4 +114,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/book/update', [BooklistController::class, 'updatebooks'])->name('books.update-book');
     Route::post('/copy/update', [CopiesController::class, 'updatecopies'])->name('books.update-copy');
     Route::post('/copy/negativeupdate', [CopiesController::class, 'updatecopiesnegative'])->name('books.updatenegative-copy');
+
+    Route::get('/student-details', function () {
+        return StudentDetails::all();
+    });
 });

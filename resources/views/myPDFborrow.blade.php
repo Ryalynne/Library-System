@@ -91,7 +91,8 @@
                 </tbody>
             </table>
         </div>
-        <p class="notice">You are instructed to return the said book/s on time. Failure to comply will result in non-issuance of
+        <p class="notice">You are instructed to return the said book/s on time. Failure to comply will result in
+            non-issuance of
             another book and a fine.</p>
         <br>
         <div class="footer-row">
@@ -115,7 +116,8 @@
         </div>
         <br>
         <div class="footer-row">
-            <span>Received by: <u> {{ $name }} {{ $middle }} {{ $lastname }} </u></span>
+            <span>Received by: <u> {{ $student->first_name }} {{ $student->middle_name }} {{ $student->lastname }}
+                </u></span>
             <br>
             <span
                 class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borrower</span>

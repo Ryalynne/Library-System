@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class borrowpage extends Model
 {
     use HasFactory;
-
+    protected $connection = 'mysql';
     protected $fillable = [
         'bookid', 'studentid', 'bookstatus', 'duedate', 'penalty','transaction'
     ];
@@ -22,7 +22,7 @@ class borrowpage extends Model
 
     public function student()
     {
-        return $this->belongsTo(studentlist::class, 'studentid');
+        return $this->belongsTo(StudentDetails::class, 'studentid');
     }
 
     public function penalty($duedate)
