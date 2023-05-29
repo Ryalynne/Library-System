@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <br>
     <div class="px-4 bg-white text-dark border border-success border-top-0 border-end-0">
@@ -24,12 +23,13 @@
                     <center>
                         <div class="image-container">
                             @if (request()->input('student') && $student->studentno == request()->input('student'))
-                                <img src="{{ $student->studimg }}" class="img-thumbnail img-fluid" alt="...">
+                                <img src="{{ $student ? asset('images/' . $student->studimg) : 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png' }}"
+                                    class="img-thumbnail img-fluid student-image" alt="No Image">
                             @else
                                 <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                                    class="img-thumbnail img-fluid" alt="...">
+                                    class="img-thumbnail img-fluid student-image" alt="No Image">
                             @endif
-                        </div>
+                        </div>                        
                     </center>
                     <div class="mb-3">
                         <label class="form-label">ENTER ID:</label>
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">CLASS: </label>
+                        <label for="booktitle" class="form-label">DESIGNATED: </label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
                             value="{{ request()->input('student') ? $student->class : ' ' }}" disabled>
                     </div>
@@ -81,11 +81,14 @@
                         <tr>
                             <th>ID</th>
                             <th>TITLE</th>
+                            <th>AUTHOR/S</th>
+                            <th>COPYRIGHT</th>
+                            <th>ACCESSION NO</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <td colspan="6">ENTER STUDENT ID FIRST</td>
+                        <td colspan="6">ENTER BORROWER ID FIRST</td>
                     </tbody>
                 </table>
                 <br>
@@ -180,6 +183,7 @@
                         </table>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -209,9 +213,29 @@
 
         .image-container {
             width: 200px;
-            /* Adjust the width as per your needs */
+            /* Adjust the width as needed */
             height: 200px;
-            /* Adjust the height as per your needs */
+            /* Adjust the height as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .student-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-body {
+            height: 400px;
+            /* Adjust the height as needed */
+            overflow: auto;
+        }
+
+        .myTable {
+            width: 100%;
+            white-space: nowrap;
         }
     </style>
 @section('script')
@@ -278,29 +302,39 @@
         });
 
         function checkBookAvailability(id) {
-            $.get("/book/" + id, function(data, status) {
-                if (data.book.id == "") {
-                    alert("The Book Does Not Exist");
-                    $('.bookid').val("");
-                } else {
-                    if (!bookList.includes(id)) {
-                        bookList.push(id);
-                        var tr = document.createElement('tr');
-                        var td1 = tr.appendChild(document.createElement('td'));
-                        var td2 = tr.appendChild(document.createElement('td'));
-                        var td3 = tr.appendChild(document.createElement('td'));
-                        td1.innerHTML = data.book.id;
-                        td2.innerHTML = data.book.title;
-                        td3.innerHTML =
-                            '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
-                            id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>';
-                        document.getElementById("tbl").appendChild(tr);
+            $.get("/bookcopies/" + id, function(data, status) {
+                try {
+                    if (data.book.id == "") {
+                        alert("The Book Does Not Exist");
                         $('.bookid').val("");
-                        console.log('Available');
                     } else {
-                        alert("The Book Already in the list");
-                        $('.bookid').val("");
+                        if (!bookList.includes(id)) {
+                            bookList.push(id);
+                            var tr = document.createElement('tr');
+                            var td1 = tr.appendChild(document.createElement('td'));
+                            var td2 = tr.appendChild(document.createElement('td'));
+                            var td3 = tr.appendChild(document.createElement('td'));
+                            var td4 = tr.appendChild(document.createElement('td'));
+                            var td5 = tr.appendChild(document.createElement('td'));
+                            var td6 = tr.appendChild(document.createElement('td'));
+                            td1.innerHTML = data.book.id;
+                            td2.innerHTML = data.book.title;
+                            td3.innerHTML = data.book.author;
+                            td4.innerHTML = data.book.copyright;
+                            td5.innerHTML = data.book.accession;
+                            td6.innerHTML =
+                                '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
+                                id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>';
+                            document.getElementById("tbl").appendChild(tr);
+                            $('.bookid').val("");
+                            console.log('Available');
+                        } else {
+                            alert("The Book Already in the list");
+                            $('.bookid').val("");
+                        }
                     }
+                } catch (error) {
+                    alert('No Available Book');
                 }
             });
         }
@@ -327,9 +361,15 @@
                         'td'));
                     var td3 = tr.appendChild(document.createElement(
                         'td'));
+                    var td4 = tr.appendChild(document.createElement('td'));
+                    var td5 = tr.appendChild(document.createElement('td'));
+                    var td6 = tr.appendChild(document.createElement('td'));
                     td1.innerHTML = $iddata;
                     td2.innerHTML = data.book.title;
-                    td3.innerHTML =
+                    td3.innerHTML = data.book.author;
+                    td4.innerHTML = data.book.copyright;
+                    td5.innerHTML = data.book.accession;
+                    td6.innerHTML =
                         '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
                         $iddata + '" onclick="deleteRow(this, ' + $iddata +
                         ');">Remove</button>';
@@ -358,6 +398,7 @@
         $('.studid').on('keyup', function(event) {
             if (event.keyCode === 13) {
                 var id = $(this).val().trim().toLowerCase();
+                console.log(id);
                 if (id === "") {
                     $('.full-name').val("");
                     $('.class').val("");
@@ -381,6 +422,7 @@
                 document.location.href = "borrowpage";
             });
         }
+
 
         var stud = document.getElementById("student").value;;
 

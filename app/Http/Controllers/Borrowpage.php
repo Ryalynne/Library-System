@@ -8,7 +8,7 @@ use App\Models\copies;
 use App\Models\studentlist;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
-use Illuminate\Support\Facades\Validator;
+
 
 class borrowpage extends Controller
 {
@@ -27,23 +27,29 @@ class borrowpage extends Controller
     {
         $student = $request->studentId;
         $studentno = studentlist::where('studentno', $student)->value('id');
-        $date = date('Y:m:d', strtotime('+3 weekdays'));
-    
-        // Create a new transaction record with a unique transaction number
+        $class = studentlist::where('studentno', $student)->value('class');
+        $datestudent = date('Y:m:d', strtotime('+3 weekdays'));
+        $datestaff = date('Y:m:d', strtotime('+5 weekdays'));
+
         $transaction = Transaction::create([
             'transaction_number' => uniqid(),
         ]);
-    
+
         foreach ($request->bookList as $key => $value) {
-            // Duplicate the same transaction number in each entry
-            ModelsBorrowpage::create([
+            $data = [
                 'bookid' =>  $value,
                 'studentid' => $studentno,
                 'bookstatus' => 'onlend',
-                'duedate' => $date,
                 'transaction' => $transaction->transaction_number,
-            ]);
+            ];
+            $class = strtolower($class);
+            if (strpos($class, 'staff') !== false || strpos($class, 'department') !== false || strpos($class, 'qmr') !== false || strpos($class, 'school director') !== false) {
+                $data['duedate'] = $datestaff;
+            } else {
+                $data['duedate'] = $datestudent;
+            }
+            
+            ModelsBorrowpage::create($data);
         }
     }
-    
 }

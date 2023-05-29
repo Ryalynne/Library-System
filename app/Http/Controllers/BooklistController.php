@@ -23,10 +23,43 @@ class BooklistController extends Controller
         $books = booklist::where('ishide', false)->paginate(10);
         return view('booklist', compact('books'));
     }
-    public function create()
+
+    public function updateback($id)
     {
+        $book = booklist::find($id);
+        $book->ishide = false;
+        $book->save();
+        return response()->json([
+            'message' => 'Book updated successfully'
+        ]);
     }
 
+
+    public function updateremove($id)
+    {
+        $book = booklist::find($id);
+        bookaction::create([
+            'bookid' => $book->id,
+            'action' => "remove the book",
+            'performby' => Auth::user()->name
+        ]);
+        $book->ishide = true;
+        $book->save();
+        return response()->json([
+            'message' => 'Book updated successfully'
+        ]);
+    }
+
+    public function getnumber($id)
+    {
+        $data = copies::where('bookid', $id)->where('action', 'lessen')->sum('copies');
+        $fine = borrowpage::where('bookid', $id)->where('bookstatus', 'fine')->count();
+        $minis = $data + $fine;
+        $onlend = borrowpage::where('bookid', $id)->where('bookstatus', 'onlend')->count();
+        $subtotal =  copies::where('bookid', $id)->where('action', 'added')->sum('copies') + $onlend;
+        $total = $subtotal - $minis;
+        return $total;
+    }
     public function store(Request $request)
     {
         try {
@@ -109,7 +142,6 @@ class BooklistController extends Controller
         // Return a response indicating the success
         return response()->json(['message' => 'Data inserted successfully']);
     }
-
     public function updatebooks(Request $request)
     {
         try {
@@ -150,16 +182,56 @@ class BooklistController extends Controller
 
     public function get_book($data)
     {
-        // $book = booklist::find($data);
-        // return compact('book');
         $book = BookList::join('copies', 'booklists.id', 'copies.bookid')
             ->where('booklists.id', $data)
-            ->where('copies.copies', '=>', 0)
+            ->where('booklists.ishide', false)
             ->orderBy('booklists.id', 'desc')
             ->first();
-
         return compact('book');
     }
+
+    public function get_bookarchived($id)
+    {
+        $book = booklist::where('id', $id)->where('ishide', true)->first();
+        return compact('book');
+    }
+
+    public function get_bookcopies($data)
+    {
+        $totalLessen = copies::where('bookid', $data)
+            ->where('action', 'lessen')->sum('copies');
+
+        $totalCopies = copies::where('bookid', $data)
+            ->where('action', 'added')
+            ->sum('copies');
+
+        $totalFine = borrowpage::where('bookid', $data)
+            ->where('bookstatus', 'fine')
+            ->count();
+
+        $totalOnLend = borrowpage::where('bookid', $data)
+            ->where('bookstatus', 'onlend')
+            ->count();
+
+        $minus  = $totalOnLend + $totalFine + $totalLessen;
+        $total = $totalCopies - $minus;
+
+        if ($total >= 1) {
+            $book = BookList::join('copies', 'booklists.id', 'copies.bookid')
+                ->where('booklists.id', $data)
+                ->where('booklists.ishide', false)
+                ->orderBy('booklists.id', 'desc')
+                ->first();
+
+            return compact('book');
+        } else {
+            $message = 'The book is not available.';
+            return compact('message');
+        }
+    }
+
+
+
 
     public function get_status($data, $studentid)
     {

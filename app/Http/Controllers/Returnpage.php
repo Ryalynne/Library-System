@@ -24,30 +24,6 @@ class Returnpage extends Controller
         return view('returnpage', compact('books', 'student', 'borrowbook'));
     }
 
-    public function create(): never
-    {
-    }
-
-
-    public function store(Request $request): never
-    {
-    }
-
-
-    public function show()
-    {
-        //
-    }
-
-
-    public function edit()
-    {
-        //
-    }
-
-    /**
-     * Update the resource in storage.
-     */
     public function update(Request $request)
     {
         $student = $request->studentId;
@@ -58,12 +34,5 @@ class Returnpage extends Controller
                 'bookstatus' => 'returned'
             ]);
         }
-    }
-
-    /**
-     * Remove the resource from storage.
-     */
-    public function destroy(): never
-    {
     }
 }

@@ -59,6 +59,7 @@
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="booklist">Books Entry</a>
+                                        <hr>    
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
@@ -119,35 +120,68 @@
                                         Archived</a>
                                 </div>
                             </li>
+
+                            
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Procurement
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item dropdown-active-success"   
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="vendormanagement">Vendor Management</a>
+                                    <hr>
+                                    <a class="dropdown-item dropdown-active-success"   
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="purchase">Purchase Order</a>
+                                    <a class="dropdown-item dropdown-active-success"   
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="purchasepending">Pending Order</a>
+                                    <a class="dropdown-item dropdown-active-success"   
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="receivepurchaseorder">Receive Order</a>
+                                    <hr>
+                                    <a class="dropdown-item dropdown-active-success"   
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="backorder">Back Order</a>
+                                    <a class="dropdown-item dropdown-active-success"   
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="badorder">Bad Order</a>
+                                </div>
+                            </li>      
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Procurement History
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item dropdown-active-success"   
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="receivehistory">Receive History</a>
+                                    <a class="dropdown-item dropdown-active-success"   
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="cancelhistory">Cancel History</a>
+                                </div>
+                            </li>      
+                            <li class="nav-item active">
+                                <a class="nav-link text-white" href="account">User Account</a>
+                            </li>
                             <li class="nav-item active">
                                 <a class="nav-link text-white" href="usermanual">User Manual</a>
                             </li>
                     </div>
                 @endguest
-                <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
-                    <!-- Authentication Links -->
                     @guest
-                        {{-- @if (Route::has('login'))
-                            <li class="nav-item nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    LOGIN
-                                </a>
-                                {{-- <div class="dropdown-menu">
-                                    <a class="dropdown-item text-success"
-                                        href="{{ route('login') }}">{{ __('STUDENT') }}</a>
-                                    <a class="dropdown-item text-success"
-                                        href="{{ route('login') }}">{{ __('FACULTY') }}</a>
-                                </div> 
-                            </li>
-                        @endif --}}
-
-                        {{-- @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('register') }}">{{ __('REGISTER') }}</a>
-                            </li>
-                        @endif --}}
                     @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#"

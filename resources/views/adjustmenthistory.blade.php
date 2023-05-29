@@ -41,6 +41,8 @@
                             <th scope="col"  class="text-center">ID</th>
                             <th scope="col"  class="text-center">TITLE</th>
                             <th scope="col"  class="text-center">AUTHOR/S</th>
+                            <th scope="col"  class="text-center">COPYRIGHT</th>
+                            <th scope="col"  class="text-center">ACCESSION NO</th>
                             <th scope="col"  class="text-center">DATE OF ACTION</th>
                             <th scope="col"  class="text-center">ACTION</th>
                             <th scope="col"  class="text-center">ADJUSTED</th>
@@ -58,6 +60,8 @@
                                     {{ $adjust->book->title }}
                                 </td>
                                 <td>{{ $adjust->book->author}}</td>
+                                <td>{{ $adjust->book->copyright}}</td>
+                                <td>{{ $adjust->book->accession}}</td>
                                 <td>{{ date('Y-m-d', strtotime($adjust->created_at))}}</td>                               
                                 <td class="col-1">{{ $adjust->action }}</td>    
                                 <td class="col-1">{{ $adjust->number_adjust }}</td>                             

@@ -9,7 +9,7 @@ class studentlist extends Model
 {
     use HasFactory;
     protected $fillable =[
-        'name','middle','lastname','class'.'studentno',
+        'name','middle','lastname','class'.'studentno','studimg',
     ];
 
     public function bookborrow(){

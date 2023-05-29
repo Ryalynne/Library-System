@@ -18,6 +18,8 @@
                 <th scope="col">ID</th>
                 <th scope="col">TITLE</th>
                 <th scope="col">AUTHOR/S</th>
+                <th scope="col">COPYRIGHT</th>
+                <th scope="col">ACCESSION NO</th>
                 <th scope="col">DATE OF ACTION</th>
                 <th scope="col">ACTION</th>
                 <th scope="col">ADJUSTED</th>
@@ -31,6 +33,8 @@
                     <td>{{ $adjust->book->id }}</td>
                     <td>{{ $adjust->book->title }}</td>
                     <td>{{ $adjust->book->author }}</td>
+                    <td>{{ $adjust->book->copyright }}</td>
+                    <td>{{ $adjust->book->accession }}</td>
                     <td>{{ date('Y-m-d', strtotime($adjust->created_at)) }}</td>
                     <td>{{ $adjust->action }}</td>
                     <td>{{ $adjust->number_adjust }}</td>
@@ -52,6 +56,7 @@
         <span contenteditable="true" style="border-bottom: 1px solid #727272;">{{ auth()->user()->name }}</span>
     </div>
 </div>
+
 </html>
 
 <style>
@@ -63,13 +68,8 @@
         padding: 0;
     }
 
-    footer {
-        position: fixed;
-        bottom: -60px;
-        left: 0px;
-        right: 0px;
-        height: 120px;
-        font-size: 20px !important;
+    .table-container {
+        overflow-x: auto;
     }
 
     table {
@@ -96,5 +96,11 @@
 
     h3 {
         color: #20462c;
+    }
+
+    @media screen and (max-width: 768px) {
+        table {
+            font-size: 12px;
+        }
     }
 </style>

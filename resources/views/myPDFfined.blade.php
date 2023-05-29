@@ -19,6 +19,7 @@
                 <th scope="col" class="text-center">TITLE</th>
                 <th scope="col" class="text-center">AUTHOR/S</th>
                 <th scope="col" class="text-center">COPYRIGHT</th>
+                <th scope="col" class="text-center">ACCESSION NO</th>
                 <th scope="col" class="text-center">BORROW DATE</th>
                 <th scope="col" class="text-center">DUE DATE</th>
                 <th scope="col" class="text-center">PENALTY</th>
@@ -34,6 +35,9 @@
                     </td>
                     <td>
                         {{ $book->book->copyright }}
+                    </td>
+                    <td>
+                        {{ $book->book->accession}}
                     </td>
                     <td>
                         {{ date('Y-m-d', strtotime($book->created_at)) }}
@@ -54,7 +58,7 @@
         <br>
     </div>
     <div class="footer-row">
-        <span>Prepared by: {{ auth()->user()->name }}</span>
+        <span>Prepared by:  <u>{{ auth()->user()->name }}  </u></span>
         <br>
         <span
             class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Librarian</span>
@@ -67,7 +71,7 @@
             Director</span>
     </div>
     <div class="footer-row">
-        <span>Return by: {{ $name }} {{ $middle }} {{ $lastname }}</span>
+        <span>Fine by:  <u>{{ $name }} {{ $middle }} {{ $lastname }}  </u></span>
         <br>
         <span
             class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borrower</span>
@@ -78,51 +82,47 @@
 </html>
 
 <style>
-    hr {
-        display: block;
-        width: 20%;
-        border-top: 0px solid #000000;
-        margin: 1em 0;
-        padding: 0;
-    }
+     hr {
+            display: block;
+            width: 20%;
+            border-top: 0px solid #000000;
+            margin: 1em 0;
+            padding: 0;
+        }
 
-    footer {
-        position: fixed;
-        bottom: -30px;
-        left: 0px;
-        right: 0px;
-        height: 120px;
-        font-size: 20px !important;
-    }
+        .table-container {
+            overflow-x: auto;
+        }
 
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    p {
-        font-size: 90%;
-        color: #20462c;
-    }
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #727272;
+        }
 
-    th,
-    td {
-        text-align: left;
-        padding: 8px;
-        border: 1px solid #727272;
-    }
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2
-    }
+        th {
+            border: 1px solid #727272;
+            background-color: #20462c;
+            color: white;
+        }
 
-    th {
-        border: 1px solid #727272;
-        background-color: #20462c;
-        color: white;
-    }
+        h3 {
+            color: #20462c;
+        }
 
-    h3 {
-        color: #20462c;
-    }
+        @media screen and (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+        }
 </style>

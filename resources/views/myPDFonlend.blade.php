@@ -15,9 +15,12 @@
     <table class="table table-bordered myTable">
         <thead>
             <tr class="bg-success text-white">
+                <th scope="col">Transaction</th>
                 <th scope="col">ID</th>
                 <th scope="col">Title</th>
                 <th scope="col">Author/s</th>
+                <th scope="col">Copyright</th>
+                <th scope="col">Accession No</th>
                 <th scope="col">Name of Borrower</th>
                 <th scope="col">Date Borrowed</th>
                 <th scope="col">Due Date</th>
@@ -27,9 +30,12 @@
         <tbody>
             @foreach ($borrow as $item)
                 <tr class="tr">
+                    <td>{{ $item->transaction }}</td>
                     <td>{{ $item->book->id }}</td>
                     <td>{{ $item->book->title }}</td>
                     <td>{{ $item->book->author }}</td>
+                    <td>{{ $item->book->copyright }}</td>
+                    <td>{{ $item->book->accession }}</td>
                     <td>{{ $item->student->name }} {{ $item->student->middle }} {{ $item->student->lastname }}</td>
                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                     <td>{{ $item->duedate }}</td>
@@ -56,45 +62,46 @@
 
 <style>
     hr {
-        display: block;
-        width: 20%;
-        border-top: 0px solid #000000;
-        margin: 1em 0;
-        padding: 0;
-    }
+            display: block;
+            width: 20%;
+            border-top: 0px solid #000000;
+            margin: 1em 0;
+            padding: 0;
+        }
 
-    footer {
-        position: fixed;
-        bottom: -60px;
-        left: 0px;
-        right: 0px;
-        height: 120px;
-        font-size: 20px !important;
-    }
+        .table-container {
+            overflow-x: auto;
+        }
 
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    th,
-    td {
-        text-align: left;
-        padding: 8px;
-        border: 1px solid #727272;
-    }
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #727272;
+        }
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2
-    }
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
 
-    th {
-        border: 1px solid #727272;
-        background-color: #20462c;
-        color: white;
-    }
+        th {
+            border: 1px solid #727272;
+            background-color: #20462c;
+            color: white;
+        }
 
-    h3 {
-        color: #20462c;
-    }
+        h3 {
+            color: #20462c;
+        }
+
+        @media screen and (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+        }
 </style>

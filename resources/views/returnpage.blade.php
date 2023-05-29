@@ -24,10 +24,11 @@
                     <center>
                         <div class="image-container">
                             @if (request()->input('student') && $student->studentno == request()->input('student'))
-                                <img src="{{ $student->studimg }}" class="img-thumbnail img-fluid" alt="...">
+                                <img src="{{ $student ? asset('images/' . $student->studimg) : 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png' }}"
+                                    class="img-thumbnail img-fluid student-image" alt="No Image">
                             @else
                                 <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                                    class="img-thumbnail img-fluid" alt="...">
+                                    class="img-thumbnail img-fluid student-image" alt="No Image">
                             @endif
                         </div>
                     </center>
@@ -44,7 +45,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="booktitle" class="form-label">CLASS:</label>
+                        <label for="booktitle" class="form-label">DESIGNATED:</label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
                             value="{{ request()->input('student') ? $student->class : ' ' }}" disabled>
                     </div>
@@ -57,42 +58,48 @@
                     </div>
                 </div>
                 <br>
-                    <table class="table table-bordered table-striped" id="tbl">
-                        <thead class="bg-success text-white">
-                            <tr>
-                                <th>ID</th>
-                                <th>TITLE</th>
-                                <th>BORROW DATE</th>
-                                <th>DUE DATE</th>
-                                <th>ACTION</th>
-                                <th>PENALTY</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (count($borrowbook) > 0)
-                                @foreach ($borrowbook as $book)
-                                    <tr>
-                                        <td>{{ $book->book->id }}</td>
-                                        <td>{{ $book->book->title }}</td>
-                                        <td class="col-2">{{ date('Y-m-d', strtotime($book->created_at)) }}</td>
-                                        <td class="col-2">{{ $book->duedate }}</td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input getbook"
-                                                    id="checkbox-{{ $book->id }}" data-id="{{ $book->id }}">
-                                                <label class="form-check-label"
-                                                    for="checkbox-{{ $book->id }}">Return</label>
-                                            </div>
-                                        </td>
-                                        <td>{{ $book->penalty($book->duedate) }}</td>
-                                    </tr>
-                                @endforeach
-                            @else
+                <table class="table table-bordered table-striped" id="tbl">
+                    <thead class="bg-success text-white">
+                        <tr>
+                            <th>TRANSACTION</th>
+                            <th>ID</th>
+                            <th>TITLE</th>
+                            <th>COPYRIGHT</th>
+                            <th>ACCESSION NO</th>
+                            <th>BORROW DATE</th>
+                            <th>DUE DATE</th>
+                            <th>ACTION</th>
+                            <th>PENALTY</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (count($borrowbook) > 0)
+                            @foreach ($borrowbook as $book)
                                 <tr>
-                                    <td id="messageRow" colspan="6">NO BORROWED BOOK</td>
+                                    <td>{{ $book->transaction }}</td>
+                                    <td>{{ $book->book->id }}</td>
+                                    <td>{{ $book->book->title }}</td>
+                                    <td>{{ $book->book->copyright }}</td>
+                                    <td>{{ $book->book->accession }}</td>
+                                    <td class="col-2">{{ date('Y-m-d', strtotime($book->created_at)) }}</td>
+                                    <td class="col-2">{{ $book->duedate }}</td>
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input getbook"
+                                                id="checkbox-{{ $book->id }}" data-id="{{ $book->id }}">
+                                            <label class="form-check-label"
+                                                for="checkbox-{{ $book->id }}">Return</label>
+                                        </div>
+                                    </td>
+                                    <td>{{ $book->penalty($book->duedate) }}</td>
                                 </tr>
-                            @endif
-                        </tbody>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td id="messageRow" colspan="10">NO BORROWED BOOK</td>
+                            </tr>
+                        @endif
+                    </tbody>
                 </table>
                 <br>
                 <div class="text-end">
@@ -129,9 +136,18 @@
 
         .image-container {
             width: 200px;
-            /* Adjust the width as per your needs */
+            /* Adjust the width as needed */
             height: 200px;
-            /* Adjust the height as per your needs */
+            /* Adjust the height as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .student-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 @section('script')
@@ -213,7 +229,7 @@
         } else {
             document.getElementById("myBtn").disabled = true;
             var tableRow = document.getElementById('messageRow');
-            tableRow.innerHTML = '<td colspan="6">ENTER STUDENT ID FIRST</td>';
+            tableRow.innerHTML = '<td colspan="6">ENTER BORROWER ID FIRST</td>';
         }
     </script>
 @endsection

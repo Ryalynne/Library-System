@@ -19,6 +19,7 @@
                 <th scope="col" class="text-center">TITLE</th>
                 <th scope="col" class="text-center">AUTHOR/S</th>
                 <th scope="col" class="text-center">COPYRIGHT</th>
+                <th scope="col" class="text-center">ACCESSION NO</th>
                 <th scope="col" class="text-center">BORROW DATE</th>
                 <th scope="col" class="text-center">DUE DATE</th>
                 <th scope="col" class="text-center">PENALTY</th>
@@ -35,6 +36,9 @@
                     </td>
                     <td>
                         {{ $book->book->copyright }}
+                    </td>
+                    <td>
+                        {{ $book->book->accession }}
                     </td>
                     <td>
                         {{ date('Y-m-d', strtotime($book->created_at)) }}
@@ -56,7 +60,7 @@
     </div>
     <br>
     <div class="footer-row">
-        <span>Prepared by: {{ auth()->user()->name }}</span>
+        <span>Prepared by: <u>{{ auth()->user()->name }}</u></span>
         <br>
         <span
             class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Librarian</span>
@@ -69,7 +73,7 @@
             Director</span>
     </div>
     <div class="footer-row">
-        <span>Return by: {{ $name }} {{ $middle }} {{ $lastname }}</span>
+        <span>Return by: <u>{{ $name }} {{ $middle }} {{ $lastname }}</u></span>
         <br>
         <span
             class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borrower</span>
@@ -88,13 +92,8 @@
         padding: 0;
     }
 
-    footer {
-        position: fixed;
-        bottom: -60px;
-        left: 0px;
-        right: 0px;
-        height: 120px;
-        font-size: 20px !important;
+    .table-container {
+        overflow-x: auto;
     }
 
     table {
@@ -121,5 +120,11 @@
 
     h3 {
         color: #20462c;
+    }
+
+    @media screen and (max-width: 768px) {
+        table {
+            font-size: 12px;
+        }
     }
 </style>

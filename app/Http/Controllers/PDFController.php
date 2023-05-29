@@ -7,7 +7,9 @@ use App\Models\bookadjusment;
 use App\Models\booklist;
 use App\Models\borrowpage;
 use App\Models\copies;
+use App\Models\purchasemodel;
 use App\Models\studentlist;
+use App\Models\vendortable;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -15,6 +17,49 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class PDFController extends Controller
 
 {
+    public function generatePurchaseOrder($booktitle, $id)
+    {
+        $bookdata = [];
+        $vendor = vendortable::where('id', $id)->value('vendorname');
+
+        foreach (json_decode($booktitle) as $book) {
+            $bookDataItem = purchasemodel::find($book);
+            if ($bookDataItem) {
+                $bookdata[] = $bookDataItem;
+            }
+        }
+
+        // Check if $bookdata is empty after filtering
+        if (empty($bookdata)) {
+            // Handle the case when $bookdata is empty (no valid books found)
+            return response()->json(['message' => 'No valid books found. Purchase order generation skipped.']);
+        }
+
+        $transaction = purchasemodel::where('vendorid', $id)->where('status', 'pending')->latest('transaction')->first();
+        $pdf = PDF::loadView('myPDFpurchaseorder', compact('vendor', 'bookdata', 'transaction'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
+
+
+
+    public function generateBadorder($bookid, $quantity)
+    {
+        $bookList = [];
+        $quantitylist = [];
+
+        foreach (json_decode($bookid) as $book) {
+            $bookList [] = purchasemodel::find($book);
+        }
+        foreach (json_decode($quantity) as $qty) {
+            $quantitylist [] = $qty;
+        }
+
+        // $transaction = purchasemodel::where('bookid', $book)->where('bookstatus', 'onlend')->value('transaction');
+
+        ///duedate need kuhain
+        $pdf = PDF::loadView('myPDFBadorder', compact('bookList', 'quantitylist'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+    }
 
     //BookList REPORTS
 
@@ -51,7 +96,7 @@ class PDFController extends Controller
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
-    public function generateBorrow($bookData , $studentId)
+    public function generateBorrow($bookData, $studentId)
     {
         $bookList = [];
         $student = studentlist::where('studentno', $studentId)->value('id');
@@ -63,10 +108,14 @@ class PDFController extends Controller
             $bookList[] = booklist::find($book);
             $transaction = borrowpage::where('bookid', $book)
                 ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
+            $duedate = borrowpage::where('bookid', $book)
+                ->where('studentid', $student)->where('bookstatus', 'onlend')->value('duedate');
         }
-        $pdf = PDF::loadView('myPDFborrow', compact('bookList','transaction','name','middle','lastname'));
+        ///duedate need kuhain
+        $pdf = PDF::loadView('myPDFborrow', compact('bookList', 'transaction', 'name', 'middle', 'lastname', 'duedate'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
+
 
     public function generatereturndamage($bookData, $studentId)
     {
@@ -79,9 +128,9 @@ class PDFController extends Controller
         foreach (json_decode($bookData) as $book) {
             $bookList[] = borrowpage::find($book);
             $transaction = borrowpage::where('bookid', $book)
-            ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
+                ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
         }
-        $pdf = PDF::loadView('myPDFfined', compact('bookList','transaction','name','middle','lastname'));
+        $pdf = PDF::loadView('myPDFfined', compact('bookList', 'transaction', 'name', 'middle', 'lastname'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -97,9 +146,9 @@ class PDFController extends Controller
         foreach (json_decode($bookData) as $book) {
             $bookList[] = borrowpage::find($book);
             $transaction = borrowpage::where('bookid', $book)
-            ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
+                ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
         }
-        $pdf = PDF::loadView('myPDFreturn', compact('bookList','transaction','name','middle','lastname'));
+        $pdf = PDF::loadView('myPDFreturn', compact('bookList', 'transaction', 'name', 'middle', 'lastname'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 

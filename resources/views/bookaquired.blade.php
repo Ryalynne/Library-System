@@ -73,7 +73,7 @@
                             </td>
                             <td class="text-center col-2">
                                 {{-- button --}}
-                                <button type="button" class="btn btn-success edit-button" data-id={{ $book->id }}
+                                <button type="button" class="btn btn-primary edit-button" data-id={{ $book->id }}
                                     data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">

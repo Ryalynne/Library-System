@@ -6,7 +6,6 @@ use App\Models\bookadjusment;
 use App\Models\booklist;
 use App\Models\copies;
 use Exception;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +17,9 @@ class CopiesController extends Controller
      */
     public function index()
     {
-        //
+        $books = booklist::where('ishide', false)->paginate(10);
+        $copies = copies::where('ishide', false)->get();
+        return view('bookaquired', compact('books'));
     }
 
     public function updatecopies(Request $request)
@@ -82,7 +83,7 @@ class CopiesController extends Controller
                 'number_adjust' => $request->lesscopies,
                 'comment' => $request->comment
             ]);
-            
+
             return response()->json(['status' => 200, 'message' => 'Copies Remove successfully.']);
         } catch (Exception $e) {
             return response()->json(['status' => 500, 'message' => $e->getMessage()]);

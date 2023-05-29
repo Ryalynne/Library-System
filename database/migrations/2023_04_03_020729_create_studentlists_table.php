@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('middle');
             $table->string('lastname');
             $table->string('class');
-            $table->string('studimg');
+            $table->string('studimg')->nullable(true);
+            $table->string('status')->default('active');
             $table->boolean('ishide')->default(0);
             $table->timestamps();
         });

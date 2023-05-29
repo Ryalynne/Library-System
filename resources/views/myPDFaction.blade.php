@@ -74,28 +74,47 @@
 </html>
 
 <style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+   hr {
+            display: block;
+            width: 20%;
+            border-top: 0px solid #000000;
+            margin: 1em 0;
+            padding: 0;
+        }
 
-    th,
-    td {
-        text-align: left;
-        padding: 8px;
-        border: 1px solid #727272;
-    }
+        .table-container {
+            overflow-x: auto;
+        }
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2
-    }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    th {
-        border: 1px solid #727272;
-        background-color: #20462c;
-        color: white;
-    }
-    h3{
-        color: #20462c;
-    }
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #727272;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        th {
+            border: 1px solid #727272;
+            background-color: #20462c;
+            color: white;
+        }
+
+        h3 {
+            color: #20462c;
+        }
+
+        @media screen and (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+        }
 </style>

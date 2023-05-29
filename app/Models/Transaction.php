@@ -12,4 +12,5 @@ class Transaction extends Model
         'transaction_number',
         // Other fillable attributes
     ];
+
 }

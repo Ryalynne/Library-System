@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\booklist;
 use Illuminate\Http\Request;
 
 class archivedcontroller extends Controller
@@ -10,7 +11,8 @@ class archivedcontroller extends Controller
      * Show the form for creating the resource.
      */
     public function index(){
-        return view('archivedhistory');
+        $adjustment = booklist::where('ishide', true)->paginate(10);
+        return view('archivedhistory', compact('adjustment'));
     }
     public function create(): never
     {

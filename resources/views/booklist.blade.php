@@ -21,11 +21,19 @@
             <br>
             <div id="success_message"></div>
             <!-- Button trigger modal -->
+
             <div class="d-flex mb-1">
-                <div class="me-auto p-2">
+                <div class="me-auto p-2 btn-group">
                     <button type="button" class="btn btn-success bg-success border-success" data-bs-toggle="modal"
                         data-bs-target="#modal_addbook">
                         Register Books
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z" />
+                            <path
+                                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z" />
+                        </svg>
                     </button>
                     <button type="button" class="btn btn-success bg-success border-success print-tbl "
                         data-bs-toggle="modal" data-bs-target="#tablemodal">
@@ -96,8 +104,8 @@
 
                                 <div class="mb-3">
                                     <label for="accession" class="form-label">ACCESSION NO.</label>
-                                    <input type="number" class="form-control t-accession" id="accession" name="accession"
-                                        :value="old('accession')" placeholder="ex.04313">
+                                    <input type="number" class="form-control t-accession" id="accession"
+                                        name="accession" :value="old('accession')" placeholder="ex.04313">
                                 </div>
 
 
@@ -170,8 +178,9 @@
                                             </button>
 
 
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#backdrop"><svg xmlns="http://www.w3.org/2000/svg"
+                                            <button type="button" class="btn btn-danger btn-sm remove-book"
+                                                data-bs-toggle="modal" data-bs-target="#backdrop"
+                                                data-id={{ $book->id }}><svg xmlns="http://www.w3.org/2000/svg"
                                                     width="20" height="20" fill="currentColor"
                                                     viewBox="0 0 16 16">
                                                     <path
@@ -205,10 +214,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        {{-- MODAL BODY --}}
                         <div class="modal-body ">
-                            {{-- <form method="POST" action="{{ route('books.update-book') }}">
-                            @csrf --}}
                             <div class="mb-3">
                                 <label for="bookid" class="form-label">BOOK ID</label>
                                 <input type="text" class="form-control modal-book-id" id="bookid" name="bookid"
@@ -262,83 +268,84 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                            <h1 class="modal-title fs-5" id="titleofbook"></h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            After removing this book it will automatically go to archived.
+                            After removing this book, it will automatically go to archived.
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success">Are you sure you want to remove
-                                this? </button>
+                            <button type="submit" class="btn btn-success removenow" id="remove">Are you sure you want
+                                to remove this?</button>
+                            <p id="myParagraph"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="qrcodemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="p1"></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <embed id="qrcode-frame" src="" frameborder="0" width="100%" height="100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5">PRINT BOOK LIST</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <embed id="table-frame" src="" frameborder="0" width="100%" height="100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </tr>
+            </tbody>
+            @endforeach
+            </table>
+
+            <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5">IMPORT EXCEL FILE</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="file" id="fileInput" accept=".xlsx, .xls" />
+                            <button type="button" class="btn btn-success" onclick="importExcelFile()">Import</button>
+                            <button type="button" class="btn btn-success" onclick="insertData()">Register</button>
+                            <br><br>
+                            <table id="importTable" class="table table-bordered">
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
-
-        <div class="modal fade" id="qrcodemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="p1"></h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <embed id="qrcode-frame" src="" frameborder="0" width="100%" height="100%">
-                    </div>
-                </div>
-            </div>
+        <br>
+        <div class="pagination justify-content-center">
+            {{ $books->links() }}
         </div>
-
-        <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5">PRINT BOOK LIST</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <embed id="table-frame" src="" frameborder="0" width="100%" height="100%">
-                    </div>
-                </div>
-            </div>
-        </div>
-        </tr>
-        </tbody>
-        @endforeach
-        </table>
-
-        <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5">IMPORT EXCEL FILE</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="file" id="fileInput" accept=".xlsx, .xls" />
-                        <button type="button" class="btn btn-success" onclick="importExcelFile()">Import</button>
-                        <button type="button" class="btn btn-success" onclick="insertData()">Register</button>
-                        <br><br>
-                        <table id="importTable" class="table table-bordered">
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <br>
-    <div class="pagination justify-content-center">
-        {{ $books->links() }}
-    </div>
     </div>
     <br>
     <br>
@@ -386,83 +393,58 @@
 @section('script')
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <script>
-        // function importExcelFile() {
-        //     var fileInput = document.getElementById('fileInput');
-        //     var table = document.getElementById('importTable');
-        //     table.innerHTML = '';
+        var removeid = "";
 
-        //     if (fileInput.files.length === 0) {
-        //         alert('Please select an Excel file.');
-        //         return;
-        //     }
+        $('.remove-book').on('click', function() {
+            var id = $(this).data('id');
+            $.get("/book/" + id, function(data, status) {
+                if (data.book && data.book.id == id) {
 
-        //     var file = fileInput.files[0];
-        //     var reader = new FileReader();
+                    $.get("/getcopy/" + id, function(copyData, copyStatus) {
+                        console.log(copyData);
+                        if (copyData == 0) {
+                            document.getElementById("titleofbook").innerHTML = data.book.title;
+                            document.getElementById("myParagraph").innerHTML = "";
+                            document.getElementById("remove").disabled = false;
+                            removeid = id;
+                        } else if (copyData > 0) {
+                            document.getElementById("titleofbook").innerHTML = data.book.title;
+                            document.getElementById("myParagraph").innerHTML =
+                                "Cannot be removed due to existing copies.";
+                            document.getElementById("remove").disabled = true;
+                        }
+                    });
+                } else {
+                    document.getElementById("myParagraph").innerHTML = data.book.title;
+                    "Cannot be removed due to existing copies.";
+                    document.getElementById("remove").disabled = true;
+                    console.log('error');
+                }
+            });
+        });
 
-        //     reader.onload = function(e) {
-        //         var data = new Uint8Array(e.target.result);
-        //         var workbook = XLSX.read(data, {
-        //             type: 'array'
-        //         });
-
-        //         var worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        //         var jsonData = XLSX.utils.sheet_to_json(worksheet, {
-        //             header: 1
-        //         });
-
-        //         // Define the column headers
-        //         var columnHeaders = ['ID', 'TITLE', 'AUTHOR', 'COPYRIGHT', 'ACCESSION NO.', 'COPIES', ''];
-
-        //         // Add column headers
-        //         var headerRow = document.createElement('tr');
-
-        //         for (var j = 0; j < columnHeaders.length; j++) {
-        //             var cellHeader = document.createElement('th');
-        //             cellHeader.textContent = columnHeaders[j];
-        //             headerRow.appendChild(cellHeader);
-        //         }
-
-        //         table.appendChild(headerRow);
-
-        //         for (var i = 1; i < jsonData.length; i++) {
-        //             (function() {
-        //                 var row = document.createElement('tr');
-
-        //                 for (var j = 0; j < jsonData[i].length; j++) {
-        //                     var cell = document.createElement('td');
-        //                     var input = document.createElement('input');
-        //                     input.type = 'text';
-        //                     input.value = jsonData[i][j];
-        //                     cell.appendChild(input);
-        //                     row.appendChild(cell);
-        //                 }
-
-        //                 // Add an input column for "COPIES"
-        //                 var copiesCell = document.createElement('td');
-        //                 var copiesInput = document.createElement('input');
-        //                 copiesInput.type = 'text';
-        //                 copiesInput.value = '0'; // Set the default value to 0
-        //                 copiesCell.appendChild(copiesInput);
-        //                 row.appendChild(copiesCell);
-
-        //                 // Add a remove button column
-        //                 var removeButtonCell = document.createElement('td');
-        //                 var removeButton = document.createElement('button');
-        //                 removeButton.textContent = 'Remove';
-        //                 removeButton.className = 'removeButton';
-        //                 removeButton.addEventListener('click', function() {
-        //                     table.removeChild(row); // Remove the row when the button is clicked
-        //                 });
-        //                 removeButtonCell.appendChild(removeButton);
-        //                 row.appendChild(removeButtonCell);
-
-        //                 table.appendChild(row);
-        //             })();
-        //         }
-        //     };
-
-        //     reader.readAsArrayBuffer(file);
-        // }
+        $('.removenow').on('click', function() {
+            var id = removeid;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "/removebook/" + id,
+                data: {
+                    _method: "POST"
+                },
+                success: function(response) {
+                    alert(response.message);
+                    location.reload();
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
 
 
         $('.btn-qr').on('click', function() {
