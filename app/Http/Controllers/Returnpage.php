@@ -15,27 +15,21 @@ class Returnpage extends Controller
     {
         $books = booklist::where('ishide', false)->get();
         if ($request->student) {
-            $student =  StudentAccount::where('student_number', $request->student)->first();
-            $borrowbook = $student->student->borrow_books;
+            $student = StudentAccount::where('student_number', $request->student)->first();
+            $borrowbook = $student ? $student->student->borrow_books : [];
         } else {
-            $student = [];
+            $student = null;
             $borrowbook = [];
         }
-        return view('returnpage', compact('books', 'student', 'borrowbook'));
+        return view('returnpage', compact('books', 'student', 'borrowbook'));        
     }
 
     public function update(Request $request)
     {
-        $student_number = $request->studentId;
-        $student = StudentAccount::where('student_number', $student_number)->first();
-        //$student = studentlist::where('studentno', $student)->value('id');
+        $stud = StudentAccount::where('student_number', $request->studentId)->value('student_id');
         foreach ($request->bookdata as $key => $value) {
-            $book = borrowpage::find($value);
+            $book = borrowpage::where('id',$value)->where('studentid', $stud);
             $book->update(['bookstatus' => 'returned']);
-            /* $bookid = borrowpage::where('id', $value)->where('studentid', $studentid);
-            $bookid->update([
-                'bookstatus' => 'returned'
-            ]); */
         }
     }
 }

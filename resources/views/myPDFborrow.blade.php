@@ -48,6 +48,16 @@
                 font-size: 12px;
             }
         }
+
+        #my-table {
+            border-collapse: collapse;
+        }
+
+        #my-table td {
+            border: none;
+            padding: 0;
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -99,29 +109,30 @@
             <span>Due Date: {{ $duedate }}</span>
             <br>
         </div>
-        <br>
-        <div class="footer-row">
-            <span>Prepared by: <u>{{ auth()->user()->name }} </u></span>
-            <br>
-            <span
-                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Librarian</span>
-        </div>
-        <br>
-        <div class="footer-row">
-            <span>Verified by: ____________</span>
-            <br>
-            <span
-                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;School
-                Director</span>
-        </div>
-        <br>
-        <div class="footer-row">
-            <span>Received by: <u> {{ $student->first_name }} {{ $student->middle_name }} {{ $student->lastname }}
-                </u></span>
-            <br>
-            <span
-                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borrower</span>
-        </div>
+        <br><br>
+        <table id="my-table">
+            <tbody>
+                <tr>
+                    <td> <span>Prepared by: </span>
+                    </td>
+                    <td> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Verified by: </span>
+                    </td>
+                    <td> <span>Received by: </span>
+                    </td>
+                </tr>
+                <td><span>{{ auth()->user()->name }}</span>
+                </td>
+                <td><span>
+                    </span></td>
+                <td><span>{{ $student->first_name }}
+                        {{ $student->middle_name }}
+                        {{ $student->lastname }}</span>
+                </td>
+            </tbody>
+        </table>
+
     </div>
 </body>
 

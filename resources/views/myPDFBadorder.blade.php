@@ -101,7 +101,7 @@
             </table>
 
         </div>
-        <p class="notice">This List is the Bad Order.</p>
+        <p class="notice">This order has been flagged as a bad order.</p>
         <div class="footer-row">
             <span>Date of Puchase Generated: {{ date('Y-m-d') }}</span>
             <br>

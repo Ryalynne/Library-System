@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\booklist;
 use App\Models\borrowpage;
 use App\Models\finesbooks;
+use App\Models\StudentAccount;
 use App\Models\studentlist;
 use Illuminate\Http\Request;
 
@@ -17,25 +18,21 @@ class finedController extends Controller
     {
         $books = booklist::where('ishide', false)->get();
         if ($request->student) {
-            $studentid = studentlist::where('studentno', $request->student)->value('id');
-            $student = studentlist::find($studentid);
-            $borrowbook = $student->bookborrow;
+            $student = StudentAccount::where('student_number', $request->student)->first();
+            $borrowbook = $student ? $student->student->borrow_books : [];
         } else {
-            $student = [];
+            $student = null;
             $borrowbook = [];
         }
-       return view('fined', compact('books', 'student', 'borrowbook'));
+        return view('fined', compact('books', 'student', 'borrowbook'));
     }
 
     public function store(Request $request)
     {
-        $student = $request->studentId;
-        $studentid = studentlist::where('studentno', $student)->value('id');
+        $stud = StudentAccount::where('student_number', $request->studentId)->value('student_id');
         foreach ($request->bookdata as $key => $value) {
-            $bookid = borrowpage::where('id', $value)->where('studentid', $studentid);
-            $bookid->update([
-                'bookstatus' => 'fine',
-            ]);
-        }
+            $book = borrowpage::where('id',$value)->where('studentid', $stud);
+            $book->update(['bookstatus' => 'fine']);
+        }    
     }
 }

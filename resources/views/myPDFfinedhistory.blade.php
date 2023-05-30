@@ -30,7 +30,7 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
                     <td>{{ $item->transaction }}</td>
                     <td>{{ $item->book->title }}</td>
-                    <td>{{ $item->student->name }} {{ $item->student->middle }} {{ $item->student->lastname }}</td>
+                    <td>{{ $item->student->first_name }} {{ $item->student->middle_name }} {{ $item->student->last_name }}
                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                     <td>{{ $item->duedate }}</td>
                     <td>{{ date('Y-m-d', strtotime($item->updated_at)) }}</td>

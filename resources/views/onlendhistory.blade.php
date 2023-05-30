@@ -39,7 +39,8 @@
                     <thead>
                         <tr class="bg-success text-white">
                             <th scope="col">Transaction</th>
-                            <th scope="col">ID</th>
+                            {{-- <th scope="col" class="text-center">Student QR</th> --}}
+                            <th scope="col">Book ID</th>
                             <th scope="col">Title</th>
                             <th scope="col">Author/s</th>
                             <th scope="col">Copyright</th>
@@ -54,12 +55,13 @@
                         <tr class="tr">
                             @foreach ($borrow as $item)
                                 <td>{{ $item->transaction}}</td>
+                                {{-- <td class="text-center">{{$item->student_number}}</td> --}}
                                 <td>{{ $item->book->id }}</td>
                                 <td>{{ $item->book->title}}</td>
                                 <td>{{ $item->book->author}}</td>
                                 <td>{{ $item->book->copyright}}</td>
                                 <td>{{ $item->book->accession}}</td>
-                                <td>{{ $item->student->name }} {{ $item->student->middle }} {{ $item->student->lastname }}
+                                <td>{{ $item->student->first_name }} {{ $item->student->middle_name }} {{ $item->student->last_name }}
                                 </td>
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>{{ $item->duedate }}</td>

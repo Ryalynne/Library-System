@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/bookaquired', [CopiesController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/', [HomeController::class, 'index']);
-    Route::get('/fined', [finedController::class, 'index'])->name('fined');
+    Route::get('/fined', [finedController::class, 'index']);
     Route::get('/finedhistory', [finebookshistory::class, 'index'])->name('finedhistory');
     Route::get('/booklist', [BooklistController::class, 'index'])->name('booklist');;
     Route::get('/returnpage', [Returnpage::class, 'index'])->name('returnpage');

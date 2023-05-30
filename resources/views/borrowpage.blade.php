@@ -294,7 +294,7 @@
             _changeInterval = setInterval(function() {
                 $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
                     try {
-                        if (data.bookstatus.bookstatus == "onlend") {
+                        if (data.bookstatus == "onlend") {
                             console.log('onlend');
                             alert('The Book is Already Borrowed');
                             $('.bookid').val("");
@@ -304,6 +304,7 @@
                     } catch (err) {
                         checkBookAvailability(id);
                     }
+                    $('.bookid').val("");
                 });
                 clearInterval(_changeInterval);
             }, 900);
@@ -343,6 +344,7 @@
                     }
                 } catch (error) {
                     alert('No Available Book');
+                    $('.bookid').val("");
                 }
             });
         }

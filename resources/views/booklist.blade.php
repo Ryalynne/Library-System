@@ -335,6 +335,7 @@
                             <button type="button" class="btn btn-success" onclick="insertData()">Register</button>
                             <br><br>
                             <table id="importTable" class="table table-bordered">
+                                <span  class="badge bg-success w-100" id="loading-indicator" style="display: none;">Loading...</span>
                             </table>
                         </div>
                     </div>
@@ -742,8 +743,31 @@
                 return;
             }
 
-            for (var i = 0; i < importedData.length; i++) {
-                var rowData = importedData[i];
+            // Show the loading indicator
+            var loadingIndicator = document.getElementById('loading-indicator');
+            loadingIndicator.style.display = 'block';
+            loadingIndicator.innerText = 'Loading...';
+
+            var totalData = importedData.length;
+            var progressInterval = 1; // Adjust the interval as needed
+            var progress = 0;
+
+            function insertNextData(index) {
+                if (index >= totalData) {
+                    // Hide the loading indicator
+                    loadingIndicator.style.display = 'none';
+                    alert('Data registered successfully.');
+                    return;
+                }
+
+                var rowData = importedData[index];
+                if (!rowData.title) {
+                    // If the title is missing or null, skip inserting this data item
+                    console.error('Missing title for data item at index ' + index);
+                    insertNextData(index + 1);
+                    return;
+                }
+
                 var dataToInsert = {
                     title: rowData.title,
                     author: rowData.author,
@@ -766,16 +790,21 @@
                     error: function(xhr, status, error) {
                         console.log(error);
                         // Handle error, if needed
+                    },
+                    complete: function() {
+                        // Update progress after every $progressInterval data items
+                        if ((index + 1) % progressInterval === 0) {
+                            progress = ((index + 1) * 100) / totalData;
+                            // Update the progress UI or perform any other required actions
+                        }
+                        // Proceed to insert the next data item
+                        insertNextData(index + 1);
                     }
                 });
             }
 
-            // Clear the imported data and the table
-            importedData = [];
-            var table = document.getElementById('importTable');
-            table.innerHTML = '';
-
-            alert('Data registered successfully.');
+            // Start inserting data
+            insertNextData(0);
         }
     </script>
 @endsection

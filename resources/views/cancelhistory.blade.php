@@ -9,7 +9,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2>Received History</h2>
+                        <h2>Cancel History</h2>
                     </div>
                 </div>
                 <div class="container">

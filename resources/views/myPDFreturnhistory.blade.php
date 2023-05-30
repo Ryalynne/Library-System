@@ -83,7 +83,7 @@
                     <td>{{ $item->book->author }}</td>
                     <td>{{ $item->book->copyright }}</td>
                     <td>{{ $item->book->accession }}</td>
-                    <td>{{ $item->student->name }} {{ $item->student->middle }} {{ $item->student->lastname }}</td>
+                    <td>{{ $item->student->first_name }} {{ $item->student->middle_name }} {{ $item->student->last_name }}
                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                     <td>{{ $item->duedate }}</td>
                     <td>{{ date('Y-m-d', strtotime($item->updated_at)) }}</td>

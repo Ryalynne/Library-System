@@ -23,8 +23,12 @@ class booklist extends Model
     
     public function getstatus($id)
     {
-            $studentno = studentlist::where('studentno', $id)->value('id');
-            return $this->hasMany(borrowpage::class, 'bookid')->where('studentid',$studentno)->where('bookstatus', 'onlend')->value('bookstatus');
+        // return $this->hasMany(borrowpage::class, 'studentid')->where('bookstatus', 'onlend')->value('bookstatus');
+            $account = StudentAccount::where('student_number', $id)->first();
+            return $this->hasMany(borrowpage::class, 'bookid')
+            ->where('studentid', $account->student->id ?? null)
+            ->where('bookstatus', 'onlend')
+            ->value('bookstatus');
         
     }
 }

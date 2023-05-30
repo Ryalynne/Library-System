@@ -9,7 +9,7 @@ class pendingpurchaseController extends Controller
 {
     public function index()
     {
-        $Order = purchasemodel::where('ishide', false)->select('department', 'status', 'requestedby', 'dateofdelivery', 'created_at', 'vendorid', 'transaction')->distinct()->whereNot('status', 'complete')->paginate(10);
+        $Order = purchasemodel::where('ishide', false)->select('department', 'status', 'requestedby', 'dateofdelivery', 'created_at', 'vendorid', 'transaction')->distinct()->whereNot('status', 'complete')->whereNot('status', 'test')->paginate(10);
         return view('pendingpurchase', compact('Order'));
     }
 

@@ -20,48 +20,5 @@ class finebookshistory extends Controller
         $student = studentlist::where('ishide', false)->paginate(10);
         return view('finedhistory', compact('books','return','student'));
     }
-    public function create(): never
-    {
-        abort(404);
-    }
 
-    /**
-     * Store the newly created resource in storage.
-     */
-    public function store(Request $request): never
-    {
-        abort(404);
-    }
-
-    /**
-     * Display the resource.
-     */
-    public function show()
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the resource.
-     */
-    public function edit()
-    {
-        //
-    }
-
-    /**
-     * Update the resource in storage.
-     */
-    public function update(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Remove the resource from storage.
-     */
-    public function destroy(): never
-    {
-        abort(404);
-    }
 }
