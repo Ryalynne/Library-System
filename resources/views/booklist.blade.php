@@ -48,7 +48,7 @@
                     </button>
                     <button type="button" class="btn btn-success bg-success border-success" data-bs-toggle="modal"
                         data-bs-target="#modal_import">
-                        IMPORT
+                        Import
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-file-earmark-spreadsheet-fill" viewBox="0 0 16 16">
                             <path d="M6 12v-2h3v2H6z" />
@@ -278,7 +278,7 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success removenow" id="remove">Are you sure you want
                                 to remove this?</button>
-                            <p id="myParagraph"></p>
+                            <p id="myParagraph" class="text-danger"></p>
                         </div>
                     </div>
                 </div>
@@ -400,7 +400,6 @@
             var id = $(this).data('id');
             $.get("/book/" + id, function(data, status) {
                 if (data.book && data.book.id == id) {
-
                     $.get("/getcopy/" + id, function(copyData, copyStatus) {
                         console.log(copyData);
                         if (copyData == 0) {

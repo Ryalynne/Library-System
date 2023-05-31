@@ -47,13 +47,13 @@
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">FULL NAME: </label>
                         <input style="text-transform:uppercase" type="text" class="form-control full-name" disabled
-                            value="{{ request()->input('student') ? ($student ? $student->student->last_name . ' ' . $student->student->first_name . ' ' . $student->student->middle_name : '') : '' }}">
+                        value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'NOT ENROLLED') : '') : '' }}">
                     </div>
 
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">DESIGNATED: </label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
-                            value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : '') : '') : '' }}"
+                            value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'NOT ENROLLED') : '') : '' }}"
                             disabled>
 
                     </div>
@@ -182,7 +182,7 @@
             formData.append('_token', token);
             formData.append('studentId', studentId);
             if (bookdata.length == 0) {
-                alert('You need to add a book to the table to borrow!');
+                alert("Please ensure you have checked the text box before fining the book!");
             } else {
                 $.post('/returndamage/book',{
                     'studentId': studentId,
@@ -216,7 +216,7 @@
 
         var stud = document.getElementById("student").value;
 
-        if (stud.length > 1) {
+        if (stud.trim().length > 1 && stud.trim().toUpperCase() !== "NOT ENROLLED"){
             document.getElementById("myBtn").disabled = false;
         } else {
             document.getElementById("myBtn").disabled = true;

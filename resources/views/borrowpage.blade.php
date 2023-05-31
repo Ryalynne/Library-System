@@ -41,7 +41,7 @@
                                 value="{{ request()->input('student') ? ($student ? $student->student_number : '') : '' }}">
                         </div>
                         <input type="hidden" id="student"
-                            value="{{ $student && request()->input('student') ? $student->student->id : '' }}">
+                        value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}">
                     </form>
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">FULL NAME: </label>
@@ -52,7 +52,7 @@
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">DESIGNATED: </label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
-                            value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : '') : '') : '' }}"
+                            value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}"
                             disabled>
 
                     </div>
@@ -404,9 +404,9 @@
             tbl.deleteRow(row);
         }
 
-        var stud = document.getElementById("student").value;;
-
-        if (stud.length > 1) {
+        var stud = document.getElementById("student").value;
+        
+        if (stud.trim().length > 1 && stud.trim().toUpperCase() !== "NOT ENROLLED"){
             document.getElementById("myBtn").disabled = false;
             document.getElementById("bor").disabled = false;
             var table = document.getElementById("tbl");
@@ -416,6 +416,7 @@
             document.getElementById("myBtn").disabled = true;
             document.getElementById("bor").disabled = true;
         }
+
 
         // console.log(stud);
     </script>

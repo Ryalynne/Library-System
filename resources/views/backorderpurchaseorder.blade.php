@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-5">
-        <h2>Receive Backorder Order</h2>
+        <h2>Receive BackOrder</h2>
         <hr>
         <div class="row">
             <div class="col-md-6">

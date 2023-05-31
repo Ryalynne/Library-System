@@ -42,7 +42,7 @@
                                 value="{{ request()->input('student') ? ($student ? $student->student_number : '') : '' }}">
                         </div>
                         <input type="hidden" id="student"
-                            value="{{ $student && request()->input('student') ? $student->student->id : '' }}">
+                        value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'NOT ENROLLED') : '') : '' }}">
                     </form>
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">FULL NAME: </label>
@@ -53,7 +53,7 @@
                     <div class="mb-3">
                         <label for="booktitle" class="form-label">DESIGNATED: </label>
                         <input style="text-transform:uppercase" type="text" class="form-control class"
-                            value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : '') : '') : '' }}"
+                            value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'NOT ENROLLED') : '') : '' }}"
                             disabled>
 
                     </div>
@@ -167,7 +167,7 @@
             let token = $(this).data('token');
             let studentId = $(this).data('student');
             if (bookdata.length == 0) {
-                alert('You need to add a book to the table to borrow!');
+                alert('Please check the text box before returning the book!');
             } else {
                 $.post('/return/book', {
                     'studentId': studentId,
@@ -201,13 +201,14 @@
       
         var stud = document.getElementById("student").value;
 
-        if (stud.length > 1) {
+        if (stud.trim().length > 1 && stud.trim().toUpperCase() !== "NOT ENROLLED"){
             document.getElementById("myBtn").disabled = false;
         } else {
             document.getElementById("myBtn").disabled = true;
             var tableRow = document.getElementById('messageRow');
             tableRow.innerHTML = '<td colspan="6">ENTER BORROWER ID FIRST</td>';
         }
+
     </script>
 @endsection
 @endsection

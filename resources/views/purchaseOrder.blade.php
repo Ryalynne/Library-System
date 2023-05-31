@@ -45,14 +45,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($id as $key => $poID) --}}
                         @if (request()->input('vendor') && $vendor->id == request()->input('vendor'))
                             @php
                                 $startingId = DB::table('purchasemodels')->max('id') + 1;
                                 $key = $startingId;
                             @endphp
                             <tr>
-                                <td class="id">{{ $key }}</td>
+                                <td class="id"></td>
                                 <td contenteditable="true" class="title"></td>
                                 <td contenteditable="true" class="quantity">0</td>
                                 <td contenteditable="true" class="unitPrice">0.00</td>
@@ -217,6 +216,9 @@
                 }
             }
         });
+
+        var startingId = <?php $maxId = DB::table('purchasemodels')->max('id'); echo is_numeric($maxId) ? $maxId  : 0; ?>;
+        
         $(document).ready(function() {
             var isEditing = false; // Flag to track if editing is in progress
 
@@ -242,7 +244,7 @@
             }
 
             // Retrieve the maximum ID value from the database
-            var startingId = <?php echo DB::table('purchasemodels')->max('id')?>
+           
        
             // Update total price when quantity or unit price changes
             $(document).on('input', '.quantity, .unitPrice', updateTotalPrice);

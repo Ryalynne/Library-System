@@ -15,15 +15,20 @@
                     d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z" />
             </svg>
         </button> --}}
-        <br><br>
+        <div class="p-2 w-25">
+            <div class="input-group">
+                <input type="search" class="form-control rounded myInput" placeholder="Search" aria-label="Search"
+                    aria-describedby="search-addon" />
+            </div>
+        </div>
         <div class="table-responsive">
 
 
             <table class="table table-bordered myTable">
                 <thead>
                     <tr class="bg-success text-white">
-                        <th>ID</th>
-                        <th>QR CODE</th>
+                        {{-- <th>ID</th> --}}
+                        <th>STUDENT ID</th>
                         <th>LAST NAME</th>
                         <th>FIRST NAME</th>
                         <th>MIDDLE NAME</th>
@@ -33,8 +38,8 @@
                 </thead>
                 <tbody>
                     @forelse ($account as $student)
-                        <tr>
-                            <td>{{ $student->id }}</td>
+                        <tr class="tr">
+                            {{-- <td>{{ $student->id }}</td> --}}
                             <td>{{ $student->account ? $student->account->student_number : '-' }}</td>
                             <td class="text-truncate">{{ $student->last_name }}</td>
                             <td class="text-truncate">{{ $student->first_name }}</td>
