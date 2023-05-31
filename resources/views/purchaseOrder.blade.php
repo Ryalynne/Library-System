@@ -5,19 +5,21 @@
         <hr>
         <div class="row">
             <div class="col-md-6">
-                <p><strong>Vendor ID:</strong>
-                <div class="mb-3">
-                    <input type="text" class="form-control w-50 getventor" name="vendor" :value="old('vendor')"
-                        value="{{ request()->input('vendor') ? $vendor->id : ' ' }}">
-                    <div class="form-text">Enter the vendor id.</div>
-                </div>
+                <form action="">
+                    <p><strong>Vendor ID:</strong>
+                    <div class="mb-3">
+                        <input type="text" class="form-control w-50 getventor" name="vendor" :value="old('vendor')"
+                            value="{{ request()->input('vendor') ? ($vendor ? $vendor->id : '') : '' }}">
+                        <div class="form-text">Enter the vendor id.</div>
+                    </div>
+                </form>
                 <p><strong>Vendor Name:</strong>
                     <input type="text" class="form-control w-50" name="vendorname"
-                        value="{{ request()->input('vendor') ? $vendor->vendorname : ' ' }}" disabled>
+                        value="{{ request()->input('vendor') ? ($vendor ? $vendor->vendorname : '') : '' }}" disabled>
                     <br>
                 <p><strong>Vendor Contact:</strong>
                     <input type="text" class="form-control w-50" name="vendorcontact"
-                        value="{{ request()->input('vendor') ? $vendor->vendorcontact : ' ' }}" disabled>
+                        value="{{ request()->input('vendor') ? ($vendor ? $vendor->vendorcontact : '') : '' }}" disabled>
                     <br>
                 <p>
                     <strong>Requested By:</strong>
@@ -30,6 +32,7 @@
                         id="department"></p>
                 <div id="text" class="form-text">Enter the designated department of requestor.</div>
                 <br>
+
             </div>
             <div class="col-md-6">
                 <h4>Order Deatails:</h4>
@@ -45,7 +48,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (request()->input('vendor') && $vendor->id == request()->input('vendor'))
+                        @if (!$vendor && request()->input('vendor'))
+                            <span class="badge bg-danger w-100">No Vendor Found.</span>
+                        @else
                             @php
                                 $startingId = DB::table('purchasemodels')->max('id') + 1;
                                 $key = $startingId;
@@ -58,7 +63,9 @@
                                 <td class="total">₱0</td>
                                 <td><button class="btn btn-danger btn-sm delete-row">Delete</button></td>
                             </tr>
-                        @else
+                        @endif
+
+                        @if (!$vendor)
                             <tr>
                                 <td colspan="6" class="text-center">ENTER VENDOR ID FIRST</td>
                             </tr>
@@ -190,35 +197,36 @@
 
 
 
-        function validateVendor(id) {
-            $.get("/vendor/" + id, function(data, status) {
-                if (data && data.id && data.id == id) {
-                    document.location.href = "purchase?vendor=" + id;
-                } else {
-                    alert('No vendor found with ID: ' + id);
-                    document.location.href = "purchase";
-                }
-            }).fail(function() {
-                alert('Error occurred while fetching vendor information.');
-                document.location.href = "purchase";
-            });
-        }
+        // function validateVendor(id) {
+        //     $.get("/vendor/" + id, function(data, status) {
+        //         if (data && data.id && data.id == id) {
+        //             document.location.href = "purchase?vendor=" + id;
+        //         } else {
+        //             alert('No vendor found with ID: ' + id);
+        //             document.location.href = "purchase";
+        //         }
+        //     }).fail(function() {
+        //         alert('Error occurred while fetching vendor information.');
+        //         document.location.href = "purchase";
+        //     });
+        // }
 
-        $('.getventor').on('keyup', function(event) {
-            if (event.keyCode === 13) {
-                var id = $(this).val().trim().toLowerCase();
-                if (id === "") {
-                    $('.vendorname').val("");
-                    $('.vendorcontact').val("");
-                    document.location.href = "purchase";
-                } else {
-                    validateVendor(id);
-                }
-            }
-        });
+        // $('.getventor').on('keyup', function(event) {
+        //     if (event.keyCode === 13) {
+        //         var id = $(this).val().trim().toLowerCase();
+        //         if (id === "") {
+        //             $('.vendorname').val("");
+        //             $('.vendorcontact').val("");
+        //             document.location.href = "purchase";
+        //         } else {
+        //             validateVendor(id);
+        //         }
+        //     }
+        // });
 
-        var startingId = <?php $maxId = DB::table('purchasemodels')->max('id'); echo is_numeric($maxId) ? $maxId  : 0; ?>;
-        
+        var startingId = <?php $maxId = DB::table('purchasemodels')->max('id');
+        echo is_numeric($maxId) ? $maxId : 0; ?>;
+
         $(document).ready(function() {
             var isEditing = false; // Flag to track if editing is in progress
 
@@ -244,8 +252,8 @@
             }
 
             // Retrieve the maximum ID value from the database
-           
-       
+
+
             // Update total price when quantity or unit price changes
             $(document).on('input', '.quantity, .unitPrice', updateTotalPrice);
 

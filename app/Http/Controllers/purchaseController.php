@@ -12,7 +12,7 @@ class purchaseController extends Controller
 {
     public function index(Request $request)
     {
-        $vendor = vendortable::where('ishide', false)->where('id', $request->vendor)->first();
+        $vendor = $request->vendor ? vendortable::where('ishide', false)->where('id', $request->vendor)->first() : [];
         $id = purchasemodel::all();
         return view('purchaseOrder', compact('vendor', 'id'));
     }
