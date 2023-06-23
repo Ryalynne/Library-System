@@ -1,66 +1,14 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://ptc.com.ph/assets/images/fullstory/fs-04-01.jpg" width="400" alt="Laravel Logo"></a></p>
+The BMA Library Management System, integrated with QR code scanning functionality, is an exceptional creation by the talented developer Ryan C. Santiago. This robust and efficient system is specifically designed to streamline various library operations, providing a comprehensive solution for librarians.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The system encompasses a wide range of features that contribute to the seamless organization of extensive book collections within libraries. It enables librarians to efficiently store and retrieve books, ensuring optimal storage practices for easy access. Additionally, the advanced functionality allows users to generate and print QR codes for each book, facilitating quick and convenient scanning for cataloging and tracking purposes. This enhances the accuracy and speed of book management processes.
 
-## About Laravel
+One of the system's noteworthy capabilities is its comprehensive book lending module. Librarians can effectively manage borrowing transactions, including tracking due dates and sending timely reminders to borrowers. This simplifies the lending process and fosters smooth interactions between library staff and patrons, enhancing overall user satisfaction.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Furthermore, the BMA Library Management System offers an extensive purchase order management feature. Librarians can effortlessly create and track purchase orders for new books, ensuring a streamlined acquisition process and efficient inventory management. This functionality aids in maintaining up-to-date collections and helps libraries cater to the evolving needs of their users.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Administrative tools are also integrated into the system, empowering librarians to efficiently manage library operations. User management features allow for the smooth organization of patron information, while reporting capabilities provide valuable insights for decision-making purposes. Librarians can generate insightful reports on various aspects of library functioning, such as book circulation, popular genres, and user demographics, enabling informed decision-making and strategic planning.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+For those interested in connecting with Ryan C. Santiago, the talented developer behind this system, you can find him on Facebook using the following link: https://www.facebook.com/Chunchunmarui/. Additionally, he can be reached via email at santiagoryan788@gmail.com.
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+In summary, the BMA Library Management System, developed by Ryan C. Santiago, offers a powerful and user-friendly interface for optimizing library operations. Its integration with QR code scanning, book lending capabilities, purchase order management, and administrative tools makes it a comprehensive solution for efficient library management. Librarians can benefit from improved organization, streamlined processes, and valuable insights, ultimately enhancing the overall experience for library staff and patrons alike.
