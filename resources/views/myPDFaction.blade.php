@@ -10,7 +10,7 @@
 <body>
 <center>
    <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-   <h3>PRINT ACTION LIST</h3>
+   <h3>BOOK ACTION HISTORY</h3>
 </center>
 <table class="table table-bordered myTable">
     <thead>

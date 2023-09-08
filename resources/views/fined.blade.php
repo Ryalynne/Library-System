@@ -12,7 +12,7 @@
     </div>
     <br>
     <div class="container text-center">
-        <div class="row align-items-start ">
+        {{-- <div class="row align-items-start "> --}}
             <div class="col border-end">
                 <div class="card">
                     <div class="card-body bg-success text-white">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <br>
-                <div class="container text-start">
+                {{-- <div class="container text-start"> --}}
                     <center>
                         <div class="image-container">
                             @if (request()->input('student') || $student)
@@ -56,12 +56,12 @@
                             disabled>
 
                     </div>
-                </div>
-            </div>
+                {{-- </div>
+            </div> --}}
             <div class="col">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2>DAMAGE / LOST BOOK</h2>
+                        <h2>DAMAGE / LOST BOOK HISTORY</h2>
                     </div>
                 </div>
                 <br>
@@ -71,8 +71,12 @@
                             <th>TRANSACTION</th>
                             <th>ID</th>
                             <th>TITLE</th>
+                            <th>AUTHOR</th>
+                            <th>DEPARTMENT</th>
                             <th>COPYRIGHT</th>
                             <th>ACCESSION NO</th>
+                            <th>CALL NO</th>
+                            <th>SUBJECT</th>
                             <th>BORROW DATE</th>
                             <th>DUE DATE</th>
                             <th>ACTION</th>
@@ -88,8 +92,16 @@
                                 <td>
                                     {{ $book->book->title }}
                                 </td>
+                                <td>
+                                    {{ $book->book->author }}
+                                </td>
+                                <td>
+                                    {{ $book->book->department }}
+                                </td>
                                 <td> {{ $book->book->copyright }}</td>
                                 <td> {{ $book->book->accession }}</td>
+                                <td> {{ $book->book->callnumber }}</td>
+                                <td> {{ $book->book->subject }}</td>
                                 <td>
                                     {{ date('Y-m-d', strtotime($book->created_at)) }}
                                 </td>
@@ -111,7 +123,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td id="messageRow" colspan="10">NO BORROWED BOOK</td>
+                                <td id="messageRow" colspan="15">NO BORROWED BOOK</td>
                             </tr>
                         @endif
 
@@ -163,8 +175,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-        
+        }  
     </style>
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>

@@ -14,51 +14,51 @@
         <div class="row align-items-start ">
             <br>
             {{-- <div class="col border-end"> --}}
-                <div class="card">
-                    <div class="card-body bg-success text-white">
-                        <h2> BORROWER INFORMATION</h2>
-                    </div>
+            <div class="card">
+                <div class="card-body bg-success text-white">
+                    <h2> BORROWER INFORMATION</h2>
                 </div>
+            </div>
+            <br>
+            {{-- <div class="container text-start"> --}}
+            <center>
                 <br>
-                {{-- <div class="container text-start"> --}}
-                    <center>
-                        <br>
-                        <div class="image-container">
-                            @if (request()->input('student') || $student)
-                                <img src="http://bma.edu.ph/img/student-picture/{{ $student ? $student->student_number : 'midshipman' }}.png"
-                                    class="img-thumbnail img-fluid student-image" alt="No Image">
-                            @else
-                                {{-- <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+                <div class="image-container">
+                    @if (request()->input('student') || $student)
+                        <img src="http://bma.edu.ph/img/student-picture/{{ $student ? $student->student_number : 'midshipman' }}.png"
+                            class="img-thumbnail img-fluid student-image" alt="No Image">
+                    @else
+                        {{-- <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
                                     class="img-thumbnail img-fluid student-image" alt="No Image"> --}}
-                                    <img src="image/student.png" class="img-thumbnail img-fluid student-image" alt="No Image">
-                            @endif
-                        </div>
-                    </center>
-                    <form action="">
-                        @if (!$student && request()->input('student'))
-                            <span class="badge bg-danger w-100">No Student Found.</span>
-                        @endif
-                        <div class="mb-3">
-                            <label class="form-label">ENTER ID:</label>
-                            <input type="text" class="form-control " name="student" :value="old('student')"
-                                value="{{ request()->input('student') ? ($student ? $student->student_number : '') : '' }}">
-                        </div>
-                        <input type="hidden" id="student"
-                        value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}">
-                    </form>
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">FULL NAME: </label>
-                        <input style="text-transform:uppercase" type="text" class="form-control full-name" disabled
-                            value="{{ request()->input('student') ? ($student ? $student->student->last_name . ' ' . $student->student->first_name . ' ' . $student->student->middle_name : '') : '' }}">
-                    </div>
+                        <img src="image/student.png" class="img-thumbnail img-fluid student-image" alt="No Image">
+                    @endif
+                </div>
+            </center>
+            <form action="">
+                @if (!$student && request()->input('student'))
+                    <span class="badge bg-danger w-100">No Student Found.</span>
+                @endif
+                <div class="mb-3">
+                    <label class="form-label">ENTER ID:</label>
+                    <input type="text" class="form-control " name="student" :value="old('student')"
+                        value="{{ request()->input('student') ? ($student ? $student->student_number : '') : '' }}">
+                </div>
+                <input type="hidden" id="student"
+                    value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}">
+            </form>
+            <div class="mb-3">
+                <label for="booktitle" class="form-label">FULL NAME: </label>
+                <input style="text-transform:uppercase" type="text" class="form-control full-name" disabled
+                    value="{{ request()->input('student') ? ($student ? $student->student->last_name . ' ' . $student->student->first_name . ' ' . $student->student->middle_name : '') : '' }}">
+            </div>
 
-                    <div class="mb-3">
-                        <label for="booktitle" class="form-label">DESIGNATED: </label>
-                        <input style="text-transform:uppercase" type="text" class="form-control class"
-                            value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}"
-                            disabled>
-                    </div>
-                {{-- </div> --}}
+            <div class="mb-3">
+                <label for="booktitle" class="form-label">DESIGNATED: </label>
+                <input style="text-transform:uppercase" type="text" class="form-control class"
+                    value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}"
+                    disabled>
+            </div>
+            {{-- </div> --}}
             {{-- </div> --}}
             <br>
             <div class="col">
@@ -150,6 +150,7 @@
                                     <th class="text-center">DEPARTMENT</th>
                                     <th class="text-center">COPYRIGHT</th>
                                     <th class="text-center">ACCCESSION NO</th>
+                                    <th class="text-center">CALL NO</th>
                                     <th class="text-center">SUBJECT</th>
                                     <th class="text-center">STATUS</th>
                                     <th class="text-center">ACTION</th>
@@ -166,10 +167,10 @@
                                                 {{ $book->title }}
                                             </td>
                                             <td>
-                                                {{ $book->department }}
+                                                {{ $book->author }}
                                             </td>
                                             <td>
-                                                {{ $book->author }}
+                                                {{ $book->department }}
                                             </td>
                                             <td>
                                                 {{ $book->copyright }}
@@ -270,6 +271,7 @@
 @section('script')
     <script>
         const bookList = [];
+        const accessionList = [];
 
         $(".borrowbtn").on('click', function() {
             let studentId = $(this).data('student');
@@ -310,6 +312,7 @@
         $(".bookid").on("keyup", function() {
             var id = $(this).val().trim().toLowerCase();
             let studentId = $(this).data('student');
+            // var accession = $(this).val().trim().toLowerCase();
 
             clearInterval(_changeInterval);
             _changeInterval = setInterval(function() {
@@ -331,14 +334,35 @@
             }, 900);
         });
 
+        //     clearInterval(_changeInterval);
+        //     _changeInterval = setInterval(function() {
+        //         $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
+        //             try {
+        //                 if (data.bookstatus == "onlend") {
+        //                     console.log('onlend');
+        //                     alert('The Book is Already Borrowed');
+        //                     $('.bookid').val("");
+        //                 } else {
+        //                     checkBookAvailability(id);
+        //                 }
+        //             } catch (err) {
+        //                 checkBookAvailability(id);
+        //             }
+        //             $('.bookid').val("");
+        //         });
+        //         clearInterval(_changeInterval);
+        //     }, 900);
+        // });
+
         function checkBookAvailability(id) {
             $.get("/bookcopies/" + id, function(data, status) {
                 try {
-                    if (data.book.id == "") {
+                    if (data.book.accession == "") {
                         alert("The Book Does Not Exist");
                         $('.bookid').val("");
                     } else {
-                        if (!bookList.includes(id)) {
+                        if (!accessionList.includes(data.book.accession)) {
+                            accessionList.push(data.book.accession);
                             bookList.push(id);
                             var tr = document.createElement('tr');
                             var td1 = tr.appendChild(document.createElement('td'));
@@ -363,14 +387,15 @@
                                 id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>';
                             document.getElementById("tbl").appendChild(tr);
                             $('.bookid').val("");
-                            console.log('Available');
+                            console.log('Available' + bookList);
                         } else {
                             alert("The Book Already in the list");
                             $('.bookid').val("");
                         }
                     }
                 } catch (error) {
-                    alert('No Available Book');
+
+                    alert('No Available Book' + id);
                     $('.bookid').val("");
                 }
             });
@@ -389,8 +414,10 @@
                 if ($status.includes("onlend")) {
                     alert('The Book Already Borrowed');
                 } else if (!bookList.includes($iddata)) {
-                    bookList.push($iddata)
-                    console.log(bookList);
+                    // bookList.push($iddata)
+                    accessionList.push(data.book.accession);
+                    bookList.push($iddata);
+                    console.log(bookList + accessionList);
                     var tr = document.createElement('tr');
                     var td1 = tr.appendChild(document.createElement(
                         'td'));
@@ -434,12 +461,14 @@
             var tbl = el.parentNode.parentNode.parentNode;
             let index = bookList.indexOf(bookID);
             bookList.splice(index, 1);
+            accessionList.splice(index, 1);
             tbl.deleteRow(row);
+            
         }
 
         var stud = document.getElementById("student").value;
-        
-        if (stud.trim().length > 1 && stud.trim().toUpperCase() !== "NOT ENROLLED"){
+
+        if (stud.trim().length > 1 && stud.trim().toUpperCase() !== "NOT ENROLLED") {
             document.getElementById("myBtn").disabled = false;
             document.getElementById("bor").disabled = false;
             var table = document.getElementById("tbl");

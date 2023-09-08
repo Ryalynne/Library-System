@@ -9,7 +9,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body bg-success text-white">
-                        <h2>Onlend History</h2>
+                        <h2>ONLED HISTORY</h2>
                     </div>
                 </div>
                 <div class="d-flex mb-1 ">
@@ -35,21 +35,22 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                <table class="table table-bordered myTable border-dark">
+                <table class="table table-bordered myTable border-dark table-sm">
                     <thead>
                         <tr class="bg-success text-white">
-                            <th scope="col">TRANSACTION</th>
-                            {{-- <th scope="col" class="text-center">Student QR</th> --}}
-                            <th scope="col">BOOK ID</th>
-                            <th scope="col">TITLE</th>
-                            <th scope="col">AUTHORS/S</th>
-                            <th scope="col">CATEGORIES</th>
-                            <th scope="col">COPYRIGHT</th>
-                            <th scope="col">ACCESSION NO</th>
-                            <th scope="col">BORROWER NAME</th>
-                            <th scope="col">DATE BORROWED</th>
-                            <th scope="col">DUE DATE</th>
-                            <th scope="col">OVERDUE</th>
+                            <th scope="col" >TRANSACTION</th>
+                            <th scope="col" >BOOK ID</th>
+                            <th scope="col" >TITLE</th>
+                            <th scope="col" >AUTHORS/S</th>
+                            <th scope="col" >CATEGORIES</th>
+                            <th scope="col" >COPYRIGHT</th>
+                            <th scope="col" >ACCESSION NO</th>
+                            <th scope="col" >CALL NO</th>
+                            <th scope="col" >SUBJECT</th>
+                            <th scope="col" >BORROWER NAME</th>
+                            <th scope="col" >DATE BORROWED</th>
+                            <th scope="col" >DUE DATE</th>
+                            <th scope="col" >OVERDUE</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,4 +108,9 @@
         });
     </script>
 @endsection
+<style>
+    th{
+    font-size: 13px;
+}
+</style>
 @endsection

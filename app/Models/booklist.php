@@ -21,6 +21,7 @@ class booklist extends Model
         return  $this->hasMany(copies::class, 'bookid')->where('action', 'added')->sum('copies') - $minis;
     }
     
+
     public function getstatus($id)
     {
         // return $this->hasMany(borrowpage::class, 'studentid')->where('bookstatus', 'onlend')->value('bookstatus');
@@ -30,5 +31,13 @@ class booklist extends Model
             ->where('bookstatus', 'onlend')
             ->value('bookstatus');
         
+    }
+
+    public function departments(){
+        return $this->belongsTo(departmentList::class, 'department');
+    }
+
+    public function subjects(){
+        return $this->belongsTo(subjectList::class, 'subject');
     }
 }

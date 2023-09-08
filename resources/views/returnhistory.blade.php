@@ -36,21 +36,23 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                    <table class="table table-bordered myTable border-dark">
+                    <table class="table table-bordered myTable border-dark table-sm">
                         <thead>
                             <tr class="bg-success text-white">
-                                <th scope="col">TRANSACTION</th>
-                                <th scope="col">BOOK ID</th>
-                                <th scope="col">TITLE</th>
-                                <th scope="col">AUTHOR/S</th>
-                                <th scope="col">CATEGORIES</th>
-                                <th scope="col">COPYRIGHT</th>
-                                <th scope="col">ACCESSION NO</th>
-                                <th scope="col">BORROWER NAME</th>
-                                <th scope="col">DATE BORROWED</th>
-                                <th scope="col">DUE DATE</th>
-                                <th scope="col">BOOK RETURNED</th>
-                                <th scope="col">OVERDUE</th>
+                                <th scope="col"  class="text-center">TRANSACTION</th>
+                                <th scope="col"  class="text-center">BOOK ID</th>
+                                <th scope="col"  class="text-center">TITLE</th>
+                                <th scope="col"  class="text-center">AUTHOR/S</th>
+                                <th scope="col"  class="text-center">DEPARTMENT</th>
+                                <th scope="col"  class="text-center">COPYRIGHT</th>
+                                <th scope="col"  class="text-center">ACCESSION NO</th>
+                                <th scope="col"  class="text-center">CALL NO</th>
+                                <th scope="col"  class="text-center">SUBJECT</th>
+                                <th scope="col"  class="text-center">BORROWER NAME</th>
+                                <th scope="col"  class="text-center">DATE BORROWED</th>
+                                <th scope="col"  class="text-center">DUE DATE</th>
+                                <th scope="col"  class="text-center">BOOK RETURNED</th>
+                                <th scope="col"  class="text-center">OVERDUE</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,6 +65,8 @@
                                     <td>{{ $item->book->categories }}</td>
                                     <td>{{ $item->book->copyright }}</td>
                                     <td>{{ $item->book->accession }}</td>
+                                    <td>{{ $item->book->calllnumber }}</td>
+                                    <td>{{ $item->book->subject }}</td>
                                     <td>{{ $item->student->first_name }} {{ $item->student->middle_name }} {{ $item->student->last_name }}         
                                     <td>{{ date('Y-m-d', strtotime($item->created_at))}}</td>
                                     <td>{{ $item->duedate }}</td>
@@ -108,5 +112,9 @@
         });
     </script>
 @endsection
-
+<style>
+    th{
+    font-size: 13px;
+}
+</style>
 @endsection

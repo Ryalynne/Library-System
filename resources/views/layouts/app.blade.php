@@ -90,12 +90,12 @@
                                     <a class="dropdown-item dropdown-active-success"
                                     onclick="this.style.backgroundColor='#198754'"
                                     onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="returnpage">Add Department</a>
+                                    onmouseout="this.style.backgroundColor=''" href="department">Add Department</a>
                                
                                     <a class="dropdown-item dropdown-active-success"
                                     onclick="this.style.backgroundColor='#198754'"
                                     onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="returnpage">Add Subject</a>
+                                    onmouseout="this.style.backgroundColor=''" href="subject">Add Subject</a>
                                
                                
                                 </div>

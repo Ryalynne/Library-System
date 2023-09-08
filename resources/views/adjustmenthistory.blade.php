@@ -34,16 +34,19 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="table-responsive">
-                <table class="table table-bordered myTable border-dark">
+                <table class="table table-bordered myTable border-dark table-sm">
                     <thead>
                         <tr class="bg-success text-white">
                             <th scope="col"  class="text-center">ID</th>
                             <th scope="col"  class="text-center">TITLE</th>
                             <th scope="col"  class="text-center">AUTHOR/S</th>
-                            <th scope="col"  class="text-center">CATEGORIES</th>
+                            <th scope="col"  class="text-center">DEPARTMENT</th>
                             <th scope="col"  class="text-center">COPYRIGHT</th>
                             <th scope="col"  class="text-center">ACCESSION NO</th>
+                            <th scope="col"  class="text-center">CALL NO</th>
+                            <th scope="col"  class="text-center">SUBJECT</th>
                             <th scope="col"  class="text-center">DATE OF ACTION</th>
                             <th scope="col"  class="text-center">ACTION</th>
                             <th scope="col"  class="text-center">ADJUSTED</th>
@@ -61,9 +64,11 @@
                                     {{ $adjust->book->title }}
                                 </td>
                                 <td>{{ $adjust->book->author}}</td>
-                                <td>{{ $adjust->book->categories}}</td>
+                                <td>{{ $adjust->book->department}}</td>
                                 <td>{{ $adjust->book->copyright}}</td>
                                 <td>{{ $adjust->book->accession}}</td>
+                                <td>{{ $adjust->book->callnumber}}</td>
+                                <td>{{ $adjust->book->subject}}</td>
                                 <td>{{ date('Y-m-d', strtotime($adjust->created_at))}}</td>                               
                                 <td class="col-1">{{ $adjust->action }}</td>    
                                 <td class="col-1">{{ $adjust->number_adjust }}</td>                             

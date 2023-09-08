@@ -10,7 +10,7 @@
 <body>
     <center>
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-        <h3>BOOK ADJUSTMENT</h3>
+        <h3>BOOK ADJUSTMENT HISTORY</h3>
     </center>
     <table class="table table-bordered myTable">
         <thead>
@@ -21,6 +21,8 @@
                 <th scope="col">DEPARTMENT</th>
                 <th scope="col">COPYRIGHT</th>
                 <th scope="col">ACCESSION NO</th>
+                <th scope="col">CALL NO</th>
+                <th scope="col">SUBJECT</th>
                 <th scope="col">DATE OF ACTION</th>
                 <th scope="col">ACTION</th>
                 <th scope="col">ADJUSTED</th>
@@ -36,6 +38,8 @@
                     <td>{{ $adjust->book->author }}</td>
                     <td>{{ $adjust->book->copyright }}</td>
                     <td>{{ $adjust->book->accession }}</td>
+                    <td>{{ $adjust->book->callnumber }}</td>
+                    <td>{{ $adjust->book->subject }}</td>
                     <td>{{ date('Y-m-d', strtotime($adjust->created_at)) }}</td>
                     <td>{{ $adjust->action }}</td>
                     <td>{{ $adjust->number_adjust }}</td>

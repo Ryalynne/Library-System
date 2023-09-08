@@ -41,12 +41,14 @@
                                 <th scope="col" class="text-center">ID</th>
                                 <th scope="col" class="text-center">TITLE</th>
                                 <th scope="col" class="text-center">AUTHOR/S</th>
-                                <th scope="col" class="text-center">CATEGORIES</th>
+                                <th scope="col" class="text-center">DEPARTMENT</th>
                                 <th scope="col" class="text-center">COPYRIGHT</th>
                                 <th scope="col" class="text-center">ACCESSION NO</th>
+                                <th scope="col" class="text-center">CALL NO</th>
+                                <th scope="col" class="text-center">SUBJECT</th>
                                 <th scope="col" class="text-center">ADDED DATE</th>
                                 <th scope="col" class="text-center">REMOVE DATE</th>
-                                <th scope="col" class="text-center">ACTION</th>
+                                <th scope="col" class="text-center">ACTION PERFORM</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,13 +64,19 @@
                                         {{ $adjust->author }}
                                     </td>
                                     <td>
-                                        {{ $adjust->categories }}
+                                        {{ $adjust->department }}
                                     </td>
                                     <td>
                                         {{ $adjust->copyright }}
                                     </td>
                                     <td>
                                         {{ $adjust->accession }}
+                                    </td>
+                                    <td>
+                                        {{ $adjust->callnumber }}
+                                    </td>
+                                    <td>
+                                        {{ $adjust->subject}}
                                     </td>
                                     <td>
                                         {{ date('Y-m-d', strtotime($adjust->created_at)) }}

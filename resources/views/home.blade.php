@@ -189,7 +189,7 @@
         }
 
         function adjustment() {
-            location.assign('/bookaquired');
+            location.assign('/bookadjustment');
         }
 
         function onlendhistory() {

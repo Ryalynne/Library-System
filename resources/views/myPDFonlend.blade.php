@@ -15,15 +15,18 @@
     <table class="table table-bordered myTable">
         <thead>
             <tr class="bg-success text-white">
-                <th scope="col">Transaction</th>
+                <th scope="col">TRANSACTION</th>
                 <th scope="col">ID</th>
-                <th scope="col">Title</th>
-                <th scope="col">Author/s</th>
-                <th scope="col">Copyright</th>
-                <th scope="col">Accession No</th>
-                <th scope="col">Name of Borrower</th>
-                <th scope="col">Date Borrowed</th>
-                <th scope="col">Due Date</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">AUTHOR/S</th>
+                <th scope="col">DEPARTMENT</th>
+                <th scope="col">COPYRIGHT</th>
+                <th scope="col">ACCESSION NO</th>
+                <th scope="col">CALL NO</th>
+                <th scope="col">SUBJECT</th>
+                <th scope="col">BORROWER NAME</th>
+                <th scope="col">DATE BORROWED</th>
+                <th scope="col">DUE DATE</th>
                 <th scope="col">PENALTY</th>
             </tr>
         </thead>
@@ -36,6 +39,8 @@
                     <td>{{ $item->book->author }}</td>
                     <td>{{ $item->book->copyright }}</td>
                     <td>{{ $item->book->accession }}</td>
+                    <td>{{ $item->book->callnumber }}</td>
+                    <td>{{ $item->book->subject }}</td>
                     <td>{{ $item->student->first_name }} {{ $item->student->middle_name }} {{ $item->student->last_name }}
                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                     <td>{{ $item->duedate }}</td>

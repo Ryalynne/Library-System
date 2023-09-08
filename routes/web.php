@@ -10,6 +10,7 @@ use App\Http\Controllers\BooklistController;
 use App\Http\Controllers\borrowpage;
 use App\Http\Controllers\cancelhistoryController;
 use App\Http\Controllers\CopiesController;
+use App\Http\Controllers\departmentController;
 use App\Http\Controllers\finebookshistory;
 use App\Http\Controllers\finedController;
 use App\Http\Controllers\HomeController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\StudentlistController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\vendorController;
 use App\Http\Controllers\statisticReports;
+use App\Http\Controllers\subjectController;
 use App\Livewire\Counter;
 use App\Models\StudentDetails;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +39,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('copies', CopiesController::class);
     Route::resource('books', BooklistController::class);
     Route::resource('borrow', borrowpage::class);
-
-
+    Route::get('/department', [departmentController::class, 'index']);
+    Route::get('/subject', [subjectController::class, 'index']);
     Route::get('/cancelhistory', [cancelhistoryController::class, 'index']);
     Route::get('/receivehistory', [receivehistoryController::class, 'index']);
     Route::get('/account', [accountController::class, 'index']);

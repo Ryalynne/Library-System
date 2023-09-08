@@ -226,18 +226,19 @@ class BooklistController extends Controller
 
     public function get_bookcopies($data)
     {
-        $totalLessen = copies::where('bookid', $data)
+        $id = booklist::where('accession', $data)->value('id');
+        $totalLessen = copies::where('bookid', $id)
             ->where('action', 'lessen')->sum('copies');
 
-        $totalCopies = copies::where('bookid', $data)
+        $totalCopies = copies::where('bookid', $id)
             ->where('action', 'added')
             ->sum('copies');
 
-        $totalFine = borrowpage::where('bookid', $data)
+        $totalFine = borrowpage::where('bookid', $id)
             ->where('bookstatus', 'fine')
             ->count();
 
-        $totalOnLend = borrowpage::where('bookid', $data)
+        $totalOnLend = borrowpage::where('bookid', $id)
             ->where('bookstatus', 'onlend')
             ->count();
 
@@ -246,7 +247,7 @@ class BooklistController extends Controller
 
         if ($total >= 1) {
             $book = BookList::join('copies', 'booklists.id', 'copies.bookid')
-                ->where('booklists.id', $data)
+                ->where('booklists.id', $id)
                 ->where('booklists.ishide', false)
                 ->orderBy('booklists.id', 'desc')
                 ->first();
@@ -256,16 +257,49 @@ class BooklistController extends Controller
             $message = 'The book is not available.';
             return compact('message');
         }
+
+
+        //     $totalLessen = copies::where('bookid', $data)
+        //     ->where('action', 'lessen')->sum('copies');
+
+        // $totalCopies = copies::where('bookid', $data)
+        //     ->where('action', 'added')
+        //     ->sum('copies');
+
+        // $totalFine = borrowpage::where('bookid', $data)
+        //     ->where('bookstatus', 'fine')
+        //     ->count();
+
+        // $totalOnLend = borrowpage::where('bookid', $data)
+        //     ->where('bookstatus', 'onlend')
+        //     ->count();
+
+        // $minus  = $totalOnLend + $totalFine + $totalLessen;
+        // $total = $totalCopies - $minus;
+
+        // if ($total >= 1) {
+        //     $book = BookList::join('copies', 'booklists.id', 'copies.bookid')
+        //         ->where('booklists.id', $data)
+        //         ->where('booklists.ishide', false)
+        //         ->orderBy('booklists.id', 'desc')
+        //         ->first();
+
+        //     return compact('book');
+        // } else {
+        //     $message = 'The book is not available.';
+        //     return compact('message');
+        // }
     }
 
     public function get_status($data, $studentid)
     {
         // $studentno = studentlist::where('studentno', $studentid)->value('id');
+        $id = booklist::where('accession', $data)->value('id');
         $account = StudentAccount::where('student_number', $studentid)->first();
         return $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
             ->join('copies', 'copies.bookid', 'borrowpages.bookid')
             ->where('borrowpages.studentid', $account->student->id)
-            ->where('borrowpages.bookid', $data)
+            ->where('borrowpages.bookid', $id)
             ->orderBy('borrowpages.id', 'desc')->first();
         // return compact('bookstatus');
     }
