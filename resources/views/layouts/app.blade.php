@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
-        {{ config('app.name', 'Laravel') }}
+        {{ config('app.name', 'BMA Library System') }}
     </title>
 
     <!-- Fonts -->
@@ -30,7 +30,7 @@
 
                 <a class="navbar-brand text-white" href="{{ url('/home') }}">
                     <img src="image/bmalogo.png" width="35" alt="" class="d-inline-block align-middle mr-2">
-                    BMA LIBRARY SYSTEM
+                    BMA LIBRARY
                 </a>
 
                 <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
@@ -49,6 +49,9 @@
                             <li class="nav-item active">
                                 <a class="nav-link text-white" href="home">Dashboard</a>
                             </li>
+                            <li class="nav-item active">
+                                <a class="nav-link text-white">|</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -58,12 +61,17 @@
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
-                                        onmouseout="this.style.backgroundColor=''" href="booklist">Books Entry</a>
+                                        onmouseout="this.style.backgroundColor=''" href="booklist">Physical Books List</a>
+                                        <hr>    
+                                        <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="ebook">E-Books List</a>
                                         <hr>    
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
-                                        onmouseout="this.style.backgroundColor=''" href="bookaquired">Books Adjustment</a>
+                                        onmouseout="this.style.backgroundColor=''" href="bookadjustment">Physical Books Adjustment</a>
                                     <hr>
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
@@ -73,13 +81,27 @@
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="returnpage">Return Book</a>
-                                    <hr>
-                                    <a class="dropdown-item dropdown-active-success"
+                                        <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="fined">Damage / Lost
-                                        Books</a>
+                                        Book</a>    
+                                    <hr>
+                                    <a class="dropdown-item dropdown-active-success"
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="returnpage">Add Department</a>
+                               
+                                    <a class="dropdown-item dropdown-active-success"
+                                    onclick="this.style.backgroundColor='#198754'"
+                                    onmouseover="this.style.backgroundColor='#198754'"
+                                    onmouseout="this.style.backgroundColor=''" href="returnpage">Add Subject</a>
+                               
+                               
                                 </div>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link text-white">|</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
@@ -106,7 +128,7 @@
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="returnhistory">Returned
                                         History</a>
-                                    {{-- finehistory --}}
+                                    <!-- {{-- finehistory --}} -->
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
@@ -121,11 +143,13 @@
                                 </div>
                             </li>
 
-                            
+                            <li class="nav-item active">
+                                <a class="nav-link text-white">|</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Procurement
+                                    Requisition
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item dropdown-active-success"   
@@ -156,10 +180,13 @@
                                     onmouseout="this.style.backgroundColor=''" href="badorder">Bad Order</a>
                                 </div>
                             </li>      
+                            <li class="nav-item active">
+                                <a class="nav-link text-white">|</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Procurement History
+                                    Requisition History
                                 </a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item dropdown-active-success"   
@@ -171,12 +198,18 @@
                                     onmouseover="this.style.backgroundColor='#198754'"
                                     onmouseout="this.style.backgroundColor=''" href="cancelhistory">Cancel History</a>
                                 </div>
-                            </li>      
+                            </li>     
                             <li class="nav-item active">
-                                <a class="nav-link text-white" href="account">User Account</a>
+                                <a class="nav-link text-white">|</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link text-white" href="usermanual">User Manual</a>
+                                <a class="nav-link text-white" href="statisticReports">Statistic Reports</a>
+                            </li> 
+                            <li class="nav-item active">
+                                <a class="nav-link text-white">|</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link text-white" href="account">Student List</a>
                             </li>
                     </div>
                 @endguest
@@ -189,10 +222,10 @@
                                 v-pre>
                                 {{ Auth::user()->name }}
                             </a>
-                            {{-- name ng profile --}}
+                            <!-- {{-- name ng profile --}} -->
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                {{-- dropdownlist --}}
+                                <!-- {{-- dropdownlist --}} -->
                                 <a class="dropdown-item dropdown-active-success "
                                     onclick="this.style.backgroundColor='#198754'"
                                     onmouseover="this.style.backgroundColor='#198754'"
@@ -216,14 +249,10 @@
             </div>
     </div>
     </nav>
-
     <main>
         @yield('content')
-
     </main>
-
     </div>
-
 </body>
 
 @guest
@@ -238,7 +267,7 @@
 @endguest
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
+@livewireScripts
 <script>
     $('.edit-button').on('click', function() {
         var id = $(this).data('id');
@@ -262,8 +291,11 @@
             $('.modal-book-id').val(id);
             $('.modal-book-title').val(data.book.title);
             $('.modal-book-author').val(data.book.author);
+            $('.modal-book-categories').val(data.book.categories);
             $('.modal-book-copyright').val(data.book.copyright);
             $('.modal-book-accession').val(data.book.accession);
+            $('.modal-book-callnumber').val(data.book.callnumber);
+            $('.modal-book-subject').val(data.book.subject);
         });
     });
     

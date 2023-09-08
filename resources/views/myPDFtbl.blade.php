@@ -20,8 +20,11 @@
                 <th>ID</th>
                 <th style="max-width: 50%">TITLE</th>
                 <th>AUTHOR/S</th>
+                <th>DEPARTMENT</th>
                 <th>COPYRIGHT</th>
                 <th>ACCESSION NO.</th>
+                <th>CALL NO.</th>
+                <th>SUBJECT</th>
                 <th>ADDED DATE</th>
             </tr>
         </thead>
@@ -38,10 +41,19 @@
                         {{ $book->author }}
                     </td>
                     <td>
+                        {{ $book->department }}
+                    </td>
+                    <td>
                         {{ $book->copyright }}
                     </td>
                     <td>
                         {{ $book->accession }}
+                    </td>
+                    <td>
+                        {{ $book->callnumber }}
+                    </td>
+                    <td>
+                        {{ $book->subject }}
                     </td>
                     <td>
                         {{ date('Y-m-d', strtotime($book->created_at)) }}

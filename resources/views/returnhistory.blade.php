@@ -13,7 +13,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body bg-success text-white">
-                            <h2>Return History</h2>
+                            <h2>Returned History</h2>
                         </div>
                     </div>
                     <div class="d-flex mb-1 ">
@@ -36,20 +36,21 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                    <table class="table table-bordered myTable">
+                    <table class="table table-bordered myTable border-dark">
                         <thead>
                             <tr class="bg-success text-white">
-                                <th scope="col">Transaction</th>
-                                <th scope="col">ID</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Author/s</th>
-                                <th scope="col">copyright</th>
-                                <th scope="col">Accession No</th>
-                                <th scope="col">Name of Borrower</th>
-                                <th scope="col">Date Borrowed</th>
-                                <th scope="col">Due Date</th>
-                                <th scope="col">Book Returned</th>
-                                <th scope="col">Penalty</th>
+                                <th scope="col">TRANSACTION</th>
+                                <th scope="col">BOOK ID</th>
+                                <th scope="col">TITLE</th>
+                                <th scope="col">AUTHOR/S</th>
+                                <th scope="col">CATEGORIES</th>
+                                <th scope="col">COPYRIGHT</th>
+                                <th scope="col">ACCESSION NO</th>
+                                <th scope="col">BORROWER NAME</th>
+                                <th scope="col">DATE BORROWED</th>
+                                <th scope="col">DUE DATE</th>
+                                <th scope="col">BOOK RETURNED</th>
+                                <th scope="col">OVERDUE</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,6 +60,7 @@
                                     <td>{{ $item->book->id }}</td>
                                     <td>{{ $item->book->title }}</td>
                                     <td>{{ $item->book->author }}</td>
+                                    <td>{{ $item->book->categories }}</td>
                                     <td>{{ $item->book->copyright }}</td>
                                     <td>{{ $item->book->accession }}</td>
                                     <td>{{ $item->student->first_name }} {{ $item->student->middle_name }} {{ $item->student->last_name }}         

@@ -24,16 +24,20 @@ use App\Http\Controllers\Returnpage;
 use App\Http\Controllers\StudentlistController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\vendorController;
+use App\Http\Controllers\statisticReports;
+use App\Livewire\Counter;
 use App\Models\StudentDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
+Route::get('/counter', Counter::class);
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('copies', CopiesController::class);
     Route::resource('books', BooklistController::class);
     Route::resource('borrow', borrowpage::class);
+
 
     Route::get('/cancelhistory', [cancelhistoryController::class, 'index']);
     Route::get('/receivehistory', [receivehistoryController::class, 'index']);
@@ -41,14 +45,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/badorder', [badorderController::class, 'index']);
     Route::get('/backorder', [backorderController::class, 'index']);
     Route::get('/receivepurchaseorder', [receivepurchaseorderController::class, 'index']);
-    Route::get('/usermanual', function () {
-        return view('usermanual');
-    });
     Route::get('/purchasepending', [pendingpurchaseController::class, 'index']);
-    Route::get('/getcopy/{id}', [BooklistController::class, 'getnumber']);
     Route::get('/vendormanagement', [vendorController::class, 'index']);
+    Route::get('/bookadjustment', [CopiesController::class, 'index']);
     Route::get('/setting', [userController::class, 'index']);
-    Route::get('/bookaquired', [CopiesController::class, 'index']);
+    Route::get('/getcopy/{id}', [BooklistController::class, 'getnumber']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/fined', [finedController::class, 'index']);
@@ -62,13 +63,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/onlendhistory', [onlendcontroller::class, 'index'])->name('onlendhistory');
     Route::get('/returnhistory', [returnhistory::class, 'index'])->name('returnhistory');
     Route::get('/archivedhistory', [archivedcontroller::class, 'index'])->name('archivedhistory');
-    Route::get('/myPDF/{data}', [PDFController::class, 'generatePDF'])->name('myPDF');
+    Route::get('/statisticReports', [statisticReports::class, 'index']);
+    Route::get('/student-details', function () {
+        return StudentDetails::all();
+    });
 
-
+    //transaction number
     Route::get('/transactionBO/{id}', [badorderController::class, 'get_transaction']);
     Route::get('/transactionB/{id}', [backorderController::class, 'get_transaction']);
     Route::get('/transaction/{id}', [receivepurchaseorderController::class, 'get_transaction']);
 
+    //display search
     Route::get('/getid/{studentno}', [StudentlistController::class, 'get_student']);
     Route::get('/bookstatus/{data}/{studentid}', [BooklistController::class, 'get_status']);
     Route::get('/book/{id}', [BooklistController::class, 'get_book']);
@@ -77,6 +82,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/vendor/{id}', [vendorController::class, 'get_vendor']);
     Route::get('/copy/{id}', [CopiesController::class, 'get_copies']);
 
+
+    //pdf print
     Route::get('/generate-badorder/{bookid}/{quantity}', [PDFController::class, 'generateBadorder']);
     Route::get('/generate-pdf/{data}', [PDFController::class, 'generatePDF']);
     Route::get('/generate-table', [PDFController::class, 'generateReports']);
@@ -90,6 +97,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/generate-tblreturndamage/{bookData}/{studentid}', [PDFController::class, 'generatereturndamage']);
     Route::get('/generate-tblfinehistory', [PDFController::class, 'generatefinehistory']);
     Route::get('/generatepuchaseorder/{id}/{booktitle}', [PDFController::class, 'generatePurchaseOrder']);
+    Route::get('/myPDF/{data}', [PDFController::class, 'generatePDF'])->name('myPDF');
+
     //dito
     Route::put('update-received-quantity/{id}', [receivepurchaseorderController::class, 'updateReceivedQuantity'])->name('update-received-quantity');
     Route::put('update-received-quantityB/{id}', [backorderController::class, 'updateReceivedQuantity'])->name('update-received-quantityB');
@@ -99,6 +108,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/gettransaction/{id}', [pendingpurchaseController::class, 'findtransaction']);
     Route::get('/order', [pendingpurchaseController::class, 'redirectToOrder'])->name('order.direct');
     Route::post('/cancelOrder', [pendingpurchaseController::class, 'cancelOrder'])->name('cancelOrder');
+
 
     Route::post('/registeraccount', [accountController::class, 'store'])->name('register.account');
     Route::post('/create/purchase', [purchaseController::class, 'createpurchaseOrder']);
@@ -114,8 +124,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/book/update', [BooklistController::class, 'updatebooks'])->name('books.update-book');
     Route::post('/copy/update', [CopiesController::class, 'updatecopies'])->name('books.update-copy');
     Route::post('/copy/negativeupdate', [CopiesController::class, 'updatecopiesnegative'])->name('books.updatenegative-copy');
-
-    Route::get('/student-details', function () {
-        return StudentDetails::all();
-    });
+    /* Livewire Routes */
+  
 });

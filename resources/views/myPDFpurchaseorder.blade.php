@@ -64,11 +64,12 @@
                 @endif
             </div>
         </center>
+        <p><b>FORM LIB-06</b></p>
         <div>
             <p>Vendor Name: {{ $vendor }}</p>
         </div>
         <div>
-            <span>Date of Puchase: {{ date('Y-m-d') }}</span>
+            <span>Date of Order: {{ date('Y-m-d') }}</span>
            
         </div> <br>
         <div class="table-container">
@@ -106,34 +107,29 @@
 
             </table>
         </div>
-        <p class="notice">Description.</p>
         <div class="footer-row">
             <span>Date of Delivery: {{ date('Y-m-d') }}</span>
             <br>
         </div>
         <div class="footer-row">
-            <span>Purchase By: {{ auth()->user()->name }}</span>
-            <br>
-        </div>
-        {{-- <div class="footer-row">
             <span>Prepared by: <u>{{ auth()->user()->name }} </u></span>
             <br>
             <span
-                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Librarian</span>
+                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Department Head</span>
         </div>
         <div class="footer-row">
-            <span>Verified by: ____________</span>
+            <span>Noted by:</span>
             <br>
             <span
-                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;School
-                Director</span>
+                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Librarian</span>
         </div>
+
         <div class="footer-row">
-            <span>Received by: <u> {{ $name }} {{ $middle }} {{ $lastname }} </u></span>
+            <span>Approved by:</span>
             <br>
             <span
-                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Borrower</span>
-        </div> --}}
+                class="position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;School Director</span>
+        </div>
     </div>
 </body>
 

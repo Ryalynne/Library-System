@@ -18,8 +18,11 @@
             <th scope="col" class="text-center">ID</th>
             <th scope="col" class="text-center">TITLE</th>
             <th scope="col" class="text-center">AUTHOR/S</th>
+            <th scope="col" class="text-center">DEPARTMENT</th>
             <th scope="col" class="text-center">COPYRIGHT</th>
             <th scope="col" class="text-center">ACCESSION NO</th>
+            <th scope="col" class="text-center">CALL NO</th>
+            <th scope="col" class="text-center">SUBJECT</th>
             <th scope="col" class="text-center">DATE OF ACTION</th>
             <th scope="col" class="text-center">ACTION PERFORM</th>
             <th scope="col" class="text-center">PERFORM BY</th>
@@ -38,10 +41,19 @@
                     {{ $book->book->author }}
                 </td>
                 <td>
+                    {{ $book->book->department }}
+                </td>
+                <td>
                     {{ $book->book->copyright }}
                 </td>
                 <td>
                     {{ $book->book->accession }}
+                </td>
+                <td>
+                    {{ $book->book->callnumber }}
+                </td>
+                <td>
+                    {{ $book->book->subject }}
                 </td>
                 <td>
                     {{date('Y-m-d', strtotime($book->created_at))}}

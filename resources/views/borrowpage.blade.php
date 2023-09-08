@@ -12,22 +12,25 @@
     <br>
     <div class="container text-center">
         <div class="row align-items-start ">
-            <div class="col border-end">
+            <br>
+            {{-- <div class="col border-end"> --}}
                 <div class="card">
                     <div class="card-body bg-success text-white">
                         <h2> BORROWER INFORMATION</h2>
                     </div>
                 </div>
                 <br>
-                <div class="container text-start">
+                {{-- <div class="container text-start"> --}}
                     <center>
+                        <br>
                         <div class="image-container">
                             @if (request()->input('student') || $student)
                                 <img src="http://bma.edu.ph/img/student-picture/{{ $student ? $student->student_number : 'midshipman' }}.png"
                                     class="img-thumbnail img-fluid student-image" alt="No Image">
                             @else
-                                <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                                    class="img-thumbnail img-fluid student-image" alt="No Image">
+                                {{-- <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
+                                    class="img-thumbnail img-fluid student-image" alt="No Image"> --}}
+                                    <img src="image/student.png" class="img-thumbnail img-fluid student-image" alt="No Image">
                             @endif
                         </div>
                     </center>
@@ -55,11 +58,13 @@
                             value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}"
                             disabled>
                     </div>
-                </div>
-            </div>
+                {{-- </div> --}}
+            {{-- </div> --}}
+            <br>
             <div class="col">
                 <div class="card">
                     <div class="card-body bg-success text-white">
+                        <br>
                         <h2>BORROWING BOOK</h2>
                     </div>
                 </div>
@@ -83,19 +88,23 @@
                         </div>
                     </div>
                 </div>
+
                 <table class="table table-bordered table-striped myTable" id="tbl">
                     <thead class="bg-success text-white">
                         <tr>
                             <th>ID</th>
                             <th>TITLE</th>
                             <th>AUTHOR/S</th>
+                            <th>DEPARTMENT</th>
                             <th>COPYRIGHT</th>
                             <th>ACCESSION NO</th>
+                            <th>CALL NO</th>
+                            <th>SUBJECT</th>
                             <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <td colspan="6">ENTER BORROWER ID FIRST</td>
+                        <td colspan="10">ENTER BORROWER ID FIRST</td>
                     </tbody>
                 </table>
                 <br>
@@ -138,8 +147,10 @@
                                     <th class="text-center">ID</th>
                                     <th class="text-center">TITLE</th>
                                     <th class="text-center">AUTHOR/S</th>
+                                    <th class="text-center">DEPARTMENT</th>
                                     <th class="text-center">COPYRIGHT</th>
                                     <th class="text-center">ACCCESSION NO</th>
+                                    <th class="text-center">SUBJECT</th>
                                     <th class="text-center">STATUS</th>
                                     <th class="text-center">ACTION</th>
                                 </tr>
@@ -155,6 +166,9 @@
                                                 {{ $book->title }}
                                             </td>
                                             <td>
+                                                {{ $book->department }}
+                                            </td>
+                                            <td>
                                                 {{ $book->author }}
                                             </td>
                                             <td>
@@ -162,6 +176,12 @@
                                             </td>
                                             <td>
                                                 {{ $book->accession }}
+                                            </td>
+                                            <td>
+                                                {{ $book->callnumber }}
+                                            </td>
+                                            <td>
+                                                {{ $book->subject }}
                                             </td>
                                             <td class="getstatus">
                                                 @if (request()->input('student'))
@@ -197,6 +217,7 @@
             </div>
         </div>
     </div>
+
     <br><br>
 
     <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static"
@@ -213,6 +234,7 @@
             </div>
         </div>
     </div>
+
     <style>
         .custom-button {
             background-color: green;
@@ -325,12 +347,18 @@
                             var td4 = tr.appendChild(document.createElement('td'));
                             var td5 = tr.appendChild(document.createElement('td'));
                             var td6 = tr.appendChild(document.createElement('td'));
+                            var td7 = tr.appendChild(document.createElement('td'));
+                            var td8 = tr.appendChild(document.createElement('td'));
+                            var td9 = tr.appendChild(document.createElement('td'));
                             td1.innerHTML = data.book.id;
                             td2.innerHTML = data.book.title;
                             td3.innerHTML = data.book.author;
-                            td4.innerHTML = data.book.copyright;
-                            td5.innerHTML = data.book.accession;
-                            td6.innerHTML =
+                            td4.innerHTML = data.book.department;
+                            td5.innerHTML = data.book.copyright;
+                            td6.innerHTML = data.book.accession;
+                            td7.innerHTML = data.book.callnumber;
+                            td8.innerHTML = data.book.subject;
+                            td9.innerHTML =
                                 '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
                                 id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>';
                             document.getElementById("tbl").appendChild(tr);
@@ -373,12 +401,18 @@
                     var td4 = tr.appendChild(document.createElement('td'));
                     var td5 = tr.appendChild(document.createElement('td'));
                     var td6 = tr.appendChild(document.createElement('td'));
+                    var td7 = tr.appendChild(document.createElement('td'));
+                    var td8 = tr.appendChild(document.createElement('td'));
+                    var td9 = tr.appendChild(document.createElement('td'));
                     td1.innerHTML = $iddata;
                     td2.innerHTML = data.book.title;
                     td3.innerHTML = data.book.author;
-                    td4.innerHTML = data.book.copyright;
-                    td5.innerHTML = data.book.accession;
-                    td6.innerHTML =
+                    td4.innerHTML = data.book.department;
+                    td5.innerHTML = data.book.copyright;
+                    td6.innerHTML = data.book.accession;
+                    td7.innerHTML = data.book.callnumber;
+                    td8.innerHTML = data.book.subject;
+                    td9.innerHTML =
                         '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
                         $iddata + '" onclick="deleteRow(this, ' + $iddata +
                         ');">Remove</button>';

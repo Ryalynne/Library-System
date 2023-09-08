@@ -10,8 +10,9 @@
 <body>
     <center>
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-        <h3>STUDENT LOST OR DAMAGE BOOK</h3>
+        <h2>STUDENT LOST OR DAMAGE BOOK</h2>
     </center>
+    <p><b>FORM LIB-10</b></p>
     <table class="table table-bordered myTable">
         <thead>
             <tr class="bg-success text-white">
@@ -22,7 +23,7 @@
                 <th scope="col" class="text-center">ACCESSION NO</th>
                 <th scope="col" class="text-center">BORROW DATE</th>
                 <th scope="col" class="text-center">DUE DATE</th>
-                <th scope="col" class="text-center">PENALTY</th>
+                <th scope="col" class="text-center">OVERDUE</th>
             </tr>
         </thead>
         @foreach ($bookList as $book)
@@ -52,6 +53,10 @@
             </tbody>
         @endforeach
     </table>
+    <p>AMOUNT:________</p>
+    <p>
+        <b>Cadet's Library card is withheld until presentation of this receipt from your office Is fully validated.</b>
+    </p>
     <br>
     <div class="footer-row">
         <span>Date Printed: {{ date('Y-m-d') }}</span>

@@ -17,9 +17,9 @@ class CopiesController extends Controller
      */
     public function index()
     {
-        $books = booklist::where('ishide', false)->paginate(10);
+        $books = booklist::where('ishide', false)->paginate(50);
         $copies = copies::where('ishide', false)->get();
-        return view('bookaquired', compact('books'));
+        return view('bookadjustment', compact('books'));
     }
 
     public function updatecopies(Request $request)

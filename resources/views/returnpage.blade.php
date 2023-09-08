@@ -27,8 +27,7 @@
                                 <img src="http://bma.edu.ph/img/student-picture/{{ $student ? $student->student_number : 'midshipman' }}.png"
                                     class="img-thumbnail img-fluid student-image" alt="No Image">
                             @else
-                                <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                                    class="img-thumbnail img-fluid student-image" alt="No Image">
+                            <img src="image/student.png" class="img-thumbnail img-fluid student-image" alt="No Image">
                             @endif
                         </div>
                     </center>
@@ -77,7 +76,7 @@
                             <th>BORROW DATE</th>
                             <th>DUE DATE</th>
                             <th>ACTION</th>
-                            <th>PENALTY</th>
+                            <th>OVERDUE</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -35,12 +35,13 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-bordered myTable">
+                    <table class="table table-bordered myTable border-dark">
                         <thead>
                             <tr class="bg-success text-white">
                                 <th scope="col" class="text-center">ID</th>
                                 <th scope="col" class="text-center">TITLE</th>
                                 <th scope="col" class="text-center">AUTHOR/S</th>
+                                <th scope="col" class="text-center">CATEGORIES</th>
                                 <th scope="col" class="text-center">COPYRIGHT</th>
                                 <th scope="col" class="text-center">ACCESSION NO</th>
                                 <th scope="col" class="text-center">ADDED DATE</th>
@@ -59,6 +60,9 @@
                                     </td>
                                     <td>
                                         {{ $adjust->author }}
+                                    </td>
+                                    <td>
+                                        {{ $adjust->categories }}
                                     </td>
                                     <td>
                                         {{ $adjust->copyright }}

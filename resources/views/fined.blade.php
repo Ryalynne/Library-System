@@ -27,8 +27,7 @@
                                 <img src="http://bma.edu.ph/img/student-picture/{{ $student ? $student->student_number : 'midshipman' }}.png"
                                     class="img-thumbnail img-fluid student-image" alt="No Image">
                             @else
-                                <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                                    class="img-thumbnail img-fluid student-image" alt="No Image">
+                            <img src="image/student.png" class="img-thumbnail img-fluid student-image" alt="No Image">
                             @endif
                         </div>
                     </center>
@@ -77,7 +76,7 @@
                             <th>BORROW DATE</th>
                             <th>DUE DATE</th>
                             <th>ACTION</th>
-                            <th>PENALTY</th>
+                            <th>OVERDUE</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,7 +101,7 @@
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input getbook"
                                             id="checkbox-{{ $book->id }}" data-id="{{ $book->id }}">
-                                        <label for="flexCheckDefault" class="form-check-label">Fine</label>
+                                        <label for="flexCheckDefault" class="form-check-label">Mark</label>
                                     </div>
                                 </td>
                                 <td>
@@ -123,8 +122,7 @@
                 <div class="text-end">
                     <button type="button" class="btn btn-success  w-50 btn-lg returnbook" data-bs-toggle="modal"
                         data-bs-target="#tablemodal" data-student="{{ $student ? $student->student_number : '' }}"
-                        data-token="{{ csrf_token() }}" id="myBtn">Fine
-                        Book</button></a>
+                        data-token="{{ csrf_token() }}" id="myBtn">Submit</button></a>
                 </div>
                 <br>
                 <br>
@@ -132,7 +130,6 @@
         </div>
     </div>
     <br><br>
-
     <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">

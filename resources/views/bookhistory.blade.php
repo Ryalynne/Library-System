@@ -36,14 +36,17 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                    <table class="table table-bordered myTable">
+                    <table class="table table-bordered myTable border-dark">
                         <thead>
                             <tr class="bg-success text-white">
                                 <th scope="col">ID</th>
                                 <th scope="col">TITLE</th>
-                                <th scope="col">AUTHRO/S</th>
+                                <th scope="col">AUTHOR/S</th>
+                                <th scope="col">DEPARTMENT</th>
                                 <th scope="col">COPYRIGHT</th>
                                 <th scope="col">ACCESSION NO</th>
+                                <th scope="col">CALL NO</th>
+                                <th scope="col">SUBJECT</th>
                                 <th scope="col">DATE OF ACTION</th>
                                 <th scope="col">ACTION PERFORM</th>
                                 <th scope="col">PERFORM BY</th>
@@ -55,8 +58,11 @@
                                     <td>{{ $item->book->id }}</td>       
                                     <td>{{ $item->book->title }}</td>
                                     <td>{{ $item->book->author }}</td>
+                                    <td>{{ $item->book->department }}</td>
                                     <td>{{ $item->book->copyright }}</td>
                                     <td>{{ $item->book->accession }}</td>
+                                    <td>{{ $item->book->callnumber }}</td>
+                                    <td>{{ $item->book->subject }}</td>
                                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                     <td>{{ $item->action }}</td>
                                     <td>{{ $item->performby }}</td>

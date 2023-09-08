@@ -18,6 +18,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">TITLE</th>
                 <th scope="col">AUTHOR/S</th>
+                <th scope="col">DEPARTMENT</th>
                 <th scope="col">COPYRIGHT</th>
                 <th scope="col">ACCESSION NO</th>
                 <th scope="col">DATE OF ACTION</th>

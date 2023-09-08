@@ -10,7 +10,7 @@ class booklist extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title', 'author', 'copyright', 'accession'
+        'title', 'author', 'copyright', 'accession', 'department','subject','callnumber'
     ];
     public function numberofcopies()
     {

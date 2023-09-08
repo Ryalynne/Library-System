@@ -17,7 +17,7 @@ class Bookhistory extends Controller
 
     public function index(Request $request)
     {
-        $action = bookaction::where('ishide', false)->paginate(10);
+        $action = bookaction::where('ishide', false)->paginate(50);
         return view('bookhistory', compact('action'));
     }
 }

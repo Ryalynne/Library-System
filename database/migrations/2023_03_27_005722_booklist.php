@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('booklists', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('author');
-            $table->string('copyright');
-            $table->string('accession');
+            $table->string('author')->nullable();
+            $table->string('department')->nullable();
+            $table->string('copyright')->nullable();
+            $table->string('accession')->nullable();
+            $table->string('callnumber')->nullable();
+            $table->string('subject')->nullable();
             $table->boolean('ishide')->default(0);
             $table->timestamps();
         });

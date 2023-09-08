@@ -38,14 +38,18 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered myTable">
+            <table class="table table-bordered border-dark myTable">
                 <thead>
                     <tr class="bg-success text-white">
                         <th scope="col" class="text-center">ID</th>
+                        <th class="text-center">QR CODE</th>
                         <th scope="col" class="text-center">TITLE</th>
                         <th scope="col" class="text-center">AUTHOR/S</th>
+                        <th scope="col" class="text-center">DEPARTMENT</th>
                         <th scope="col" class="text-center">COPYRIGHT</th>
                         <th scope="col" class="text-center">ACCESSION NO</th>
+                        <th scope="col" class="text-center">CALL NO</th>
+                        <th scope="col" class="text-center">SUBJECT</th>
                         <th scope="col" class="text-center">COPIES</th>
                         <th scope="col" class="text-center">ACTIONS PERFORM</th>
                     </tr>
@@ -56,6 +60,8 @@
                             <th class="px-6 py-3">
                                 {{ $book->id }}
                             </th>
+                            <td class="text-center">{!! QrCode::size(40, 50)->generate($book->id) !!}
+                            </td>
                             <td class="px-6 py-3">
                                 {{ $book->title }}
                             </td>
@@ -63,10 +69,19 @@
                                 {{ $book->author }}
                             </td>
                             <td class="px-6 py-3">
+                                {{ $book->department }}
+                            </td>
+                            <td class="px-6 py-3">
                                 {{ $book->copyright }}
                             </td>
                             <td class="px-6 py-3">
                                 {{ $book->accession }}
+                            </td>
+                            <td>
+                                {{$book->callnumber}}
+                            </td>
+                            <td>
+                                {{$book->subject}}
                             </td>
                             <td class="px-6 py-3">
                                 {{ $book->numberofcopies() }}
@@ -125,6 +140,14 @@
                                                     class="form-control modal-book-author" placeholder="Disabled input"
                                                     readonly>
                                             </div>
+                                              {{-- department --}}
+                                            <div class="mb-3">
+                                                <label for="disabledTextInput" class="form-label">department</label>
+                                                <input type="text" id="disabledTextInput"
+                                                    class="form-control modal-book-department" placeholder="Disabled input"
+                                                    readonly>
+                                            </div>
+                                            {{-- department --}}
                                             <div class="mb-3">
                                                 <label for="disabledTextInput" class="form-label">COPYRIGHT</label>
                                                 <input type="text" id="disabledTextInput"
@@ -235,7 +258,7 @@
                                             @csrf
                                             <button type="button" class="btn btn-danger"
                                                 data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success less-copies-btn">Less
+                                            <button type="submit" class="btn btn-success less-copies-btn">Adjust
                                                 copies</button>
                                         </div>
                                         {{-- </form> --}}
