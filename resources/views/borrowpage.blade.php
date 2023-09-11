@@ -13,30 +13,27 @@
     <div class="container text-center">
         <div class="row align-items-start ">
             <br>
-            {{-- <div class="col border-end"> --}}
             <div class="card">
                 <div class="card-body bg-success text-white">
                     <h2> BORROWER INFORMATION</h2>
                 </div>
             </div>
             <br>
-            {{-- <div class="container text-start"> --}}
             <center>
                 <br>
                 <div class="image-container">
-                    @if (request()->input('student') || $student)
-                        <img src="http://bma.edu.ph/img/student-picture/{{ $student ? $student->student_number : 'midshipman' }}.png"
+                    @if (request()->input('student') ||  $student )
+                   
+                        <img src="http://bma.edu.ph/img/student-picture/{{ $student ? $student->student_number : 'midshipman'}}.png"
                             class="img-thumbnail img-fluid student-image" alt="No Image">
                     @else
-                        {{-- <img src="https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png"
-                                    class="img-thumbnail img-fluid student-image" alt="No Image"> --}}
                         <img src="image/student.png" class="img-thumbnail img-fluid student-image" alt="No Image">
-                    @endif
+                    @endif 
                 </div>
             </center>
             <form action="">
-                @if (!$student && request()->input('student'))
-                    <span class="badge bg-danger w-100">No Student Found.</span>
+                @if (!$student && request()->input('student') && !$teacher && request()->input('teacher'))
+                    <span class="badge bg-danger w-100">No User Found.</span>
                 @endif
                 <div class="mb-3">
                     <label class="form-label">ENTER ID:</label>
@@ -44,7 +41,8 @@
                         value="{{ request()->input('student') ? ($student ? $student->student_number : '') : '' }}">
                 </div>
                 <input type="hidden" id="student"
-                    value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}">
+                    value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ?
+                    $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : ''  }}">
             </form>
             <div class="mb-3">
                 <label for="booktitle" class="form-label">FULL NAME: </label>
@@ -58,8 +56,6 @@
                     value="{{ request()->input('student') ? ($student ? ($student->student->enrollment_assessment ? $student->student->enrollment_assessment->year_level() : 'Not Enrolled') : '') : '' }}"
                     disabled>
             </div>
-            {{-- </div> --}}
-            {{-- </div> --}}
             <br>
             <div class="col">
                 <div class="card">
@@ -159,10 +155,10 @@
                             <tbody>
                                 @foreach ($books as $book)
                                     @if ($book->numberofcopies() > 0)
-                                        <tr class="trtr tr">
-                                            <th scope="row" class="getidd">
+                                        <tr class="trtr">
+                                            <td scope="row" class="getidd">
                                                 {{ $book->id }}
-                                            </th>
+                                            </td>
                                             <td class="getisbn">
                                                 {{ $book->title }}
                                             </td>
@@ -175,7 +171,7 @@
                                             <td>
                                                 {{ $book->copyright }}
                                             </td>
-                                            <td>
+                                            <td class="getacc">
                                                 {{ $book->accession }}
                                             </td>
                                             <td>
@@ -301,6 +297,7 @@
                     table.deleteRow(i);
                 }
                 bookList.splice(0, bookList.length);
+                bookList.splice(0, accessionList.length);
                 alert('successfully borrowed');
                 console.log(bookList);
             }
@@ -333,27 +330,6 @@
                 clearInterval(_changeInterval);
             }, 900);
         });
-
-        //     clearInterval(_changeInterval);
-        //     _changeInterval = setInterval(function() {
-        //         $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
-        //             try {
-        //                 if (data.bookstatus == "onlend") {
-        //                     console.log('onlend');
-        //                     alert('The Book is Already Borrowed');
-        //                     $('.bookid').val("");
-        //                 } else {
-        //                     checkBookAvailability(id);
-        //                 }
-        //             } catch (err) {
-        //                 checkBookAvailability(id);
-        //             }
-        //             $('.bookid').val("");
-        //         });
-        //         clearInterval(_changeInterval);
-        //     }, 900);
-        // });
-
         function checkBookAvailability(id) {
             $.get("/bookcopies/" + id, function(data, status) {
                 try {
@@ -363,7 +339,7 @@
                     } else {
                         if (!accessionList.includes(data.book.accession)) {
                             accessionList.push(data.book.accession);
-                            bookList.push(id);
+                            bookList.push(data.book.id);
                             var tr = document.createElement('tr');
                             var td1 = tr.appendChild(document.createElement('td'));
                             var td2 = tr.appendChild(document.createElement('td'));
@@ -408,12 +384,13 @@
         $(".getdata").on('click', function() {
 
             var $row = $(this).closest(".trtr");
-            $iddata = $row.find(".getidd").text().trim().toLowerCase();;
+            $iddata = $row.find(".getidd").text().trim().toLowerCase();
+            $acc = $row.find(".getacc").text().trim().toLowerCase();
             $status = $row.find(".getstatus").text();
             $.get("/book/" + $iddata, function(data, status) {
                 if ($status.includes("onlend")) {
                     alert('The Book Already Borrowed');
-                } else if (!bookList.includes($iddata)) {
+                } else if (!accessionList.includes($acc)) {
                     // bookList.push($iddata)
                     accessionList.push(data.book.accession);
                     bookList.push($iddata);

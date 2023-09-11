@@ -7,6 +7,7 @@ use App\Models\booklist;
 use App\Models\borrowpage;
 use App\Models\copies;
 use App\Models\StudentAccount;
+use App\Models\UserStaff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -257,50 +258,50 @@ class BooklistController extends Controller
             $message = 'The book is not available.';
             return compact('message');
         }
-
-
-        //     $totalLessen = copies::where('bookid', $data)
-        //     ->where('action', 'lessen')->sum('copies');
-
-        // $totalCopies = copies::where('bookid', $data)
-        //     ->where('action', 'added')
-        //     ->sum('copies');
-
-        // $totalFine = borrowpage::where('bookid', $data)
-        //     ->where('bookstatus', 'fine')
-        //     ->count();
-
-        // $totalOnLend = borrowpage::where('bookid', $data)
-        //     ->where('bookstatus', 'onlend')
-        //     ->count();
-
-        // $minus  = $totalOnLend + $totalFine + $totalLessen;
-        // $total = $totalCopies - $minus;
-
-        // if ($total >= 1) {
-        //     $book = BookList::join('copies', 'booklists.id', 'copies.bookid')
-        //         ->where('booklists.id', $data)
-        //         ->where('booklists.ishide', false)
-        //         ->orderBy('booklists.id', 'desc')
-        //         ->first();
-
-        //     return compact('book');
-        // } else {
-        //     $message = 'The book is not available.';
-        //     return compact('message');
-        // }
     }
 
-    public function get_status($data, $studentid)
+    public function get_status($bookid, Request $request)
     {
         // $studentno = studentlist::where('studentno', $studentid)->value('id');
-        $id = booklist::where('accession', $data)->value('id');
-        $account = StudentAccount::where('student_number', $studentid)->first();
-        return $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
-            ->join('copies', 'copies.bookid', 'borrowpages.bookid')
-            ->where('borrowpages.studentid', $account->student->id)
-            ->where('borrowpages.bookid', $id)
-            ->orderBy('borrowpages.id', 'desc')->first();
-        // return compact('bookstatus');
+        // $id = booklist::where('accession', $data)->value('id');
+        // $account = StudentAccount::where('student_number', $studentid)->first();
+        // return $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
+        // ->join('copies', 'copies.bookid', 'borrowpages.bookid')
+        // ->where('borrowpages.studentid', $account->student->id)
+        // ->where('borrowpages.bookid', $id)
+        // ->orderBy('borrowpages.id', 'desc')->first();
+
+        $value = [];
+        $id = booklist::where('accession', $bookid)->value('id');
+
+        if ($request->data) {
+            $word = 'employee';
+            if (strpos($request->data, $word) !== false) {
+                // Employee
+
+                // $data = explode(":", $request->data);
+                // $data = count($data) > 1 ? $data[1] : str_replace($word, '', $request->data);
+                // $value = UserStaff::where('email', $data)->first();
+                // $value = $value->staff;
+                // $designated = $value->job_description;
+
+            } else {
+                // Student
+
+                $data = explode(".", $request->data);
+                $data = count($data) > 1 ? $data[0] : null;
+                $value = StudentAccount::where('student_number', $data)->first();
+                return $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
+                ->join('copies', 'copies.bookid', 'borrowpages.bookid')
+                ->where('borrowpages.studentid', $value->student_number)
+                ->where('borrowpages.bookid', $id)
+                ->orderBy('borrowpages.id', 'desc')->first();
+
+                // $value = StudentDetails::find($value->id);
+                // $designated = $value->enrollment_assessment ?  
+                // $value->enrollment_assessment->year_level() ." ".
+                // $value->enrollment_assessment->course->course_code : '';
+            }
+        }
     }
 }

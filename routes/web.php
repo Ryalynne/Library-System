@@ -7,7 +7,7 @@ use App\Http\Controllers\backorderController;
 use App\Http\Controllers\badorderController;
 use App\Http\Controllers\Bookhistory;
 use App\Http\Controllers\BooklistController;
-use App\Http\Controllers\borrowpage;
+use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\cancelhistoryController;
 use App\Http\Controllers\CopiesController;
 use App\Http\Controllers\departmentController;
@@ -38,7 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('copies', CopiesController::class);
     Route::resource('books', BooklistController::class);
-    Route::resource('borrow', borrowpage::class);
+    Route::resource('borrow', BorrowController::class);
     Route::get('/department', [departmentController::class, 'index']);
     Route::get('/subject', [subjectController::class, 'index']);
     Route::get('/cancelhistory', [cancelhistoryController::class, 'index']);
@@ -59,7 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/booklist', [BooklistController::class, 'index'])->name('booklist');;
     Route::get('/returnpage', [Returnpage::class, 'index'])->name('returnpage');
     Route::get('/purchase', [purchaseController::class, 'index'])->name('purchase');
-    Route::get('/borrowpage', [borrowpage::class, 'index'])->name('borrowpage');
+    Route::get('/borrowpage', [BorrowController::class, 'index']);
     Route::get('/bookhistory', [Bookhistory::class, 'index'])->name('bookhistory');
     Route::get('/adjustmenthistory', [adjustmentcontroller::class, 'index'])->name('adjustmenthistory');
     Route::get('/onlendhistory', [onlendcontroller::class, 'index'])->name('onlendhistory');
@@ -121,7 +121,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/removearchived/{id}', [BooklistController::class, 'updateback'])->name('removeArchived.update');
     Route::post('/return/book', [Returnpage::class, 'update']);
     Route::post('/returndamage/book', [finedController::class, 'store']);
-    Route::post('/book/borrow', [borrowpage::class, 'storebookborrow']);
+    Route::post('/book/borrow', [BorrowController::class, 'storebookborrow']);
     Route::post('/updateuser', [userController::class, 'update'])->name('updateuser');
     Route::post('/book/update', [BooklistController::class, 'updatebooks'])->name('books.update-book');
     Route::post('/copy/update', [CopiesController::class, 'updatecopies'])->name('books.update-copy');

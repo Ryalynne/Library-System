@@ -24,4 +24,15 @@ class StudentDetails extends Model
     public function borrow_books(){
         return $this->hasMany(borrowpage::class , 'studentid')->where('bookstatus', 'onlend')->where('ishide',false);
     }
+
+    public function profile_picture()
+    {
+        $_formats = ['.jpeg', '.jpg', '.png'];
+        $_path = 'http://bma.edu.ph/img/student-picture/';
+        $_image = 'http://bma.edu.ph/img/student-picture/midship-man.jpg';
+        foreach ($_formats as $format) {
+            $_image = @fopen($_path . $this->account->student_number . $format, 'r') ? $_path . $this->account->student_number . $format : $_image;
+        }
+        return $_image;
+    }
 }

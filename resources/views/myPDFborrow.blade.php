@@ -85,8 +85,11 @@
                     <tr class="bg-success text-white">
                         <th>TITLE</th>
                         <th>AUTHOR/S</th>
+                        <th>DEPARTMENT</th>
                         <th>COPYRIGHT</th>
-                        <th>ACCESSION</th>
+                        <th>ACCESSION NO</th>
+                        <th>CALL NO</th>
+                        <th>SUBJECT</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -94,8 +97,11 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->author }}</td>
+                            <td>{{ $book->department }}</td>
                             <td>{{ $book->copyright }}</td>
                             <td>{{ $book->accession }}</td>
+                            <td>{{ $book->callnumber }}</td>
+                            <td>{{ $book->subject }}</td>
                         </tr>
                     @endforeach
                 </tbody>

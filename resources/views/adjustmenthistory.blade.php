@@ -39,19 +39,19 @@
                 <table class="table table-bordered myTable border-dark table-sm">
                     <thead>
                         <tr class="bg-success text-white">
-                            <th scope="col"  class="text-center">ID</th>
-                            <th scope="col"  class="text-center">TITLE</th>
-                            <th scope="col"  class="text-center">AUTHOR/S</th>
-                            <th scope="col"  class="text-center">DEPARTMENT</th>
-                            <th scope="col"  class="text-center">COPYRIGHT</th>
-                            <th scope="col"  class="text-center">ACCESSION NO</th>
-                            <th scope="col"  class="text-center">CALL NO</th>
-                            <th scope="col"  class="text-center">SUBJECT</th>
-                            <th scope="col"  class="text-center">DATE OF ACTION</th>
-                            <th scope="col"  class="text-center">ACTION</th>
-                            <th scope="col"  class="text-center">ADJUSTED</th>
-                            <th scope="col"  class="text-center">PERFORM BY</th>
-                            <th scope="col"  class="text-center">COMMENT</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">TITLE</th>
+                            <th scope="col">AUTHOR/S</th>
+                            <th scope="col">DEPARTMENT</th>
+                            <th scope="col">COPYRIGHT</th>
+                            <th scope="col">ACCESSION NO</th>
+                            <th scope="col">CALL NO</th>
+                            <th scope="col">SUBJECT</th>
+                            <th scope="col">DATE OF ACTION</th>
+                            <th scope="col">ACTION</th>
+                            <th scope="col">ADJUSTED</th>
+                            <th scope="col">PERFORM BY</th>
+                            <th scope="col">COMMENT</th>
                         </tr>
                     </thead>
                     <tbody>

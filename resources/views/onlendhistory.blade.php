@@ -61,8 +61,11 @@
                                 <td>{{ $item->book->id }}</td>
                                 <td>{{ $item->book->title}}</td>
                                 <td>{{ $item->book->author}}</td>
+                                <td>{{ $item->book->department}}</td>
                                 <td>{{ $item->book->copyright}}</td>
                                 <td>{{ $item->book->accession}}</td>
+                                <td>{{ $item->book->callnumber}}</td>
+                                <td>{{ $item->book->subject}}</td>
                                 <td>{{ $item->student->first_name }} {{ $item->student->middle_name }} {{ $item->student->last_name }}
                                 </td>
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
