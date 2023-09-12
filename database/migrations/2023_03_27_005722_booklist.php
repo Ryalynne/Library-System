@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('booklists', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('author')->nullable();
+            $table->text('title')->nullable();
+            $table->text('author')->nullable();
 
             // $table->string('department')->nullable();
       
@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('copyright')->nullable();
             $table->string('accession')->nullable();
             $table->string('callnumber')->nullable();
+
             // $table->string('subject')->nullable();
             $table->boolean('ishide')->default(0);
             $table->timestamps();

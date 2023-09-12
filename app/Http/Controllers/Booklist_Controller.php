@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\BookListImport;
+use App\Imports\UsersImport;
 use App\Models\bookaction;
 use App\Models\booklist;
 use App\Models\borrowpage;
@@ -12,9 +14,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
-
-class BooklistController extends Controller
+class Booklist_Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +24,7 @@ class BooklistController extends Controller
     public function index()
     {
         $books = booklist::where('ishide', false)->paginate(50);
-        return view('booklist', compact('books'));
+        return view('books.book_list', compact('books'));
     }
 
     public function updateback($id)
@@ -292,10 +294,10 @@ class BooklistController extends Controller
                 $data = count($data) > 1 ? $data[0] : null;
                 $value = StudentAccount::where('student_number', $data)->first();
                 return $bookstatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
-                ->join('copies', 'copies.bookid', 'borrowpages.bookid')
-                ->where('borrowpages.studentid', $value->student_number)
-                ->where('borrowpages.bookid', $id)
-                ->orderBy('borrowpages.id', 'desc')->first();
+                    ->join('copies', 'copies.bookid', 'borrowpages.bookid')
+                    ->where('borrowpages.studentid', $value->student_number)
+                    ->where('borrowpages.bookid', $id)
+                    ->orderBy('borrowpages.id', 'desc')->first();
 
                 // $value = StudentDetails::find($value->id);
                 // $designated = $value->enrollment_assessment ?  
@@ -303,5 +305,18 @@ class BooklistController extends Controller
                 // $value->enrollment_assessment->course->course_code : '';
             }
         }
+    }
+
+    public function import(Request $request)
+    {
+        // // Excel::import(new UsersImport, '.xlsx');
+        // Excel::import(new UsersImport, $request->file('file')->store('temp'));
+        // return redirect('/')->with('success', 'All good!');
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
+        $file = $request->file('file');
+        Excel::import(new BookListImport, $file);
+        return redirect('/booklist')->with('success', 'Import completed successfully.');
     }
 }

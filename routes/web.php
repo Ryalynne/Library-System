@@ -6,8 +6,8 @@ use App\Http\Controllers\archivedcontroller;
 use App\Http\Controllers\backorderController;
 use App\Http\Controllers\badorderController;
 use App\Http\Controllers\Bookhistory;
-use App\Http\Controllers\BooklistController;
-use App\Http\Controllers\BorrowController;
+use App\Http\Controllers\Booklist_Controller;
+use App\Http\Controllers\Borrow_Controller;
 use App\Http\Controllers\cancelhistoryController;
 use App\Http\Controllers\CopiesController;
 use App\Http\Controllers\departmentController;
@@ -15,7 +15,7 @@ use App\Http\Controllers\finebookshistory;
 use App\Http\Controllers\finedController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\onlendcontroller;
-use App\Http\Controllers\PDFController;
+use App\Http\Controllers\PDF_Controller;
 use App\Http\Controllers\pendingpurchaseController;
 use App\Http\Controllers\purchaseController;
 use App\Http\Controllers\receivehistoryController;
@@ -37,8 +37,8 @@ Route::get('/counter', Counter::class);
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('copies', CopiesController::class);
-    Route::resource('books', BooklistController::class);
-    Route::resource('borrow', BorrowController::class);
+    Route::resource('books', Booklist_Controller::class);
+    Route::resource('borrow', Borrow_Controller::class);
     Route::get('/department', [departmentController::class, 'index']);
     Route::get('/subject', [subjectController::class, 'index']);
     Route::get('/cancelhistory', [cancelhistoryController::class, 'index']);
@@ -51,15 +51,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/vendormanagement', [vendorController::class, 'index']);
     Route::get('/bookadjustment', [CopiesController::class, 'index']);
     Route::get('/setting', [userController::class, 'index']);
-    Route::get('/getcopy/{id}', [BooklistController::class, 'getnumber']);
+    Route::get('/getcopy/{id}', [Booklist_Controller::class, 'getnumber']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/fined', [finedController::class, 'index']);
     Route::get('/finedhistory', [finebookshistory::class, 'index'])->name('finedhistory');
-    Route::get('/booklist', [BooklistController::class, 'index'])->name('booklist');;
+    Route::get('/booklist', [Booklist_Controller::class, 'index'])->name('booklist');;
     Route::get('/returnpage', [Returnpage::class, 'index'])->name('returnpage');
     Route::get('/purchase', [purchaseController::class, 'index'])->name('purchase');
-    Route::get('/borrowpage', [BorrowController::class, 'index']);
+    Route::get('/borrowpage', [Borrow_Controller::class, 'index']);
     Route::get('/bookhistory', [Bookhistory::class, 'index'])->name('bookhistory');
     Route::get('/adjustmenthistory', [adjustmentcontroller::class, 'index'])->name('adjustmenthistory');
     Route::get('/onlendhistory', [onlendcontroller::class, 'index'])->name('onlendhistory');
@@ -77,30 +77,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //display search
     Route::get('/getid/{studentno}', [StudentlistController::class, 'get_student']);
-    Route::get('/bookstatus/{data}/{studentid}', [BooklistController::class, 'get_status']);
-    Route::get('/book/{id}', [BooklistController::class, 'get_book']);
-    Route::get('/bookarchived/{id}', [BooklistController::class, 'get_bookarchived']);
-    Route::get('/bookcopies/{id}', [BooklistController::class, 'get_bookcopies']);
+    Route::get('/bookstatus/{data}/{studentid}', [Booklist_Controller::class, 'get_status']);
+    Route::get('/book/{id}', [Booklist_Controller::class, 'get_book']);
+    Route::get('/bookarchived/{id}', [Booklist_Controller::class, 'get_bookarchived']);
+    Route::get('/bookcopies/{id}', [Booklist_Controller::class, 'get_bookcopies']);
     Route::get('/vendor/{id}', [vendorController::class, 'get_vendor']);
     Route::get('/copy/{id}', [CopiesController::class, 'get_copies']);
 
 
     //pdf print
-    Route::get('/generate-badorder/{bookid}/{quantity}', [PDFController::class, 'generateBadorder']);
-    Route::get('/generate-pdf/{data}', [PDFController::class, 'generatePDF']);
-    Route::get('/generate-table', [PDFController::class, 'generateReports']);
-    Route::get('/generate-action', [PDFController::class, 'generateAction']);
-    Route::get('/generate-tblcopies', [PDFController::class, 'generateCopies']);
-    Route::get('/generate-tblborrow/{id}/{studentid}', [PDFController::class, 'generateBorrow']);
-    Route::get('/generate-tblreturn/{bookData}/{studentid}', [PDFController::class, 'generateReturn']);
-    Route::get('/generate-tbladjustment', [PDFController::class, 'generateAdjustment']);
-    Route::get('/generate-tblonlend', [PDFController::class, 'generateOnlend']);
-    Route::get('/generate-tblreturnhistory', [PDFController::class, 'generatereturnhistory']);
-    Route::get('/generate-tblreturndamage/{bookData}/{studentid}', [PDFController::class, 'generatereturndamage']);
-    Route::get('/generate-tblfinehistory', [PDFController::class, 'generatefinehistory']);
-    Route::get('/generatepuchaseorder/{id}/{booktitle}', [PDFController::class, 'generatePurchaseOrder']);
-    Route::get('/myPDF/{data}', [PDFController::class, 'generatePDF'])->name('myPDF');
-
+    Route::get('/generate-badorder/{bookid}/{quantity}', [PDF_Controller::class, 'generateBadorder']);
+    Route::get('/generate-pdf/{data}', [PDF_Controller::class, 'generatePDF']);
+    Route::get('/generate-table', [PDF_Controller::class, 'generateReports']);
+    Route::get('/generate-action', [PDF_Controller::class, 'generateAction']);
+    Route::get('/generate-tblcopies', [PDF_Controller::class, 'generateCopies']);
+    Route::get('/generate-tblborrow/{id}/{studentid}', [PDF_Controller::class, 'generateBorrow']);
+    Route::get('/generate-tblreturn/{bookData}/{studentid}', [PDF_Controller::class, 'generateReturn']);
+    Route::get('/generate-tbladjustment', [PDF_Controller::class, 'generateAdjustment']);
+    Route::get('/generate-tblonlend', [PDF_Controller::class, 'generateOnlend']);
+    Route::get('/generate-tblreturnhistory', [PDF_Controller::class, 'generatereturnhistory']);
+    Route::get('/generate-tblreturndamage/{bookData}/{studentid}', [PDF_Controller::class, 'generatereturndamage']);
+    Route::get('/generate-tblfinehistory', [PDF_Controller::class, 'generatefinehistory']);
+    Route::get('/generatepuchaseorder/{id}/{booktitle}', [PDF_Controller::class, 'generatePurchaseOrder']);
+    Route::get('/myPDF/{data}', [PDF_Controller::class, 'generatePDF'])->name('myPDF');
+    Route::get('/Print_QRList', [PDF_Controller::class, 'bulkprint']);
     //dito
     Route::put('update-received-quantity/{id}', [receivepurchaseorderController::class, 'updateReceivedQuantity'])->name('update-received-quantity');
     Route::put('update-received-quantityB/{id}', [backorderController::class, 'updateReceivedQuantity'])->name('update-received-quantityB');
@@ -117,15 +117,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/createvendor', [vendorController::class, 'create'])->name('vendor.create');
     Route::post('/test', [booklistcontroller::class, 'test']);
     Route::post('/removevendor/{id}', [vendorController::class, 'updateremove'])->name('removeVendor.update');
-    Route::post('/removebook/{id}', [BooklistController::class, 'updateremove'])->name('removeBook.update');
-    Route::post('/removearchived/{id}', [BooklistController::class, 'updateback'])->name('removeArchived.update');
+    Route::post('/removebook/{id}', [Booklist_Controller::class, 'updateremove'])->name('removeBook.update');
+    Route::post('/removearchived/{id}', [Booklist_Controller::class, 'updateback'])->name('removeArchived.update');
     Route::post('/return/book', [Returnpage::class, 'update']);
     Route::post('/returndamage/book', [finedController::class, 'store']);
-    Route::post('/book/borrow', [BorrowController::class, 'storebookborrow']);
+    Route::post('/book/borrow', [Borrow_Controller::class, 'storebookborrow']);
     Route::post('/updateuser', [userController::class, 'update'])->name('updateuser');
-    Route::post('/book/update', [BooklistController::class, 'updatebooks'])->name('books.update-book');
+    Route::post('/book/update', [Booklist_Controller::class, 'updatebooks'])->name('books.update-book');
     Route::post('/copy/update', [CopiesController::class, 'updatecopies'])->name('books.update-copy');
     Route::post('/copy/negativeupdate', [CopiesController::class, 'updatecopiesnegative'])->name('books.updatenegative-copy');
-    /* Livewire Routes */
+   
+
+
+    Route::post('/import', [Booklist_Controller::class , 'import'])->name('import');
   
 });

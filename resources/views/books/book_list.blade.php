@@ -7,7 +7,7 @@
         <!-- other meta tags and CSS links -->
     </head>
 
-    <br>
+
     <div class="px-4 bg-white text-dark border border-success border-top-0 border-end-0">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -16,6 +16,7 @@
             </ol>
         </nav>
     </div>
+
     <div class="table-responsive-lg">
         <div class="container">
             <br>
@@ -56,6 +57,19 @@
                                 d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z" />
                         </svg>
                     </button>
+                    <button type="button" class="btn btn-success bg-success border-success btn-bulkqr"
+                        data-bs-toggle="modal" data-bs-target="#modal_bulk">
+                        Bulk QR Print
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-printer-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                            <path
+                                d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                        </svg>
+                    </button>
+                   
                 </div>
                 <div class="p-2">
                     <div class="input-group">
@@ -208,9 +222,9 @@
                                             {{ $book->id }}
                                         </th>
                                         @if ($book->accession != null)
-                                        <td class="text-center">{!! QrCode::size(40, 50)->generate($book->accession) !!}</td>
+                                            <td class="text-center">{!! QrCode::size(40, 50)->generate($book->accession) !!}</td>
                                         @else
-                                        <td>NO QRCODE</td>
+                                            <td>NO QRCODE</td>
                                         @endif
                                         <td>
                                             {{ $book->title }}
@@ -227,7 +241,7 @@
                                             {{ $book->callnumber }}
                                         </td>
                                         <td>
-                                            {{  $book->subjects? $book->subjects->subjectName :'' }}
+                                            {{ $book->subjects ? $book->subjects->subjectName : '' }}
                                         </td>
                                         <td>
                                             {{ date('Y-m-d', strtotime($book->created_at)) }}
@@ -463,6 +477,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 </tr>
                             </tbody>
                             {{-- @endforeach --}}
@@ -474,7 +489,7 @@
 
             <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5">IMPORT EXCEL FILE</h1>
@@ -482,14 +497,23 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <input type="file" id="fileInput" accept=".xlsx, .xls" />
+                            {{-- <input type="file" id="fileInput" accept=".xlsx, .xls" />
                             <button type="button" class="btn btn-success" onclick="importExcelFile()">Import</button>
                             <button type="button" class="btn btn-success" onclick="insertData()">Register</button>
                             <br><br>
                             <table id="importTable" class="table table-bordered">
                                 <span class="badge bg-success w-100" id="loading-indicator"
                                     style="display: none;">Loading...</span>
-                            </table>
+                            </table> --}}
+
+                             <div class="custom-file">
+                        <form action="/import" method="POST" enctype="multipart/form-data">
+                            @csrf 
+                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
+                            <button type="submit">Import</button>
+                        </form>
+                    </div>
+
                         </div>
                     </div>
                 </div>
@@ -500,494 +524,522 @@
         <div class="pagination justify-content-center">
             {{ $books->links() }}
         </div>
+
+
+        <div class="modal fade" id="modal_bulk" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">QR CODE</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <embed id="bulk-frame" src="" frameborder="0" width="100%" height="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-    <br>
-    <br>
 
-
-
-@section('style')
-    <style>
-        #importTable {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        #importTable th,
-        #importTable td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        #importTable th {
-            background-color: #f2f2f2;
-        }
-
-        #importTable td input[type="text"] {
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .removeButton {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            cursor: pointer;
-            position: relative;
-            z-index: 1;
-        }
-    </style>
-@endsection
-
-@section('script')
-    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-    <script>
-        var removeid = "";
-
-        $('.remove-book').on('click', function() {
-            var id = $(this).data('id');
-            $.get("/book/" + id, function(data, status) {
-                if (data.book && data.book.id == id) {
-                    $.get("/getcopy/" + id, function(copyData, copyStatus) {
-                        console.log(copyData);
-                        if (copyData == 0) {
-                            document.getElementById("titleofbook").innerHTML = data.book.title;
-                            document.getElementById("myParagraph").innerHTML = "";
-                            document.getElementById("remove").disabled = false;
-                            removeid = id;
-                        } else if (copyData > 0) {
-                            document.getElementById("titleofbook").innerHTML = data.book.title;
-                            document.getElementById("myParagraph").innerHTML =
-                                "Cannot be removed due to existing copies.";
-                            document.getElementById("remove").disabled = true;
-                        }
-                    });
-                } else {
-                    document.getElementById("myParagraph").innerHTML = data.book.title;
-                    "Cannot be removed due to existing copies.";
-                    document.getElementById("remove").disabled = true;
-                    console.log('error');
-                }
-            });
-        });
-
-        $('.removenow').on('click', function() {
-            var id = removeid;
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: "POST",
-                url: "/removebook/" + id,
-                data: {
-                    _method: "POST"
-                },
-                success: function(response) {
-                    alert(response.message);
-                    location.reload();
-                },
-                error: function(xhr) {
-                    console.log(xhr.responseText);
-                }
-            });
-        });
-
-
-        $('.btn-qr').on('click', function() {
-            var id = $(this).data('id');
-
-            $.get("/book/" + id, function(data, status) {
-                $('#p1').text(data.book.title)
-            });
-
-            // $('#p1').text(id)          
-            const frame = $('#qrcode-frame')
-            const link = '/generate-pdf/' + id
-            frame.attr('src', link)
-
-        });
-
-        $('.print-tbl').on('click', function() {
-
-            const frame = $('#table-frame')
-            const link = '/generate-table/'
-            frame.attr('src', link)
-            console.log('button clicked');
-
-        });
-
-
-        $(document).on('click', '.btn-tr-update', function(e) {
-            e.preventDefault();
-            $(this).text('Checking');
-            var data = {
-                'id': $('.modal-book-id').val(),
-                'title': $('.modal-book-title').val(),
-                'author': $('.modal-book-author').val(),
-                'department': $('.modal-book-department').val(),
-                'copyright': $('.modal-book-copyright').val(),
-                'accession': $('.modal-book-accession').val(),
-                'callnumber': $('.modal-book-callnumber').val(),
-                'subject': $('.modal-book-subject').val(),
-            }
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: "POST",
-                url: "{{ route('books.update-book') }}",
-                data: data,
-                dataType: "json",
-                success: function(response) {
-                    if (response.status == 400) {
-                        $('#msg1title').html("");
-                        $('#msg1author').html("");
-                        $('#msg1department').html("");
-                        $('#msg1copyright').html("");
-                        $('#msg1accession').html("");
-                        $('#msg1callnumber').html("");
-                        $('#msg1subject').html("");
-                        switch (true) {
-                            case (response.errors.title !== undefined):
-                                $('#msg1title').append(response.errors.title);
-                                $('#msg1title').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msg1title').removeClass('alert alert-danger');
-                                break;
-                        }
-
-                        switch (true) {
-                            case (response.errors.author !== undefined):
-                                $('#msg1author').append(response.errors.author);
-                                $('#msg1author').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msg1author').removeClass('alert alert-danger');
-                                break;
-                        }
-
-                        switch (true) {
-                            case (response.errors.department !== undefined):
-                                $('#msg1department').append(response.errors.department);
-                                $('#msg1department').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msg1department').removeClass('alert alert-danger');
-                                break;
-                        }
-
-                        switch (true) {
-                            case (response.errors.copyright !== undefined):
-                                $('#msg1copyright').append(response.errors.copyright);
-                                $('#msg1copyright').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msg1copyright').removeClass('alert alert-danger');
-                                break;
-                        }
-
-                        switch (true) {
-                            case (response.errors.accession !== undefined):
-                                $('#msg1accession').append(response.errors.accession);
-                                $('#msg1accession').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msg1accession').removeClass('alert alert-danger');
-                                break;
-                        }
-                        $('.btn-tr-update').text('Update');
-                    } else {
-                        $('#success_message').html("");
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        $('.AddUpdate').find('input').val('');
-                        $('.btn-tr-update').text('Update');
-                        $('.AddUpdate').modal('hide');
-                        location.reload();
-                    }
-                }
-            });
-        })
-
-
-        $(document).on('click', '.btn-tr-submit', function(e) {
-            e.preventDefault();
-            $(this).text('Checking');
-            var data = {
-                'title': $('.t-title').val(),
-                'author': $('.t-author').val(),
-                'department': $('.t-department').val(),
-                'copyright': $('.t-copyright').val(),
-                'accession': $('.t-accession').val(),
-                'copies': $('.t-copies').val(),
-                'subject': $('.t-subject').val(),
-                'callnumber': $('.t-callnumber').val(),
-            }
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: "POST",
-                url: "{{ route('books.store') }}",
-                data: data,
-                dataType: "json",
-                success: function(response) {
-                    if (response.status == 400) {
-                        $('#msgtitle').html("");
-                        // $('#msgauthor').html("");
-                        // $('#msgdepartment').html("");
-                        // $('#msgcopyright').html("");
-                        // $('#msgaccession').html("");
-                        // $('#msgsubject').html("");
-                        // $('#msgcallnumber').html("");
-                        $('#msgcopies').html("");
-
-                        switch (true) {
-                            case !!response.errors.title:
-                                $('#msgtitle').append(response.errors.title);
-                                $('#msgtitle').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msgtitle').removeClass('alert alert-danger');
-                        }
-                        // switch (true) {
-                        //     case !!response.errors.author:
-                        //         $('#msgauthor').append(response.errors.author);
-                        //         $('#msgauthor').addClass('alert alert-danger');
-                        //         break;
-                        //     default:
-                        //         $('#msgauthor').removeClass('alert alert-danger');
-                        // }
-                        // switch (true) {
-                        //     case !!response.errors.department:
-                        //         $('#msgdepartment').append(response.errors.department);
-                        //         $('#msgdepartment').addClass('alert alert-danger');
-                        //         break;
-                        //     default:
-                        //         $('#msgdepartment').removeClass('alert alert-danger');
-                        // }
-                        // switch (true) {
-                        //     case !!response.errors.copyright:
-                        //         $('#msgcopyright').append(response.errors.copyright);
-                        //         $('#msgcopyright').addClass('alert alert-danger');
-                        //         break;
-                        //     default:
-                        //         $('#msgcopyright').removeClass('alert alert-danger');
-                        // }
-                        // switch (true) {
-                        //     case !!response.errors.accession:
-                        //         $('#msgaccession').append(response.errors.accession);
-                        //         $('#msgaccession').addClass('alert alert-danger');
-                        //         break;
-                        //     default:
-                        //         $('#msgaccession').removeClass('alert alert-danger');
-                        // }
-                        switch (true) {
-                            case !!response.errors.copies:
-                                $('#msgcopies').append(response.errors.copies);
-                                $('#msgcopies').addClass('alert alert-danger');
-                                break;
-                            default:
-                                $('#msgcopies').removeClass('alert alert-danger');
-                        }
-                        $('.btn-tr-submit').text('Register');
-                    } else {
-                        $('#success_message').html("");
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        $('.AddStudentModal').find('input').val('');
-                        $('.btn-tr-submit').text('Register');
-                        $('.AddStudentModal').modal('hide');
-                        setTimeout(function() {
-                            location.reload();
-                        }, 2000);
-                    }
-                }
-            });
-        })
-
-
-        var importedData = []; // Array to store the imported data
-
-        function importExcelFile() {
-            var fileInput = document.getElementById('fileInput');
-            var table = document.getElementById('importTable');
-            table.innerHTML = '';
-
-            if (fileInput.files.length === 0) {
-                alert('Please select an Excel file.');
-                return;
+    @section('style')
+        <style>
+            #importTable {
+                border-collapse: collapse;
+                width: 100%;
             }
 
-            var file = fileInput.files[0];
-            var reader = new FileReader();
+            #importTable th,
+            #importTable td {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
 
-            reader.onload = function(e) {
-                var data = new Uint8Array(e.target.result);
-                var workbook = XLSX.read(data, {
-                    type: 'array'
-                });
+            #importTable th {
+                background-color: #f2f2f2;
+            }
 
-                var worksheet = workbook.Sheets[workbook.SheetNames[0]];
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, {
-                    header: 1
-                });
+            #importTable td input[type="text"] {
+                width: 100%;
+                box-sizing: border-box;
+            }
 
-                // Define the column headers
-                var columnHeaders = ['ID', 'TITLE', 'AUTHOR', 'COPYRIGHT', 'ACCESSION NO.', 'COPIES', ''];
+            .removeButton {
+                background-color: #f44336;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                cursor: pointer;
+                position: relative;
+                z-index: 1;
+            }
+        </style>
+    @endsection
 
-                // Add column headers
-                var headerRow = document.createElement('tr');
+    @section('script')
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+        <script>
+            var removeid = "";
 
-                for (var j = 0; j < columnHeaders.length; j++) {
-                    var cellHeader = document.createElement('th');
-                    cellHeader.textContent = columnHeaders[j];
-                    headerRow.appendChild(cellHeader);
-                }
-
-                table.appendChild(headerRow);
-
-                for (var i = 1; i < jsonData.length; i++) {
-                    (function() {
-                        var row = document.createElement('tr');
-
-                        for (var j = 0; j < jsonData[i].length; j++) {
-                            var cell = document.createElement('td');
-                            var input = document.createElement('input');
-                            input.type = 'text';
-                            input.value = jsonData[i][j];
-                            cell.appendChild(input);
-                            row.appendChild(cell);
-                        }
-
-                        // Add an input column for "COPIES"
-                        var copiesCell = document.createElement('td');
-                        var copiesInput = document.createElement('input');
-                        copiesInput.type = 'text';
-                        copiesInput.value = '1'; // Set the default value to 0
-                        copiesCell.appendChild(copiesInput);
-                        row.appendChild(copiesCell);
-
-                        // Add a remove button column
-                        var removeButtonCell = document.createElement('td');
-                        var removeButton = document.createElement('button');
-                        removeButton.textContent = 'Remove';
-                        removeButton.className = 'removeButton';
-                        removeButton.addEventListener('click', function() {
-                            removeImportedRow(rowData);
-                            table.removeChild(row);
+            $('.remove-book').on('click', function() {
+                var id = $(this).data('id');
+                $.get("/book/" + id, function(data, status) {
+                    if (data.book && data.book.id == id) {
+                        $.get("/getcopy/" + id, function(copyData, copyStatus) {
+                            console.log(copyData);
+                            if (copyData == 0) {
+                                document.getElementById("titleofbook").innerHTML = data.book.title;
+                                document.getElementById("myParagraph").innerHTML = "";
+                                document.getElementById("remove").disabled = false;
+                                removeid = id;
+                            } else if (copyData > 0) {
+                                document.getElementById("titleofbook").innerHTML = data.book.title;
+                                document.getElementById("myParagraph").innerHTML =
+                                    "Cannot be removed due to existing copies.";
+                                document.getElementById("remove").disabled = true;
+                            }
                         });
-                        removeButtonCell.appendChild(removeButton);
-                        row.appendChild(removeButtonCell);
+                    } else {
+                        document.getElementById("myParagraph").innerHTML = data.book.title;
+                        "Cannot be removed due to existing copies.";
+                        document.getElementById("remove").disabled = true;
+                        console.log('error');
+                    }
+                });
+            });
 
-                        table.appendChild(row);
-
-                        // Push the row data into the importedData array
-                        var rowData = {
-                            id: jsonData[i][0],
-                            title: jsonData[i][1],
-                            author: jsonData[i][2],
-                            copyright: jsonData[i][3],
-                            accession: jsonData[i][4],
-                            copies: copiesInput
-                        };
-
-                        importedData.push(rowData);
-                    })();
-                }
-            };
-
-            reader.readAsArrayBuffer(file);
-        }
-
-        function removeImportedRow(rowData) {
-            var index = importedData.indexOf(rowData);
-            if (index > -1) {
-                importedData.splice(index, 1);
-            }
-        }
-
-        function insertData() {
-            if (importedData.length === 0) {
-                alert('No data to register. Please import an Excel file first.');
-                return;
-            }
-
-            // Show the loading indicator
-            var loadingIndicator = document.getElementById('loading-indicator');
-            loadingIndicator.style.display = 'block';
-            loadingIndicator.innerText = 'Loading...';
-
-            var totalData = importedData.length;
-            var progressInterval = 1; // Adjust the interval as needed
-            var progress = 0;
-
-            function insertNextData(index) {
-                if (index >= totalData) {
-                    // Hide the loading indicator
-                    loadingIndicator.style.display = 'none';
-                    alert('Data registered successfully.');
-                    return;
-                }
-
-                var rowData = importedData[index];
-                if (!rowData.title) {
-                    // If the title is missing or null, skip inserting this data item
-                    console.error('Missing title for data item at index ' + index);
-                    insertNextData(index + 1);
-                    return;
-                }
-
-                var dataToInsert = {
-                    title: rowData.title,
-                    author: rowData.author,
-                    copyright: rowData.copyright,
-                    accession: rowData.accession,
-                    copies: rowData.copies.value
-                };
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    url: '/test',
-                    type: 'POST',
-                    data: dataToInsert,
+            $('.removenow').on('click', function() {
+                var id = removeid;
+                $.ajaxSetup({
                     headers: {
-                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the headers
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "/removebook/" + id,
+                    data: {
+                        _method: "POST"
                     },
                     success: function(response) {
-                        console.log(response.message);
-                        // Handle success, if needed
+                        alert(response.message);
+                        location.reload();
                     },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                        // Handle error, if needed
-                    },
-                    complete: function() {
-                        // Update progress after every $progressInterval data items
-                        if ((index + 1) % progressInterval === 0) {
-                            progress = ((index + 1) * 100) / totalData;
-                            // Update the progress UI or perform any other required actions
-                        }
-                        // Proceed to insert the next data item
-                        insertNextData(index + 1);
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
                     }
                 });
+            });
+
+
+
+
+
+            $('.btn-qr').on('click', function() {
+                var id = $(this).data('id');
+
+                $.get("/book/" + id, function(data, status) {
+                    $('#p1').text(data.book.title)
+                });
+
+                // $('#p1').text(id)          
+                const frame = $('#qrcode-frame')
+                const link = '/generate-pdf/' + id
+                frame.attr('src', link)
+
+            });
+
+            $('.print-tbl').on('click', function() {
+
+                const frame = $('#table-frame')
+                const link = '/generate-table/'
+                frame.attr('src', link)
+                console.log('button clicked');
+
+            });
+
+            $('.btn-bulkqr').on('click', function() {
+                // var id = $(this).data('id');
+                // const frame = $('#modal_bulk')
+                // const link = '/Print_QRList/' + id
+                // frame.attr('src', link)
+                const frame = $('#bulk-frame')
+                const link = '/Print_QRList/'
+                frame.attr('src', link)
+
+            });
+
+
+            $(document).on('click', '.btn-tr-update', function(e) {
+                e.preventDefault();
+                $(this).text('Checking');
+                var data = {
+                    'id': $('.modal-book-id').val(),
+                    'title': $('.modal-book-title').val(),
+                    'author': $('.modal-book-author').val(),
+                    'department': $('.modal-book-department').val(),
+                    'copyright': $('.modal-book-copyright').val(),
+                    'accession': $('.modal-book-accession').val(),
+                    'callnumber': $('.modal-book-callnumber').val(),
+                    'subject': $('.modal-book-subject').val(),
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('books.update-book') }}",
+                    data: data,
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status == 400) {
+                            $('#msg1title').html("");
+                            $('#msg1author').html("");
+                            $('#msg1department').html("");
+                            $('#msg1copyright').html("");
+                            $('#msg1accession').html("");
+                            $('#msg1callnumber').html("");
+                            $('#msg1subject').html("");
+                            switch (true) {
+                                case (response.errors.title !== undefined):
+                                    $('#msg1title').append(response.errors.title);
+                                    $('#msg1title').addClass('alert alert-danger');
+                                    break;
+                                default:
+                                    $('#msg1title').removeClass('alert alert-danger');
+                                    break;
+                            }
+
+                            switch (true) {
+                                case (response.errors.author !== undefined):
+                                    $('#msg1author').append(response.errors.author);
+                                    $('#msg1author').addClass('alert alert-danger');
+                                    break;
+                                default:
+                                    $('#msg1author').removeClass('alert alert-danger');
+                                    break;
+                            }
+
+                            switch (true) {
+                                case (response.errors.department !== undefined):
+                                    $('#msg1department').append(response.errors.department);
+                                    $('#msg1department').addClass('alert alert-danger');
+                                    break;
+                                default:
+                                    $('#msg1department').removeClass('alert alert-danger');
+                                    break;
+                            }
+
+                            switch (true) {
+                                case (response.errors.copyright !== undefined):
+                                    $('#msg1copyright').append(response.errors.copyright);
+                                    $('#msg1copyright').addClass('alert alert-danger');
+                                    break;
+                                default:
+                                    $('#msg1copyright').removeClass('alert alert-danger');
+                                    break;
+                            }
+
+                            switch (true) {
+                                case (response.errors.accession !== undefined):
+                                    $('#msg1accession').append(response.errors.accession);
+                                    $('#msg1accession').addClass('alert alert-danger');
+                                    break;
+                                default:
+                                    $('#msg1accession').removeClass('alert alert-danger');
+                                    break;
+                            }
+                            $('.btn-tr-update').text('Update');
+                        } else {
+                            $('#success_message').html("");
+                            $('#success_message').addClass('alert alert-success');
+                            $('#success_message').text(response.message);
+                            $('.AddUpdate').find('input').val('');
+                            $('.btn-tr-update').text('Update');
+                            $('.AddUpdate').modal('hide');
+                            location.reload();
+                        }
+                    }
+                });
+            })
+
+
+            $(document).on('click', '.btn-tr-submit', function(e) {
+                e.preventDefault();
+                $(this).text('Checking');
+                var data = {
+                    'title': $('.t-title').val(),
+                    'author': $('.t-author').val(),
+                    'department': $('.t-department').val(),
+                    'copyright': $('.t-copyright').val(),
+                    'accession': $('.t-accession').val(),
+                    'copies': $('.t-copies').val(),
+                    'subject': $('.t-subject').val(),
+                    'callnumber': $('.t-callnumber').val(),
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('books.store') }}",
+                    data: data,
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status == 400) {
+                            $('#msgtitle').html("");
+                            // $('#msgauthor').html("");
+                            // $('#msgdepartment').html("");
+                            // $('#msgcopyright').html("");
+                            // $('#msgaccession').html("");
+                            // $('#msgsubject').html("");
+                            // $('#msgcallnumber').html("");
+                            $('#msgcopies').html("");
+
+                            switch (true) {
+                                case !!response.errors.title:
+                                    $('#msgtitle').append(response.errors.title);
+                                    $('#msgtitle').addClass('alert alert-danger');
+                                    break;
+                                default:
+                                    $('#msgtitle').removeClass('alert alert-danger');
+                            }
+                            // switch (true) {
+                            //     case !!response.errors.author:
+                            //         $('#msgauthor').append(response.errors.author);
+                            //         $('#msgauthor').addClass('alert alert-danger');
+                            //         break;
+                            //     default:
+                            //         $('#msgauthor').removeClass('alert alert-danger');
+                            // }
+                            // switch (true) {
+                            //     case !!response.errors.department:
+                            //         $('#msgdepartment').append(response.errors.department);
+                            //         $('#msgdepartment').addClass('alert alert-danger');
+                            //         break;
+                            //     default:
+                            //         $('#msgdepartment').removeClass('alert alert-danger');
+                            // }
+                            // switch (true) {
+                            //     case !!response.errors.copyright:
+                            //         $('#msgcopyright').append(response.errors.copyright);
+                            //         $('#msgcopyright').addClass('alert alert-danger');
+                            //         break;
+                            //     default:
+                            //         $('#msgcopyright').removeClass('alert alert-danger');
+                            // }
+                            // switch (true) {
+                            //     case !!response.errors.accession:
+                            //         $('#msgaccession').append(response.errors.accession);
+                            //         $('#msgaccession').addClass('alert alert-danger');
+                            //         break;
+                            //     default:
+                            //         $('#msgaccession').removeClass('alert alert-danger');
+                            // }
+                            switch (true) {
+                                case !!response.errors.copies:
+                                    $('#msgcopies').append(response.errors.copies);
+                                    $('#msgcopies').addClass('alert alert-danger');
+                                    break;
+                                default:
+                                    $('#msgcopies').removeClass('alert alert-danger');
+                            }
+                            $('.btn-tr-submit').text('Register');
+                        } else {
+                            $('#success_message').html("");
+                            $('#success_message').addClass('alert alert-success');
+                            $('#success_message').text(response.message);
+                            $('.AddStudentModal').find('input').val('');
+                            $('.btn-tr-submit').text('Register');
+                            $('.AddStudentModal').modal('hide');
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        }
+                    }
+                });
+            })
+
+
+            var importedData = []; // Array to store the imported data
+
+            function importExcelFile() {
+                var fileInput = document.getElementById('fileInput');
+                var table = document.getElementById('importTable');
+                table.innerHTML = '';
+
+                if (fileInput.files.length === 0) {
+                    alert('Please select an Excel file.');
+                    return;
+                }
+
+                var file = fileInput.files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var data = new Uint8Array(e.target.result);
+                    var workbook = XLSX.read(data, {
+                        type: 'array'
+                    });
+
+                    var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, {
+                        header: 1
+                    });
+
+                    // Define the column headers
+                    var columnHeaders = ['ID', 'TITLE', 'AUTHOR', 'COPYRIGHT', 'ACCESSION NO.', 'COPIES', ''];
+
+                    // Add column headers
+                    var headerRow = document.createElement('tr');
+
+                    for (var j = 0; j < columnHeaders.length; j++) {
+                        var cellHeader = document.createElement('th');
+                        cellHeader.textContent = columnHeaders[j];
+                        headerRow.appendChild(cellHeader);
+                    }
+
+                    table.appendChild(headerRow);
+
+                    for (var i = 1; i < jsonData.length; i++) {
+                        (function() {
+                            var row = document.createElement('tr');
+
+                            for (var j = 0; j < jsonData[i].length; j++) {
+                                var cell = document.createElement('td');
+                                var input = document.createElement('input');
+                                input.type = 'text';
+                                input.value = jsonData[i][j];
+                                cell.appendChild(input);
+                                row.appendChild(cell);
+                            }
+
+                            // Add an input column for "COPIES"
+                            var copiesCell = document.createElement('td');
+                            var copiesInput = document.createElement('input');
+                            copiesInput.type = 'text';
+                            copiesInput.value = '1'; // Set the default value to 0
+                            copiesCell.appendChild(copiesInput);
+                            row.appendChild(copiesCell);
+
+                            // Add a remove button column
+                            var removeButtonCell = document.createElement('td');
+                            var removeButton = document.createElement('button');
+                            removeButton.textContent = 'Remove';
+                            removeButton.className = 'removeButton';
+                            removeButton.addEventListener('click', function() {
+                                removeImportedRow(rowData);
+                                table.removeChild(row);
+                            });
+                            removeButtonCell.appendChild(removeButton);
+                            row.appendChild(removeButtonCell);
+
+                            table.appendChild(row);
+
+                            // Push the row data into the importedData array
+                            var rowData = {
+                                id: jsonData[i][0],
+                                title: jsonData[i][1],
+                                author: jsonData[i][2],
+                                copyright: jsonData[i][3],
+                                accession: jsonData[i][4],
+                                copies: copiesInput
+                            };
+
+                            importedData.push(rowData);
+                        })();
+                    }
+                };
+
+                reader.readAsArrayBuffer(file);
             }
 
-            // Start inserting data
-            insertNextData(0);
-        }
-    </script>
-@endsection
+            function removeImportedRow(rowData) {
+                var index = importedData.indexOf(rowData);
+                if (index > -1) {
+                    importedData.splice(index, 1);
+                }
+            }
+
+            function insertData() {
+                if (importedData.length === 0) {
+                    alert('No data to register. Please import an Excel file first.');
+                    return;
+                }
+
+                // Show the loading indicator
+                var loadingIndicator = document.getElementById('loading-indicator');
+                loadingIndicator.style.display = 'block';
+                loadingIndicator.innerText = 'Loading...';
+
+                var totalData = importedData.length;
+                var progressInterval = 1; // Adjust the interval as needed
+                var progress = 0;
+
+                function insertNextData(index) {
+                    if (index >= totalData) {
+                        // Hide the loading indicator
+                        loadingIndicator.style.display = 'none';
+                        alert('Data registered successfully.');
+                        return;
+                    }
+
+                    var rowData = importedData[index];
+                    if (!rowData.title) {
+                        // If the title is missing or null, skip inserting this data item
+                        console.error('Missing title for data item at index ' + index);
+                        insertNextData(index + 1);
+                        return;
+                    }
+
+                    var dataToInsert = {
+                        title: rowData.title,
+                        author: rowData.author,
+                        copyright: rowData.copyright,
+                        accession: rowData.accession,
+                        copies: rowData.copies.value
+                    };
+                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                    $.ajax({
+                        url: '/test',
+                        type: 'POST',
+                        data: dataToInsert,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the headers
+                        },
+                        success: function(response) {
+                            console.log(response.message);
+                            // Handle success, if needed
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                            // Handle error, if needed
+                        },
+                        complete: function() {
+                            // Update progress after every $progressInterval data items
+                            if ((index + 1) % progressInterval === 0) {
+                                progress = ((index + 1) * 100) / totalData;
+                                // Update the progress UI or perform any other required actions
+                            }
+                            // Proceed to insert the next data item
+                            insertNextData(index + 1);
+                        }
+                    });
+                }
+
+                // Start inserting data
+                insertNextData(0);
+            }
+        </script>
+    @endsection
 @endsection
