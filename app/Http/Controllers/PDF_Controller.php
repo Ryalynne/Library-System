@@ -1,24 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\bookaction;
 use App\Models\bookadjusment;
 use App\Models\booklist;
 use App\Models\borrowpage;
-use App\Models\copies;
 use App\Models\purchasemodel;
 use App\Models\StudentAccount;
-use App\Models\StudentDetails;
 use App\Models\studentlist;
 use App\Models\vendortable;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-class PDFController extends Controller
+class PDF_Controller extends Controller
 
 {
+    function __construct()
+    {
+        ini_set('max_execution_time', 6000); //3 minutes   
+    }
+    
     public function generatePurchaseOrder($booktitle, $id)
     {
         $bookdata = [];
@@ -41,7 +42,6 @@ class PDFController extends Controller
         $pdf = PDF::loadView('myPDFpurchaseorder', compact('vendor', 'bookdata', 'transaction'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
-
 
 
     public function generateBadorder($bookid, $quantity)
@@ -71,8 +71,6 @@ class PDFController extends Controller
         $qrcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($book->accession));
         $pdf = PDF::loadView('myPDF', compact('qrcode', 'book'));
         return $pdf->stream();
-        //$pdf = PDF::loadView('myPDF');
-        //return $pdf->download('itsolutionstuff.pdf');
     }
 
 
@@ -137,10 +135,6 @@ class PDFController extends Controller
         $bookList = [];
         $account = StudentAccount::where('student_number', $student_number)->first();
         $student = $account->student;
-        /*  $student = studentlist::where('studentno', $studentId)->value('id');
-        $name = studentlist::where('studentno', $studentId)->value('name');
-        $middle = studentlist::where('studentno', $studentId)->value('middle');
-        $lastname = studentlist::where('studentno', $studentId)->value('lastname'); */
 
         foreach (json_decode($bookData) as $book) {
             $bookList[] = borrowpage::find($book);
@@ -182,4 +176,23 @@ class PDFController extends Controller
         $pdf = PDF::loadView('myPDFfinedhistory', compact('fine'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
+
+  public function bulkprint()
+{
+    $books = booklist::all();
+    $qrCodesAndBooks = [];
+    foreach ($books as $book) {
+        if (isset($book->accession)) {
+            $qrcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($book->accession));
+            $qrCodesAndBooks[] = [
+                'qrcode' => $qrcode,
+                'book' => $book,
+            ];
+        }
+    }
+    $pdf = PDF::loadView('myPDF_BulkQr', compact('qrCodesAndBooks'));
+    return $pdf->download('qrlist.pdf');
+}
+
+    
 }

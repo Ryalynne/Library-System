@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\UserStaff;
 
-class BorrowController extends Controller
+class Borrow_Controller extends Controller
 {
     /**
      * Display a listing of the resource.
