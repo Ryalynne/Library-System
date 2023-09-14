@@ -15,9 +15,10 @@ return new class extends Migration
         Schema::create('borrowpages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('bookid');
-            $table->unsignedBigInteger('studentid');
+            // $table->unsignedBigInteger('studentid');
             $table->foreign('bookid')->references('id')->on('booklists');
-            $table->foreign('studentid')->references('id')->on(new Expression('bma_portal.student_details'));
+            // $table->foreign('studentid')->references('id')->on(new Expression('bma_portal.student_details'));
+            $table->string('borrower');
             $table->string('transaction');
             $table->string('bookstatus');
             $table->date('duedate');

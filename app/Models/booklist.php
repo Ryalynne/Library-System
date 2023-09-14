@@ -22,16 +22,16 @@ class booklist extends Model
     }
     
 
-    public function getstatus($id)
-    {
-        // return $this->hasMany(borrowpage::class, 'studentid')->where('bookstatus', 'onlend')->value('bookstatus');
-            $account = StudentAccount::where('student_number', $id)->first();
-            return $this->hasMany(borrowpage::class, 'bookid')
-            ->where('studentid', $account->student->id ?? null)
-            ->where('bookstatus', 'onlend')
-            ->value('bookstatus');
+    // public function getstatus($id)
+    // {
+    //     // return $this->hasMany(borrowpage::class, 'studentid')->where('bookstatus', 'onlend')->value('bookstatus');
+    //         $account = StudentAccount::where('student_number', $id)->first();
+    //         return $this->hasMany(borrowpage::class, 'bookid')
+    //         ->where('studentid', $account->student->id ?? null)
+    //         ->where('bookstatus', 'onlend')
+    //         ->value('bookstatus');
         
-    }
+    // }
 
     public function departments(){
         return $this->belongsTo(departmentList::class, 'department');

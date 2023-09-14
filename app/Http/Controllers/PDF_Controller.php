@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\bookaction;
 use App\Models\bookadjusment;
 use App\Models\booklist;
@@ -19,7 +20,7 @@ class PDF_Controller extends Controller
     {
         ini_set('max_execution_time', 6000); //3 minutes   
     }
-    
+
     public function generatePurchaseOrder($booktitle, $id)
     {
         $bookdata = [];
@@ -65,20 +66,16 @@ class PDF_Controller extends Controller
 
     //BookList REPORTS
 
-    public function generatePDF($data)
+    public function booklist_pdf()
     {
-        $book  = booklist::find($data);
-        $qrcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($book->accession));
-        $pdf = PDF::loadView('myPDF', compact('qrcode', 'book'));
-        return $pdf->stream();
-    }
-
-
-    public function generateReports()
-    {
+        // $books = booklist::where('ishide', false)->get();
+        // $pdf = PDF::loadView('myPDFtbl', compact('books'));
+        // return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->download('book_list.pdf')->stream();
         $books = booklist::where('ishide', false)->get();
-        $pdf = PDF::loadView('myPDFtbl', compact('books'));
-        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+        $pdf = PDF::loadView('myPDFtbl', [
+            'books' => $books
+        ]);
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->download('book_list.pdf');
     }
 
     public function generateCopies()
@@ -177,22 +174,30 @@ class PDF_Controller extends Controller
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
-  public function bulkprint()
-{
-    $books = booklist::all();
-    $qrCodesAndBooks = [];
-    foreach ($books as $book) {
-        if (isset($book->accession)) {
-            $qrcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($book->accession));
-            $qrCodesAndBooks[] = [
-                'qrcode' => $qrcode,
-                'book' => $book,
-            ];
-        }
+    //qr code
+    public function generatePDF($data)
+    {
+        $book  = booklist::find($data);
+        $qrcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($book->accession));
+        $pdf = PDF::loadView('myPDF', compact('qrcode', 'book'));
+        return $pdf->stream();
     }
-    $pdf = PDF::loadView('myPDF_BulkQr', compact('qrCodesAndBooks'));
-    return $pdf->download('qrlist.pdf');
-}
 
-    
+
+    public function bulkprint()
+    {
+        $books = booklist::where('ishide', false)->get();
+        $qrCodesAndBooks = [];
+        foreach ($books as $book) {
+            if (isset($book->accession)) {
+                $qrcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($book->accession));
+                $qrCodesAndBooks[] = [
+                    'qrcode' => $qrcode,
+                    'book' => $book,
+                ];
+            }
+        }
+        $pdf = PDF::loadView('myPDF_BulkQr', compact('qrCodesAndBooks'));
+        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->download('qrlist.pdf');
+    }
 }

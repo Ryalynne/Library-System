@@ -440,7 +440,6 @@
             bookList.splice(index, 1);
             accessionList.splice(index, 1);
             tbl.deleteRow(row);
-            
         }
 
         var stud = document.getElementById("student").value;

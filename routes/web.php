@@ -88,7 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //pdf print
     Route::get('/generate-badorder/{bookid}/{quantity}', [PDF_Controller::class, 'generateBadorder']);
     Route::get('/generate-pdf/{data}', [PDF_Controller::class, 'generatePDF']);
-    Route::get('/generate-table', [PDF_Controller::class, 'generateReports']);
+    Route::get('/generate-table', [PDF_Controller::class, 'booklist_pdf']);
     Route::get('/generate-action', [PDF_Controller::class, 'generateAction']);
     Route::get('/generate-tblcopies', [PDF_Controller::class, 'generateCopies']);
     Route::get('/generate-tblborrow/{id}/{studentid}', [PDF_Controller::class, 'generateBorrow']);
@@ -106,7 +106,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('update-received-quantityB/{id}', [backorderController::class, 'updateReceivedQuantity'])->name('update-received-quantityB');
 
     //
-    // web.php or api.php
+
     Route::get('/gettransaction/{id}', [pendingpurchaseController::class, 'findtransaction']);
     Route::get('/order', [pendingpurchaseController::class, 'redirectToOrder'])->name('order.direct');
     Route::post('/cancelOrder', [pendingpurchaseController::class, 'cancelOrder'])->name('cancelOrder');
@@ -115,7 +115,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/registeraccount', [accountController::class, 'store'])->name('register.account');
     Route::post('/create/purchase', [purchaseController::class, 'createpurchaseOrder']);
     Route::post('/createvendor', [vendorController::class, 'create'])->name('vendor.create');
-    Route::post('/test', [booklistcontroller::class, 'test']);
     Route::post('/removevendor/{id}', [vendorController::class, 'updateremove'])->name('removeVendor.update');
     Route::post('/removebook/{id}', [Booklist_Controller::class, 'updateremove'])->name('removeBook.update');
     Route::post('/removearchived/{id}', [Booklist_Controller::class, 'updateback'])->name('removeArchived.update');
@@ -127,8 +126,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/copy/update', [CopiesController::class, 'updatecopies'])->name('books.update-copy');
     Route::post('/copy/negativeupdate', [CopiesController::class, 'updatecopiesnegative'])->name('books.updatenegative-copy');
    
-
-
     Route::post('/import', [Booklist_Controller::class , 'import'])->name('import');
   
 });

@@ -4,9 +4,7 @@
 
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- other meta tags and CSS links -->
     </head>
-
 
     <div class="px-4 bg-white text-dark border border-success border-top-0 border-end-0">
         <nav aria-label="breadcrumb">
@@ -21,10 +19,10 @@
         <div class="container">
             <br>
             <div id="success_message"></div>
-            <!-- Button trigger modal -->
-
             <div class="d-flex mb-1">
                 <div class="me-auto p-2 btn-group">
+
+                    {{-- ADD BOOK --}}
                     <button type="button" class="btn btn-success bg-success border-success" data-bs-toggle="modal"
                         data-bs-target="#modal_addbook">
                         Register Books
@@ -36,17 +34,22 @@
                                 d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z" />
                         </svg>
                     </button>
-                    <button type="button" class="btn btn-success bg-success border-success print-tbl "
-                        data-bs-toggle="modal" data-bs-target="#tablemodal">
-                        Print Book List
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-printer-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
-                            <path
-                                d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
-                        </svg>
-                    </button>
+
+                    {{-- PRINT TABLE --}}
+                    <form action="/generate-table" method="GET">
+                        <button type="submit" class="btn btn-success bg-success border-success">
+                            Print Book List
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                                <path
+                                    d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                            </svg>
+                        </button>
+                    </form>
+
+                    {{-- IMPORT --}}
                     <button type="button" class="btn btn-success bg-success border-success" data-bs-toggle="modal"
                         data-bs-target="#modal_import">
                         Import
@@ -57,19 +60,21 @@
                                 d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM3 9h10v1h-3v2h3v1h-3v2H9v-2H6v2H5v-2H3v-1h2v-2H3V9z" />
                         </svg>
                     </button>
-                    <button type="button" class="btn btn-success bg-success border-success btn-bulkqr"
-                        data-bs-toggle="modal" data-bs-target="#modal_bulk">
-                        Bulk QR Print
 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-printer-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
-                            <path
-                                d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
-                        </svg>
-                    </button>
-                   
+                    {{-- QRLIST --}}
+                    <form action="/Print_QRList/" method="GET">
+                        <button type="submit" class="btn btn-success bg-success border-success">
+                            Bulk QR Print
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-printer-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z" />
+                                <path
+                                    d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+                            </svg>
+                        </button>
+                    </form>
                 </div>
                 <div class="p-2">
                     <div class="input-group">
@@ -107,14 +112,6 @@
                                         id="author" name="author" :value="old('author')" placeholder="ex.IMO">
                                 </div>
                                 <p id="msgauthor" class="text-danger"> </p>
-
-                                <!-- department -->
-                                {{-- <div class="mb-3">
-                                <label for="department" class="form-label">DEPARTMENT</label>
-                                <input style="text-transform:uppercase" type="text" class="form-control t-department" id="department" name="department" :value="old('department')" placeholder="ex.MARE">
-                            </div>
-                            <p id="msgdepartment" class="text-danger"> </p> --}}
-
 
                                 <div class="mb-3">
                                     <div class="form-group">
@@ -155,11 +152,6 @@
                                     <input type="text" class="form-control t-callnumber" id="callnumber"
                                         name="callnumber" :value="old('callnumber')" placeholder="ex.04313">
                                 </div>
-
-                                {{-- <div class="mb-3">
-                                <label for="subject" class="form-label">SUBJECT</label>
-                                <input type="text" class="form-control t-subject" id="subject" name="subject" :value="old('subject')" placeholder="ex.04313">
-                            </div> --}}
 
                                 <div class="mb-3">
                                     <div class="form-group">
@@ -203,7 +195,6 @@
                             <thead>
                                 <tr class="bg-success text-white">
                                     <th class="text-center">ID</th>
-                                    <th class="text-center">QR CODE</th>
                                     <th class="text-center">TITLE</th>
                                     <th class="text-center">AUTHOR</th>
                                     <th class="text-center">DEPARTMENT</th>
@@ -221,11 +212,6 @@
                                         <th class="text-center">
                                             {{ $book->id }}
                                         </th>
-                                        @if ($book->accession != null)
-                                            <td class="text-center">{!! QrCode::size(40, 50)->generate($book->accession) !!}</td>
-                                        @else
-                                            <td>NO QRCODE</td>
-                                        @endif
                                         <td>
                                             {{ $book->title }}
                                         </td>
@@ -288,243 +274,166 @@
                                         <td colspan="15" class="text-center text-size-15px"><b>NO BOOK FOUND</b></td>
                                     </tr>
                                 @endforelse
-                                {{--  @foreach ($books as $book)
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
-                                <th class="text-center">
-                                    {{ $book->id }}
-                                </th>
-                                @if ($book->accession != null)
-                                <td class="text-center">{!! QrCode::size(40, 50)->generate($book->accession) !!}</td>
-                            @else
-                                <td>NO QRCODE</td>
-                            @endif --}}
-                                <div class="modal fade AddUpdate" id="staticBackdrop" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">UPDATE BOOK</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body ">
-
-                                                <div class="mb-3">
-                                                    <label for="bookid" class="form-label">BOOK ID</label>
-                                                    <input type="text" class="form-control modal-book-id"
-                                                        id="bookid" name="bookid" :value="old('bookid')" readonly>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="updatetitle" class="form-label">TITLE</label>
-                                                    <input style="text-transform:uppercase" type="text"
-                                                        class="form-control modal-book-title" id="updatetitle"
-                                                        name="updatetitle" :value="old('updatetitle')">
-                                                </div>
-                                                <p id="msg1title" class="text-danger"> </p>
-
-                                                <div class="mb-3">
-                                                    <label for="updateauthor" class="form-label">AUTHOR/S</label>
-                                                    <input style="text-transform:uppercase" type="text"
-                                                        class="form-control modal-book-author" id="updateauthor"
-                                                        name="updateauthor" :value="old('updateauthor')">
-                                                </div>
-                                                <p id="msg1author" class="text-danger"> </p>
-
-                                                <!-- department -->
-                                                {{-- <div class="mb-3">
-                                                <label for="updatedepartment" class="form-label">DEPARTMENT</label>
-                                                <input style="text-transform:uppercase" type="text" class="form-control modal-book-department" id="updatedepartment" name="updatedepartment" :value="old('updatedepartment')">
-                                            </div>
-                                            <p id="msg1department" class="text-danger"> </p> --}}
-                                                <!-- department -->
-
-                                                <div class="mb-3">
-                                                    <div class="form-group">
-                                                        <label for="updatedepartment">DEPARTMENT</label>
-                                                        <select name="department" id="department"
-                                                            class="form-control t-department">
-                                                            <option value=""
-                                                                {{ request('department') ? '' : 'selected' }}>Select
-                                                                Department</option>
-                                                            @foreach (\App\Models\departmentList::select('departmentName')->distinct()->get() as $department)
-                                                                ;
-                                                                <option value="{{ $department->departmentName }}"
-                                                                    {{ request('department') == $department->id ? 'selected' : '' }}>
-                                                                    {{-- {{ strtoupper($department->departmentName) }} --}}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="updatecopyright" class="form-label">COPYRIGHT</label>
-                                                    <input style="text-transform:uppercase" type="text"
-                                                        class="form-control modal-book-copyright" id="updatecopyright"
-                                                        name="updatecopyright" :value="old('updatecopyright')">
-                                                </div>
-                                                <p id="msg1copyright" class="text-danger"> </p>
-
-                                                <div class="mb-3">
-                                                    <label for="updateaccession" class="form-label">ACCESSION NO.</label>
-                                                    <input style="text-transform:uppercase" type="text"
-                                                        class="form-control modal-book-accession" id="updateaccession"
-                                                        name="updateaccession" :value="old('updateaccession')">
-                                                </div>
-                                                <p id="msg1accession" class="text-danger"> </p>
-
-                                                <div class="mb-3">
-                                                    <label for="updatecallnumber" class="form-label">CALL NO.</label>
-                                                    <input style="text-transform:uppercase" type="text"
-                                                        class="form-control modal-book-callnumber" id="updatecallnumber"
-                                                        name="updatecallnumber" :value="old('updatecallnumber')">
-                                                </div>
-                                                <p id="msg1callnumber" class="text-danger"> </p>
-                                                {{-- 
-                                            <div class="mb-3">
-                                                <label for="updatesubject" class="form-label">SUBJECT</label>
-                                                <input style="text-transform:uppercase" type="text" class="form-control modal-book-subject" id="updatesubject" name="updatesubject" :value="old('updatesubject')">
-                                            </div>
-                                            <p id="msg1subject" class="text-danger"> </p> --}}
-
-                                                <div class="mb-3">
-                                                    <div class="form-group">
-                                                        <label for="updatesubject">SUBJECT</label>
-                                                        <select name="subject" id="subject"
-                                                            class="form-control t-subject">
-                                                            <option value=""
-                                                                {{ request('subject') ? '' : 'selected' }}>Select Subject
-                                                            </option>
-                                                            @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
-                                                                <option value="{{ $subject->subjectName }}"
-                                                                    {{ request('subject') == $subject->subjectName ? 'selected' : '' }}>
-                                                                    {{ strtoupper($subject->subjectName) }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-bs-dismiss="modal">Close</button>
-                                                <button type="submit"
-                                                    class="btn btn-success btn-tr-update">Update</button>
-                                            </div>
-                                            <!-- {{-- </form> --}} -->
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="modal fade" id="backdrop" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="titleofbook"></h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                After removing this book, it will automatically go to archived.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-success removenow"
-                                                    id="remove">Are you sure you want
-                                                    to remove this?</button>
-                                                <p id="myParagraph" class="text-danger"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="modal fade" id="qrcodemodal" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="p1"></h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <embed id="qrcode-frame" src="" frameborder="0" width="100%"
-                                                    height="100%">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="modal fade" id="tablemodal" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-fullscreen">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5">PRINT BOOK LIST</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <embed id="table-frame" src="" frameborder="0" width="100%"
-                                                    height="100%">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                </tr>
                             </tbody>
-                            {{-- @endforeach --}}
                         </table>
                     </div>
                 </div>
             </div>
-
-
-            <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5">IMPORT EXCEL FILE</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            {{-- <input type="file" id="fileInput" accept=".xlsx, .xls" />
-                            <button type="button" class="btn btn-success" onclick="importExcelFile()">Import</button>
-                            <button type="button" class="btn btn-success" onclick="insertData()">Register</button>
-                            <br><br>
-                            <table id="importTable" class="table table-bordered">
-                                <span class="badge bg-success w-100" id="loading-indicator"
-                                    style="display: none;">Loading...</span>
-                            </table> --}}
-
-                             <div class="custom-file">
-                        <form action="/import" method="POST" enctype="multipart/form-data">
-                            @csrf 
-                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
-                            <button type="submit">Import</button>
-                        </form>
-                    </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <br>
         <div class="pagination justify-content-center">
             {{ $books->links() }}
         </div>
 
+
+        <div class="modal fade AddUpdate" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">UPDATE BOOK</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body ">
+
+                        <div class="mb-3">
+                            <label for="bookid" class="form-label">BOOK ID</label>
+                            <input type="text" class="form-control modal-book-id" id="bookid" name="bookid"
+                                :value="old('bookid')" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updatetitle" class="form-label">TITLE</label>
+                            <input style="text-transform:uppercase" type="text" class="form-control modal-book-title"
+                                id="updatetitle" name="updatetitle" :value="old('updatetitle')">
+                        </div>
+                        <p id="msg1title" class="text-danger"> </p>
+
+                        <div class="mb-3">
+                            <label for="updateauthor" class="form-label">AUTHOR/S</label>
+                            <input style="text-transform:uppercase" type="text" class="form-control modal-book-author"
+                                id="updateauthor" name="updateauthor" :value="old('updateauthor')">
+                        </div>
+                        <p id="msg1author" class="text-danger"> </p>
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label for="updatedepartment">DEPARTMENT</label>
+                                <select name="department" id="department" class="form-control t-department">
+                                    <option value="" {{ request('department') ? '' : 'selected' }}>Select
+                                        Department</option>
+                                    @foreach (\App\Models\departmentList::select('departmentName')->distinct()->get() as $department)
+                                        ;
+                                        <option value="{{ $department->departmentName }}"
+                                            {{ request('department') == $department->id ? 'selected' : '' }}>
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="updatecopyright" class="form-label">COPYRIGHT</label>
+                            <input style="text-transform:uppercase" type="text"
+                                class="form-control modal-book-copyright" id="updatecopyright" name="updatecopyright"
+                                :value="old('updatecopyright')">
+                        </div>
+                        <p id="msg1copyright" class="text-danger"> </p>
+
+                        <div class="mb-3">
+                            <label for="updateaccession" class="form-label">ACCESSION NO.</label>
+                            <input style="text-transform:uppercase" type="text"
+                                class="form-control modal-book-accession" id="updateaccession" name="updateaccession"
+                                :value="old('updateaccession')">
+                        </div>
+                        <p id="msg1accession" class="text-danger"> </p>
+
+                        <div class="mb-3">
+                            <label for="updatecallnumber" class="form-label">CALL NO.</label>
+                            <input style="text-transform:uppercase" type="text"
+                                class="form-control modal-book-callnumber" id="updatecallnumber" name="updatecallnumber"
+                                :value="old('updatecallnumber')">
+                        </div>
+                        <p id="msg1callnumber" class="text-danger"> </p>
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label for="updatesubject">SUBJECT</label>
+                                <select name="subject" id="subject" class="form-control t-subject">
+                                    <option value="" {{ request('subject') ? '' : 'selected' }}>Select Subject
+                                    </option>
+                                    @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
+                                        <option value="{{ $subject->subjectName }}"
+                                            {{ request('subject') == $subject->subjectName ? 'selected' : '' }}>
+                                            {{ strtoupper($subject->subjectName) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success btn-tr-update">Update</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="backdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="titleofbook"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        After removing this book, it will automatically go to archived.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success removenow" id="remove">Are you sure you want
+                            to remove this?</button>
+                        <p id="myParagraph" class="text-danger"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="qrcodemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="p1"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <embed id="qrcode-frame" src="" frameborder="0" width="100%" height="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">IMPORT EXCEL FILE</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <form action="/import" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" name="file" class="custom-file-input" id="inputGroupFile01">
+                                <button type="submit">Import</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="modal fade" id="modal_bulk" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -540,50 +449,8 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
-    @section('style')
-        <style>
-            #importTable {
-                border-collapse: collapse;
-                width: 100%;
-            }
-
-            #importTable th,
-            #importTable td {
-                border: 1px solid #ddd;
-                padding: 8px;
-            }
-
-            #importTable th {
-                background-color: #f2f2f2;
-            }
-
-            #importTable td input[type="text"] {
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            .removeButton {
-                background-color: #f44336;
-                color: white;
-                border: none;
-                padding: 8px 16px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 14px;
-                cursor: pointer;
-                position: relative;
-                z-index: 1;
-            }
-        </style>
-    @endsection
-
     @section('script')
-        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
         <script>
             var removeid = "";
 
@@ -637,44 +504,17 @@
                 });
             });
 
-
-
-
-
             $('.btn-qr').on('click', function() {
                 var id = $(this).data('id');
 
                 $.get("/book/" + id, function(data, status) {
                     $('#p1').text(data.book.title)
                 });
-
-                // $('#p1').text(id)          
                 const frame = $('#qrcode-frame')
                 const link = '/generate-pdf/' + id
                 frame.attr('src', link)
 
             });
-
-            $('.print-tbl').on('click', function() {
-
-                const frame = $('#table-frame')
-                const link = '/generate-table/'
-                frame.attr('src', link)
-                console.log('button clicked');
-
-            });
-
-            $('.btn-bulkqr').on('click', function() {
-                // var id = $(this).data('id');
-                // const frame = $('#modal_bulk')
-                // const link = '/Print_QRList/' + id
-                // frame.attr('src', link)
-                const frame = $('#bulk-frame')
-                const link = '/Print_QRList/'
-                frame.attr('src', link)
-
-            });
-
 
             $(document).on('click', '.btn-tr-update', function(e) {
                 e.preventDefault();
@@ -798,12 +638,6 @@
                     success: function(response) {
                         if (response.status == 400) {
                             $('#msgtitle').html("");
-                            // $('#msgauthor').html("");
-                            // $('#msgdepartment').html("");
-                            // $('#msgcopyright').html("");
-                            // $('#msgaccession').html("");
-                            // $('#msgsubject').html("");
-                            // $('#msgcallnumber').html("");
                             $('#msgcopies').html("");
 
                             switch (true) {
@@ -814,38 +648,7 @@
                                 default:
                                     $('#msgtitle').removeClass('alert alert-danger');
                             }
-                            // switch (true) {
-                            //     case !!response.errors.author:
-                            //         $('#msgauthor').append(response.errors.author);
-                            //         $('#msgauthor').addClass('alert alert-danger');
-                            //         break;
-                            //     default:
-                            //         $('#msgauthor').removeClass('alert alert-danger');
-                            // }
-                            // switch (true) {
-                            //     case !!response.errors.department:
-                            //         $('#msgdepartment').append(response.errors.department);
-                            //         $('#msgdepartment').addClass('alert alert-danger');
-                            //         break;
-                            //     default:
-                            //         $('#msgdepartment').removeClass('alert alert-danger');
-                            // }
-                            // switch (true) {
-                            //     case !!response.errors.copyright:
-                            //         $('#msgcopyright').append(response.errors.copyright);
-                            //         $('#msgcopyright').addClass('alert alert-danger');
-                            //         break;
-                            //     default:
-                            //         $('#msgcopyright').removeClass('alert alert-danger');
-                            // }
-                            // switch (true) {
-                            //     case !!response.errors.accession:
-                            //         $('#msgaccession').append(response.errors.accession);
-                            //         $('#msgaccession').addClass('alert alert-danger');
-                            //         break;
-                            //     default:
-                            //         $('#msgaccession').removeClass('alert alert-danger');
-                            // }
+
                             switch (true) {
                                 case !!response.errors.copies:
                                     $('#msgcopies').append(response.errors.copies);
@@ -869,177 +672,6 @@
                     }
                 });
             })
-
-
-            var importedData = []; // Array to store the imported data
-
-            function importExcelFile() {
-                var fileInput = document.getElementById('fileInput');
-                var table = document.getElementById('importTable');
-                table.innerHTML = '';
-
-                if (fileInput.files.length === 0) {
-                    alert('Please select an Excel file.');
-                    return;
-                }
-
-                var file = fileInput.files[0];
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    var data = new Uint8Array(e.target.result);
-                    var workbook = XLSX.read(data, {
-                        type: 'array'
-                    });
-
-                    var worksheet = workbook.Sheets[workbook.SheetNames[0]];
-                    var jsonData = XLSX.utils.sheet_to_json(worksheet, {
-                        header: 1
-                    });
-
-                    // Define the column headers
-                    var columnHeaders = ['ID', 'TITLE', 'AUTHOR', 'COPYRIGHT', 'ACCESSION NO.', 'COPIES', ''];
-
-                    // Add column headers
-                    var headerRow = document.createElement('tr');
-
-                    for (var j = 0; j < columnHeaders.length; j++) {
-                        var cellHeader = document.createElement('th');
-                        cellHeader.textContent = columnHeaders[j];
-                        headerRow.appendChild(cellHeader);
-                    }
-
-                    table.appendChild(headerRow);
-
-                    for (var i = 1; i < jsonData.length; i++) {
-                        (function() {
-                            var row = document.createElement('tr');
-
-                            for (var j = 0; j < jsonData[i].length; j++) {
-                                var cell = document.createElement('td');
-                                var input = document.createElement('input');
-                                input.type = 'text';
-                                input.value = jsonData[i][j];
-                                cell.appendChild(input);
-                                row.appendChild(cell);
-                            }
-
-                            // Add an input column for "COPIES"
-                            var copiesCell = document.createElement('td');
-                            var copiesInput = document.createElement('input');
-                            copiesInput.type = 'text';
-                            copiesInput.value = '1'; // Set the default value to 0
-                            copiesCell.appendChild(copiesInput);
-                            row.appendChild(copiesCell);
-
-                            // Add a remove button column
-                            var removeButtonCell = document.createElement('td');
-                            var removeButton = document.createElement('button');
-                            removeButton.textContent = 'Remove';
-                            removeButton.className = 'removeButton';
-                            removeButton.addEventListener('click', function() {
-                                removeImportedRow(rowData);
-                                table.removeChild(row);
-                            });
-                            removeButtonCell.appendChild(removeButton);
-                            row.appendChild(removeButtonCell);
-
-                            table.appendChild(row);
-
-                            // Push the row data into the importedData array
-                            var rowData = {
-                                id: jsonData[i][0],
-                                title: jsonData[i][1],
-                                author: jsonData[i][2],
-                                copyright: jsonData[i][3],
-                                accession: jsonData[i][4],
-                                copies: copiesInput
-                            };
-
-                            importedData.push(rowData);
-                        })();
-                    }
-                };
-
-                reader.readAsArrayBuffer(file);
-            }
-
-            function removeImportedRow(rowData) {
-                var index = importedData.indexOf(rowData);
-                if (index > -1) {
-                    importedData.splice(index, 1);
-                }
-            }
-
-            function insertData() {
-                if (importedData.length === 0) {
-                    alert('No data to register. Please import an Excel file first.');
-                    return;
-                }
-
-                // Show the loading indicator
-                var loadingIndicator = document.getElementById('loading-indicator');
-                loadingIndicator.style.display = 'block';
-                loadingIndicator.innerText = 'Loading...';
-
-                var totalData = importedData.length;
-                var progressInterval = 1; // Adjust the interval as needed
-                var progress = 0;
-
-                function insertNextData(index) {
-                    if (index >= totalData) {
-                        // Hide the loading indicator
-                        loadingIndicator.style.display = 'none';
-                        alert('Data registered successfully.');
-                        return;
-                    }
-
-                    var rowData = importedData[index];
-                    if (!rowData.title) {
-                        // If the title is missing or null, skip inserting this data item
-                        console.error('Missing title for data item at index ' + index);
-                        insertNextData(index + 1);
-                        return;
-                    }
-
-                    var dataToInsert = {
-                        title: rowData.title,
-                        author: rowData.author,
-                        copyright: rowData.copyright,
-                        accession: rowData.accession,
-                        copies: rowData.copies.value
-                    };
-                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    $.ajax({
-                        url: '/test',
-                        type: 'POST',
-                        data: dataToInsert,
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the headers
-                        },
-                        success: function(response) {
-                            console.log(response.message);
-                            // Handle success, if needed
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(error);
-                            // Handle error, if needed
-                        },
-                        complete: function() {
-                            // Update progress after every $progressInterval data items
-                            if ((index + 1) % progressInterval === 0) {
-                                progress = ((index + 1) * 100) / totalData;
-                                // Update the progress UI or perform any other required actions
-                            }
-                            // Proceed to insert the next data item
-                            insertNextData(index + 1);
-                        }
-                    });
-                }
-
-                // Start inserting data
-                insertNextData(0);
-            }
         </script>
     @endsection
 @endsection

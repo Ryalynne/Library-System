@@ -1,107 +1,74 @@
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BOOK QR</title>
     <style>
-        .grid-container {
-            display: grid;
-            grid-template-columns: auto auto auto auto;
-            grid-gap: auto;
-            background-color: #ffffff;
-            padding: 10px;
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #customers td,
+        #customers th {
+            border: 1px solid black;
+            padding: 8px;
         }
 
-        .grid-item {
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.8);
-            padding: 1px;
-            font-size: 15px;
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        .book-item {
+            text-align: center;
+        }
+
+        .book-item img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
         }
     </style>
 </head>
-
 <body>
-    <center>
-        <h1>QR CODE GENERATOR</h1>
-    </center>
-    <br>
-    {{-- <div class="book-container">
-        @foreach ($qrCodesAndBooks as $data)
-            @for ($i = 1; $i <= $data['book']->numberofcopies(); $i++)
-                <div class="book-item">
-                    <img src="data:image/png;base64, {!! $data['qrcode'] !!}">
-                    <div>{{ $data['book']->accession }}</div>
-                </div>
-            @endfor
-        @endforeach
-    </div> 
-
-    <div class="grid-container">
-        @foreach ($qrCodesAndBooks as $data)
-            @for ($i = 1; $i <= $data['book']->numberofcopies(); $i++)
-                <div class="grid-item">
-                    <img src="data:image/png;base64, {!! $data['qrcode'] !!}">
-                    {{-- <div>{{ $data['book']->accession }}</div> 
-                </div>
-                <div class="grid-item">
-                    {{ $data['book']->accession }}
-                </div>
-            @endfor
-        @endforeach
-    </div>
-</body>
-
-</html> --}}
-
-
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BOOK QR</title>
-    <br>
-</head>
-
-<body>
-    <center>
-        <h1>QR CODE</h1>
-
-        <br>
-        <div class="book-container">
-            @foreach ($qrCodesAndBooks as $data)
-                @for ($i = 1; $i <= $data['book']->numberofcopies(); $i++)
-                    <div class="book-item">
-                        <img src="data:image/png;base64, {!! $data['qrcode'] !!}">
-                        <div>{{ $data['book']->accession }}</div>
-                    </div>
+    <h1>QR CODE</h1>
+    <table id="customers">
+        @if (count($qrCodesAndBooks))
+            @foreach ($qrCodesAndBooks as $book)
+                @for ($i = 1; $i <= $book['book']->numberofcopies(); $i++)
+                    @if (($i - 1) % 5 == 0)
+                        <tr>
+                    @endif
+                    <td>
+                        <div class="book-item">
+                            <img src="data:image/png;base64, {!! $book['qrcode'] !!}">
+                            <div>{{ $book['book']->accession }}</div>
+                        </div>
+                    </td>
+                    @if ($i % 5 == 0 || $i == $book['book']->numberofcopies())
+                        </tr>
+                    @endif
                 @endfor
             @endforeach
-        </div>
-    </center>
+        @else
+            <tr>
+                <td>NO QR FOUND</td>
+            </tr>
+        @endif
+    </table>
 </body>
-
 </html>
-<style>
-    .book-container {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .book-item {
-        display: inline-block;
-        margin-right: 5px;
-        margin-left: 5px;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-
-    .book-item img {
-        max-width: 180px;
-        height: auto;
-    }
-</style>
