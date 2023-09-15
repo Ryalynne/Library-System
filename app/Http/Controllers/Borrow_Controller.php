@@ -43,11 +43,11 @@ class Borrow_Controller extends Controller
 
     public function storebookborrow(Request $request)
     {
-        if ($request->data) {
+        if ($request->borrower) {
             $word = 'employee';
-            if (strpos($request->data, $word) !== false) {
+            if (strpos($request->borrower, $word) !== false) {
                 // Employee
-                $data = explode(".", $request->data);
+                $data = explode(".", $request->borrower);
                 $data = count($data) > 1 ? $data[0] : null;
                 $value = UserStaff::where('email', $data)->first();
                 $duedateemployee = date('Y:m:d', strtotime('+5 weekdays'));
@@ -55,16 +55,16 @@ class Borrow_Controller extends Controller
                 foreach ($request->bookList as $key => $bookID) {
                     $array = [
                         'bookid' =>  $bookID,
-                        'studentid' => $value->email,
+                        'borrower' => $value->email,
                         'bookstatus' => 'onlend',
                         'transaction' => $transaction->transaction_number,
                         'duedate' => $duedateemployee,
-                    ];
+                    ];//borrower id
                 }
                 borrowpage::create($array);
             } else {
                 // Student
-                $data = explode(".", $request->data);
+                $data = explode(".", $request->borrower);
                 $data = count($data) > 1 ? $data[0] : null;
                 $value = StudentAccount::where('student_number', $data)->first();
                 $duedatestudent = date('Y:m:d', strtotime('+3 weekdays'));
@@ -72,11 +72,11 @@ class Borrow_Controller extends Controller
                 foreach ($request->bookList as $key => $bookID) {
                     $array = [
                         'bookid' =>  $bookID,
-                        'studentid' => $value->student_number,
+                        'borrower' => $value->student_number,
                         'bookstatus' => 'onlend',
                         'transaction' => $transaction->transaction_number,
                         'duedate' => $duedatestudent,
-                    ];
+                    ];//borrower id
                 }
                 borrowpage::create($array);
             }

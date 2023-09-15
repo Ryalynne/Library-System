@@ -104,7 +104,7 @@
             data-borrower="{{ request()->input('data') }}" data-token="{{ csrf_token() }}" id="bor">Submit
             Books</button></a>
     </div>
-{{-- 
+    {{-- 
     <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static"
         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
@@ -186,12 +186,12 @@
                                                 {{ $book->subject }}
                                             </td>
                                             <td class="getstatus">
-                                                {{-- @if (request()->input('data'))
+                                                @if (request()->input('data'))
                                                     {{ $book->getstatus(request()->input('data')) }}
                                                     @if (empty($book->getstatus(request()->input('data'))))
                                                         Available
                                                     @endif
-                                                @endif --}}
+                                                @endif
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-success btn-sm btn-circle getdata">
@@ -228,21 +228,20 @@
         var _changeInterval = null;
 
 
-
         $(".borrowbook").on('click', function() {
-            let data = $(this).data('borrower');
+            let borrower = $(this).data('borrower');
             let token = $(this).data('token');
             const formData = new FormData();
-            formData.append('data', data);
-            formData.append('bookList', accessionList);
+            formData.append('borrower', borrower);
+            formData.append('bookList', bookList);
             formData.append('_token', token);
-            console.log(accessionList + bookList);
-            if (accessionList.length == 0) {
+
+            if (bookList.length == 0) {
                 alert('You need to add a book to the table to borrow!');
             } else {
                 $.post('/book/borrow', {
-                    'data': data,
-                    'bookList': accessionList,
+                    'borrower': borrower,
+                    'bookList': bookList,
                     '_token': token
                 }, function(response) {
                     console.log(response);
@@ -257,16 +256,22 @@
                 bookList.splice(0, bookList.length);
                 accessionList.splice(0, accessionList.length);
                 alert('successfully borrowed');
+                //print borrow
             }
         });
 
+
+
+
+
+
         $(".bookid").on("keyup", function() {
             var id = $(this).val().trim().toLowerCase();
-            let studentId = $(this).data('user');
+          
 
             clearInterval(_changeInterval);
             _changeInterval = setInterval(function() {
-                $.get("/bookstatus/" + id + "/" + studentId, function(data, status) {
+                $.get("/bookstatus/" + id , function(data, status) {
                     try {
                         if (data.bookstatus == "onlend") {
                             console.log('onlend');
@@ -288,11 +293,11 @@
         function checkBookAvailability(id) {
             $.get("/bookcopies/" + id, function(data, status) {
                 try {
-                    if (data.book.accession == "") {
+                    if (data.book.id == "") {
                         alert("The Book Does Not Exist");
                         $('.bookid').val("");
                     } else {
-                        if (!accessionList.includes(data.book.accession)) {
+                        if (!bookListList.includes(data.book.bookList)) {
                             accessionList.push(data.book.accession);
                             bookList.push(data.book.id);
                             var tr = document.createElement('tr');
@@ -337,7 +342,6 @@
         var studentid = "";
 
         $(".getdata").on('click', function() {
-
             var $row = $(this).closest(".trtr");
             $iddata = $row.find(".getidd").text().trim().toLowerCase();
             $acc = $row.find(".getacc").text().trim().toLowerCase();
@@ -395,7 +399,6 @@
             bookList.splice(index, 1);
             accessionList.splice(index, 1);
             tbl.deleteRow(row);
-
         }
     </script>
 @endsection

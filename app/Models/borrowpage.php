@@ -12,7 +12,7 @@ class borrowpage extends Model
     use HasFactory;
     protected $connection = 'mysql';
     protected $fillable = [
-        'bookid', 'studentid', 'bookstatus', 'duedate', 'penalty','transaction'
+        'bookid', 'studentid', 'bookstatus', 'duedate', 'penalty','transaction', 'borrower'
     ];
 
     public function book()

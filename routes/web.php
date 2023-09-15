@@ -77,7 +77,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //display search
     Route::get('/getid/{studentno}', [StudentlistController::class, 'get_student']);
-    Route::get('/bookstatus/{data}/{studentid}', [Booklist_Controller::class, 'get_status']);
+    Route::get('/bookstatus/{data}', [Booklist_Controller::class, 'get_status']);
     Route::get('/book/{id}', [Booklist_Controller::class, 'get_book']);
     Route::get('/bookarchived/{id}', [Booklist_Controller::class, 'get_bookarchived']);
     Route::get('/bookcopies/{id}', [Booklist_Controller::class, 'get_bookcopies']);

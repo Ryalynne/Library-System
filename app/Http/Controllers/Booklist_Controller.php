@@ -200,31 +200,31 @@ class Booklist_Controller extends Controller
         }
     }
 
-    public function get_status($bookid, Request $request)
+    public function get_status($bookid, $borrower)
     {
         $value = [];
         $id = booklist::where('accession', $bookid)->value('id');
         
-        if ($request->data) {
+        if ($borrower) {
             $word = 'employee';
-            if (strpos($request->data, $word) !== false) {
+            if (strpos($borrower, $word) !== false) {
                 // Employee
-                $data = explode(".", $request->data);
+                $data = explode(".", $borrower);
                 $data = count($data) > 1 ? $data[0] : null;
                 $value = UserStaff::where('email', $data)->first();
                 return borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
                     ->join('copies', 'copies.bookid', 'borrowpages.bookid')
-                    ->where('borrowpages.studentid', $value->email)
+                    ->where('borrowpages.borrower', $data)
                     ->where('borrowpages.bookid', $id)
                     ->orderBy('borrowpages.id', 'desc')->first();
             } else {
                 // Student
-                $data = explode(".", $request->data);
+                $data = explode(".", $borrower);
                 $data = count($data) > 1 ? $data[0] : null;
                 $value = StudentAccount::where('student_number', $data)->first();
                 return borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
                     ->join('copies', 'copies.bookid', 'borrowpages.bookid')
-                    ->where('borrowpages.studentid', $value->student_number)
+                    ->where('borrowpages.borrower', $value->student_number)
                     ->where('borrowpages.bookid', $id)
                     ->orderBy('borrowpages.id', 'desc')->first();
             }
