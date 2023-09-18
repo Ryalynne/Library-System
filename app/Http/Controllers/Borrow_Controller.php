@@ -43,43 +43,51 @@ class Borrow_Controller extends Controller
 
     public function storebookborrow(Request $request)
     {
-        if ($request->borrower) {
-            $word = 'employee';
-            if (strpos($request->borrower, $word) !== false) {
+        $borrower = "";
+        if ($request->has('user')) {
+            $user = $request->input('user');
+            if (strpos($user, 'employee') !== false) {
                 // Employee
-                $data = explode(".", $request->borrower);
-                $data = count($data) > 1 ? $data[0] : null;
-                $value = UserStaff::where('email', $data)->first();
-                $duedateemployee = date('Y:m:d', strtotime('+5 weekdays'));
-                $transaction = Transaction::create(['transaction_number' => uniqid(),]);
-                foreach ($request->bookList as $key => $bookID) {
-                    $array = [
-                        'bookid' =>  $bookID,
-                        'borrower' => $value->email,
-                        'bookstatus' => 'onlend',
-                        'transaction' => $transaction->transaction_number,
-                        'duedate' => $duedateemployee,
-                    ];//borrower id
-                }
-                borrowpage::create($array);
+                $email = explode(":", $user);
+                $email = count($email) > 1 ? $email[1] : str_replace('employee', '', $user);
+                $value = UserStaff::where('email', $email)->first();
+                $dueDateEmployee = date('Y-m-d', strtotime('+5 weekdays'));
+                $borrower = $email;
             } else {
                 // Student
-                $data = explode(".", $request->borrower);
-                $data = count($data) > 1 ? $data[0] : null;
-                $value = StudentAccount::where('student_number', $data)->first();
-                $duedatestudent = date('Y:m:d', strtotime('+3 weekdays'));
-                $transaction = Transaction::create(['transaction_number' => uniqid(),]);
-                foreach ($request->bookList as $key => $bookID) {
-                    $array = [
-                        'bookid' =>  $bookID,
-                        'borrower' => $value->student_number,
+                $studentNumberParts = explode(".", $user);
+                $studentNumber = count($studentNumberParts) > 1 ? $studentNumberParts[0] : null;
+                $value = StudentAccount::where('student_number', $studentNumber)->first();
+                $dueDateStudent = date('Y-m-d', strtotime('+3 weekdays'));
+                $borrower = $studentNumber;
+            }
+
+            if ($value) {
+                $transaction = Transaction::create(['transaction_number' => uniqid()]);
+                $borrowArray = [];
+
+                foreach ($request->input('books') as $bookID) {
+                    // Add book data to the array
+                    $borrowArray[] = [
+                        'bookid' => $bookID,
+                        'borrower' => $borrower, // Use the original user value
                         'bookstatus' => 'onlend',
                         'transaction' => $transaction->transaction_number,
-                        'duedate' => $duedatestudent,
-                    ];//borrower id
+                        'duedate' => isset($dueDateEmployee) ? $dueDateEmployee : $dueDateStudent,
+                    ];
                 }
-                borrowpage::create($array);
+
+                borrowpage::insert($borrowArray);
+
+                // Return a response, e.g., a success message
+                return response()->json(['message' => 'Books borrowed successfully']);
+            } else {
+                // Handle the case where the user is not found (e.g., return an error response)
+                return response()->json(['error' => 'User not found'], 404);
             }
+        } else {
+            // Handle the case where no user is provided (e.g., return an error response)
+            return response()->json(['error' => 'User not specified'], 400);
         }
     }
 }

@@ -27,13 +27,11 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\vendorController;
 use App\Http\Controllers\statisticReports;
 use App\Http\Controllers\subjectController;
-use App\Livewire\Counter;
 use App\Models\StudentDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-Route::get('/counter', Counter::class);
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('copies', CopiesController::class);
@@ -77,7 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //display search
     Route::get('/getid/{studentno}', [StudentlistController::class, 'get_student']);
-    Route::get('/bookstatus/{data}', [Booklist_Controller::class, 'get_status']);
+    Route::get('/bookstatus/{bookid}/{borrower}', [Booklist_Controller::class, 'get_status']);
     Route::get('/book/{id}', [Booklist_Controller::class, 'get_book']);
     Route::get('/bookarchived/{id}', [Booklist_Controller::class, 'get_bookarchived']);
     Route::get('/bookcopies/{id}', [Booklist_Controller::class, 'get_bookcopies']);

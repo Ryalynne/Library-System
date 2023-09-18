@@ -132,9 +132,7 @@
                 </td>
                 <td><span>
                     </span></td>
-                <td><span>{{ $student->first_name }}
-                        {{ $student->middle_name }}
-                        {{ $student->lastname }}</span>
+                <td><span>{{ $borrower}}</span>
                 </td>
             </tbody>
         </table>

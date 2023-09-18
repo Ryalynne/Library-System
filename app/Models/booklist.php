@@ -35,9 +35,9 @@ class booklist extends Model
             $word = 'employee';
             if (strpos($data, $word) !== false) {
                 // Employee
-                $data = explode(".", $data);
-                $data = count($data) > 1 ? $data[0] : null;
-                $value = UserStaff::where('email', $data)->first();
+                $email = explode(":", $data);
+                $email = count($email) > 1 ? $email[1] : str_replace('employee', '', $data);
+                $value = UserStaff::where('email', $email)->first();
                 return $this->hasMany(borrowpage::class, 'bookid')
                     ->where('borrower', $value->email ?? null)
                     ->where('bookstatus', 'onlend')

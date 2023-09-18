@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Imports\BookListImport;
-use App\Imports\UsersImport;
 use App\Models\bookaction;
 use App\Models\booklist;
 use App\Models\borrowpage;
 use App\Models\copies;
 use App\Models\StudentAccount;
-use App\Models\UserStaff;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -168,6 +165,7 @@ class Booklist_Controller extends Controller
     public function get_bookcopies($data)
     {
         $id = booklist::where('accession', $data)->value('id');
+
         $totalLessen = copies::where('bookid', $id)
             ->where('action', 'lessen')->sum('copies');
 
@@ -202,34 +200,35 @@ class Booklist_Controller extends Controller
 
     public function get_status($bookid, $borrower)
     {
-        $value = [];
         $id = booklist::where('accession', $bookid)->value('id');
-        
-        if ($borrower) {
-            $word = 'employee';
-            if (strpos($borrower, $word) !== false) {
-                // Employee
-                $data = explode(".", $borrower);
-                $data = count($data) > 1 ? $data[0] : null;
-                $value = UserStaff::where('email', $data)->first();
-                return borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
-                    ->join('copies', 'copies.bookid', 'borrowpages.bookid')
-                    ->where('borrowpages.borrower', $data)
-                    ->where('borrowpages.bookid', $id)
-                    ->orderBy('borrowpages.id', 'desc')->first();
-            } else {
-                // Student
-                $data = explode(".", $borrower);
-                $data = count($data) > 1 ? $data[0] : null;
-                $value = StudentAccount::where('student_number', $data)->first();
-                return borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
-                    ->join('copies', 'copies.bookid', 'borrowpages.bookid')
-                    ->where('borrowpages.borrower', $value->student_number)
-                    ->where('borrowpages.bookid', $id)
-                    ->orderBy('borrowpages.id', 'desc')->first();
-            }
+        if (strpos($borrower, 'employee') !== false) {
+            $email = explode(":", $borrower);
+            $email = count($email) > 1 ? $email[1] : str_replace('employee', '', $borrower);
+            $bookStatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
+                ->join('copies', 'copies.bookid', 'borrowpages.bookid')
+                ->where('borrowpages.borrower', $email)
+                ->where('borrowpages.bookid', $id)
+                ->orderBy('borrowpages.id', 'desc')
+                ->value('bookstatus');
+        } else {
+            // Student
+            $studentNumberParts = explode(".", $borrower);
+            $studentNumber = count($studentNumberParts) > 1 ? $studentNumberParts[0] : null;
+            $value = StudentAccount::where('student_number', $studentNumber)->first();
+            $bookStatus = borrowpage::join('booklists', 'booklists.id', 'borrowpages.bookid')
+                ->join('copies', 'copies.bookid', 'borrowpages.bookid')
+                ->where('borrowpages.borrower', $value->student_number)
+                ->where('borrowpages.bookid', $id)
+                ->orderBy('borrowpages.id', 'desc')
+                ->value('bookstatus');
+        }
+        if ($bookStatus === 'onlend') {
+            return response()->json(['status' => 'error', 'message' => 'The Book is Already Borrowed']);
+        } else {
+            return response()->json(['status' => 'success']);
         }
     }
+
 
     public function import(Request $request)
     {

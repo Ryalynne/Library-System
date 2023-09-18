@@ -35,7 +35,7 @@
         <form action="">
             <label class="form-label">ENTER ID: </label>
             <input type="text" class="form-control mb-4" name="data" :value="old('data')"
-                value="{{ request()->input('data') }}">
+                data-borrower="{{ request()->input('data') }}" value="{{ request()->input('data') }}">
         </form>
 
         <label class="form-label">FULL NAME: </label>
@@ -101,10 +101,11 @@
         </table>
 
         <button type="button" class="btn btn-success  w-40 btn-lg borrowbook mb-4 mt-4 "
-            data-borrower="{{ request()->input('data') }}" data-token="{{ csrf_token() }}" id="bor">Submit
+        data-bs-toggle="modal" data-bs-target="#tablemodal" data-submit="{{ request()->input('data') }}" data-token="{{ csrf_token() }}" id="bor">Submit
             Books</button></a>
+
     </div>
-    {{-- 
+    
     <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static"
         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
@@ -118,7 +119,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -229,109 +230,103 @@
 
 
         $(".borrowbook").on('click', function() {
-            let borrower = $(this).data('borrower');
+            let borrower = $(this).data('submit');
             let token = $(this).data('token');
             const formData = new FormData();
-            formData.append('borrower', borrower);
-            formData.append('bookList', bookList);
+            formData.append('user', borrower);
+            formData.append('books', bookList);
             formData.append('_token', token);
 
             if (bookList.length == 0) {
                 alert('You need to add a book to the table to borrow!');
             } else {
                 $.post('/book/borrow', {
-                    'borrower': borrower,
-                    'bookList': bookList,
+                    'user': borrower,
+                    'books': bookList,
                     '_token': token
                 }, function(response) {
                     console.log(response);
                 })
-                // const frame = $('#table-frame')
-                // const link = '/generate-tblborrow/' + JSON.stringify(bookList) + '/' + data
-                // frame.attr('src', link)
+
+                console.log(borrower + bookList);
+                const frame = $('#table-frame')
+                const link = '/generate-tblborrow/' + JSON.stringify(bookList) + '/' + borrower
+                frame.attr('src', link)
                 var table = document.getElementById("tbl");
                 for (var i = table.rows.length - 1; i > 0; i--) {
                     table.deleteRow(i);
                 }
                 bookList.splice(0, bookList.length);
                 accessionList.splice(0, accessionList.length);
+                // location.reload();
                 alert('successfully borrowed');
                 //print borrow
             }
         });
 
 
-
-
-
+        var _changeInterval;
 
         $(".bookid").on("keyup", function() {
             var id = $(this).val().trim().toLowerCase();
-          
-
+            var borrower = $(this).data('user');
             clearInterval(_changeInterval);
             _changeInterval = setInterval(function() {
-                $.get("/bookstatus/" + id , function(data, status) {
-                    try {
-                        if (data.bookstatus == "onlend") {
-                            console.log('onlend');
-                            alert('The Book is Already Borrowed');
-                            $('.bookid').val("");
-                        } else {
+                $.get("/bookstatus/" + id + '/' + borrower)
+                    .done(function(data, response) {
+                        if (data.status == "success") {
+                            console.log('Book is available');
+                            alert(data.status);
                             checkBookAvailability(id);
+                        } else if (data.status == "error") {
+                            console.log('Book is already borrowed');
+                            alert(data.status);
+                            $('.bookid').val("");
                         }
-                    } catch (err) {
-                        checkBookAvailability(id);
-                    }
-                    $('.bookid').val("");
-                });
+                    })
+                    .fail(function(jqXHR, textStatus, errorThrown) {
+                        console.error("AJAX request failed:", textStatus, errorThrown);
+                    })
+                    .always(function() {
+                        $('.bookid').val("");
+                    });
                 clearInterval(_changeInterval);
             }, 900);
-
         });
 
         function checkBookAvailability(id) {
-            $.get("/bookcopies/" + id, function(data, status) {
+            $.get("/bookcopies/" + id, function(data) {
                 try {
                     if (data.book.id == "") {
                         alert("The Book Does Not Exist");
                         $('.bookid').val("");
                     } else {
-                        if (!bookListList.includes(data.book.bookList)) {
+                        if (!bookList.includes(data.book.id)) {
                             accessionList.push(data.book.accession);
                             bookList.push(data.book.id);
-                            var tr = document.createElement('tr');
-                            var td1 = tr.appendChild(document.createElement('td'));
-                            var td2 = tr.appendChild(document.createElement('td'));
-                            var td3 = tr.appendChild(document.createElement('td'));
-                            var td4 = tr.appendChild(document.createElement('td'));
-                            var td5 = tr.appendChild(document.createElement('td'));
-                            var td6 = tr.appendChild(document.createElement('td'));
-                            var td7 = tr.appendChild(document.createElement('td'));
-                            var td8 = tr.appendChild(document.createElement('td'));
-                            var td9 = tr.appendChild(document.createElement('td'));
-                            td1.innerHTML = data.book.id;
-                            td2.innerHTML = data.book.title;
-                            td3.innerHTML = data.book.author;
-                            td4.innerHTML = data.book.department;
-                            td5.innerHTML = data.book.copyright;
-                            td6.innerHTML = data.book.accession;
-                            td7.innerHTML = data.book.callnumber;
-                            td8.innerHTML = data.book.subject;
-                            td9.innerHTML =
+                            var tr = $('<tr>');
+                            tr.append($('<td>').text(data.book.id));
+                            tr.append($('<td>').text(data.book.title));
+                            tr.append($('<td>').text(data.book.author));
+                            tr.append($('<td>').text(data.book.department));
+                            tr.append($('<td>').text(data.book.copyright));
+                            tr.append($('<td>').text(data.book.accession));
+                            tr.append($('<td>').text(data.book.callnumber));
+                            tr.append($('<td>').text(data.book.subject));
+                            tr.append($('<td>').html(
                                 '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
-                                id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>';
-                            document.getElementById("tbl").appendChild(tr);
+                                id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>'));
+                            $('#tbl').append(tr);
                             $('.bookid').val("");
-                            console.log('Available' + bookList);
+                            console.log('Available Books: ' + bookList);
+                            console.log('Accession List: ' + accessionList);
                         } else {
-                            alert("The Book Already in the list");
+                            alert("The Book is Already in the list");
                             $('.bookid').val("");
                         }
                     }
                 } catch (error) {
-
-                    alert('No Available Book' + id);
+                    alert('Error, No Available Book' + ' ' + id);
                     $('.bookid').val("");
                 }
             });

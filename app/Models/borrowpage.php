@@ -19,7 +19,6 @@ class borrowpage extends Model
     {
         return $this->belongsTo(booklist::class, 'bookid');
     }
-
     public function student()
     {
         return $this->belongsTo(StudentDetails::class, 'studentid');

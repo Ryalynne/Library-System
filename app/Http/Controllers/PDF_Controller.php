@@ -8,7 +8,9 @@ use App\Models\booklist;
 use App\Models\borrowpage;
 use App\Models\purchasemodel;
 use App\Models\StudentAccount;
+use App\Models\StudentDetails;
 use App\Models\studentlist;
+use App\Models\UserStaff;
 use App\Models\vendortable;
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -93,20 +95,55 @@ class PDF_Controller extends Controller
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
-    public function generateBorrow($bookData, $student_number)
+    public function generateBorrow($bookData, $borrower)
     {
         $bookList = [];
-        $student = StudentAccount::where('student_number', $student_number)->first();
-        $student = $student->student;
-        foreach (json_decode($bookData) as $book) {
-            $bookList[] = booklist::find($book);
-            $transaction = borrowpage::where('bookid', $book)
-                ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('transaction');
-            $duedate = borrowpage::where('bookid', $book)
-                ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('duedate');
+        // $student = StudentAccount::where('student_number', $student_number)->first();
+        // $student = $student->student;
+        // foreach (json_decode($bookData) as $book) {
+        //     $bookList[] = booklist::find($book);
+        //     $transaction = borrowpage::where('bookid', $book)
+        //         ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('transaction');
+        //     $duedate = borrowpage::where('bookid', $book)
+        //         ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('duedate');
+        // }
+
+        if ($borrower) {
+            $word = 'employee';
+            if (strpos($borrower, $word) !== false) {
+                // Employee
+                $data = explode(":", $borrower);
+                $data = count($data) > 1 ? $data[1] : str_replace($word, '', $borrower);
+                $value = UserStaff::where('email', $data)->first();
+                $value = $value->staff;
+                $designated = $value->job_description;
+                foreach (json_decode($bookData) as $book) {
+                    $bookList[] = booklist::find($book);
+                    $transaction = borrowpage::where('bookid', $book)
+                        ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
+                    $duedate = borrowpage::where('bookid', $book)
+                        ->where('borrower', $data)->where('bookstatus', 'onlend')->value('duedate');
+                }
+            } else {
+                // Student
+                $data = explode(".", $borrower);
+                $data = count($data) > 1 ? $data[0] : null;
+                $value = StudentAccount::where('student_number', $data)->first();
+                $value = StudentDetails::find($value->id);
+                $designated = $value->enrollment_assessment ?  $value->enrollment_assessment->year_level() . " " . $value->enrollment_assessment->course->course_code : '';
+                foreach (json_decode($bookData) as $book) {
+                    $bookList[] = booklist::find($book);
+                    $transaction = borrowpage::where('bookid', $book)
+                        ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
+                    $duedate = borrowpage::where('bookid', $book)
+                        ->where('borrower', $data)->where('bookstatus', 'onlend')->value('duedate');
+                }
+            }
         }
+
+    
         ///duedate need kuhain
-        $pdf = PDF::loadView('myPDFborrow', compact('bookList', 'transaction', 'student', 'duedate'));
+        $pdf = PDF::loadView('myPDFborrow', compact('bookList', 'transaction', 'duedate', 'borrower'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
     }
 
