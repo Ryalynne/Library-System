@@ -45,7 +45,6 @@
     </style>
 </head>
 <body>
-    <h1>QR CODE</h1>
     <table id="customers">
         @if (count($qrCodesAndBooks))
             @foreach ($qrCodesAndBooks as $book)

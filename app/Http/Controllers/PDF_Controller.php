@@ -227,7 +227,7 @@ class PDF_Controller extends Controller
         $qrCodesAndBooks = [];
         foreach ($books as $book) {
             if (isset($book->accession)) {
-                $qrcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($book->accession));
+                $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate($book->accession));
                 $qrCodesAndBooks[] = [
                     'qrcode' => $qrcode,
                     'book' => $book,
@@ -235,6 +235,6 @@ class PDF_Controller extends Controller
             }
         }
         $pdf = PDF::loadView('myPDF_BulkQr', compact('qrCodesAndBooks'));
-        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->download('qrlist.pdf');
+        return $pdf->download('qrlist.pdf');
     }
 }
