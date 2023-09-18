@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <style>
         #customers {
@@ -7,6 +8,7 @@
             border-collapse: collapse;
             width: 100%;
         }
+
         #customers td,
         #customers th {
             border: 1px solid black;
@@ -44,25 +46,37 @@
         }
     </style>
 </head>
+
 <body>
     <table id="customers">
-        @if (count($qrCodesAndBooks))
-            @foreach ($qrCodesAndBooks as $book)
-                @for ($i = 1; $i <= $book['book']->numberofcopies(); $i++)
-                    @if (($i - 1) % 5 == 0)
-                        <tr>
-                    @endif
-                    <td>
-                        <div class="book-item">
-                            <img src="data:image/png;base64, {!! $book['qrcode'] !!}">
-                            <div>{{ $book['book']->accession }}</div>
-                        </div>
-                    </td>
-                    @if ($i % 5 == 0 || $i == $book['book']->numberofcopies())
-                        </tr>
-                    @endif
-                @endfor
-            @endforeach
+        @php
+            $batchSize = 100; // Set the batch size
+            $totalBooks = count($qrCodesAndBooks);
+            $qrCodesPerRow = 5; // Number of QR codes per row
+            $totalRows = ceil($totalBooks / $qrCodesPerRow);
+        @endphp
+
+        @if ($totalBooks > 0)
+            @for ($row = 0; $row < $totalRows; $row++)
+                <tr>
+                    @for ($col = 0; $col < $qrCodesPerRow; $col++)
+                        @php
+                            $index = $row * $qrCodesPerRow + $col;
+                            if ($index >= $totalBooks) {
+                                break;
+                            }
+                            $book = $qrCodesAndBooks[$index]['book'];
+                            $qrcode = $qrCodesAndBooks[$index]['qrcode'];
+                        @endphp
+                        <td>
+                            <div class="book-item">
+                                <img src="data:image/png;base64, {!! $qrcode !!}">
+                                <div>{{ $book->accession }}</div>
+                            </div>
+                        </td>
+                    @endfor
+                </tr>
+            @endfor
         @else
             <tr>
                 <td>NO QR FOUND</td>
@@ -70,4 +84,5 @@
         @endif
     </table>
 </body>
+
 </html>

@@ -68,7 +68,7 @@ class PDF_Controller extends Controller
 
     //BookList REPORTS
 
-    public function booklist_pdf()
+    public function booklist_pdf()  
     {
         // $books = booklist::where('ishide', false)->get();
         // $pdf = PDF::loadView('myPDFtbl', compact('books'));
@@ -98,16 +98,6 @@ class PDF_Controller extends Controller
     public function generateBorrow($bookData, $borrower)
     {
         $bookList = [];
-        // $student = StudentAccount::where('student_number', $student_number)->first();
-        // $student = $student->student;
-        // foreach (json_decode($bookData) as $book) {
-        //     $bookList[] = booklist::find($book);
-        //     $transaction = borrowpage::where('bookid', $book)
-        //         ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('transaction');
-        //     $duedate = borrowpage::where('bookid', $book)
-        //         ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('duedate');
-        // }
-
         if ($borrower) {
             $word = 'employee';
             if (strpos($borrower, $word) !== false) {
