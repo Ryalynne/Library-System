@@ -10,7 +10,7 @@
 <body>
     <center>
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-        <h3>STUDENT RETURN BOOK</h3>
+        <h3>RETURNING BOOK</h3>
     </center>
     <table class="table table-bordered myTable">
         <thead>
@@ -74,9 +74,7 @@
             </td>
             <td><span>
                 </span></td>
-            <td><span>{{ $student->first_name }}
-                    {{ $student->middle_name }}
-                    {{ $student->lastname }}</span>
+            <td><span>{{ $student_number}}</span>
             </td>
         </tbody>
     </table>

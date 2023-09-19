@@ -3,6 +3,11 @@
 
 <head>
     <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
         #customers {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -12,7 +17,7 @@
         #customers td,
         #customers th {
             border: 1px solid black;
-            padding: 8px;
+            padding: 4px;
         }
 
         #customers tr:nth-child(even) {
@@ -52,7 +57,7 @@
         @php
             $batchSize = 100; // Set the batch size
             $totalBooks = count($qrCodesAndBooks);
-            $qrCodesPerRow = 5; // Number of QR codes per row
+            $qrCodesPerRow = 7; // Number of QR codes per row
             $totalRows = ceil($totalBooks / $qrCodesPerRow);
         @endphp
 

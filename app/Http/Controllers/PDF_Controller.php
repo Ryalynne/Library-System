@@ -68,7 +68,7 @@ class PDF_Controller extends Controller
 
     //BookList REPORTS
 
-    public function booklist_pdf()  
+    public function booklist_pdf()
     {
         // $books = booklist::where('ishide', false)->get();
         // $pdf = PDF::loadView('myPDFtbl', compact('books'));
@@ -131,7 +131,7 @@ class PDF_Controller extends Controller
             }
         }
 
-    
+
         ///duedate need kuhain
         $pdf = PDF::loadView('myPDFborrow', compact('bookList', 'transaction', 'duedate', 'borrower'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
@@ -141,14 +141,44 @@ class PDF_Controller extends Controller
     public function generatereturndamage($bookData, $studentId)
     {
         $bookList = [];
-        $student = StudentAccount::where('student_number', $studentId)->first();
-        $student = $student->student;
 
-        foreach (json_decode($bookData) as $book) {
-            $bookList[] = borrowpage::find($book);
-            $transaction = borrowpage::where('bookid', $book)
-                ->where('studentid', $student)->where('bookstatus', 'onlend')->value('transaction');
+        // $student = StudentAccount::where('student_number', $studentId)->first();
+        // $student = $student->student;
+
+        // foreach (json_decode($bookData) as $book) {
+        //     $bookList[] = borrowpage::find($book);
+        //     $transaction = borrowpage::where('bookid', $book)
+        //         ->where('borrower', $student)->where('bookstatus', 'onlend')->value('transaction');
+        // }
+
+        $value = [];
+        if ($studentId) {
+            $word = 'employee';
+            if (strpos($studentId, $word) !== false) {
+                // Employee
+                $data = explode(":", $studentId);
+                $data = count($data) > 1 ? $data[1] : str_replace($word, '', $studentId);
+                $value = UserStaff::where('email', $data)->first();
+                foreach (json_decode($bookData) as $book) {
+                    $bookList[] = borrowpage::find($book);
+                    $transaction = borrowpage::where('bookid', $book)
+                        ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
+                }
+            } else if (strpos($studentId, $word) === false) {
+                // Student
+                $data = explode(".", $studentId);
+                $data = count($data) > 1 ? $data[0] : null;
+                $value = StudentAccount::where('student_number', $data)->first();
+                $value = StudentDetails::find($value->id);
+                foreach (json_decode($bookData) as $book) {
+                    $bookList[] = borrowpage::find($book);
+                    $transaction = borrowpage::where('bookid', $book)
+                        ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
+                }
+            }
         }
+
+
         $pdf = PDF::loadView('myPDFfined', compact('bookList', 'transaction', 'student'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
     }
@@ -157,15 +187,43 @@ class PDF_Controller extends Controller
     public function generateReturn($bookData, $student_number)
     {
         $bookList = [];
-        $account = StudentAccount::where('student_number', $student_number)->first();
-        $student = $account->student;
+        // $account = StudentAccount::where('student_number', $student_number)->first();
+        // $student = $account->student;
 
-        foreach (json_decode($bookData) as $book) {
-            $bookList[] = borrowpage::find($book);
-            $transaction = borrowpage::where('bookid', $book)
-                ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('transaction');
+        // foreach (json_decode($bookData) as $book) {
+        //     $bookList[] = borrowpage::find($book);
+        //     $transaction = borrowpage::where('bookid', $book)
+        //         ->where('studentid', $student->id)->where('bookstatus', 'onlend')->value('transaction');
+        // }
+
+        $value = [];
+        if ($student_number) {
+            $word = 'employee';
+            if (strpos($student_number, $word) !== false) {
+                // Employee
+                $data = explode(":", $student_number);
+                $data = count($data) > 1 ? $data[1] : str_replace($word, '', $student_number);
+                $value = UserStaff::where('email', $data)->first();
+                foreach (json_decode($bookData) as $book) {
+                    $bookList[] = borrowpage::find($book);
+                    $transaction = borrowpage::where('bookid', $book)
+                        ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
+                }
+            } else if (strpos($student_number, $word) === false) {
+                // Student
+                $data = explode(".", $student_number);
+                $data = count($data) > 1 ? $data[0] : null;
+                $value = StudentAccount::where('student_number', $data)->first();
+                $value = StudentDetails::find($value->id);
+                foreach (json_decode($bookData) as $book) {
+                    $bookList[] = borrowpage::find($book);
+                    $transaction = borrowpage::where('bookid', $book)
+                        ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
+                }
+            }
         }
-        $pdf = PDF::loadView('myPDFreturn', compact('bookList', 'transaction', 'student'));
+
+        $pdf = PDF::loadView('myPDFreturn', compact('bookList', 'transaction','student_number'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
     }
 

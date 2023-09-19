@@ -21,7 +21,7 @@ use App\Http\Controllers\purchaseController;
 use App\Http\Controllers\receivehistoryController;
 use App\Http\Controllers\receivepurchaseorderController;
 use App\Http\Controllers\returnhistory;
-use App\Http\Controllers\Returnpage;
+use App\Http\Controllers\Return_Controller;
 use App\Http\Controllers\StudentlistController;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\vendorController;
@@ -55,7 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/fined', [finedController::class, 'index']);
     Route::get('/finedhistory', [finebookshistory::class, 'index'])->name('finedhistory');
     Route::get('/booklist', [Booklist_Controller::class, 'index'])->name('booklist');;
-    Route::get('/returnpage', [Returnpage::class, 'index'])->name('returnpage');
+    Route::get('/returnpage', [Return_Controller::class, 'index'])->name('returnpage');
     Route::get('/purchase', [purchaseController::class, 'index'])->name('purchase');
     Route::get('/borrowpage', [Borrow_Controller::class, 'index']);
     Route::get('/bookhistory', [Bookhistory::class, 'index'])->name('bookhistory');
@@ -116,7 +116,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/removevendor/{id}', [vendorController::class, 'updateremove'])->name('removeVendor.update');
     Route::post('/removebook/{id}', [Booklist_Controller::class, 'updateremove'])->name('removeBook.update');
     Route::post('/removearchived/{id}', [Booklist_Controller::class, 'updateback'])->name('removeArchived.update');
-    Route::post('/return/book', [Returnpage::class, 'update']);
+    Route::post('/return/book', [Return_Controller::class, 'update']);
     Route::post('/returndamage/book', [finedController::class, 'store']);
     Route::post('/book/borrow', [Borrow_Controller::class, 'storebookborrow']);
     Route::post('/updateuser', [userController::class, 'update'])->name('updateuser');
