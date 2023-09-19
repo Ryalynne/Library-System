@@ -73,6 +73,7 @@ class Borrow_Controller extends Controller
                         'borrower' => $borrower, // Use the original user value
                         'bookstatus' => 'onlend',
                         'transaction' => $transaction->transaction_number,
+                        'created_at' => now(),
                         'duedate' => isset($dueDateEmployee) ? $dueDateEmployee : $dueDateStudent,
                     ];
                 }
