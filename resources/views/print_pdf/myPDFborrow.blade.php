@@ -65,7 +65,7 @@
     <div class="container">
         <center>
             <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-            <h3>STUDENT BORROWED BOOK</h3>
+            <h3>BORROWED BOOK</h3>
             <div class="transaction">
                 @if ($transaction)
                     <p>TRANSACTION: {{ $transaction }}</p>

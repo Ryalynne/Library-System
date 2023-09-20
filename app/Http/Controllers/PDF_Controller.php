@@ -43,7 +43,7 @@ class PDF_Controller extends Controller
 
         $transaction = purchasemodel::where('vendorid', $id)->where('status', 'pending')->latest('transaction')->first();
         $pdf = PDF::loadView('print_pdf.myPDFpurchaseorder', compact('vendor', 'bookdata', 'transaction'));
-        return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
+        return $pdf->stream();
     }
 
 

@@ -67,7 +67,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Verified by: </span>
                 </td>
-                <td> <span>Received by: </span>
+                <td> <span>Returned by: </span>
                 </td>
             </tr>
             <td><span>{{ auth()->user()->name }}</span>
