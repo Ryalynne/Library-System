@@ -42,7 +42,7 @@ class PDF_Controller extends Controller
         }
 
         $transaction = purchasemodel::where('vendorid', $id)->where('status', 'pending')->latest('transaction')->first();
-        $pdf = PDF::loadView('myPDFpurchaseorder', compact('vendor', 'bookdata', 'transaction'));
+        $pdf = PDF::loadView('print_pdf.myPDFpurchaseorder', compact('vendor', 'bookdata', 'transaction'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -62,7 +62,7 @@ class PDF_Controller extends Controller
         // $transaction = purchasemodel::where('bookid', $book)->where('bookstatus', 'onlend')->value('transaction');
 
         ///duedate need kuhain
-        $pdf = PDF::loadView('myPDFBadorder', compact('bookList', 'quantitylist'));
+        $pdf = PDF::loadView('print_pdf.myPDFBadorder', compact('bookList', 'quantitylist'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -74,7 +74,7 @@ class PDF_Controller extends Controller
         // $pdf = PDF::loadView('myPDFtbl', compact('books'));
         // return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->download('book_list.pdf')->stream();
         $books = booklist::where('ishide', false)->get();
-        $pdf = PDF::loadView('myPDFtbl', [
+        $pdf = PDF::loadView('print_pdf.myPDFtbl', [
             'books' => $books
         ]);
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->download('book_list.pdf');
@@ -91,7 +91,7 @@ class PDF_Controller extends Controller
     public function generateAction()
     {
         $books = bookaction::where('ishide', false)->get();
-        $pdf = PDF::loadView('myPDFaction', compact('books'));
+        $pdf = PDF::loadView('print_pdf.myPDFaction', compact('books'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -133,7 +133,7 @@ class PDF_Controller extends Controller
 
 
         ///duedate need kuhain
-        $pdf = PDF::loadView('myPDFborrow', compact('bookList', 'transaction', 'duedate', 'borrower'));
+        $pdf = PDF::loadView('print_pdf.myPDFborrow', compact('bookList', 'transaction', 'duedate', 'borrower'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
     }
 
@@ -179,7 +179,7 @@ class PDF_Controller extends Controller
         }
 
 
-        $pdf = PDF::loadView('myPDFfined', compact('bookList', 'transaction', 'student'));
+        $pdf = PDF::loadView('print_pdf.myPDFfined', compact('bookList', 'transaction', 'student'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
     }
 
@@ -223,7 +223,7 @@ class PDF_Controller extends Controller
             }
         }
 
-        $pdf = PDF::loadView('myPDFreturn', compact('bookList', 'transaction','student_number'));
+        $pdf = PDF::loadView('print_pdf.myPDFreturn', compact('bookList', 'transaction','student_number'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
     }
 
@@ -232,13 +232,13 @@ class PDF_Controller extends Controller
     public function generateAdjustment()
     {
         $adjustment = bookadjusment::where('ishide', false)->get();
-        $pdf = PDF::loadView('myPDFadjustment', compact('adjustment'));
+        $pdf = PDF::loadView('print_pdf.myPDFadjustment', compact('adjustment'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
     public function generateOnlend()
     {
         $borrow = borrowpage::where('ishide', false)->where('bookstatus', 'onlend')->get();
-        $pdf = PDF::loadView('myPDFonlend', compact('borrow'));
+        $pdf = PDF::loadView('print_pdf.myPDFonlend', compact('borrow'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -247,7 +247,7 @@ class PDF_Controller extends Controller
         $books = booklist::where('ishide', false)->get();
         $return = borrowpage::where('ishide', false)->where('bookstatus', 'returned')->get();
         $student = studentlist::where('ishide', false)->get();
-        $pdf = PDF::loadView('myPDFreturnhistory', compact('books', 'return', 'student'));
+        $pdf = PDF::loadView('print_pdf.myPDFreturnhistory', compact('books', 'return', 'student'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -255,7 +255,7 @@ class PDF_Controller extends Controller
     public function generatefinehistory()
     {
         $fine = borrowpage::where('bookstatus', 'fine')->get();
-        $pdf = PDF::loadView('myPDFfinedhistory', compact('fine'));
+        $pdf = PDF::loadView('print_pdf.myPDFfinedhistory', compact('fine'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -263,8 +263,8 @@ class PDF_Controller extends Controller
     public function generatePDF($data)
     {
         $book  = booklist::find($data);
-        $qrcode = base64_encode(QrCode::format('svg')->size(100)->errorCorrection('H')->generate($book->accession));
-        $pdf = PDF::loadView('myPDF', compact('qrcode', 'book'));
+        $qrcode = base64_encode(QrCode::format('svg')->size(50)->errorCorrection('H')->generate($book->accession));
+        $pdf = PDF::loadView('print_pdf.myPDF', compact('qrcode', 'book'));
         return $pdf->stream();
     }
 
@@ -282,7 +282,7 @@ class PDF_Controller extends Controller
                 ];
             }
         }
-        $pdf = PDF::loadView('myPDF_BulkQr', compact('qrCodesAndBooks'));
+        $pdf = PDF::loadView('print_pdf.myPDF_BulkQr', compact('qrCodesAndBooks'));
         return $pdf->download('qrlist.pdf');
     }
 }
