@@ -55,26 +55,26 @@
     </table>
     <br>
     <div class="footer-row">
-        <span>Date Printed: {{ date('Y-m-d') }}</span>
+        <span>DATE RETURNED: {{ date('Y-m-d') }}</span>
     </div>
     <br><br>
     <table id="my-table">
         <tbody>
             <tr>
-                <td> <span>Prepared by: </span>
+                <td> <span>PREPARED BY: </span>
                 </td>
                 <td> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Verified by: </span>
+                        VERIFIED BY: </span>
                 </td>
-                <td> <span>Returned by: </span>
+                <td> <span>RETURNED BY: </span>
                 </td>
             </tr>
             <td><span>{{ auth()->user()->name }}</span>
             </td>
             <td><span>
                 </span></td>
-            <td><span>{{ $student_number}}</span>
+            <td><span>{{ $borrowedby}}</span>
             </td>
         </tbody>
     </table>

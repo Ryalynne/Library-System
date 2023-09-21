@@ -16,7 +16,7 @@
                     <div class="me-auto p-2">
                         <button type="button" class="btn btn-success bg-success border-success  printbtn"
                             data-bs-toggle="modal" data-bs-target="#tablemodal">
-                            Print Adjustment
+                            Print Archived
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-printer-fill" viewBox="0 0 16 16">
                                 <path
@@ -146,9 +146,10 @@
 
 @section('script')
     <script>
+
         $(".printbtn").on('click', function() {
             const frame = $('#table-frame')
-            const link = '/generate-tbladjustment/'
+            const link = '/generate-archived/'
             frame.attr('src', link)
         });
 

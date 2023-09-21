@@ -21,7 +21,7 @@
 
         .bordertbl th,
         .bordertbl td {
-            border: 1px solid #ccc;
+            border: 1px solid #000000;
             padding: 8px;
             text-align: left;
         }
@@ -89,20 +89,20 @@
             </tbody>
         </table>
         <div class="footer-row">
-            <span>Date of Delivery: {{ date('Y-m-d') }}</span>
+            <span>DATE OF DELIVERY: {{ date('Y-m-d') }}</span>
         </div>
         <table>
             <tbody>
                 <tr>
-                    <td>Prepared by: ______________________________</td>
+                    <td>PREPARED BY: ______________________________</td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Noted by: ______________________________</td>
-                    <td>Approved by: ____________________</td>
+                        NOTED BY: ______________________________</td>
+                    <td>APPROVE BY: ____________________</td>
                 </tr>
                 <tr>
-                    <td>Department Head</td>
-                    <td>Librarian</td>
-                    <td>School Director</td>
+                    <td>DEPARTMENT HEAD</td>
+                    <td>LIBRARIAN</td>
+                    <td>SCHOOL DIRECTOR</td>
                 </tr>
             </tbody>
         </table>

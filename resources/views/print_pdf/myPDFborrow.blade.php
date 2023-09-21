@@ -113,27 +113,27 @@
             another book and a fine.</p>
         <br>
         <div class="footer-row">
-            <span>Due Date: {{ $duedate }}</span>
+            <span>DUE DATE: {{ $duedate }}</span>
             <br>
         </div>
         <br><br>
         <table id="my-table">
             <tbody>
                 <tr>
-                    <td> <span>Prepared by: </span>
+                    <td> <span>PREPARED BY: </span>
                     </td>
                     <td> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Verified by: </span>
+                        VERIFIED BY: </span>
                     </td>
-                    <td> <span>Received by: </span>
+                    <td> <span>RECEIVED BY: </span>
                     </td>
                 </tr>
                 <td><span>{{ auth()->user()->name }}</span>
                 </td>
                 <td><span>
                     </span></td>
-                <td><span>{{ $borrower}}</span>
+                <td><span>{{$borrowedby}}</span>
                 </td>
             </tbody>
         </table>

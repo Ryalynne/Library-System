@@ -276,11 +276,11 @@
                     .done(function(data, response) {
                         if (data.status == "success") {
                             console.log('Book is available');
-                            alert(data.status);
+                         
                             checkBookAvailability(id);
                         } else if (data.status == "error") {
                             console.log('Book is already borrowed');
-                            alert(data.status);
+                            alert("Book is already borrowed");
                             $('.bookid').val("");
                         }
                     })

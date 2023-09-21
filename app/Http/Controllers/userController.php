@@ -13,7 +13,7 @@ class userController extends Controller
     //
     public function index()
     {
-        return view('setting');
+        return view('settings.setting');
     }
     public function update(Request $request)
     {

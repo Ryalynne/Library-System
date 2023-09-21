@@ -62,42 +62,43 @@
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="booklist">Physical Books List</a>
-                                        <hr>    
-                                        <a class="dropdown-item dropdown-active-success"
-                                        onclick="this.style.backgroundColor='#198754'"
-                                        onmouseover="this.style.backgroundColor='#198754'"
-                                        onmouseout="this.style.backgroundColor=''" href="ebook">E-Books List</a>
-                                        <hr>    
+                                    <hr>
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
-                                        onmouseout="this.style.backgroundColor=''" href="bookadjustment">Physical Books Adjustment</a>
+                                        onmouseout="this.style.backgroundColor=''" href="ebook">E-Books List</a>
+                                    <hr>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="bookadjustment">Physical Books
+                                        Adjustment</a>
                                     <hr>
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="borrowpage">Borrow Book</a>
-                                        <a class="dropdown-item dropdown-active-success"
+                                    <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="returnpage">Return Book</a>
-                                        <a class="dropdown-item dropdown-active-success"
+                                    <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
                                         onmouseout="this.style.backgroundColor=''" href="fined">Damage / Lost
-                                        Book</a>    
+                                        Book</a>
                                     <hr>
                                     <a class="dropdown-item dropdown-active-success"
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="department">Add Department</a>
-                               
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="department">Add Department</a>
+
                                     <a class="dropdown-item dropdown-active-success"
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="subject">Add Subject</a>
-                               
-                               
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="subject">Add Subject</a>
+
+
                                 </div>
                             </li>
                             <li class="nav-item active">
@@ -152,34 +153,37 @@
                                     Requisition
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item dropdown-active-success"   
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="vendormanagement">Vendor Management</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="vendormanagement">Vendor
+                                        Management</a>
                                     <hr>
-                                    <a class="dropdown-item dropdown-active-success"   
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="purchase">Purchase Order</a>
-                                    <a class="dropdown-item dropdown-active-success"   
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="purchasepending">Pending Order</a>
-                                    <a class="dropdown-item dropdown-active-success"   
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="receivepurchaseorder">Receive Order</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="purchase">Purchase Order</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="purchasepending">Pending
+                                        Order</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="receivepurchaseorder">Receive
+                                        Order</a>
                                     <hr>
-                                    <a class="dropdown-item dropdown-active-success"   
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="backorder">Back Order</a>
-                                    <a class="dropdown-item dropdown-active-success"   
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="badorder">Bad Order</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="backorder">Back Order</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="badorder">Bad Order</a>
                                 </div>
-                            </li>      
+                            </li>
                             <li class="nav-item active">
                                 <a class="nav-link text-white">|</a>
                             </li>
@@ -189,22 +193,36 @@
                                     Requisition History
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item dropdown-active-success"   
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="receivehistory">Receive History</a>
-                                    <a class="dropdown-item dropdown-active-success"   
-                                    onclick="this.style.backgroundColor='#198754'"
-                                    onmouseover="this.style.backgroundColor='#198754'"
-                                    onmouseout="this.style.backgroundColor=''" href="cancelhistory">Cancel History</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="receivehistory">Receive
+                                        History</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="cancelhistory">Cancel History</a>
                                 </div>
-                            </li>     
+                            </li>
                             <li class="nav-item active">
                                 <a class="nav-link text-white">|</a>
                             </li>
-                            <li class="nav-item active">
-                                <a class="nav-link text-white" href="statisticReports">Statistic Reports</a>
-                            </li> 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Statistic Report
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="receivehistory">Summary of Statistics</a>
+                                    <a class="dropdown-item dropdown-active-success"
+                                        onclick="this.style.backgroundColor='#198754'"
+                                        onmouseover="this.style.backgroundColor='#198754'"
+                                        onmouseout="this.style.backgroundColor=''" href="cancelhistory">Summary of E-book Statistics</a>
+                                </div>
+                            </li>
                             <li class="nav-item active">
                                 <a class="nav-link text-white">|</a>
                             </li>
@@ -298,7 +316,6 @@
             $('.modal-book-subject').val(data.book.subject);
         });
     });
-    
 </script>
 
 @yield('script')

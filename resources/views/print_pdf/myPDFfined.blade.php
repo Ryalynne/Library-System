@@ -10,7 +10,7 @@
 <body>
     <center>
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
-        <h2>STUDENT LOST OR DAMAGE BOOK</h2>
+        <h3>STUDENT LOST OR DAMAGE BOOK</h3>
     </center>
     <p><b>FORM LIB-10</b></p>
     <table class="table table-bordered myTable">
@@ -59,29 +59,27 @@
     </p>
     <br>
     <div class="footer-row">
-        <span>Date Printed: {{ date('Y-m-d') }}</span>
+        <span>DATE PRINTED: {{ date('Y-m-d') }}</span>
         <br>
     </div>
     <br><br>
     <table id="my-table">
         <tbody>
             <tr>
-                <td> <span>Prepared by: </span>
+                <td> <span>PREPARED BY: </span>
                 </td>
                 <td> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Verified by: </span>
+                        VERIFIED BY: </span>
                 </td>
-                <td> <span>Received by: </span>
+                <td> <span>RECEIVED BY: </span>
                 </td>
             </tr>
             <td><span>{{ auth()->user()->name }}</span>
             </td>
             <td><span>
                 </span></td>
-            <td><span>{{ $student->first_name }}
-                    {{ $student->middle_name }}
-                    {{ $student->lastname }}</span>
+            <td><span>{{$borrowedby}}</span>
             </td>
         </tbody>
     </table>
