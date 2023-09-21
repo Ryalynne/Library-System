@@ -4,7 +4,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item text-success">Book Management</li>
-                <li class="breadcrumb-item text-success" aria-current="page">Return Book</li>
+                <li class="breadcrumb-item text-success" aria-current="page">Lost/Damage Book</li>
             </ol>
         </nav>
     </div>

@@ -7,10 +7,10 @@
     </head>
 
     <div class="px-4 bg-white text-dark border border-success border-top-0 border-end-0">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item text-success">Book Management</li>
-                <li class="breadcrumb-item active text-success" aria-current="page">Book Entry</li>
+        <nav aria-label="breadcrumb ">
+            <ol class="breadcrumb ">
+                <li class="breadcrumb-item text-success  mt-3">Book Management</li>
+                <li class="breadcrumb-item active text-success  mt-3" aria-current="page">Book Entry</li>
             </ol>
         </nav>
     </div>
