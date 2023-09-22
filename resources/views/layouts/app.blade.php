@@ -49,7 +49,7 @@
                             <li class="nav-item active">
                                 <a class="nav-link text-white" href="home">Dashboard</a>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item active liremove-bar">
                                 <a class="nav-link text-white">|</a>
                             </li>
                             <li class="nav-item dropdown">
@@ -101,7 +101,7 @@
 
                                 </div>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item active liremove-bar">
                                 <a class="nav-link text-white">|</a>
                             </li>
                             <li class="nav-item dropdown">
@@ -144,7 +144,7 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item active">
+                            <li class="nav-item active liremove-bar">
                                 <a class="nav-link text-white">|</a>
                             </li>
                             <li class="nav-item dropdown">
@@ -184,7 +184,7 @@
                                         onmouseout="this.style.backgroundColor=''" href="badorder">Bad Order</a>
                                 </div>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item active liremove-bar">
                                 <a class="nav-link text-white">|</a>
                             </li>
                             <li class="nav-item dropdown">
@@ -204,7 +204,7 @@
                                         onmouseout="this.style.backgroundColor=''" href="cancelhistory">Cancel History</a>
                                 </div>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item active liremove-bar">
                                 <a class="nav-link text-white">|</a>
                             </li>
                             <li class="nav-item dropdown">
@@ -216,14 +216,16 @@
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
-                                        onmouseout="this.style.backgroundColor=''" href="receivehistory">Summary of Statistics</a>
+                                        onmouseout="this.style.backgroundColor=''" href="receivehistory">Summary of
+                                        Statistics</a>
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
-                                        onmouseout="this.style.backgroundColor=''" href="cancelhistory">Summary of E-book Statistics</a>
+                                        onmouseout="this.style.backgroundColor=''" href="cancelhistory">Summary of E-book
+                                        Statistics</a>
                                 </div>
                             </li>
-                            <li class="nav-item active">
+                            <li class="nav-item active liremove-bar">
                                 <a class="nav-link text-white">|</a>
                             </li>
                             <li class="nav-item active">
@@ -332,6 +334,13 @@
     .dropdown-item.dropdown-active-success.active {
         color: rgb(255, 255, 255);
     }
+
+    @media only screen and (max-width: 800px) {
+        .liremove-bar{
+            display:none;
+        }
+    }
+    
 </style>
 
 </html>
