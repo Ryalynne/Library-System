@@ -21,8 +21,9 @@ class StudentDetails extends Model
         $academic = AcademicYear::where('is_active', true)->first();
         return $this->hasOne(EnrollmentAssessment::class, 'student_id')->where('academic_id', $academic->id);
     }
-    public function borrow_books(){
-        return $this->hasMany(borrowpage::class , 'studentid')->where('bookstatus', 'onlend')->where('ishide',false);
+    public function borrow_books()
+    {
+        return $this->hasMany(borrowpage::class, 'studentid')->where('bookstatus', 'onlend')->where('ishide', false);
     }
 
     public function profile_picture()

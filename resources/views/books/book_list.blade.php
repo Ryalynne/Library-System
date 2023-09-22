@@ -99,10 +99,9 @@
                                         <select name="department" id="department" class="form-control t-department">
                                             <option value="" {{ request('department') ? '' : 'selected' }}>Select
                                                 Department</option>
-                                            @foreach (\App\Models\departmentList::select('departmentName', 'id')->get() as $department)
-                                                ;
-                                                <option value="{{ $department->id }}"
-                                                    {{ request('department') == $department->id ? 'selected' : '' }}>
+                                            @foreach (\App\Models\departmentList::select('departmentName')->distinct()->get() as $department)
+                                                <option value="{{ $department->departmentName }}"
+                                                    {{ request('department') == $department->departmentName ? 'selected' : '' }}>
                                                     {{ strtoupper($department->departmentName) }}
                                                 </option>
                                             @endforeach
@@ -137,11 +136,9 @@
                                     <div class="form-group">
                                         <label for="subject">SUBJECT</label>
                                         <select name="subject" id="subject" class="form-control t-subject">
-                                            <option value="" {{ request('subject') ? '' : 'selected' }}>Select
-                                                Subject</option>
-                                            @foreach (\App\Models\subjectList::select('subjectName', 'id')->get() as $subject)
-                                                <option value="{{ $subject->id }}"
-                                                    {{ request('subject') == $subject->id ? 'selected' : '' }}>
+                                            @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
+                                                <option value="{{ $subject->subjectName }}"
+                                                    {{ request('subject') == $subject->subjectName ? 'selected' : '' }}>
                                                     {{ strtoupper($subject->subjectName) }}
                                                 </option>
                                             @endforeach
@@ -198,7 +195,7 @@
                                         <td>
                                             {{ $book->author }}
                                         </td>
-                                        <td>{{ $book->departments ? $book->departments->departmentName : '' }}</td>
+                                        <td>{{ $book->departments}}</td>
                                         <td>{{ $book->copyright }}</td>
                                         <td>
                                             {{ $book->accession }}
@@ -207,7 +204,7 @@
                                             {{ $book->callnumber }}
                                         </td>
                                         <td>
-                                            {{ $book->subjects ? $book->subjects->subjectName : '' }}
+                                            {{ $book->subjects}}
                                         </td>
                                         <td>
                                             {{ date('Y-m-d', strtotime($book->created_at)) }}
@@ -300,11 +297,11 @@
                                     <option value="" {{ request('department') ? '' : 'selected' }}>Select
                                         Department</option>
                                     @foreach (\App\Models\departmentList::select('departmentName')->distinct()->get() as $department)
-                                        ;
                                         <option value="{{ $department->departmentName }}"
-                                            {{ request('department') == $department->id ? 'selected' : '' }}>
+                                            {{ request('department') == $department->departmentName ? 'selected' : '' }}>
+                                            {{ strtoupper($department->departmentName) }}
                                         </option>
-                                    @endforeach
+                                    @endforeach                                 
                                 </select>
                             </div>
                         </div>
@@ -336,8 +333,6 @@
                             <div class="form-group">
                                 <label for="updatesubject">SUBJECT</label>
                                 <select name="subject" id="subject" class="form-control t-subject">
-                                    <option value="" {{ request('subject') ? '' : 'selected' }}>Select Subject
-                                    </option>
                                     @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
                                         <option value="{{ $subject->subjectName }}"
                                             {{ request('subject') == $subject->subjectName ? 'selected' : '' }}>

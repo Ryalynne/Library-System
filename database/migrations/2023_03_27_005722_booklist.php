@@ -18,12 +18,8 @@ return new class extends Migration
 
             // $table->string('department')->nullable();
       
-            $table->unsignedBigInteger('department')->nullable();
-            $table->foreign('department')->references('id')->on('department_lists');
-
-   
-            $table->unsignedBigInteger('subject')->nullable();
-            $table->foreign('subject')->references('id')->on('subject_lists');
+            $table->string('department')->nullable();
+            $table->string('subject')->nullable();
 
 
             $table->string('copyright')->nullable();

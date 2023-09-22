@@ -66,7 +66,8 @@
                                 <td>{{ $item->book->accession}}</td>
                                 <td>{{ $item->book->callnumber}}</td>
                                 <td>{{ $item->book->subject}}</td>
-                                <td>{{$item->borrower}}</td>
+                                <td>{{ ($studentName = $item->student_list($item->borrower)) ?: ($staffName = $item->staff_list($item->borrower)) ?: 'no info' }}
+                                </td>
                                 <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
                                 <td>{{ $item->duedate }}</td>
                                 <td>{{ $item->penalty($item->duedate) }}</td>
