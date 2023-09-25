@@ -126,4 +126,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/import', [Booklist_Controller::class , 'import'])->name('import');
     Route::post('/add/department',[Add_DepartmentController::class, 'store']);
     Route::post('/add/subject',[Add_SubjectController::class, 'store']);
+
+
+    Route::get('/fetch-data', [Borrow_Controller::class, 'fetchData']);
 });

@@ -6,6 +6,7 @@ use App\Models\booklist;
 use App\Models\BorrowController as ModelsBorrowpage;
 use App\Models\borrowpage;
 use App\Models\copies;
+use App\Models\Staff;
 use App\Models\StudentAccount;
 use App\Models\StudentDetails;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class Borrow_Controller extends Controller
 {
     public function index(Request $request)
     {
-        $books = booklist::where('ishide', false)->get();
+        $books = booklist::where('ishide', false)->paginate(50);
         $copies = copies::where('ishide', false)->get();
         $value = [];
         $designated = [];
@@ -40,6 +41,14 @@ class Borrow_Controller extends Controller
         }
         return view('books.borrow_page', compact('books', 'copies', 'value', 'designated'));
     }
+
+    public function fetchData(Request $request)
+    {
+        $name = $request->input('name');
+        $data = StudentDetails::where('first_name', '=', $name)->get();
+        return response()->json($data);
+    }
+
 
     public function storebookborrow(Request $request)
     {

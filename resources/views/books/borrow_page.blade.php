@@ -33,9 +33,17 @@
             <span class="badge bg-danger w-100">No User Found.</span>
         @endif
         <form action="">
-            <label class="form-label">ENTER ID: </label>
-            <input type="text" class="form-control mb-4" name="data" :value="old('data')"
-                data-borrower="{{ request()->input('data') }}" value="{{ request()->input('data') }}">
+            <div class="form-group">
+                <label for="data">ENTER ID:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="data" name="data" :value="old('data')"
+                        data-borrower="{{ request()->input('data') }}" value="{{ request()->input('data') }}">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#search_user">SEARCH</button>
+                    </div>
+                </div>
+            </div>
         </form>
 
         <label class="form-label">FULL NAME: </label>
@@ -100,12 +108,53 @@
             </tbody>
         </table>
 
-        <button type="button" class="btn btn-success  w-40 btn-lg borrowbook mb-4 mt-4 "
-        data-bs-toggle="modal" data-bs-target="#tablemodal" data-submit="{{ request()->input('data') }}" data-token="{{ csrf_token() }}" id="bor">Submit
+        <button type="button" class="btn btn-success  w-40 btn-lg borrowbook mb-4 mt-4 " data-bs-toggle="modal"
+            data-bs-target="#tablemodal" data-submit="{{ request()->input('data') }}" data-token="{{ csrf_token() }}"
+            id="bor">Submit
             Books</button></a>
 
     </div>
-    
+
+    {{-- --------------------------------------------------------------------------------------------------------------------------------------- --}}
+    {{-- MODALS --}}
+
+
+    {{-- SEARCH BORROWER --}}
+    <div class="modal fade" id="search_user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5  fw-bold">SEARCH PERSON</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="name" placeholder="NAME">
+                        <button class="input-group-text bg-success text-white" id="searchBtn">SEARCH</button>
+                    </div>
+
+                    <!-- Table to display data -->
+                    <table class="table table-responsive table-bordered table-striped myTable mb5" id="tbl">
+                        <!-- Table headers here -->
+                        <thead class="bg-success text-white">
+                            <th>ID</th>
+                            <th>FIRST NAME</th>
+                            <th>MIDDLE NAME</th>
+                            <th>LAST NAME</th>
+                            <th>ACTION</th>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- PRINT BORROWER --}}
     <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static"
         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
@@ -122,6 +171,7 @@
     </div>
 
 
+    {{-- SEARCH BAR --}}
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -276,7 +326,7 @@
                     .done(function(data, response) {
                         if (data.status == "success") {
                             console.log('Book is available');
-                         
+
                             checkBookAvailability(id);
                         } else if (data.status == "error") {
                             console.log('Book is already borrowed');
@@ -395,5 +445,32 @@
             accessionList.splice(index, 1);
             tbl.deleteRow(row);
         }
+
+
+        $(document).ready(function() {
+            $('#searchBtn').click(function() {
+                var name = $('#name').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/fetch-data',
+                    data: {
+                        name: name
+                    },
+                    success: function(data) {
+                        $('#tbl tbody').empty();
+                        $.each(data, function(index, item) {
+                            $('#tbl tbody').append('<tr>' +
+                                '<td>' + item.id + '</td>' +
+                                '<td>' + item.first_name + '</td>' +
+                                '<td>' + item.middle_name + '</td>' +
+                                '<td>' + item.last_name + '</td>' +
+                                '<td><a href="#">SELECT</a>' +
+                                '</tr>');
+                        });
+                    }
+                });
+            });
+        });
+
     </script>
 @endsection
