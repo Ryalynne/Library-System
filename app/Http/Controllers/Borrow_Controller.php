@@ -44,10 +44,50 @@ class Borrow_Controller extends Controller
 
     public function fetchData(Request $request)
     {
+        $data = [];
         $name = $request->input('name');
-        $data = StudentDetails::where('first_name', '=', $name)->get();
+        if ($request->input('TypeUser') == 'Employee') {
+            $staff = Staff::where('last_name', 'LIKE', '%' . $name . '%')->get();
+            foreach ($staff as $staffDetail) {
+                $data[] = $staffDetail;
+            }
+        } elseif ($request->input('TypeUser') == 'Student') {
+            $studentDetails = StudentDetails::where('last_name', 'LIKE', '%' . $name . '%')->get();
+            foreach ($studentDetails as $detail) {
+                $studentAccount = StudentAccount::where('student_id', $detail->id)->latest()->first();
+                if ($studentAccount) {
+                    $relatedStudentDetail = StudentDetails::find($studentAccount->student_id);
+                    if ($relatedStudentDetail) {
+                        $data[] = $relatedStudentDetail;
+                    }
+                }
+            }
+        }
+
         return response()->json($data);
+
+        // $name = $request->input('name');
+
+        // $studentDetails = StudentDetails::where('last_name', 'LIKE', '%' . $name . '%')->get();
+
+        // $staff = Staff::where('last_name', 'LIKE', '%' . $name . '%')->get();
+        // $data = [];
+
+        // foreach ($studentDetails as $detail) {
+        //     $studentAccount = StudentAccount::where('student_id', $detail->id)->latest()->first();
+        //     if ($studentAccount) {
+        //         $relatedStudentDetail = StudentDetails::find($studentAccount->student_id);
+        //         if ($relatedStudentDetail) {
+        //             $data[] = $relatedStudentDetail;
+        //         }
+        //     }
+        // }
+        // foreach ($staff as $staffDetail) {
+        //     $data[] = $staffDetail;
+        // }
+
     }
+
 
 
     public function storebookborrow(Request $request)
@@ -100,4 +140,16 @@ class Borrow_Controller extends Controller
             return response()->json(['error' => 'User not specified'], 400);
         }
     }
-}
+
+
+    function get_user($id , $user)
+    {
+        $student = StudentAccount::where('student_id', $id)->value('email');
+        $employee = UserStaff::where('id', $id)->value('email');
+        if ($user == 'Employee') {
+            return 'employee' . $employee;
+        } elseif ($user == 'Student') {
+            return str_replace('@bma.edu.ph', '', $student);
+        }
+    }
+}  

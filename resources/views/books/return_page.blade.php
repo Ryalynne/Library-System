@@ -31,10 +31,19 @@
         @if (!$value && request()->input('data'))
             <span class="badge bg-danger w-100">No User Found.</span>
         @endif
+
         <form action="">
-            <label class="form-label">ENTER ID: </label>
-            <input type="text" class="form-control mb-4" name="data" :value="old('data')"
-                data-borrower="{{ request()->input('data') }}" value="{{ request()->input('data') }}">
+            <div class="form-group">
+                <label for="data">ENTER ID:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control mb-4" name="data" :value="old('data')"
+                        data-borrower="{{ request()->input('data') }}" value="{{ request()->input('data') }}">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#search_user">SEARCH</button>
+                    </div>
+                </div>
+            </div>
         </form>
 
         <label class="form-label">FULL NAME: </label>
@@ -127,6 +136,54 @@
     </div>
 
 
+
+    {{-- SEARCH BORROWER --}}
+    <div class="modal fade" id="search_user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5  fw-bold">SEARCH PERSON</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle mb-2" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Type of Borrower
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" data-value="Employee">Employee</a></li>
+                            <li><a class="dropdown-item" data-value="Student">Student</a></li>
+                        </ul>
+                        <input type="hidden" name="TypeUser" id="TypeUser" value="Employee"> <!-- Default value -->
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="name" placeholder="ENTER LAST NAME">
+                        <button class="input-group-text bg-success text-white" id="searchBtn">SEARCH</button>
+                    </div>
+
+                    <!-- Table to display data -->
+                    <table class="table table-responsive table-bordered table-striped myTable mb5" id="tbl">
+                        <!-- Table headers here -->
+                        <thead class="bg-success text-white">
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>ACTION</th>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 @endsection
 
 @section('script')
@@ -168,6 +225,59 @@
             }
         });
 
+        $(document).ready(function() {
+            $('#searchBtn').click(function() {
+                var name = $('#name').val();
+                var TypeUser = $('#TypeUser').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/fetch-data',
+                    data: {
+                        name: name,
+                        TypeUser: TypeUser
+                    },
+                    success: function(data) {
+                        $('#tbl tbody').empty();
+                        $.each(data, function(index, item) {
+                            console.log(item);
+                            var row = '<tr>' +
+                                '<td>' + item.id + '</td>' +
+                                '<td>' + item.first_name +" " +item.middle_name +" "+ item.last_name + '</td>' +
+                                '<td>' +
+                                '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-transaction="' +
+                                item.id + '">SELECT</button>' +
+                                '</td>' +
+                                '</tr>';
+                            $('#tbl tbody').append(row);
+                        });
+
+                        $('.custom-button').on('click', function(event) {
+                            event
+                                .preventDefault();
+                            var button = $(event.currentTarget);
+                            var id = button.data('transaction');
+                            var user = $('#TypeUser').val();
+                            var redirectLink = $('#redirect-link');
+
+                            $.get("/get-user/" + id + "/" + user, function(data,
+                                status) {
+                                window.location.href = '/returnpage?data=' +
+                                    data;
+                            });
+                        });
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $('.dropdown-item').on('click', function() {
+                var selectedValue = $(this).data('value');
+                $('#dropdownMenuButton1').text(selectedValue);
+                $('#TypeUser').val(selectedValue);
+            });
+        });
 
         // var stud = document.getElementById("student").value;
 

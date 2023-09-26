@@ -33,7 +33,7 @@
             <span class="badge bg-danger w-100">No User Found.</span>
         @endif
         <form action="">
-            <div class="form-group">
+            <div class="form-group mb-4">
                 <label for="data">ENTER ID:</label>
                 <div class="input-group">
                     <input type="text" class="form-control" id="data" name="data" :value="old('data')"
@@ -129,8 +129,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle mb-2" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Type of Borrower
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" data-value="Employee">Employee</a></li>
+                            <li><a class="dropdown-item" data-value="Student">Student</a></li>
+                        </ul>
+                        <input type="hidden" name="TypeUser" id="TypeUser" value="Employee"> <!-- Default value -->
+                    </div>
+
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="name" placeholder="NAME">
+                        <input type="text" class="form-control" id="name" placeholder="ENTER LAST NAME">
                         <button class="input-group-text bg-success text-white" id="searchBtn">SEARCH</button>
                     </div>
 
@@ -139,9 +152,7 @@
                         <!-- Table headers here -->
                         <thead class="bg-success text-white">
                             <th>ID</th>
-                            <th>FIRST NAME</th>
-                            <th>MIDDLE NAME</th>
-                            <th>LAST NAME</th>
+                            <th>NAME</th>
                             <th>ACTION</th>
                         </thead>
                         <tbody>
@@ -450,27 +461,57 @@
         $(document).ready(function() {
             $('#searchBtn').click(function() {
                 var name = $('#name').val();
+                var TypeUser = $('#TypeUser').val();
+
                 $.ajax({
                     type: 'GET',
                     url: '/fetch-data',
                     data: {
-                        name: name
+                        name: name,
+                        TypeUser: TypeUser
                     },
                     success: function(data) {
                         $('#tbl tbody').empty();
                         $.each(data, function(index, item) {
-                            $('#tbl tbody').append('<tr>' +
+                            console.log(item);
+                            var row = '<tr>' +
                                 '<td>' + item.id + '</td>' +
-                                '<td>' + item.first_name + '</td>' +
-                                '<td>' + item.middle_name + '</td>' +
-                                '<td>' + item.last_name + '</td>' +
-                                '<td><a href="#">SELECT</a>' +
-                                '</tr>');
+                                '<td>' + item.first_name +" " +item.middle_name +" "+ item.last_name + '</td>' +
+                                '<td>' +
+                                '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-transaction="' +
+                                item.id + '">SELECT</button>' +
+                                '</td>' +
+                                '</tr>';
+                            $('#tbl tbody').append(row);
+                        });
+
+                        $('.custom-button').on('click', function(event) {
+                            event
+                                .preventDefault();
+                            var button = $(event.currentTarget);
+                            var id = button.data('transaction');
+                            var user = $('#TypeUser').val();
+                            var redirectLink = $('#redirect-link');
+
+                            $.get("/get-user/" + id + "/" + user, function(data,
+                            status) {
+                                window.location.href = '/borrowpage?data=' +
+                                    data;
+                            });
                         });
                     }
                 });
             });
         });
 
+        $(document).ready(function() {
+            $('.dropdown-item').on('click', function() {
+                var selectedValue = $(this).data('value');
+                $('#dropdownMenuButton1').text(selectedValue);
+                $('#TypeUser').val(selectedValue);
+            });
+        });
+
+        
     </script>
 @endsection

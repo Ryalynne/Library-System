@@ -9,6 +9,7 @@ class Staff extends Model
 {
 
     use HasFactory;
+    protected $connection = 'mysql-main';
     function profile_picture()
     {
         $_image = 'avatar.png';

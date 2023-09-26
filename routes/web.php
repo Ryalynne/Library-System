@@ -129,4 +129,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::get('/fetch-data', [Borrow_Controller::class, 'fetchData']);
+    Route::get('/get-user/{id}/{user}', [Borrow_Controller::class, 'get_user']);
 });
