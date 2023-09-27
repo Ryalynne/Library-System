@@ -216,7 +216,7 @@
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"
                                         onmouseover="this.style.backgroundColor='#198754'"
-                                        onmouseout="this.style.backgroundColor=''" href="receivehistory">Summary of
+                                        onmouseout="this.style.backgroundColor=''" href="statistic-summary">Summary of
                                         Statistics</a>
                                     <a class="dropdown-item dropdown-active-success"
                                         onclick="this.style.backgroundColor='#198754'"

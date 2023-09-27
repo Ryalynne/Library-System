@@ -164,7 +164,7 @@
                     </div>
 
                     <!-- Table to display data -->
-                    <table class="table table-responsive table-bordered table-striped myTable mb5" id="tbl">
+                    <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5" id="tbl">
                         <!-- Table headers here -->
                         <thead class="bg-success text-white">
                             <th>ID</th>
@@ -236,7 +236,7 @@
                         TypeUser: TypeUser
                     },
                     success: function(data) {
-                        $('#tbl tbody').empty();
+                        $('.search-tbl tbody').empty();
                         $.each(data, function(index, item) {
                             console.log(item);
                             var row = '<tr>' +
@@ -247,7 +247,7 @@
                                 item.id + '">SELECT</button>' +
                                 '</td>' +
                                 '</tr>';
-                            $('#tbl tbody').append(row);
+                            $('.search-tbl tbody').append(row);
                         });
 
                         $('.custom-button').on('click', function(event) {

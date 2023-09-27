@@ -31,7 +31,7 @@
                                         Number of Booklist</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalofbooklist }}</div>
                                 </div>
-                                <div class="col-auto border border-primary-subtle">
+                                <div class="col-auto border-primary-subtle">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45"
                                         fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -201,11 +201,57 @@
                 </div>
 
             </div>
+            <div class="container mb-5">
+                <h2 class="text-success">LINE CHART</h2>
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
         </div>
 
     </body>
+    <link rel=
+    "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          type="text/css" />
+    <script src=
+    "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src=
+    "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+            type="text/javascript">
+    </script>
+    <script src=
+    "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src=
+    "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
 
     <script>
+
+        let ctx = document.getElementById("myChart").getContext("2d");
+        let myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                ],
+                datasets: [{
+                        label: "ONLEND",
+                        // data: [2, 9, 3, 17, 6,],
+                        data: {!! json_encode($onlendCounts) !!},
+                        backgroundColor: "rgba(255, 0, 0, 0.6)",
+                    },
+                    {
+                        label: "RETURNED",
+                        data: {!! json_encode($returnedCounts) !!},
+                        backgroundColor: "rgba(0,0,255,0.3)",
+                    },
+                ],
+            },
+        });
+
         function booklist() {
             location.assign('/booklist');
         }

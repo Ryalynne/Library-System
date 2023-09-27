@@ -37,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('copies', Book_InventoryController::class);
     Route::resource('books', Booklist_Controller::class);
     Route::resource('borrow', Borrow_Controller::class);
+    Route::get('/statistic-summary', [Statistic_ReportController::class, 'index']);
     Route::get('/department', [Add_DepartmentController::class, 'index']);
     Route::get('/subject', [Add_SubjectController::class, 'index']);
     Route::get('/cancelhistory', [Cancel_PurchaseOrder_historyController::class, 'index']);
