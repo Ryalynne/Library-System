@@ -82,7 +82,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Number of Lend</div>
+                                        Number of Onlend</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totaloflend }}</div>
                                 </div>
                                 <div class="col-auto">
@@ -202,7 +202,7 @@
 
             </div>
             <div class="container mb-5">
-                <h2 class="text-success">LINE CHART</h2>
+                <h2 class="text-success">LINE CHART THIS WEEK</h2>
                 <div>
                     <canvas id="myChart"></canvas>
                 </div>
