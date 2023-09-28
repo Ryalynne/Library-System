@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
     <div class="px-4 bg-white text-dark border border-success border-top-0 border-end-0 mt-4 mb-4">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -36,8 +35,9 @@
             <div class="form-group mb-4">
                 <label for="data">ENTER ID:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="data" name="data" :value="old('data')"
-                        data-borrower="{{ request()->input('data') }}" value="{{ request()->input('data') }}">
+                    <input type="text" class="borrowerName form-control" id="data" name="data"
+                        :value="old('data')" data-borrower="{{ request()->input('data') }}"
+                        value="{{ request()->input('data') }}">
                     <div class="input-group-append">
                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
                             data-bs-target="#search_user">SEARCH</button>
@@ -47,7 +47,7 @@
         </form>
 
         <label class="form-label">FULL NAME: </label>
-        <input type="text" class="form-control mb-4" :value="old('data')"
+        <input type="text" class="form-control mb-4 " :value="old('data')"
             value="{{ request()->input('data') ? ($value ? $value->last_name . ', ' . $value->first_name . ', ' . $value->middle_name : '') : '' }}"
             disabled>
 
@@ -148,7 +148,8 @@
                     </div>
 
                     <!-- Table to display data -->
-                    <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5" id="tbl">
+                    <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5"
+                        id="tbl">
                         <!-- Table headers here -->
                         <thead class="bg-success text-white">
                             <th>ID</th>
@@ -198,13 +199,14 @@
                             <div class="me-auto p-2">
                             </div>
                             <div class="p-2">
-                                <div class="input-group">
-                                    <input type="search" class="form-control rounded myInput" placeholder="Search"
-                                        aria-label="Search" aria-describedby="search-addon" />
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="accessionName"
+                                        placeholder="ACCESSION NO">
+                                    <button class="input-group-text bg-success text-white" id="searchBtn1">SEARCH</button>
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered myTable" id="data">
+                        <table class="table table-bordered myTable book-tbl" id="data">
                             <thead class="bg-success text-white">
                                 <tr>
                                     <th class="text-center">ID</th>
@@ -220,7 +222,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($books as $book)
+                                {{-- @foreach ($books as $book)
                                     @if ($book->numberofcopies() > 0)
                                         <tr class="trtr">
                                             <td scope="row" class="getidd">
@@ -270,7 +272,7 @@
                                         </tr>
                             </tbody>
                             @endif
-                            @endforeach
+                            @endforeach --}}
                         </table>
                     </div>
                 </div>
@@ -280,7 +282,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('script')
@@ -397,53 +398,53 @@
         let $status = "";
         var studentid = "";
 
-        $(".getdata").on('click', function() {
-            var $row = $(this).closest(".trtr");
-            $iddata = $row.find(".getidd").text().trim().toLowerCase();
-            $acc = $row.find(".getacc").text().trim().toLowerCase();
-            $status = $row.find(".getstatus").text();
-            $.get("/book/" + $iddata, function(data, status) {
-                if ($status.includes("onlend")) {
-                    alert('The Book Already Borrowed');
-                } else if (!accessionList.includes($acc)) {
-                    // bookList.push($iddata)
-                    accessionList.push(data.book.accession);
-                    bookList.push($iddata);
-                    console.log(bookList + accessionList);
-                    var tr = document.createElement('tr');
-                    var td1 = tr.appendChild(document.createElement(
-                        'td'));
-                    var td2 = tr.appendChild(document.createElement(
-                        'td'));
-                    var td3 = tr.appendChild(document.createElement(
-                        'td'));
-                    var td4 = tr.appendChild(document.createElement('td'));
-                    var td5 = tr.appendChild(document.createElement('td'));
-                    var td6 = tr.appendChild(document.createElement('td'));
-                    var td7 = tr.appendChild(document.createElement('td'));
-                    var td8 = tr.appendChild(document.createElement('td'));
-                    var td9 = tr.appendChild(document.createElement('td'));
-                    td1.innerHTML = $iddata;
-                    td2.innerHTML = data.book.title;
-                    td3.innerHTML = data.book.author;
-                    td4.innerHTML = data.book.department;
-                    td5.innerHTML = data.book.copyright;
-                    td6.innerHTML = data.book.accession;
-                    td7.innerHTML = data.book.callnumber;
-                    td8.innerHTML = data.book.subject;
-                    td9.innerHTML =
-                        '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
-                        $iddata + '" onclick="deleteRow(this, ' + $iddata +
-                        ');">Remove</button>';
-                    document.getElementById("tbl").appendChild(tr);
-                    $('.bookid').val("");
-                    alert('Added Successfully');
-                    console.log($status)
-                } else {
-                    alert('The Book Already in the list');
-                }
-            });
-        });
+        // $(".getdata").on('click', function() {
+        //     var $row = $(this).closest(".trtr");
+        //     $iddata = $row.find(".getidd").text().trim().toLowerCase();
+        //     $acc = $row.find(".getacc").text().trim().toLowerCase();
+        //     $status = $row.find(".getstatus").text();
+        //     $.get("/book/" + $iddata, function(data, status) {
+        //         if ($status.includes("onlend")) {
+        //             alert('The Book Already Borrowed');
+        //         } else if (!accessionList.includes($acc)) {
+        //             // bookList.push($iddata)
+        //             accessionList.push(data.book.accession);
+        //             bookList.push($iddata);
+        //             console.log(bookList + accessionList);
+        //             var tr = document.createElement('tr');
+        //             var td1 = tr.appendChild(document.createElement(
+        //                 'td'));
+        //             var td2 = tr.appendChild(document.createElement(
+        //                 'td'));
+        //             var td3 = tr.appendChild(document.createElement(
+        //                 'td'));
+        //             var td4 = tr.appendChild(document.createElement('td'));
+        //             var td5 = tr.appendChild(document.createElement('td'));
+        //             var td6 = tr.appendChild(document.createElement('td'));
+        //             var td7 = tr.appendChild(document.createElement('td'));
+        //             var td8 = tr.appendChild(document.createElement('td'));
+        //             var td9 = tr.appendChild(document.createElement('td'));
+        //             td1.innerHTML = $iddata;
+        //             td2.innerHTML = data.book.title;
+        //             td3.innerHTML = data.book.author;
+        //             td4.innerHTML = data.book.department;
+        //             td5.innerHTML = data.book.copyright;
+        //             td6.innerHTML = data.book.accession;
+        //             td7.innerHTML = data.book.callnumber;
+        //             td8.innerHTML = data.book.subject;
+        //             td9.innerHTML =
+        //                 '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
+        //                 $iddata + '" onclick="deleteRow(this, ' + $iddata +
+        //                 ');">Remove</button>';
+        //             document.getElementById("tbl").appendChild(tr);
+        //             $('.bookid').val("");
+        //             alert('Added Successfully');
+        //             console.log($status)
+        //         } else {
+        //             alert('The Book Already in the list');
+        //         }
+        //     });
+        // });
 
 
         function deleteRow(el, id) {
@@ -476,7 +477,8 @@
                             console.log(item);
                             var row = '<tr>' +
                                 '<td>' + item.id + '</td>' +
-                                '<td>' + item.first_name +" " +item.middle_name +" "+ item.last_name + '</td>' +
+                                '<td>' + item.first_name + " " + item.middle_name +
+                                " " + item.last_name + '</td>' +
                                 '<td>' +
                                 '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-transaction="' +
                                 item.id + '">SELECT</button>' +
@@ -494,7 +496,7 @@
                             var redirectLink = $('#redirect-link');
 
                             $.get("/get-user/" + id + "/" + user, function(data,
-                            status) {
+                                status) {
                                 window.location.href = '/borrowpage?data=' +
                                     data;
                             });
@@ -512,6 +514,117 @@
             });
         });
 
-        
+
+
+        $(document).ready(function() {
+            var accessionList = []; // Initialize the accessionList
+            var bookList = []; // Initialize the bookList
+
+            $('#searchBtn1').click(function() {
+                var accessionName = $('#accessionName').val();
+                var borrowerName = $('.borrowerName').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/get-book',
+                    data: {
+                        accessionName: accessionName,
+                        borrowerName: borrowerName
+                    },
+                    success: function(data) {
+                        $('.book-tbl tbody').empty();
+                        $.each(data, function(index, item) {
+                            console.log(item);
+                            var row = '<tr class="trtr">' +
+                                '<td class="getidd">' + item.id + '</td>' +
+                                '<td>' + item.title + '</td>' +
+                                '<td>' + item.author + '</td>' +
+                                '<td>' + item.department + '</td>' +
+                                '<td>' + item.copyright + '</td>' +
+                                '<td class="getacc">' + item.accession + '</td>' +
+                                // Added missing class
+                                '<td>' + item.callnumber + '</td>' +
+                                '<td>' + item.subject + '</td>' +
+                                '<td class="getstatus">' + item.onlend + '</td>' +
+                                '<td>' +
+                                '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
+                                item.id + '">SELECT</button>' +
+                                // Removed extra quotes and fixed data-id attribute
+                                '</td>' +
+                                '</tr>';
+
+                            $('.book-tbl tbody').append(row);
+                        });
+
+                        // Event delegation for dynamic elements
+                        $('.book-tbl').on('click', '.custom-button', function(event) {
+                            var $row = $(this).closest(".trtr");
+                            var $iddata = $row.find(".getidd").text().trim()
+                                .toLowerCase();
+                            var $acc = $row.find(".getacc").text().trim().toLowerCase();
+                            var $status = $row.find(".getstatus").text();
+
+                            $.get("/book/" + $iddata, function(data, status) {
+                                if ($status.includes("onlend")) {
+                                    alert('The Book Already Borrowed');
+                                } else if (!accessionList.includes($acc)) {
+                                    // bookList.push($iddata)
+                                    accessionList.push(data.book.accession);
+                                    bookList.push($iddata);
+                                    console.log(bookList + accessionList);
+                                    var tr = document.createElement('tr');
+                                    var td1 = tr.appendChild(document
+                                        .createElement(
+                                            'td'));
+                                    var td2 = tr.appendChild(document
+                                        .createElement(
+                                            'td'));
+                                    var td3 = tr.appendChild(document
+                                        .createElement(
+                                            'td'));
+                                    var td4 = tr.appendChild(document
+                                        .createElement('td'));
+                                    var td5 = tr.appendChild(document
+                                        .createElement('td'));
+                                    var td6 = tr.appendChild(document
+                                        .createElement('td'));
+                                    var td7 = tr.appendChild(document
+                                        .createElement('td'));
+                                    var td8 = tr.appendChild(document
+                                        .createElement('td'));
+                                    var td9 = tr.appendChild(document
+                                        .createElement('td'));
+                                    td1.innerHTML = $iddata;
+                                    td2.innerHTML = data.book.title;
+                                    td3.innerHTML = data.book.author;
+                                    td4.innerHTML = data.book.department;
+                                    td5.innerHTML = data.book.copyright;
+                                    td6.innerHTML = data.book.accession;
+                                    td7.innerHTML = data.book.callnumber;
+                                    td8.innerHTML = data.book.subject;
+                                    td9.innerHTML =
+                                        '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-id="' +
+                                        $iddata +
+                                        '" onclick="deleteRow(this, ' +
+                                        $iddata +
+                                        ');">Remove</button>';
+                                    document.getElementById("tbl").appendChild(
+                                        tr);
+                                    $('.bookid').val("");
+                                    alert('Added Successfully');
+                                    console.log($status)
+                                } else {
+                                    alert('The Book Already in the list');
+                                }
+                            });
+                        });
+                    },
+                    error: function() {
+                        // Handle error if the AJAX request fails
+                        alert('Error fetching data.');
+                    }
+                });
+            });
+        });
     </script>
 @endsection

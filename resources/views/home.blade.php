@@ -7,6 +7,12 @@
             .body {
                 background: rgb(194, 194, 194);
             }
+
+            h2 {
+                text-align: center;
+                font-family: "Verdana", sans-serif;
+                font-size: 40px;
+            }
         </style>
     </head>
 
@@ -21,6 +27,7 @@
 
         <div class="container">
             <div class="row">
+                <h2 class="text-success">SUMMARY OF ALL MODULES</h2>
                 <div class="col-xl-3 col-md-6 mb-5">
                     <div
                         class="card border-left-primary shadow h-100 py-1 border-success border-3 border-bottom-0 border-end-0  border-top-0">
@@ -207,39 +214,40 @@
                     <canvas id="myChart"></canvas>
                 </div>
             </div>
+
+            <div class="col-xs-12 text-center">
+                <h2 class="text-success">Donut Chart</h2>
+            </div>
+
+            <div id="donut-chart"></div>
+
         </div>
 
     </body>
-    <link rel=
-    "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-          type="text/css" />
-    <script src=
-    "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src=
-    "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
-            type="text/javascript">
-    </script>
-    <script src=
-    "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src=
-    "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    <link rel="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
 
     <script>
-
         let ctx = document.getElementById("myChart").getContext("2d");
         let myChart = new Chart(ctx, {
             type: "line",
             data: {
                 labels: [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
+                    "Monday " + {!! json_encode($onlendCounts[0]) !!} + "-" + {!! json_encode($returnedCounts[0]) !!},
+                    "Tuesday " + {!! json_encode($onlendCounts[1]) !!} + "-" + {!! json_encode($returnedCounts[1]) !!},
+                    "Wednesday " + {!! json_encode($onlendCounts[2]) !!} + "-" + {!! json_encode($returnedCounts[2]) !!},
+                    "Thursday " + {!! json_encode($onlendCounts[3]) !!} + "-" + {!! json_encode($returnedCounts[3]) !!},
+                    "Friday " + {!! json_encode($onlendCounts[4]) !!} + "-" + {!! json_encode($returnedCounts[4]) !!}
                 ],
                 datasets: [{
                         label: "ONLEND",
-                        // data: [2, 9, 3, 17, 6,],
+                        //data: [2, 9, 3, 17, 6,],
                         data: {!! json_encode($onlendCounts) !!},
                         backgroundColor: "rgba(255, 0, 0, 0.6)",
                     },
@@ -251,6 +259,32 @@
                 ],
             },
         });
+
+
+        let chart = bb.generate({
+            data: {
+                columns: [
+                    ["BSMAR-E", 2],
+                    ["orange", 4],
+                    ["green", 3],
+                ],
+                type: "donut",
+                onclick: function(d, i) {
+                    console.log("onclick", d, i);
+                },
+                onover: function(d, i) {
+                    console.log("onover", d, i);
+                },
+                onout: function(d, i) {
+                    console.log("onout", d, i);
+                },
+            },
+            donut: {
+                title: "70",
+            },
+            bindto: "#donut-chart",
+        });
+
 
         function booklist() {
             location.assign('/booklist');

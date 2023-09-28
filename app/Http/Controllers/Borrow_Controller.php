@@ -17,7 +17,6 @@ class Borrow_Controller extends Controller
 {
     public function index(Request $request)
     {
-        $books = booklist::where('ishide', false)->paginate(50);
         $copies = copies::where('ishide', false)->get();
         $value = [];
         $designated = [];
@@ -39,9 +38,51 @@ class Borrow_Controller extends Controller
                 $designated = $value->enrollment_assessment ?  $value->enrollment_assessment->year_level() . " " . $value->enrollment_assessment->course->course_code : '';
             }
         }
-        return view('books.borrow_page', compact('books', 'copies', 'value', 'designated'));
+        return view('books.borrow_page', compact('copies', 'value', 'designated'));
     }
 
+    public function fetchBook(Request $request)
+    {
+        $books = [];
+    
+        $book = booklist::where('ishide', false)->where('accession', $request->accessionName)->first();
+    
+        if ($book) {
+            $book1 = copies::where('ishide', false)->where('bookid', $book->id)->value('id');
+    
+            if ($book1) {
+                $books[] = $book->toArray();
+                if ($request->borrowerName) {
+                    $word = 'employee';
+                    if (strpos($request->borrowerName, $word) !== false) {
+                        // Employee
+                        $borrowerName = explode(":", $request->borrowerName);
+                        $borrowerName = count($borrowerName) > 1 ? $borrowerName[1] : str_replace($word, '', $request->borrowerName);
+                    } else {
+                        // Student
+                        $borrowerName = explode(".", $request->borrowerName);
+                        $borrowerName = count($borrowerName) > 1 ? $borrowerName[0] : null;
+                    }
+    
+                    if ($borrowerName) {
+                        $onlend = borrowpage::where('bookid', $book1)
+                            ->where('borrower', $borrowerName)
+                            ->where('bookstatus', 'onlend')
+                            ->get();
+    
+                        if ($onlend->isEmpty()) {
+                            $books[0]['onlend'] = 'available'; 
+                        } else {
+                            $books[0]['onlend'] = 'onlend'; 
+                        }
+                    }
+                }
+            }
+        }
+    
+        return response()->json($books);
+    }
+    
     public function fetchData(Request $request)
     {
         $data = [];
@@ -63,32 +104,8 @@ class Borrow_Controller extends Controller
                 }
             }
         }
-
         return response()->json($data);
-
-        // $name = $request->input('name');
-
-        // $studentDetails = StudentDetails::where('last_name', 'LIKE', '%' . $name . '%')->get();
-
-        // $staff = Staff::where('last_name', 'LIKE', '%' . $name . '%')->get();
-        // $data = [];
-
-        // foreach ($studentDetails as $detail) {
-        //     $studentAccount = StudentAccount::where('student_id', $detail->id)->latest()->first();
-        //     if ($studentAccount) {
-        //         $relatedStudentDetail = StudentDetails::find($studentAccount->student_id);
-        //         if ($relatedStudentDetail) {
-        //             $data[] = $relatedStudentDetail;
-        //         }
-        //     }
-        // }
-        // foreach ($staff as $staffDetail) {
-        //     $data[] = $staffDetail;
-        // }
-
     }
-
-
 
     public function storebookborrow(Request $request)
     {
@@ -116,33 +133,26 @@ class Borrow_Controller extends Controller
                 $borrowArray = [];
 
                 foreach ($request->input('books') as $bookID) {
-                    // Add book data to the array
                     $borrowArray[] = [
                         'bookid' => $bookID,
-                        'borrower' => $borrower, // Use the original user value
+                        'borrower' => $borrower, 
                         'bookstatus' => 'onlend',
                         'transaction' => $transaction->transaction_number,
                         'created_at' => now(),
                         'duedate' => isset($dueDateEmployee) ? $dueDateEmployee : $dueDateStudent,
                     ];
                 }
-
                 borrowpage::insert($borrowArray);
-
-                // Return a response, e.g., a success message
                 return response()->json(['message' => 'Books borrowed successfully']);
             } else {
-                // Handle the case where the user is not found (e.g., return an error response)
                 return response()->json(['error' => 'User not found'], 404);
             }
         } else {
-            // Handle the case where no user is provided (e.g., return an error response)
             return response()->json(['error' => 'User not specified'], 400);
         }
     }
 
-
-    function get_user($id , $user)
+    function get_user($id, $user)
     {
         $student = StudentAccount::where('student_id', $id)->value('email');
         $employee = UserStaff::where('id', $id)->value('email');
@@ -152,4 +162,4 @@ class Borrow_Controller extends Controller
             return str_replace('@bma.edu.ph', '', $student);
         }
     }
-}  
+}
