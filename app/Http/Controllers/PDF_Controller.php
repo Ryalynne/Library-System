@@ -13,6 +13,8 @@ use App\Models\studentlist;
 use App\Models\UserStaff;
 use App\Models\vendortable;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PDF_Controller extends Controller
@@ -115,7 +117,7 @@ class PDF_Controller extends Controller
                     $duedate = borrowpage::where('bookid', $book)
                         ->where('borrower', $data)->where('bookstatus', 'onlend')->value('duedate');
                 }
-                $borrowedby =  $value->first_name ." ". $value->middle_name ." ". $value->last_name;
+                $borrowedby =  $value->first_name . " " . $value->middle_name . " " . $value->last_name;
             } else {
                 // Student
                 $data = explode(".", $borrower);
@@ -130,13 +132,12 @@ class PDF_Controller extends Controller
                     $duedate = borrowpage::where('bookid', $book)
                         ->where('borrower', $data)->where('bookstatus', 'onlend')->value('duedate');
                 }
-                $borrowedby = $value->first_name ." ". $value->middle_name ." ". $value->last_name;
+                $borrowedby = $value->first_name . " " . $value->middle_name . " " . $value->last_name;
             }
         }
 
         $pdf = PDF::loadView('print_pdf.myPDFborrow', compact('bookList', 'transaction', 'duedate', 'borrowedby'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
-
     }
 
 
@@ -157,8 +158,8 @@ class PDF_Controller extends Controller
                     $transaction = borrowpage::where('bookid', $book)
                         ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
                 }
-                $borrowedby =  $value->first_name ." ". $value->middle_name ." ". $value->last_name;
-            } else{
+                $borrowedby =  $value->first_name . " " . $value->middle_name . " " . $value->last_name;
+            } else {
                 // Student
                 $data = explode(".", $studentId);
                 $data = count($data) > 1 ? $data[0] : null;
@@ -169,12 +170,12 @@ class PDF_Controller extends Controller
                     $transaction = borrowpage::where('bookid', $book)
                         ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
                 }
-                $borrowedby =  $value->first_name ." ". $value->middle_name ." ". $value->last_name;
+                $borrowedby =  $value->first_name . " " . $value->middle_name . " " . $value->last_name;
             }
         }
 
 
-        $pdf = PDF::loadView('print_pdf.myPDFfined', compact('bookList', 'transaction','borrowedby'));
+        $pdf = PDF::loadView('print_pdf.myPDFfined', compact('bookList', 'transaction', 'borrowedby'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
     }
 
@@ -196,8 +197,8 @@ class PDF_Controller extends Controller
                     $transaction = borrowpage::where('bookid', $book)
                         ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
                 }
-                $borrowedby =  $value->first_name ." ". $value->middle_name ." ". $value->last_name;
-            } else{
+                $borrowedby =  $value->first_name . " " . $value->middle_name . " " . $value->last_name;
+            } else {
                 // Student
                 $data = explode(".", $student_number);
                 $data = count($data) > 1 ? $data[0] : null;
@@ -208,11 +209,11 @@ class PDF_Controller extends Controller
                     $transaction = borrowpage::where('bookid', $book)
                         ->where('borrower', $data)->where('bookstatus', 'onlend')->value('transaction');
                 }
-                $borrowedby = $value->first_name ." ". $value->middle_name ." ". $value->last_name;
+                $borrowedby = $value->first_name . " " . $value->middle_name . " " . $value->last_name;
             }
         }
 
-        $pdf = PDF::loadView('print_pdf.myPDFreturn', compact('bookList', 'transaction','borrowedby'));
+        $pdf = PDF::loadView('print_pdf.myPDFreturn', compact('bookList', 'transaction', 'borrowedby'));
         return $pdf->setPaper('612.00,1008.00', 'portrait')->stream();
     }
 
@@ -273,5 +274,64 @@ class PDF_Controller extends Controller
         }
         $pdf = PDF::loadView('print_pdf.myPDF_BulkQr', compact('qrCodesAndBooks'));
         return $pdf->download('qrlist.pdf');
+    }
+
+
+    function print_statistic(Request $request)
+    {
+
+        $startingDate = $request->input('startingdate');
+        $endDate =  $request->input('enddate');
+
+
+        $startDate = Carbon::parse($startingDate)->startOfDay();
+        $endDate = Carbon::parse($endDate)->endOfDay();
+
+
+        $onlendCounts = [];
+
+
+        for ($day = $startDate; $day->lte($endDate); $day->addDay()) {
+            if ($day->isWeekday()) {
+
+                $count = borrowpage::whereDate('created_at', $day->toDateString())
+                    ->count();
+
+                $onlendCounts[$day->toDateString()] = $count;
+            }
+        }
+
+        $pdf = PDF::loadView('print_pdf.myPDF_printStatistic', compact('onlendCounts', 'startingDate','endDate'));
+        return $pdf->download('statistic.pdf');
+    }
+
+
+    function print_statisticR(Request $request)
+    {
+
+        $startingDate = $request->input('startingdate');
+        $endDate =  $request->input('enddate');
+
+
+        $startDate = Carbon::parse($startingDate)->startOfDay();
+        $endDate = Carbon::parse($endDate)->endOfDay();
+
+
+        $returnedCounts = [];
+
+
+        for ($day = $startDate; $day->lte($endDate); $day->addDay()) {
+            if ($day->isWeekday()) {
+
+                $count = borrowpage::where('bookstatus', 'returned')
+                    ->whereDate('updated_at', $day->toDateString())
+                    ->count();
+
+                $returnedCounts[$day->toDateString()] = $count;
+            }
+        }
+
+        $pdf = PDF::loadView('print_pdf.myPDF_printStatisticR', compact('returnedCounts', 'startingDate','endDate'));
+        return $pdf->download('statistic.pdf');
     }
 }

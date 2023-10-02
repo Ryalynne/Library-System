@@ -43,46 +43,94 @@ class Borrow_Controller extends Controller
 
     public function fetchBook(Request $request)
     {
+        // $books = [];
+
+        // $book = booklist::where('ishide', false)->where('title', $request->accessionName)->first();
+
+        // if ($book) {
+        //     $book1 = copies::where('ishide', false)->where('bookid', $book->id)->value('id');
+
+        //     if ($book1) {
+        //         $books[] = $book->toArray();
+        //         if ($request->borrowerName) {
+        //             $word = 'employee';
+        //             if (strpos($request->borrowerName, $word) !== false) {
+        //                 // Employee
+        //                 $borrowerName = explode(":", $request->borrowerName);
+        //                 $borrowerName = count($borrowerName) > 1 ? $borrowerName[1] : str_replace($word, '', $request->borrowerName);
+        //             } else {
+        //                 // Student
+        //                 $borrowerName = explode(".", $request->borrowerName);
+        //                 $borrowerName = count($borrowerName) > 1 ? $borrowerName[0] : null;
+        //             }
+
+        //             if ($borrowerName) {
+        //                 $onlend = borrowpage::where('bookid', $book1)
+        //                     ->where('borrower', $borrowerName)
+        //                     ->where('bookstatus', 'onlend')
+        //                     ->get();
+
+        //                 if ($onlend->isEmpty()) {
+        //                     $books[0]['onlend'] = 'available'; 
+        //                 } else {
+        //                     $books[0]['onlend'] = 'onlend'; 
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
         $books = [];
-    
-        $book = booklist::where('ishide', false)->where('accession', $request->accessionName)->first();
-    
-        if ($book) {
-            $book1 = copies::where('ishide', false)->where('bookid', $book->id)->value('id');
-    
-            if ($book1) {
-                $books[] = $book->toArray();
+
+        // Find all books with the given title that are not hidden
+        $booksWithSameTitle = Booklist::where('title', $request->accessionName)
+            ->where('ishide', false)
+            ->get();
+
+        foreach ($booksWithSameTitle as $book) {
+            // Find copies of each book that are not hidden
+            $copies = copies::where('bookid', $book->id)
+                ->where('ishide', false)
+                ->get();
+
+            foreach ($copies as $copy) {
+                $bookData = $book->toArray();
+
                 if ($request->borrowerName) {
+                    $borrowerName = $request->borrowerName;
                     $word = 'employee';
-                    if (strpos($request->borrowerName, $word) !== false) {
+
+                    if (strpos($borrowerName, $word) !== false) {
                         // Employee
-                        $borrowerName = explode(":", $request->borrowerName);
-                        $borrowerName = count($borrowerName) > 1 ? $borrowerName[1] : str_replace($word, '', $request->borrowerName);
+                        $borrowerName = explode(":", $borrowerName);
+                        $borrowerName = count($borrowerName) > 1 ? $borrowerName[1] : str_replace($word, '', $borrowerName);
                     } else {
                         // Student
-                        $borrowerName = explode(".", $request->borrowerName);
+                        $borrowerName = explode(".", $borrowerName);
                         $borrowerName = count($borrowerName) > 1 ? $borrowerName[0] : null;
                     }
-    
+
                     if ($borrowerName) {
-                        $onlend = borrowpage::where('bookid', $book1)
+                        $onlend = Borrowpage::where('bookid', $copy->id)
                             ->where('borrower', $borrowerName)
                             ->where('bookstatus', 'onlend')
                             ->get();
-    
+
                         if ($onlend->isEmpty()) {
-                            $books[0]['onlend'] = 'available'; 
+                            $bookData['onlend'] = 'available';
                         } else {
-                            $books[0]['onlend'] = 'onlend'; 
+                            $bookData['onlend'] = 'onlend';
                         }
                     }
                 }
+
+                $books[] = $bookData;
             }
         }
-    
+
         return response()->json($books);
     }
-    
+
     public function fetchData(Request $request)
     {
         $data = [];
@@ -135,7 +183,7 @@ class Borrow_Controller extends Controller
                 foreach ($request->input('books') as $bookID) {
                     $borrowArray[] = [
                         'bookid' => $bookID,
-                        'borrower' => $borrower, 
+                        'borrower' => $borrower,
                         'bookstatus' => 'onlend',
                         'transaction' => $transaction->transaction_number,
                         'created_at' => now(),

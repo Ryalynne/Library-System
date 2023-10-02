@@ -27,6 +27,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\Vendor_ListController;
 use App\Http\Controllers\Statistic_ReportController;
 use App\Http\Controllers\Add_SubjectController;
+use App\Http\Controllers\ebookController;
 use App\Models\StudentDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('copies', Book_InventoryController::class);
     Route::resource('books', Booklist_Controller::class);
     Route::resource('borrow', Borrow_Controller::class);
-    Route::get('/statistic-summary', [Statistic_ReportController::class, 'index']);
+    Route::get('/ebook', [EbookController::class, 'index']);
+    Route::get('/statistic-summary', [Statistic_ReportController::class, 'index'])->name('statistic-summary');
     Route::get('/department', [Add_DepartmentController::class, 'index']);
     Route::get('/subject', [Add_SubjectController::class, 'index']);
     Route::get('/cancelhistory', [Cancel_PurchaseOrder_historyController::class, 'index']);
@@ -68,7 +70,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/student-details', function () {
         return StudentDetails::all();
     });
-
+    Route::get('/fetch-data', [Borrow_Controller::class, 'fetchData']);
+    Route::get('/get-user/{id}/{user}', [Borrow_Controller::class, 'get_user']);
+    Route::get('/get-book', [Borrow_Controller::class, 'fetchBook']);
     //transaction number
     Route::get('/transactionBO/{id}', [Bad_OrderController::class, 'get_transaction']);
     Route::get('/transactionB/{id}', [Back_OrderController::class, 'get_transaction']);
@@ -85,6 +89,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     //pdf print
+
+    Route::get('/generate-statistic', [PDF_Controller::class, 'print_statistic']);
+    Route::get('/generate-statisticR', [PDF_Controller::class, 'print_statisticR']);
+
     Route::get('/generate-badorder/{bookid}/{quantity}', [PDF_Controller::class, 'generateBadorder']);
     Route::get('/generate-pdf/{data}', [PDF_Controller::class, 'generatePDF']);
     Route::get('/generate-table', [PDF_Controller::class, 'booklist_pdf']);
@@ -129,7 +137,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/add/subject',[Add_SubjectController::class, 'store']);
 
 
-    Route::get('/fetch-data', [Borrow_Controller::class, 'fetchData']);
-    Route::get('/get-user/{id}/{user}', [Borrow_Controller::class, 'get_user']);
-    Route::get('/get-book', [Borrow_Controller::class, 'fetchBook']);
+
 });

@@ -215,11 +215,11 @@
                 </div>
             </div>
 
-            <div class="col-xs-12 text-center">
+            {{-- <div class="col-xs-12 text-center">
                 <h2 class="text-success">Donut Chart</h2>
             </div>
 
-            <div id="donut-chart"></div>
+            <div id="donut-chart"></div> --}}
 
         </div>
 
@@ -261,29 +261,29 @@
         });
 
 
-        let chart = bb.generate({
-            data: {
-                columns: [
-                    ["BSMAR-E", 2],
-                    ["orange", 4],
-                    ["green", 3],
-                ],
-                type: "donut",
-                onclick: function(d, i) {
-                    console.log("onclick", d, i);
-                },
-                onover: function(d, i) {
-                    console.log("onover", d, i);
-                },
-                onout: function(d, i) {
-                    console.log("onout", d, i);
-                },
-            },
-            donut: {
-                title: "70",
-            },
-            bindto: "#donut-chart",
-        });
+        // let chart = bb.generate({
+        //     data: {
+        //         columns: [
+        //             ["BSMAR-E", 2],
+        //             ["orange", 4],
+        //             ["green", 3],
+        //         ],
+        //         type: "donut",
+        //         onclick: function(d, i) {
+        //             console.log("onclick", d, i);
+        //         },
+        //         onover: function(d, i) {
+        //             console.log("onover", d, i);
+        //         },
+        //         onout: function(d, i) {
+        //             console.log("onout", d, i);
+        //         },
+        //     },
+        //     donut: {
+        //         title: "70",
+        //     },
+        //     bindto: "#donut-chart",
+        // });
 
 
         function booklist() {

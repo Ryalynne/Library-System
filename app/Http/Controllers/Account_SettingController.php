@@ -30,19 +30,18 @@ class Account_SettingController extends Controller
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images'), $imageName);
             } else {
-                $imageName = null; // Set the default value if no image is uploaded
+                $imageName = null; 
             }
 
-            // Create a new instance of the StudentList model and set the attributes
+  
             $student = new studentlist;
             $student->studentno = $request->input('qr_code');
             $student->name = $request->input('name');
             $student->middle = $request->input('middle_name');
             $student->lastname = $request->input('last_name');
             $student->class = $request->input('designation');
-            $student->studimg = $imageName; // Store the image filename in the database
+            $student->studimg = $imageName; 
 
-            // Save the student record in the database
             $student->save();
 
             return back();
@@ -50,6 +49,6 @@ class Account_SettingController extends Controller
             // Handle the exception
             return back()->with('error', 'An error occurred while storing the student data.');
         }
-        // Redirect or return a response
+   
     }
 }
