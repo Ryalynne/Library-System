@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('ebooks', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('author');
-            $table->string('copyright');
-            $table->string('links');
+            $table->string('title')->nullable();
+            $table->string('author')->nullable();
+            $table->string('copyright')->nullable();
+            $table->string('links')->nullable();
             $table->timestamps();
         });
     }

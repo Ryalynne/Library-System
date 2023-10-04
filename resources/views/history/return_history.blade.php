@@ -44,7 +44,6 @@
                             <thead>
                                 <tr class="bg-success text-white">
                                     <th scope="col" class="text-center">TRANSACTION</th>
-                                    <th scope="col" class="text-center">BOOK ID</th>
                                     <th scope="col" class="text-center">TITLE</th>
                                     <th scope="col" class="text-center">AUTHOR/S</th>
                                     <th scope="col" class="text-center">DEPARTMENT</th>
@@ -63,7 +62,6 @@
                                 <tr class="tr">
                                     @foreach ($return as $item)
                                         <td>{{ $item->transaction }}</td>
-                                        <td>{{ $item->book->id }}</td>
                                         <td>{{ $item->book->title }}</td>
                                         <td>{{ $item->book->author }}</td>
                                         <td>{{ $item->book->categories }}</td>
@@ -72,13 +70,20 @@
                                         <td>{{ $item->book->calllnumber }}</td>
                                         <td>{{ $item->book->subject }}</td>
                                         <td>
-                                            {{ ($studentName = $item->student_list($item->borrower)) 
-                                            ?: ($staffName = $item->staff_list($item->borrower)) 
-                                            ?: 'no info' }}                                                                                                                     
-                                        </td>                                                                                                                      
-                                        <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
-                                        <td>{{ $item->duedate }}</td>
-                                        <td>{{ date('Y-m-d', strtotime($item->updated_at)) }}</td>
+                                            @if ($item->student_list($item->borrower))
+                                                {{ ucwords($item->borrower . ', ' . $item->student_list($item->borrower)) }}
+                                            @else
+                                                @php
+                                                    $staff = $item->staff_list($item->borrower);
+                                                @endphp
+                                                {{ ucwords($item->borrower . ', ' . $staff->last_name . ', ' . $staff->first_name) . ', ' . $staff->department }}
+                                            @endif
+                                            {{--  {{ json_encode($item->staff_list($item->borrower)) }} --}}
+                                            {{--  {{ ($studentName = $item->student_list($item->borrower)) ?: ($staffName = $item->staff_list($item->borrower)) ?: 'no info' }} --}}
+                                        </td>
+                                        <td>{{ date('F j, Y', strtotime($item->created_at)) }}</td>
+                                        <td>{{ date('F j, Y', strtotime($item->duedate)) }}</td>
+                                        <td>{{ date('F j, Y', strtotime($item->updated_at)) }}</td>
                                         <td>{{ $item->returnpenalty($item->duedate, $item->updated_at) }}</td>
                                 </tr>
                             </tbody>

@@ -41,7 +41,7 @@
             <table class="table table-bordered border-dark myTable">
                 <thead>
                     <tr class="bg-success text-white">
-                        <th scope="col" class="text-center">ID</th>
+
                         <th scope="col" class="text-center">TITLE</th>
                         <th scope="col" class="text-center">AUTHOR/S</th>
                         <th scope="col" class="text-center">DEPARTMENT</th>
@@ -56,9 +56,7 @@
                 <tbody>
                     @foreach ($books as $book)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
-                            <th class="px-6 py-3">
-                                {{ $book->id }}
-                            </th>
+
                             <td class="px-6 py-3">
                                 {{ $book->title }}
                             </td>
@@ -75,10 +73,10 @@
                                 {{ $book->accession }}
                             </td>
                             <td>
-                                {{$book->callnumber}}
+                                {{ $book->callnumber }}
                             </td>
                             <td>
-                                {{$book->subject}}
+                                {{ $book->subject }}
                             </td>
                             <td class="px-6 py-3">
                                 {{ $book->numberofcopies() }}
@@ -137,12 +135,12 @@
                                                     class="form-control modal-book-author" placeholder="Disabled input"
                                                     readonly>
                                             </div>
-                                              {{-- department --}}
+                                            {{-- department --}}
                                             <div class="mb-3">
                                                 <label for="disabledTextInput" class="form-label">department</label>
                                                 <input type="text" id="disabledTextInput"
-                                                    class="form-control modal-book-department" placeholder="Disabled input"
-                                                    readonly>
+                                                    class="form-control modal-book-department"
+                                                    placeholder="Disabled input" readonly>
                                             </div>
                                             {{-- department --}}
                                             <div class="mb-3">

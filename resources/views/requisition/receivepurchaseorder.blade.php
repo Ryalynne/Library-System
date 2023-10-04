@@ -52,7 +52,7 @@
                 <table class="table table-bordered myTable">
                     <thead>
                         <tr class="bg-success text-white">
-                            <th>CODE ID</th>
+                            <th hidden>CODE ID</th>
                             <th>TITLE</th>
                             <th>Quantity Receive</th>
                             <th>Quantity Order</th>
@@ -64,7 +64,7 @@
                     <tbody>
                         @forelse ($order as $book)
                             <tr data-book-id="{{ $book->id }}">
-                                <td>{{ $book->id }}</td>
+                                <td hidden>{{ $book->id }}</td>
                                 <td>{{ $book->title }}</td>
                                 <td contenteditable="true" oninput="updateTotal(this)">0</td>
                                 <td>{{ $book->quantity }}</td>

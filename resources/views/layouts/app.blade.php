@@ -291,19 +291,22 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 @livewireScripts
 <script>
-    $('.edit-button').on('click', function() {
-        var id = $(this).data('id');
-        $.get("/copy/" + id, function(data, status) {
-            $('.modal-copy-copies').val(data.copy)
-        });
-    });
-
+    
     $(document).ready(function() {
         $(".myInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
             $(".myTable .tr").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
+        });
+    });
+
+
+
+    $('.edit-button').on('click', function() {
+        var id = $(this).data('id');
+        $.get("/copy/" + id, function(data, status) {
+            $('.modal-copy-copies').val(data.copy)
         });
     });
 
@@ -338,11 +341,10 @@
     }
 
     @media only screen and (max-width: 800px) {
-        .liremove-bar{
-            display:none;
+        .liremove-bar {
+            display: none;
         }
     }
-    
 </style>
 
 </html>

@@ -39,7 +39,7 @@
                     <table class="table table-bordered myTable">
                         <thead>
                             <tr class="bg-success text-white">
-                                <th scope="col">ID</th>
+                                <th scope="col" hidden>ID</th>
                                 <th scope="col">TRANSACTION</th>
                                 <th scope="col">TITLE</th>
                                 <th scope="col">REQUESTED BY</th>

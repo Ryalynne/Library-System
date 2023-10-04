@@ -18,9 +18,14 @@ class Booklist_Controller extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = booklist::where('ishide', false)->paginate(50);
+        $search = $request->input('search');
+        $query = booklist::where('ishide', false);
+        if (!empty($search)) {
+            $query->where('accession', $search);
+        }
+        $books = $query->paginate(50);
         return view('books.book_list', compact('books'));
     }
 

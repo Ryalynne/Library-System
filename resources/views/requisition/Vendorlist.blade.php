@@ -31,7 +31,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th hidden>ID</th>
                     <th>Vendor Name</th>
                     <th>Vendor Contact</th>
                     <th>Actions</th>
@@ -40,7 +40,7 @@
             <tbody>
                 @foreach ($vendor as $vendorlist)
                     <tr>
-                        <td>{{ $vendorlist->id }}</td>
+                        <td hidden>{{ $vendorlist->id }}</td>
                         <td>{{ $vendorlist->vendorname }}</td>
                         <td>{{ $vendorlist->vendorcontact }}</td>
                         <td>

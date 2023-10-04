@@ -39,7 +39,7 @@
                 <table class="table table-bordered myTable">
                     <thead>
                         <tr class="bg-success text-white">
-                            <th>CODE ID</th>
+                            <th hidden>CODE ID</th>
                             <th>TITLE</th>
                             <th>Quantity</th>
                             <th>Unit Price</th>
@@ -56,7 +56,7 @@
                                 $key = $startingId;
                             @endphp
                             <tr>
-                                <td class="id"></td>
+                                <td class="id" hidden></td>
                                 <td contenteditable="true" class="title"></td>
                                 <td contenteditable="true" class="quantity">0</td>
                                 <td contenteditable="true" class="unitPrice">0.00</td>

@@ -66,7 +66,7 @@
             <thead class="bg-success text-white">
                 <tr>
                     <th>TRANSACTION</th>
-                    <th>ID</th>
+                    <th hidden>ID</th>
                     <th>TITLE</th>
                     <th>AUTHOR</th>
                     <th>DEPARTMENT</th>
@@ -169,7 +169,7 @@
                     <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5" id="tbl">
                         <!-- Table headers here -->
                         <thead class="bg-success text-white">
-                            <th>ID</th>
+                            <th hidden>ID</th>
                             <th>NAME</th>
                             <th>ACTION</th>
                         </thead>

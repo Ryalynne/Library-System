@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\booklist;
+use App\Models\ebooks;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class UsersImport implements ToModel
@@ -25,4 +26,16 @@ class UsersImport implements ToModel
             'department'    => $row['DEPARTMENT'],
         ]);
     }
+
+
+    public function ebook_model(array $row)
+    {
+        return new ebooks([
+            'title'     => $row['TITLE'],
+            'author'    => $row['AUTHOR'],
+            'copyright'    => $row['COPYRIGHT'],
+            'links'    => $row['LINKS'],
+        ]);
+    }
+
 }

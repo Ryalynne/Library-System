@@ -85,7 +85,7 @@ class PDF_Controller extends Controller
     public function generateCopies()
     {
         $books = booklist::where('ishide', false)->get();
-        $pdf = PDF::loadView('myPDFtblcopies', compact('books'));
+        $pdf = PDF::loadView('print_pdf.myPDFtblcopies', compact('books'));
         return $pdf->setPaper('0,0,612.00,1008.00', 'landscape')->stream();
     }
 
@@ -301,7 +301,7 @@ class PDF_Controller extends Controller
             }
         }
 
-        $pdf = PDF::loadView('print_pdf.myPDF_printStatistic', compact('onlendCounts', 'startingDate','endDate'));
+        $pdf = PDF::loadView('print_pdf.myPDF_printStatistic', compact('onlendCounts', 'startingDate', 'endDate'));
         return $pdf->download('statistic.pdf');
     }
 
@@ -331,7 +331,7 @@ class PDF_Controller extends Controller
             }
         }
 
-        $pdf = PDF::loadView('print_pdf.myPDF_printStatisticR', compact('returnedCounts', 'startingDate','endDate'));
+        $pdf = PDF::loadView('print_pdf.myPDF_printStatisticR', compact('returnedCounts', 'startingDate', 'endDate'));
         return $pdf->download('statistic.pdf');
     }
 }

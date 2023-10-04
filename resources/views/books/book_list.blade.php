@@ -58,10 +58,13 @@
 
                 <div class="p-2">
                     <div class="input-group">
-                        <input type="search" class="form-control rounded myInput" placeholder="Search" aria-label="Search"
-                            aria-describedby="search-addon" />
+                        <form method="GET" action="/booklist">
+                            @csrf
+                            <input class="myInput form-control " placeholder="Search here" name="search" />
+                        </form>
                     </div>
                 </div>
+
             </div>
             <form>
                 @csrf
@@ -171,7 +174,6 @@
                         <table class="table table-bordered border-dark myTable">
                             <thead>
                                 <tr class="bg-success text-white">
-                                    <th class="text-center">ID</th>
                                     <th class="text-center">TITLE</th>
                                     <th class="text-center">AUTHOR</th>
                                     <th class="text-center">DEPARTMENT</th>
@@ -180,22 +182,19 @@
                                     <th class="text-center">CALL NO.</th>
                                     <th class="text-center">SUBJECT</th>
                                     <th class="text-center">ADDED AT</th>
-                                    <th class="text-center ">ACTIONS PERFORM</th>
+                                    <th class="text-center">ACTIONS PERFORM</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse ($books as $book)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
-                                        <th class="text-center">
-                                            {{ $book->id }}
-                                        </th>
                                         <td>
                                             {{ $book->title }}
                                         </td>
                                         <td>
                                             {{ $book->author }}
                                         </td>
-                                        <td>{{ $book->departments}}</td>
+                                        <td>{{ $book->department }}</td>
                                         <td>{{ $book->copyright }}</td>
                                         <td>
                                             {{ $book->accession }}
@@ -204,10 +203,10 @@
                                             {{ $book->callnumber }}
                                         </td>
                                         <td>
-                                            {{ $book->subjects}}
+                                            {{ $book->subjects }}
                                         </td>
                                         <td>
-                                            {{ date('Y-m-d', strtotime($book->created_at)) }}
+                                            {{ date('F j, Y', strtotime($book->created_at)) }}
                                         </td>
                                         <td class="text-center col-2">
                                             <button type="button" class="btn btn-success edit-button btn-sm"
@@ -272,7 +271,7 @@
                     </div>
                     <div class="modal-body ">
 
-                        <div class="mb-3">
+                        <div class="mb-3" hidden>
                             <label for="bookid" class="form-label">BOOK ID</label>
                             <input type="text" class="form-control modal-book-id" id="bookid" name="bookid"
                                 :value="old('bookid')" readonly>
@@ -301,7 +300,7 @@
                                             {{ request('department') == $department->departmentName ? 'selected' : '' }}>
                                             {{ strtoupper($department->departmentName) }}
                                         </option>
-                                    @endforeach                                 
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

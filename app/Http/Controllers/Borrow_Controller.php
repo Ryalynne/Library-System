@@ -43,43 +43,7 @@ class Borrow_Controller extends Controller
 
     public function fetchBook(Request $request)
     {
-        // $books = [];
-
-        // $book = booklist::where('ishide', false)->where('title', $request->accessionName)->first();
-
-        // if ($book) {
-        //     $book1 = copies::where('ishide', false)->where('bookid', $book->id)->value('id');
-
-        //     if ($book1) {
-        //         $books[] = $book->toArray();
-        //         if ($request->borrowerName) {
-        //             $word = 'employee';
-        //             if (strpos($request->borrowerName, $word) !== false) {
-        //                 // Employee
-        //                 $borrowerName = explode(":", $request->borrowerName);
-        //                 $borrowerName = count($borrowerName) > 1 ? $borrowerName[1] : str_replace($word, '', $request->borrowerName);
-        //             } else {
-        //                 // Student
-        //                 $borrowerName = explode(".", $request->borrowerName);
-        //                 $borrowerName = count($borrowerName) > 1 ? $borrowerName[0] : null;
-        //             }
-
-        //             if ($borrowerName) {
-        //                 $onlend = borrowpage::where('bookid', $book1)
-        //                     ->where('borrower', $borrowerName)
-        //                     ->where('bookstatus', 'onlend')
-        //                     ->get();
-
-        //                 if ($onlend->isEmpty()) {
-        //                     $books[0]['onlend'] = 'available'; 
-        //                 } else {
-        //                     $books[0]['onlend'] = 'onlend'; 
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
+  
         $books = [];
 
         // Find all books with the given title that are not hidden

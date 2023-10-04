@@ -27,7 +27,7 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\Vendor_ListController;
 use App\Http\Controllers\Statistic_ReportController;
 use App\Http\Controllers\Add_SubjectController;
-use App\Http\Controllers\ebookController;
+use App\Http\Controllers\EbookController;
 use App\Models\StudentDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -135,7 +135,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/import', [Booklist_Controller::class , 'import'])->name('import');
     Route::post('/add/department',[Add_DepartmentController::class, 'store']);
     Route::post('/add/subject',[Add_SubjectController::class, 'store']);
-
-
-
+    
+    Route::post('/importEbooks', [EbookController::class , 'importEbooks'])->name('importEbooks');
 });

@@ -38,7 +38,7 @@
                     <table class="table table-bordered myTable border-dark">
                         <thead>
                             <tr class="bg-success text-white">
-                                <th scope="col" class="text-center">ID</th>
+
                                 <th scope="col" class="text-center">TITLE</th>
                                 <th scope="col" class="text-center">AUTHOR/S</th>
                                 <th scope="col" class="text-center">DEPARTMENT</th>
@@ -54,9 +54,6 @@
                         <tbody>
                             <tr class="tr">
                                 @foreach ($adjustment as $adjust)
-                                    <td>
-                                        {{ $adjust->id }}
-                                    </td>
                                     <td>
                                         {{ $adjust->title }}
                                     </td>
@@ -76,13 +73,13 @@
                                         {{ $adjust->callnumber }}
                                     </td>
                                     <td>
-                                        {{ $adjust->subject}}
+                                        {{ $adjust->subject }}
                                     </td>
                                     <td>
-                                        {{ date('Y-m-d', strtotime($adjust->created_at)) }}
+                                        {{ date('F j, Y', strtotime($adjust->created_at)) }}
                                     </td>
                                     <td>
-                                        {{ date('Y-m-d', strtotime($adjust->updated_at)) }}
+                                        {{ date('F j, Y', strtotime($adjust->updated_at)) }}
                                     </td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-success btn-sm remove-book"
@@ -146,7 +143,6 @@
 
 @section('script')
     <script>
-
         $(".printbtn").on('click', function() {
             const frame = $('#table-frame')
             const link = '/generate-archived/'
@@ -191,7 +187,6 @@
                 }
             });
         });
-        
     </script>
 @endsection
 @endsection

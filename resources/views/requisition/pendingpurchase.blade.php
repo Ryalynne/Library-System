@@ -44,8 +44,7 @@
                                 <td>{{ $item->requestedby }}</td>
                                 <td>{{ $item->department }}</td>
                                 <td class="text-center"><button type="button" class="btn btn-danger btn-sm remove-book"
-                                        data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
-                                       >
+                                        data-bs-toggle="modal" data-bs-target="#cancelOrderModal">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                             <path
@@ -117,11 +116,6 @@
         </div>
     </div>
 
-
-
-
-
-
 @section('script')
     <script>
         $(".printbtn").on('click', function() {
@@ -147,7 +141,7 @@
                 if (data.transaction && data.transaction.id == id) {
 
                 } else {
-                
+
                 }
             });
         });

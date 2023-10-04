@@ -35,46 +35,55 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                <table class="table table-bordered myTable border-dark table-sm">
-                    <thead>
-                        <tr class="bg-success text-white">
-                            <th scope="col" >TRANSACTION</th>
-                            <th scope="col" >BOOK ID</th>
-                            <th scope="col" >TITLE</th>
-                            <th scope="col" >AUTHORS/S</th>
-                            <th scope="col" >CATEGORIES</th>
-                            <th scope="col" >COPYRIGHT</th>
-                            <th scope="col" >ACCESSION NO</th>
-                            <th scope="col" >CALL NO</th>
-                            <th scope="col" >SUBJECT</th>
-                            <th scope="col" >BORROWER NAME</th>
-                            <th scope="col" >DATE BORROWED</th>
-                            <th scope="col" >DUE DATE</th>
-                            <th scope="col" >OVERDUE</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="tr">
-                            @foreach ($borrow as $item)
-                                <td>{{ $item->transaction}}</td>
-                                {{-- <td class="text-center">{{$item->student_number}}</td> --}}
-                                <td>{{ $item->book->id }}</td>
-                                <td>{{ $item->book->title}}</td>
-                                <td>{{ $item->book->author}}</td>
-                                <td>{{ $item->book->department}}</td>
-                                <td>{{ $item->book->copyright}}</td>
-                                <td>{{ $item->book->accession}}</td>
-                                <td>{{ $item->book->callnumber}}</td>
-                                <td>{{ $item->book->subject}}</td>
-                                <td>{{ ($studentName = $item->student_list($item->borrower)) ?: ($staffName = $item->staff_list($item->borrower)) ?: 'no info' }}
-                                </td>
-                                <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
-                                <td>{{ $item->duedate }}</td>
-                                <td>{{ $item->penalty($item->duedate) }}</td>
-                        </tr>
-                    </tbody>
-                    @endforeach
-                </table>
+                    <table class="table table-bordered myTable border-dark table-sm">
+                        <thead>
+                            <tr class="bg-success text-white">
+                                <th scope="col">TRANSACTION</th>
+                                <th scope="col">TITLE</th>
+                                <th scope="col">AUTHORS/S</th>
+                                <th scope="col">COPYRIGHT</th>
+                                <th scope="col">ACCESSION NO</th>
+                                <th scope="col">CALL NO</th>
+                                <th scope="col">SUBJECT</th>
+                                <th scope="col">BORROWER NAME</th>
+
+                                <th scope="col">DATE BORROWED</th>
+                                <th scope="col">DUE DATE</th>
+                                <th scope="col">OVERDUE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="tr">
+                                @foreach ($borrow as $item)
+                                    <td>{{ $item->transaction }}</td>
+                                    {{-- <td class="text-center">{{$item->student_number}}</td> --}}
+                                    {{-- <td>{{ $item->book->id }}</td> --}}
+                                    <td>{{ $item->book->title }}</td>
+                                    <td>{{ $item->book->author }}</td>
+
+                                    <td>{{ $item->book->copyright }}</td>
+                                    <td>{{ $item->book->accession }}</td>
+                                    <td>{{ $item->book->callnumber }}</td>
+                                    <td>{{ $item->book->subject }}</td>
+                                    <td>
+                                        @if ($item->student_list($item->borrower))
+                                            {{ ucwords($item->borrower . ', ' . $item->student_list($item->borrower)) }}
+                                        @else
+                                            @php
+                                                $staff = $item->staff_list($item->borrower);
+                                            @endphp
+                                            {{ ucwords($item->borrower . ', ' . $staff->last_name . ', ' . $staff->first_name) . ', ' . $staff->department }}
+                                        @endif
+                                        {{--  {{ json_encode($item->staff_list($item->borrower)) }} --}}
+                                        {{--  {{ ($studentName = $item->student_list($item->borrower)) ?: ($staffName = $item->staff_list($item->borrower)) ?: 'no info' }} --}}
+                                    </td>
+                                    <td>{{ date('F j, Y', strtotime($item->created_at)) }}</td>
+                                    <td>{{  date('F j, Y', strtotime($item->duedate)) }}</td>
+                                    <td>{{ $item->penalty($item->duedate) }}</td>
+                            </tr>
+                        </tbody>
+                        @endforeach
+                    </table>
                 </div>
                 <br>
                 <div class="pagination justify-content-center">
@@ -102,7 +111,6 @@
 
 
 @section('script')
-
     <script>
         $(".printbtn").on('click', function() {
             const frame = $('#table-frame')
@@ -112,8 +120,8 @@
     </script>
 @endsection
 <style>
-    th{
-    font-size: 13px;
-}
+    th {
+        font-size: 13px;
+    }
 </style>
 @endsection

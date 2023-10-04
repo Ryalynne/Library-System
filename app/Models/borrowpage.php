@@ -26,26 +26,46 @@ class borrowpage extends Model
 
     function staff_list($email)
     {
-        return UserStaff::where('email', $email)->value('name');
+        return UserStaff::where('users.email', $email)
+            ->join('staff', 'staff.user_id', 'users.id')->select('staff.last_name', 'staff.first_name', 'staff.department')->first();
     }
 
     function student_list($id)
     {
-        $studentId = StudentAccount::where('student_number', $id)->value('id');
-    
-        if ($studentId !== null) {
-            $studentDetails = StudentDetails::select('first_name', 'middle_name', 'last_name')
-                ->where('id', $studentId)
+        $student = StudentAccount::where('student_number', $id)->first();
+
+        if ($student !== null) {
+            $studentDetails = StudentDetails::select('first_name', 'middle_name', 'last_name', 'id')
+                ->where('id', $student->id)
                 ->first();
-    
+
             if ($studentDetails !== null) {
-                return $studentDetails->first_name . ' ' . $studentDetails->middle_name . ' ' . $studentDetails->last_name;
+
+                $year_level = EnrollmentAssessment::where('student_id', $studentDetails->id)->first();
+                $level = '';
+
+                if ($year_level->year_level == '11') {
+                    $level = 'Grade 11';
+                } elseif ($year_level->year_level == '12') {
+                    $level = 'Grade 12';
+                } elseif ($year_level->year_level == '1') {
+                    $level = '1st Class';
+                } elseif ($year_level->year_level == '2') {
+                    $level = '2nd Class';
+                } elseif ($year_level->year_level == '3') {
+                    $level = '3rd Class';
+                } elseif ($year_level->year_level == '4') {
+                    $level = '4th Class';
+                }
+
+                return "{$studentDetails->first_name} {$studentDetails->middle_name} {$studentDetails->last_name}, {$level}";
             }
         }
-    
-        return null; // Return null or handle the case when no data is found
+        return null;
     }
-    
+
+
+
 
     public function penalty($duedate)
     {

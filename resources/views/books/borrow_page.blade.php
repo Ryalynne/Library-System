@@ -88,7 +88,7 @@
         <table class="table table-responsive table-bordered table-striped myTable mb5" id="tbl">
             <thead class="bg-success text-white">
                 <tr>
-                    <th>ID</th>
+                    <th hidden>ID</th>
                     <th>TITLE</th>
                     <th>AUTHOR/S</th>
                     <th>DEPARTMENT</th>
@@ -152,7 +152,7 @@
                         id="tbl">
                         <!-- Table headers here -->
                         <thead class="bg-success text-white">
-                            <th>ID</th>
+                            <th hidden>ID</th>
                             <th>NAME</th>
                             <th>ACTION</th>
                         </thead>
@@ -221,57 +221,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($books as $book)
-                                    @if ($book->numberofcopies() > 0)
-                                        <tr class="trtr">
-                                            <td scope="row" class="getidd">
-                                                {{ $book->id }}
-                                            </td>
-                                            <td class="getisbn">
-                                                {{ $book->title }}
-                                            </td>
-                                            <td>
-                                                {{ $book->author }}
-                                            </td>
-                                            <td>
-                                                {{ $book->department }}
-                                            </td>
-                                            <td>
-                                                {{ $book->copyright }}
-                                            </td>
-                                            <td class="getacc">
-                                                {{ $book->accession }}
-                                            </td>
-                                            <td>
-                                                {{ $book->callnumber }}
-                                            </td>
-                                            <td>
-                                                {{ $book->subject }}
-                                            </td>
-                                            <td class="getstatus">
-                                                @if (request()->input('data'))
-                                                    {{ $book->getstatus(request()->input('data')) }}
-                                                    @if (empty($book->getstatus(request()->input('data'))))
-                                                        Available
-                                                    @endif
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-success btn-sm btn-circle getdata">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-plus-circle"
-                                                        viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                        <path
-                                                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                                                    </svg>
-                                                </button>
-                                            </td>
-                                        </tr>
-                            </tbody>
-                            @endif
-                            @endforeach --}}
                         </table>
                     </div>
                 </div>

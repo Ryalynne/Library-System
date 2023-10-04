@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\booklist;
 use App\Models\copies;
 use App\Models\departmentList;
+use App\Models\ebooks;
 use App\Models\subjectList;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -43,4 +44,6 @@ class BookListImport implements ToCollection
             ]);
         }
     }
+
+  
 }

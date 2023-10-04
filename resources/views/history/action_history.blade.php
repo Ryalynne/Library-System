@@ -15,8 +15,8 @@
                 <div class="container">
                     <div class="d-flex mb-1 ">
                         <div class="me-auto p-2">
-                            <button type="button" class="btn btn-success bg-success border-success printbtn" data-bs-toggle="modal"
-                                data-bs-target="#tablemodal">
+                            <button type="button" class="btn btn-success bg-success border-success printbtn"
+                                data-bs-toggle="modal" data-bs-target="#tablemodal">
                                 Print Action
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-printer-fill" viewBox="0 0 16 16">
@@ -36,40 +36,38 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                    <table class="table table-bordered myTable border-dark">
-                        <thead>
-                            <tr class="bg-success text-white">
-                                <th scope="col">ID</th>
-                                <th scope="col">TITLE</th>
-                                <th scope="col">AUTHOR/S</th>
-                                <th scope="col">DEPARTMENT</th>
-                                <th scope="col">COPYRIGHT</th>
-                                <th scope="col">ACCESSION NO</th>
-                                <th scope="col">CALL NO</th>
-                                <th scope="col">SUBJECT</th>
-                                <th scope="col">DATE OF ACTION</th>
-                                <th scope="col">ACTION PERFORM</th>
-                                <th scope="col">PERFORM BY</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="tr">
-                                @foreach ($action as $item)
-                                    <td>{{ $item->book->id }}</td>       
-                                    <td>{{ $item->book->title }}</td>
-                                    <td>{{ $item->book->author }}</td>
-                                    <td>{{ $item->book->department }}</td>
-                                    <td>{{ $item->book->copyright }}</td>
-                                    <td>{{ $item->book->accession }}</td>
-                                    <td>{{ $item->book->callnumber }}</td>
-                                    <td>{{ $item->book->subject }}</td>
-                                    <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>
-                                    <td>{{ $item->action }}</td>
-                                    <td>{{ $item->performby }}</td>
-                            </tr>
-                        </tbody>
-                        @endforeach
-                    </table>
+                        <table class="table table-bordered myTable border-dark">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th scope="col">TITLE</th>
+                                    <th scope="col">AUTHOR/S</th>
+                                    <th scope="col">DEPARTMENT</th>
+                                    <th scope="col">COPYRIGHT</th>
+                                    <th scope="col">ACCESSION NO</th>
+                                    <th scope="col">CALL NO</th>
+                                    <th scope="col">SUBJECT</th>
+                                    <th scope="col">DATE OF ACTION</th>
+                                    <th scope="col">ACTION PERFORM</th>
+                                    <th scope="col">PERFORM BY</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tr">
+                                    @foreach ($action as $item)
+                                        <td>{{ $item->book->title }}</td>
+                                        <td>{{ $item->book->author }}</td>
+                                        <td>{{ $item->book->department }}</td>
+                                        <td>{{ $item->book->copyright }}</td>
+                                        <td>{{ $item->book->accession }}</td>
+                                        <td>{{ $item->book->callnumber }}</td>
+                                        <td>{{ $item->book->subject }}</td>
+                                        <td>{{ date('F j, Y', strtotime($item->created_at)) }}</td>
+                                        <td>{{ $item->action }}</td>
+                                        <td>{{ $item->performby }}</td>
+                                </tr>
+                            </tbody>
+                            @endforeach
+                        </table>
                     </div>
                     <br>
                     <div class="pagination justify-content-center">
@@ -79,8 +77,8 @@
             </div>
         </div>
 
-        <div class="modal fade" id="tablemodal" data-bs-backdrop="static"
-            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-fullscreen">
                 <div class="modal-content">
                     <div class="modal-header">
