@@ -132,9 +132,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/book/update', [Booklist_Controller::class, 'updatebooks'])->name('books.update-book');
     Route::post('/copy/update', [Book_InventoryController::class, 'updatecopies'])->name('books.update-copy');
     Route::post('/copy/negativeupdate', [Book_InventoryController::class, 'updatecopiesnegative'])->name('books.updatenegative-copy');
-    Route::post('/import', [Booklist_Controller::class , 'import'])->name('import');
-    Route::post('/add/department',[Add_DepartmentController::class, 'store']);
-    Route::post('/add/subject',[Add_SubjectController::class, 'store']);
-    
-    Route::post('/importEbooks', [EbookController::class , 'importEbooks'])->name('importEbooks');
+    Route::post('/import', [Booklist_Controller::class, 'import'])->name('import');
+    Route::post('/add/department', [Add_DepartmentController::class, 'store']);
+    Route::post('/add/subject', [Add_SubjectController::class, 'store']);
+
+    Route::post('/importEbooks', [EbookController::class, 'importEbooks'])->name('importEbooks');
 });
