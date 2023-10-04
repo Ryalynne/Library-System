@@ -85,7 +85,7 @@
                     @foreach ($borrowbook as $book)
                         <tr>
                             <td>{{ $book->transaction }}</td>
-                            <td>{{ $book->book->id }}</td>
+                            <td hidden>{{ $book->book->id }}</td>
                             <td>{{ $book->book->title }}</td>
                             <td>{{ $book->book->author }}</td>
                             <td>{{ $book->book->department }}</td>
@@ -166,7 +166,8 @@
                     </div>
 
                     <!-- Table to display data -->
-                    <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5" id="tbl">
+                    <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5"
+                        id="tbl">
                         <!-- Table headers here -->
                         <thead class="bg-success text-white">
                             <th hidden>ID</th>
@@ -242,8 +243,9 @@
                         $.each(data, function(index, item) {
                             console.log(item);
                             var row = '<tr>' +
-                                '<td>' + item.id + '</td>' +
-                                '<td>' + item.first_name +" " +item.middle_name +" "+ item.last_name + '</td>' +
+                                // '<td>' + item.id + '</td>' +
+                                '<td>' + item.first_name + " " + item.middle_name +
+                                " " + item.last_name + '</td>' +
                                 '<td>' +
                                 '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-transaction="' +
                                 item.id + '">SELECT</button>' +

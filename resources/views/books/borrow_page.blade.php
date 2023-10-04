@@ -208,7 +208,7 @@
                         <table class="table table-bordered myTable book-tbl" id="data">
                             <thead class="bg-success text-white">
                                 <tr>
-                                    <th class="text-center">ID</th>
+                                    {{-- <th class="text-center">ID</th> --}}
                                     <th class="text-center">TITLE</th>
                                     <th class="text-center">AUTHOR/S</th>
                                     <th class="text-center">DEPARTMENT</th>
@@ -314,7 +314,7 @@
                             accessionList.push(data.book.accession);
                             bookList.push(data.book.id);
                             var tr = $('<tr>');
-                            tr.append($('<td>').text(data.book.id));
+                            // tr.append($('<td>').text(data.book.id));
                             tr.append($('<td>').text(data.book.title));
                             tr.append($('<td>').text(data.book.author));
                             tr.append($('<td>').text(data.book.department));
@@ -375,7 +375,7 @@
                         $.each(data, function(index, item) {
                             console.log(item);
                             var row = '<tr>' +
-                                '<td>' + item.id + '</td>' +
+                                // '<td>' + item.id + '</td>' +
                                 '<td>' + item.first_name + " " + item.middle_name +
                                 " " + item.last_name + '</td>' +
                                 '<td>' +
@@ -432,7 +432,7 @@
                         $.each(data, function(index, item) {
                             console.log(item);
                             var row = '<tr class="trtr">' +
-                                '<td class="getidd">' + item.id + '</td>' +
+                                // '<td class="getidd">' + item.id + '</td>' +
                                 '<td>' + item.title + '</td>' +
                                 '<td>' + item.author + '</td>' +
                                 '<td>' + item.department + '</td>' +
@@ -469,9 +469,9 @@
                                     bookList.push(data.book.id);
 
                                     var tr = document.createElement('tr');
-                                    var td1 = tr.appendChild(document
-                                        .createElement(
-                                            'td'));
+                                    // var td1 = tr.appendChild(document
+                                    //     .createElement(
+                                    //         'td'));
                                     var td2 = tr.appendChild(document
                                         .createElement(
                                             'td'));
@@ -490,7 +490,7 @@
                                         .createElement('td'));
                                     var td9 = tr.appendChild(document
                                         .createElement('td'));
-                                    td1.innerHTML = data.book.id;
+                                    // td1.innerHTML = data.book.id;
                                     td2.innerHTML = data.book.title;
                                     td3.innerHTML = data.book.author;
                                     td4.innerHTML = data.book.department;

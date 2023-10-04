@@ -79,8 +79,6 @@
                                                 @endphp
                                                 {{ ucwords($item->borrower . ', ' . $staff->last_name . ', ' . $staff->first_name) . ', ' . $staff->department }}
                                             @endif
-                                            {{--  {{ json_encode($item->staff_list($item->borrower)) }} --}}
-                                            {{--  {{ ($studentName = $item->student_list($item->borrower)) ?: ($staffName = $item->staff_list($item->borrower)) ?: 'no info' }} --}}
                                         </td>
                                         <td>{{ date('F j, Y', strtotime($item->created_at)) }}</td>
                                         <td>{{ date('F j, Y', strtotime($item->duedate)) }}</td>
