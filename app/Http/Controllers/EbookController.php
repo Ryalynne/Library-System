@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 
 use App\Imports\Ebook_Import;
+use App\Models\ebooks;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EbookController extends Controller
 {
-    function index(){
-        
-        return view('books.e_book');
+    function index()
+    {
+        $ebook = ebooks::paginate(50);
+        return view('books.e_book', compact('ebook'));
     }
 
 
@@ -24,5 +26,4 @@ class EbookController extends Controller
         Excel::import(new Ebook_Import, $file);
         return redirect('/ebook')->with('success', 'Import completed successfully.');
     }
-
 }

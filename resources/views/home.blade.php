@@ -27,7 +27,10 @@
 
         <div class="container">
             <div class="row">
+
+
                 <h2 class="text-success">SUMMARY OF ALL MODULES</h2>
+
                 <div class="col-xl-3 col-md-6 mb-5">
                     <div
                         class="card border-left-primary shadow h-100 py-1 border-success border-3 border-bottom-0 border-end-0  border-top-0">
@@ -35,7 +38,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Number of Booklist</div>
+                                       Booklist</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalofbooklist }}</div>
                                 </div>
                                 <div class="col-auto border-primary-subtle">
@@ -55,12 +58,39 @@
                 </div>
 
                 <div class="col-xl-3 col-md-6 mb-5">
+                    <div
+                        class="card border-left-primary shadow h-100 py-1 border-success border-3 border-bottom-0 border-end-0  border-top-0">
+                        <div class="card-body" onclick="booklist()">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Ebook</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalofbooklist }}</div>
+                                </div>
+                                <div class="col-auto border-primary-subtle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45"
+                                        fill="currentColor" class="bi bi-list-task" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" />
+                                        <path
+                                            d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z" />
+                                        <path fill-rule="evenodd"
+                                            d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-3 col-md-6 mb-5">
                     <div class="card  shadow h-100 py-1 border-success border-bottom-0 border-end-0  border-top-0">
                         <div class="card-body" onclick="adjustment()">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-success font-weight-bold text-primary text-uppercase mb-1">
-                                        Number of Books Copies</div>
+                                        Copies</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                         {{ $totaldata }}
                                     </div>
@@ -89,7 +119,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Number of Onlend</div>
+                                      Onlend</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totaloflend }}</div>
                                 </div>
                                 <div class="col-auto">
@@ -114,7 +144,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Number of Returned</div>
+                                        Returned</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalofreturn }}</div>
                                 </div>
                                 <div class="col-auto">
@@ -136,7 +166,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Number of Book Damage/ Lost</div>
+                                        Damage/ Lost</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalofdamage }}</div>
                                 </div>
                                 <div class="col-auto">
@@ -162,7 +192,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Number of Pending Purchase</div>
+                                       Pending Purchase</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $purchase }}</div>
                                 </div>
                                 <div class="col-auto">
@@ -188,7 +218,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        Number of Pending backorder</div>
+                                      Pending backorder</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $backorder }}</div>
                                 </div>
                                 <div class="col-auto">

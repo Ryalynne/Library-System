@@ -30,12 +30,16 @@
             </div>
 
 
+
             <div class="p-2">
                 <div class="input-group">
-                    <input type="search" class="form-control rounded myInput" placeholder="Search" aria-label="Search"
-                        aria-describedby="search-addon" />
+                    <form method="GET" action="/bookadjustment">
+                        @csrf
+                        <input class="myInput form-control " placeholder="Search here" name="search" />
+                    </form>
                 </div>
             </div>
+
         </div>
         <div class="table-responsive">
             <table class="table table-bordered border-dark myTable">
@@ -392,7 +396,6 @@
                         $('.Lesscopiesmodal').find('input').val('');
                         $('.less-copies-btn').text('Less Copies');
                         $('.Lesscopiesmodal').modal('hide');
-                        // Refresh the page after 3 seconds
                         setTimeout(function() {
                             location.reload();
                         }, 1000);

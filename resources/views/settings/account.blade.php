@@ -15,12 +15,15 @@
                     d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0Z" />
             </svg>
         </button> --}}
-        <div class="p-2 w-25">
+        <div class="p-2">
             <div class="input-group">
-                <input type="search" class="form-control rounded myInput" placeholder="Search" aria-label="Search"
-                    aria-describedby="search-addon" />
+                <form method="GET" action="/account">
+                    @csrf
+                    <input class="myInput form-control " placeholder="Search here" name="search" />
+                </form>
             </div>
         </div>
+
         <div class="table-responsive">
 
 
@@ -68,13 +71,11 @@
                 </tbody>
             </table>
             <div class="pagination justify-content-center">
-            @if (count($account) > 0)
                 {{ $account->links() }}
-            @endif
             </div>
         </div>
     </div>
-{{-- 
+    {{-- 
     
     <div class="modal fade AddUpdate" id="modal_addstudent" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -127,8 +128,6 @@
             </div>
         </div>
     </div> --}}
-
-
 @endsection
 
 @section('script')

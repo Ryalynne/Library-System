@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('author')->nullable();
             $table->string('copyright')->nullable();
+            $table->string('department')->nullable();
             $table->string('links')->nullable();
             $table->timestamps();
         });

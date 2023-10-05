@@ -137,4 +137,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/add/subject', [Add_SubjectController::class, 'store']);
 
     Route::post('/importEbooks', [EbookController::class, 'importEbooks'])->name('importEbooks');
+
+
+    Route::get('users-export', [Booklist_Controller::class, 'export'])->name('users.export');
+
 });

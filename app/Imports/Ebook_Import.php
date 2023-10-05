@@ -18,7 +18,8 @@ class Ebook_Import implements ToCollection
                 'title' => $row[0],
                 'author' => $row[1],
                 'copyright' => $row[2],
-                'links' => $row[3],
+                'department' => $row[3],
+                'links' => $row[4],
             ]);
         }
     }

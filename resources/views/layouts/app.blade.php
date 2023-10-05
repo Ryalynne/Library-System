@@ -291,7 +291,6 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 @livewireScripts
 <script>
-    
     $(document).ready(function() {
         $(".myInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -316,11 +315,11 @@
             $('.modal-book-id').val(id);
             $('.modal-book-title').val(data.book.title);
             $('.modal-book-author').val(data.book.author);
-            $('.modal-book-categories').val(data.book.categories);
+            $('.t-department').val(data.book.department);
             $('.modal-book-copyright').val(data.book.copyright);
             $('.modal-book-accession').val(data.book.accession);
             $('.modal-book-callnumber').val(data.book.callnumber);
-            $('.modal-book-subject').val(data.book.subject);
+            $('.t-subject').val(data.book.subject);
         });
     });
 </script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Imports\BookListImport;
 use App\Models\bookaction;
 use App\Models\booklist;
@@ -29,6 +30,11 @@ class Booklist_Controller extends Controller
         return view('books.book_list', compact('books'));
     }
 
+    public function export() 
+    {
+        return Excel::download(new UsersExport, 'BookList.xlsx');
+    }
+     
     public function updateback($id)
     {
         $book = booklist::find($id);
@@ -117,7 +123,6 @@ class Booklist_Controller extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'title' => 'required',
-
             ]);
             if ($validator->fails()) {
                 return response()->json([

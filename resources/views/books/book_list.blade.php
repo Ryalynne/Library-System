@@ -30,12 +30,12 @@
                         </button>
 
                         {{-- PRINT TABLE --}}
-                        <form action="/generate-table" method="GET">
+                        {{-- <form action="/generate-table" method="GET">
                             <button type="submit" class="btn btn-success bg-success border-success mx-2 rounded">
                                 Print Book List
                                 <!-- Your SVG icon code -->
                             </button>
-                        </form>
+                        </form> --}}
 
                         {{-- IMPORT --}}
                         <button type="button" class="btn btn-success bg-success border-success mx-2 rounded"
@@ -43,7 +43,7 @@
                             Import
                             <!-- Your SVG icon code -->
                         </button>
-
+                        <a class="btn btn-success float-end rounded" href="{{ route('users.export') }}">Export Booklist</a>
                         {{-- QRLIST --}}
                         <form action="/Print_QRList/" method="GET">
                             <button type="submit" class="btn btn-success bg-success border-success mx-2 rounded">
@@ -203,7 +203,7 @@
                                             {{ $book->callnumber }}
                                         </td>
                                         <td>
-                                            {{ $book->subjects }}
+                                            {{ $book->subject }}
                                         </td>
                                         <td>
                                             {{ date('F j, Y', strtotime($book->created_at)) }}
@@ -291,13 +291,12 @@
                         <p id="msg1author" class="text-danger"> </p>
                         <div class="mb-3">
                             <div class="form-group">
-                                <label for="updatedepartment">DEPARTMENT</label>
-                                <select name="department" id="department" class="form-control t-department">
-                                    <option value="" {{ request('department') ? '' : 'selected' }}>Select
-                                        Department</option>
-                                    @foreach (\App\Models\departmentList::select('departmentName')->distinct()->get() as $department)
+                                <label for="department">DEPARTMENT</label>
+                                <select name="updatedepartment" id="updatedepartment" class="form-control t-department modal-book-department">
+                                    <option value="{{ $department->departmentName }}">Select Department</option>
+                                    @foreach (\App\Models\DepartmentList::select('departmentName')->distinct()->get() as $department)
                                         <option value="{{ $department->departmentName }}"
-                                            {{ request('department') == $department->departmentName ? 'selected' : '' }}>
+                                            {{ request('updatedepartment') == $department->departmentName ? 'selected' : '' }}>
                                             {{ strtoupper($department->departmentName) }}
                                         </option>
                                     @endforeach
@@ -331,10 +330,10 @@
                         <div class="mb-3">
                             <div class="form-group">
                                 <label for="updatesubject">SUBJECT</label>
-                                <select name="subject" id="subject" class="form-control t-subject">
+                                <select name="updatesubject" id="updatesubject" class="form-control t-subject modal-book-subject">
                                     @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
                                         <option value="{{ $subject->subjectName }}"
-                                            {{ request('subject') == $subject->subjectName ? 'selected' : '' }}>
+                                            {{ request('updatesubject') == $subject->subjectName ? 'selected' : '' }}>
                                             {{ strtoupper($subject->subjectName) }}
                                         </option>
                                     @endforeach

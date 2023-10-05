@@ -34,8 +34,8 @@ class UsersImport implements ToModel
             'title'     => $row['TITLE'],
             'author'    => $row['AUTHOR'],
             'copyright'    => $row['COPYRIGHT'],
+            'department'    => $row['DEPARTMENT'],
             'links'    => $row['LINKS'],
         ]);
     }
-
 }

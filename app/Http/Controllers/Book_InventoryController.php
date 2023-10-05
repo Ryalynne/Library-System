@@ -15,12 +15,27 @@ class Book_InventoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $books = booklist::where('ishide', false)->paginate(50);
+    //     $copies = copies::where('ishide', false)->get();
+    //     return view('books.book_inventory', compact('books'));
+    // }
+
+
+    public function index(Request $request)
     {
-        $books = booklist::where('ishide', false)->paginate(50);
-        $copies = copies::where('ishide', false)->get();
+        $search = $request->input('search');
+        $query = booklist::where('ishide', false);
+
+        if (!empty($search)) {
+            $query->where('accession', $search);
+        }
+        $books = $query->paginate(50);
+
         return view('books.book_inventory', compact('books'));
     }
+
 
     public function updatecopies(Request $request)
     {

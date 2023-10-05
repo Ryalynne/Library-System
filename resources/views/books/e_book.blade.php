@@ -17,15 +17,30 @@
                         <th>TITLE</th>
                         <th>AUTHOR</th>
                         <th>COPYTRIGHT</th>
+                        <th>DEPARTMENT</th>
                         <th>LINKS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                    </tr>
+                    @if ($ebook->count() > 0)
+                        @foreach ($ebook as $item)
+                            <tr>
+
+                                <td>{{ $item->title }}</td>
+                                <td>{{ $item->author }}</td>
+                                <td>{{ $item->copyright }}</td>
+                                <td>{{ $item->deparment }}</td>
+                                <td>{{ $item->links }}</td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="4" class="text-center text-size-15px"><b>NO EBOOKS FOUND</b></td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
+            {{ $ebook->links() }}
         </div>
 
 
@@ -50,5 +65,4 @@
                 </div>
             </div>
         </div>
-
     @endsection
