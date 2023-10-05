@@ -165,6 +165,7 @@ class Booklist_Controller extends Controller
             ->first();
         return compact('book');
     }
+    
 
     public function get_bookarchived($id)
     {

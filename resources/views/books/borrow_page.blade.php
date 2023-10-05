@@ -432,7 +432,7 @@
                         $.each(data, function(index, item) {
                             console.log(item);
                             var row = '<tr class="trtr">' +
-                                // '<td class="getidd">' + item.id + '</td>' +
+                                '<td class="getidd" hidden>' + item.id + '</td>' +
                                 '<td>' + item.title + '</td>' +
                                 '<td>' + item.author + '</td>' +
                                 '<td>' + item.department + '</td>' +
@@ -451,7 +451,6 @@
 
                             $('.book-tbl tbody').append(row);
                         });
-
 
                         $('.book-tbl').on('click', '.custom-button1', function(event) {
                             var $row = $(this).closest(".trtr");
