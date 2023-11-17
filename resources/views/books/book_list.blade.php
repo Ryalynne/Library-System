@@ -330,7 +330,7 @@
                         <div class="mb-3">
                             <div class="form-group">
                                 <label for="updatesubject">SUBJECT</label>
-                                <select name="updatesubject" id="updatesubject" class="form-control t-subject modal-book-subject">
+                                <select name="updatesubject" id="updatesubject" class="form-control modal-book-subject">
                                     @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
                                         <option value="{{ $subject->subjectName }}"
                                             {{ request('updatesubject') == $subject->subjectName ? 'selected' : '' }}>
