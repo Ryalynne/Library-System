@@ -51,11 +51,8 @@
                                 <!-- Your SVG icon code -->
                             </button>
                         </form>
-
-
                     </div>
                 </div>
-
                 <div class="p-2">
                     <div class="input-group">
                         <form method="GET" action="/booklist">
@@ -64,7 +61,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
             <form>
                 @csrf
@@ -111,10 +107,7 @@
                                         </select>
                                     </div>
                                 </div>
-
-
                                 <!-- department -->
-
                                 <div class="mb-3">
                                     <label for="copyright" class="form-label">COPYRIGHT</label>
                                     <input type="text" class="form-control t-copyright" id="copyright" name="copyright"
@@ -292,7 +285,8 @@
                         <div class="mb-3">
                             <div class="form-group">
                                 <label for="department">DEPARTMENT</label>
-                                <select name="updatedepartment" id="updatedepartment" class="form-control t-department modal-book-department">
+                                <select name="updatedepartment" id="updatedepartment"
+                                    class="form-control t-department modal-book-department">
                                     <option value="{{ $department->departmentName }}">Select Department</option>
                                     @foreach (\App\Models\DepartmentList::select('departmentName')->distinct()->get() as $department)
                                         <option value="{{ $department->departmentName }}"

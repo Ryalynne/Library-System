@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('author')->nullable();
 
             // $table->string('department')->nullable();
-      
+
             $table->string('department')->nullable();
             $table->string('subject')->nullable();
 
