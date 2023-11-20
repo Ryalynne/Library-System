@@ -75,53 +75,94 @@ class Booklist_Controller extends Controller
     public function store(Request $request)
     {
         try {
-            try {
-                $validator = Validator::make($request->all(), [
-                    'title' => 'required',
-                    'copies' => 'required|numeric|min:0',
-                ]);
-
-                if ($validator->fails()) {
-                    return response()->json([
-                        'status' => 400,
-                        'errors' => $validator->messages()
-                    ]);
-                }
-
-                $book = booklist::create([
-                    'title' => $request->title,
-                    'author' => $request->author,
-                    'department' => $request->department,
-                    'copyright' => $request->copyright,
-                    'accession' => $request->accession,
-                    'callnumber'  => $request->callnumber,
-                    'subject' => $request->subject,
-                ]);
-                copies::create([
-                    'bookid' => $book->id,
-                    'action' => "added",
-                    'copies' => $request->copies
-                ]);
-
-                bookaction::create([
-                    'bookid' => $book->id,
-                    'action' => "added",
-                    'performby' => Auth::user()->name
-                ]);
-
+            $validator = Validator::make($request->all(), [
+                'title' => 'required',
+                'copies' => 'required|numeric|min:0',
+            ]);
+            if ($validator->fails()) {
                 return response()->json([
-                    'status' => 200,
-                    'message' => 'Book Added Successfully.'
-                ]);
-            } catch (\Exception $e) {
-                return response()->json([
-                    'error' => $e->getMessage()
+                    'status' => 400,
+                    'errors' => $validator->messages()
                 ]);
             }
-        } catch (Exception $e) {
-            return $e;
+            $book = booklist::create([
+                'title' => $request->title,
+                'author' => $request->author,
+                'department' => $request->department,
+                'copyright' => $request->copyright,
+                'accession' => $request->accession,
+                'callnumber'  => $request->callnumber,
+                'subject' => $request->subject,
+            ]);
+
+            copies::create([
+                'bookid' => $book->id,
+                'action' => "added",
+                'copies' => $request->copies
+            ]);
+            bookaction::create([
+                'bookid' => $book->id,
+                'action' => "added",
+                'performby' => Auth::user()->name
+            ]);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Book Added Successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'error' => $e->getMessage()
+            ]);
         }
     }
+
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         $validator = Validator::make($request->all(), [
+    //             'title' => 'required',
+    //             'copies' => 'required|numeric|min:0',
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return response()->json([
+    //                 'status' => 400,
+    //                 'errors' => $validator->messages()
+    //             ]);
+    //         }
+
+    //         $book = booklist::create([
+    //             'title' => $request->title,
+    //             'author' => $request->author,
+    //             'department' => $request->department,
+    //             'copyright' => $request->copyright,
+    //             'accession' => $request->accession,
+    //             'callnumber'  => $request->callnumber,
+    //             'subject' => $request->subject,
+    //         ]);
+    //         copies::create([
+    //             'bookid' => $book->id,
+    //             'action' => "added",
+    //             'copies' => $request->copies
+    //         ]);
+
+    //         bookaction::create([
+    //             'bookid' => $book->id,
+    //             'action' => "added",
+    //             'performby' => Auth::user()->name
+    //         ]);
+
+    //         return response()->json([
+    //             'status' => 200,
+    //             'message' => 'Book Added Successfully.'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'error' => $e->getMessage()
+    //         ]);
+    //     }
+    // }
 
     public function updatebooks(Request $request)
     {

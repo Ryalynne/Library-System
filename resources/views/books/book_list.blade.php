@@ -326,7 +326,8 @@
                         <div class="mb-3">
                             <div class="form-group">
                                 <label for="updatesubject">SUBJECT</label>
-                                <select name="updatesubject" id="updatesubject" class="form-control modal-book-subject">
+                                <select name="updatesubject" id="updatesubject"
+                                    class="form-control t-subject modal-book-subject">
                                     @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
                                         <option value="{{ $subject->subjectName }}"
                                             {{ request('updatesubject') == $subject->subjectName ? 'selected' : '' }}>
@@ -591,8 +592,8 @@
                     'copyright': $('.t-copyright').val(),
                     'accession': $('.t-accession').val(),
                     'copies': $('.t-copies').val(),
-                    'subject': $('.t-subject').val(),
                     'callnumber': $('.t-callnumber').val(),
+                    'subject': $('.t-subject').val(),
                 }
                 $.ajaxSetup({
                     headers: {
@@ -608,7 +609,6 @@
                         if (response.status == 400) {
                             $('#msgtitle').html("");
                             $('#msgcopies').html("");
-
                             switch (true) {
                                 case !!response.errors.title:
                                     $('#msgtitle').append(response.errors.title);
@@ -617,7 +617,6 @@
                                 default:
                                     $('#msgtitle').removeClass('alert alert-danger');
                             }
-
                             switch (true) {
                                 case !!response.errors.copies:
                                     $('#msgcopies').append(response.errors.copies);
