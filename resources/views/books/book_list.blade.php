@@ -96,18 +96,18 @@
                                     <div class="form-group">
                                         <label for="department">DEPARTMENT</label>
                                         <select name="department" id="department" class="form-control t-department">
-                                            <option value="" {{ request('department') ? '' : 'selected' }}>Select
-                                                Department</option>
-                                            @foreach (\App\Models\departmentList::select('departmentName')->distinct()->get() as $department)
-                                                <option value="{{ $department->departmentName }}"
-                                                    {{ request('department') == $department->departmentName ? 'selected' : '' }}>
+                                            @foreach (\App\Models\departmentList::all() as $department)
+                                                <option value="{{ $department->id }}"
+                                                    {{ request('department') == $department->id ? 'selected' : '' }}>
                                                     {{ strtoupper($department->departmentName) }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+
                                 <!-- department -->
+
                                 <div class="mb-3">
                                     <label for="copyright" class="form-label">COPYRIGHT</label>
                                     <input type="text" class="form-control t-copyright" id="copyright" name="copyright"
@@ -127,24 +127,20 @@
                                     <input type="text" class="form-control t-callnumber" id="callnumber"
                                         name="callnumber" :value="old('callnumber')" placeholder="ex.04313">
                                 </div>
-
                                 <div class="mb-3">
                                     <div class="form-group">
                                         <label for="subject">SUBJECT</label>
-                                        <option value="" {{ request('subject') ? '' : 'selected' }}>Select
-                                            Department</option>
                                         <select name="subject" id="subject" class="form-control t-subject">
-                                            @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
-                                                <option value="{{ $subject->subjectName }}"
-                                                    {{ request('subject') == $subject->subjectName ? 'selected' : '' }}>
+                                            @foreach (\App\Models\subjectList::all() as $subject)
+                                                <option value="{{ $subject->id }}"
+                                                    {{ request('subject') == $subject->id ? 'selected' : '' }}>
                                                     {{ strtoupper($subject->subjectName) }}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-
-                                {{-- textfield --}}
+                                {{-- subject --}}
                                 <div class="mb-3">
                                     <label for="copies" class="form-label">COPIES</label>
                                     <input type="text" class="form-control t-copies" id="copies" name="copies"
@@ -152,8 +148,6 @@
                                 </div>
                                 <p id="msgcopies" class="text-danger"> </p>
                             </div>
-
-
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success btn-tr-submit">Register</button>
@@ -189,7 +183,13 @@
                                         <td>
                                             {{ $book->author }}
                                         </td>
-                                        <td>{{ $book->department }}</td>
+                                        <td>
+                                            @if ($book->department == null)
+                                                no department
+                                            @else
+                                                {{ $book->departments->departmentName }}
+                                            @endif
+                                        </td>
                                         <td>{{ $book->copyright }}</td>
                                         <td>
                                             {{ $book->accession }}
@@ -198,7 +198,11 @@
                                             {{ $book->callnumber }}
                                         </td>
                                         <td>
-                                            {{ $book->subject }}
+                                            @if ($book->subject == null)
+                                                no subject
+                                            @else
+                                                {{ $book->subjects->subjectName }}
+                                            @endif
                                         </td>
                                         <td>
                                             {{ date('F j, Y', strtotime($book->created_at)) }}
@@ -284,7 +288,8 @@
                                 id="updateauthor" name="updateauthor" :value="old('updateauthor')">
                         </div>
                         <p id="msg1author" class="text-danger"> </p>
-                        <div class="mb-3">
+
+                        {{-- <div class="mb-3">
                             <div class="form-group">
                                 <label for="department">DEPARTMENT</label>
                                 <select name="updatedepartment" id="updatedepartment"
@@ -298,8 +303,21 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div> --}}
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label for="updatedepartment">DEPARTMENT</label>
+                                <select name="updatedepartment" id="updatedepartment"
+                                    class="form-control t-department modal-book-department">
+                                    @foreach (\App\Models\departmentList::all() as $department)
+                                        <option value="{{ $department->id }}"
+                                            {{ request('department') == $department->id ? 'selected' : '' }}>
+                                            {{ strtoupper($department->departmentName) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-
                         <div class="mb-3">
                             <label for="updatecopyright" class="form-label">COPYRIGHT</label>
                             <input style="text-transform:uppercase" type="text"
@@ -323,7 +341,7 @@
                                 :value="old('updatecallnumber')">
                         </div>
                         <p id="msg1callnumber" class="text-danger"> </p>
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <div class="form-group">
                                 <label for="updatesubject">SUBJECT</label>
                                 <select name="updatesubject" id="updatesubject"
@@ -336,8 +354,21 @@
                                     @endforeach
                                 </select>
                             </div>
+                        </div> --}}
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label for="updatesubject">SUBJECT</label>
+                                <select name="updatesubject" id="updatesubject"
+                                    class="form-control t-subject modal-book-subject">
+                                    @foreach (\App\Models\subjectList::all() as $subject)
+                                        <option value="{{ $subject->id }}"
+                                            {{ request('subject') == $subject->id ? 'selected' : '' }}>
+                                            {{ strtoupper($subject->subjectName) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

@@ -60,11 +60,23 @@
                                         {{ $adjust->book->title }}
                                     </td>
                                     <td>{{ $adjust->book->author }}</td>
-                                    <td>{{ $adjust->book->department }}</td>
+                                    <td>
+                                        @if ($adjust->book->department == null)
+                                            no department
+                                        @else
+                                            {{ $adjust->book->departments->departmentName }}
+                                        @endif
+                                    </td>
                                     <td>{{ $adjust->book->copyright }}</td>
                                     <td>{{ $adjust->book->accession }}</td>
                                     <td>{{ $adjust->book->callnumber }}</td>
-                                    <td>{{ $adjust->book->subject }}</td>
+                                    <td>
+                                        @if ($adjust->book->subject == null)
+                                            no subject
+                                        @else
+                                            {{ $adjust->book->subjects->subjectName }}
+                                        @endif
+                                    </td>
                                     <td>{{ date('F j, Y', strtotime($adjust->created_at)) }}</td>
                                     <td class="col-1">{{ $adjust->action }}</td>
                                     <td class="col-1">{{ $adjust->number_adjust }}</td>

@@ -88,11 +88,11 @@
                             <td hidden>{{ $book->book->id }}</td>
                             <td>{{ $book->book->title }}</td>
                             <td>{{ $book->book->author }}</td>
-                            <td>{{ $book->book->department }}</td>
+                            <td>{{ $book->book->departments->departmentName }}</td>
                             <td>{{ $book->book->copyright }}</td>
                             <td>{{ $book->book->accession }}</td>
                             <td>{{ $book->book->callnumber }}</td>
-                            <td>{{ $book->book->subject }}</td>
+                            <td>{{ $book->book->subjects->subjectName }}</td>
                             <td class="col-2">{{ date('Y-m-d', strtotime($book->created_at)) }}</td>
                             <td class="col-2">{{ $book->duedate }}</td>
                             <td>
@@ -135,8 +135,8 @@
         </div>
     </div>
 
-        {{-- SEARCH BORROWER --}}
-        <div class="modal fade" id="search_user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    {{-- SEARCH BORROWER --}}
+    <div class="modal fade" id="search_user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -164,7 +164,8 @@
                     </div>
 
                     <!-- Table to display data -->
-                    <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5" id="tbl">
+                    <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5"
+                        id="tbl">
                         <!-- Table headers here -->
                         <thead class="bg-success text-white">
                             <th hidden>ID</th>
@@ -240,8 +241,9 @@
                         $.each(data, function(index, item) {
                             console.log(item);
                             var row = '<tr>' +
-                               
-                                '<td>' + item.first_name +" " +item.middle_name +" "+ item.last_name + '</td>' +
+
+                                '<td>' + item.first_name + " " + item.middle_name +
+                                " " + item.last_name + '</td>' +
                                 '<td>' +
                                 '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button" data-transaction="' +
                                 item.id + '">SELECT</button>' +
@@ -259,7 +261,7 @@
                             var redirectLink = $('#redirect-link');
 
                             $.get("/get-user/" + id + "/" + user, function(data,
-                            status) {
+                                status) {
                                 window.location.href = '/fined?data=' +
                                     data;
                             });
@@ -276,7 +278,6 @@
                 $('#TypeUser').val(selectedValue);
             });
         });
-
     </script>
 @endsection
 @endsection

@@ -74,7 +74,7 @@
             </td>
             <td><span>
                 </span></td>
-            <td><span>{{ $borrowedby}}</span>
+            <td><span>{{ $borrowedby }}</span>
             </td>
         </tbody>
     </table>

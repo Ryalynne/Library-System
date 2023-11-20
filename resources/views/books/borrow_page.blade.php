@@ -314,21 +314,37 @@
                             accessionList.push(data.book.accession);
                             bookList.push(data.book.id);
                             var tr = $('<tr>');
-                            // tr.append($('<td>').text(data.book.id));
                             tr.append($('<td>').text(data.book.title));
                             tr.append($('<td>').text(data.book.author));
-                            tr.append($('<td>').text(data.book.department));
-                            tr.append($('<td>').text(data.book.copyright));
-                            tr.append($('<td>').text(data.book.accession));
-                            tr.append($('<td>').text(data.book.callnumber));
-                            tr.append($('<td>').text(data.book.subject));
-                            tr.append($('<td>').html(
-                                '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button1" data-id="' +
-                                id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>'));
-                            $('#tbl').append(tr);
-                            $('.bookid').val("");
-                            console.log('Available Books: ' + bookList);
-                            console.log('Accession List: ' + accessionList);
+
+                            $.get("/findDepsub/" + data.book.department + '/' + data.book.subject, function(
+                                response) {
+                                let departmentName = response.department.departmentName;
+                                let subjectName = response.subject.subjectName;
+
+                                tr.append($('<td>').text(departmentName));
+
+
+                                tr.append($('<td>').text(data.book.copyright));
+                                tr.append($('<td>').text(data.book.accession));
+                                tr.append($('<td>').text(data.book.callnumber));
+
+
+                                tr.append($('<td>').text(subjectName));
+
+
+
+
+                                tr.append($('<td>').html(
+                                    '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button1" data-id="' +
+                                    id + '" onclick="deleteRow(this, ' + id + ');">Remove</button>'
+                                ));
+
+                                $('#tbl').append(tr);
+                                $('.bookid').val("");
+                                console.log('Available Books: ' + bookList);
+                                console.log('Accession List: ' + accessionList);
+                            });
                         } else {
                             alert("The Book is Already in the list");
                             $('.bookid').val("");
@@ -340,7 +356,6 @@
                 }
             });
         }
-
         var $iddata = "";
         let $status = "";
         var studentid = "";

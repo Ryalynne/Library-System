@@ -15,6 +15,7 @@ class UsersExport implements FromCollection, WithHeadings
     {
         return booklist::select("title", "author", 'department', 'copyright', 'accession', 'callnumber', 'subject')->where('ishide', 0)->get();
     }
+    //subjct , department
 
     /**
      * Write code on Method

@@ -22,6 +22,11 @@ class booklist extends Model
     }
 
 
+    public function department()
+    {
+        return $this->belongsTo(departmentList::class, 'department_id');
+    }
+
     public function getstatus($data)
     {
         // return $this->hasMany(borrowpage::class, 'studentid')->where('bookstatus', 'onlend')->value('bookstatus');

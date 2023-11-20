@@ -55,11 +55,11 @@
                     <td>{{ $book->id }}</td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author }}</td>
-                    <td>{{ $book->department }}</td>
+                    <td>{{ $book->departments->departmentName }}</td>
                     <td>{{ $book->copyright }}</td>
                     <td>{{ $book->accession }}</td>
                     <td>{{ $book->callnumber }}</td>
-                    <td>{{ $book->subject }}</td>
+                    <td>{{ $book->subjects->subjectName }}</td>
                 </tr>
             @endforeach
         @else

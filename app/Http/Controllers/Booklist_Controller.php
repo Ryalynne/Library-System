@@ -8,7 +8,9 @@ use App\Models\bookaction;
 use App\Models\booklist;
 use App\Models\borrowpage;
 use App\Models\copies;
+use App\Models\departmentList;
 use App\Models\StudentAccount;
+use App\Models\subjectList;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -217,6 +219,13 @@ class Booklist_Controller extends Controller
     {
         $book = booklist::where('id', $id)->where('ishide', true)->first();
         return compact('book');
+    }
+
+    public function get_depsub($dep, $sub)
+    {
+        $department = departmentList::where('id', $dep)->first();
+        $subject = subjectList::where('id', $sub)->first();
+        return compact('department', 'subject');
     }
 
     public function get_bookcopies($data)

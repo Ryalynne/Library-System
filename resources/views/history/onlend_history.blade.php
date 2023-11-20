@@ -64,7 +64,13 @@
                                     <td>{{ $item->book->copyright }}</td>
                                     <td>{{ $item->book->accession }}</td>
                                     <td>{{ $item->book->callnumber }}</td>
-                                    <td>{{ $item->book->subject }}</td>
+                                    <td>
+                                        @if ($item->book->subject == null)
+                                            no subject
+                                        @else
+                                            {{ $item->book->subjects->subjectName }}
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($item->student_list($item->borrower))
                                             {{ ucwords($item->borrower . ', ' . $item->student_list($item->borrower)) }}
@@ -78,7 +84,7 @@
                                         {{--  {{ ($studentName = $item->student_list($item->borrower)) ?: ($staffName = $item->staff_list($item->borrower)) ?: 'no info' }} --}}
                                     </td>
                                     <td>{{ date('F j, Y', strtotime($item->created_at)) }}</td>
-                                    <td>{{  date('F j, Y', strtotime($item->duedate)) }}</td>
+                                    <td>{{ date('F j, Y', strtotime($item->duedate)) }}</td>
                                     <td>{{ $item->penalty($item->duedate) }}</td>
                             </tr>
                         </tbody>

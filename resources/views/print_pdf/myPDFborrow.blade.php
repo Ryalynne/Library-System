@@ -98,11 +98,11 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 tr">
                             <td>{{ $book->title }}</td>
                             <td>{{ $book->author }}</td>
-                            <td>{{ $book->department }}</td>
+                            <td>{{ $book->departments->departmentName }}</td>
                             <td>{{ $book->copyright }}</td>
                             <td>{{ $book->accession }}</td>
                             <td>{{ $book->callnumber }}</td>
-                            <td>{{ $book->subject }}</td>
+                            <td>{{ $book->subjects->subjectName }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -123,8 +123,8 @@
                     <td> <span>PREPARED BY: </span>
                     </td>
                     <td> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        VERIFIED BY: </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            VERIFIED BY: </span>
                     </td>
                     <td> <span>RECEIVED BY: </span>
                     </td>
@@ -133,7 +133,7 @@
                 </td>
                 <td><span>
                     </span></td>
-                <td><span>{{$borrowedby}}</span>
+                <td><span>{{ $borrowedby }}</span>
                 </td>
             </tbody>
         </table>

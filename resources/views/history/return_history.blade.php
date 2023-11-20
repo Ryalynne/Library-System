@@ -64,11 +64,23 @@
                                         <td>{{ $item->transaction }}</td>
                                         <td>{{ $item->book->title }}</td>
                                         <td>{{ $item->book->author }}</td>
-                                        <td>{{ $item->book->categories }}</td>
+                                        <td>
+                                            @if ($item->book->department == null)
+                                                no department
+                                            @else
+                                                {{ $item->book->departments->departmentName }}
+                                            @endif
+                                        </td>
                                         <td>{{ $item->book->copyright }}</td>
                                         <td>{{ $item->book->accession }}</td>
                                         <td>{{ $item->book->calllnumber }}</td>
-                                        <td>{{ $item->book->subject }}</td>
+                                        <td>
+                                            @if ($item->book->subject == null)
+                                                no subject
+                                            @else
+                                                {{ $item->book->subjects->subjectName }}
+                                            @endif
+                                        </td>
                                         <td>
                                             @if ($item->student_list($item->borrower))
                                                 {{ ucwords($item->borrower . ', ' . $item->student_list($item->borrower)) }}

@@ -68,7 +68,11 @@
                                 {{ $book->author }}
                             </td>
                             <td class="px-6 py-3">
-                                {{ $book->department }}
+                                @if ($book->department == null)
+                                    no department
+                                @else
+                                    {{ $book->departments->departmentName }}
+                                @endif
                             </td>
                             <td class="px-6 py-3">
                                 {{ $book->copyright }}
@@ -80,7 +84,11 @@
                                 {{ $book->callnumber }}
                             </td>
                             <td>
-                                {{ $book->subject }}
+                                @if ($book->subject == null)
+                                    no subject
+                                @else
+                                    {{ $book->subjects->subjectName }}
+                                @endif
                             </td>
                             <td class="px-6 py-3">
                                 {{ $book->numberofcopies() }}
@@ -120,12 +128,12 @@
                                         <div class="modal-body ">
                                             {{-- <form method="POST" action="{{ route('books.update-copy') }}">
                                                 <fieldset> --}}
-                                            <div class="mb-3">
+                                            {{-- <div class="mb-3">
                                                 <label for="disabledTextInput" class="form-label">BOOK ID</label>
                                                 <input type="text" id="disabledTextInput"
                                                     class="form-control modal-book-id" placeholder="Disabled input"
                                                     readonly>
-                                            </div>
+                                            </div> --}}
                                             <div class="mb-3">
                                                 <label for="disabledTextInput" class="form-label">
                                                     TITLE</label>
@@ -140,12 +148,12 @@
                                                     readonly>
                                             </div>
                                             {{-- department --}}
-                                            <div class="mb-3">
+                                            {{-- <div class="mb-3">
                                                 <label for="disabledTextInput" class="form-label">department</label>
                                                 <input type="text" id="disabledTextInput"
                                                     class="form-control modal-book-department"
                                                     placeholder="Disabled input" readonly>
-                                            </div>
+                                            </div> --}}
                                             {{-- department --}}
                                             <div class="mb-3">
                                                 <label for="disabledTextInput" class="form-label">COPYRIGHT</label>
@@ -202,11 +210,11 @@
                                         <div class="modal-body ">
                                             {{-- <form method="POST" action="{{ route('books.updatenegative-copy') }}">
                                                 <fieldset> --}}
-                                            <div class="mb-3">
+                                            {{-- <div class="mb-3">
                                                 <label class="form-label">BOOK ID</label>
                                                 <input type="text" id="disabledTextInput"
                                                     class="form-control modal-book-id" readonly>
-                                            </div>
+                                            </div> --}}
                                             <div class="mb-3">
                                                 <label class="form-label">TITLE</label>
                                                 <input type="text" id="disabledTextInput"

@@ -86,7 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/bookcopies/{id}', [Booklist_Controller::class, 'get_bookcopies']);
     Route::get('/vendor/{id}', [Vendor_ListController::class, 'get_vendor']);
     Route::get('/copy/{id}', [Book_InventoryController::class, 'get_copies']);
-
+    Route::get('/findDepsub/{depid}/{subid}', [Booklist_Controller::class, 'get_depsub']);
 
     //pdf print
 

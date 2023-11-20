@@ -36,11 +36,11 @@
                     <td>{{ $adjust->book->id }}</td>
                     <td>{{ $adjust->book->title }}</td>
                     <td>{{ $adjust->book->author }}</td>
-                    <td>{{ $adjust->book->department }}</td>
+                    <td>{{ $adjust->book->departments->departmentName }}</td>
                     <td>{{ $adjust->book->copyright }}</td>
                     <td>{{ $adjust->book->accession }}</td>
                     <td>{{ $adjust->book->callnumber }}</td>
-                    <td>{{ $adjust->book->subject }}</td>
+                    <td>{{ $adjust->book->subjects->subjectName }}</td>
                     <td>{{ date('Y-m-d', strtotime($adjust->created_at)) }}</td>
                     <td>{{ $adjust->action }}</td>
                     <td>{{ $adjust->number_adjust }}</td>

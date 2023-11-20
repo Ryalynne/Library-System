@@ -41,7 +41,7 @@
                         {{ $book->author }}
                     </td>
                     <td>
-                        {{ $book->department }}
+                        {{ $book->departments->departmentName }}
                     </td>
                     <td>
                         {{ $book->copyright }}
@@ -53,7 +53,7 @@
                         {{ $book->callnumber }}
                     </td>
                     <td>
-                        {{ $book->subject }}
+                        {{ $book->subjects->subjectName}}
                     </td>
                     <td>
                         {{ date('Y-m-d', strtotime($book->created_at)) }}
