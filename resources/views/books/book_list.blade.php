@@ -131,6 +131,8 @@
                                 <div class="mb-3">
                                     <div class="form-group">
                                         <label for="subject">SUBJECT</label>
+                                        <option value="" {{ request('subject') ? '' : 'selected' }}>Select
+                                            Department</option>
                                         <select name="subject" id="subject" class="form-control t-subject">
                                             @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
                                                 <option value="{{ $subject->subjectName }}"
