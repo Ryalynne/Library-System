@@ -40,7 +40,7 @@
                         {{-- IMPORT --}}
                         <button type="button" class="btn btn-success bg-success border-success mx-2 rounded"
                             data-bs-toggle="modal" data-bs-target="#modal_import">
-                            Import
+                            Import Booklist
                             <!-- Your SVG icon code -->
                         </button>
                         <a class="btn btn-success float-end rounded" href="{{ route('users.export') }}">Export Booklist</a>
