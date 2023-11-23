@@ -5,11 +5,10 @@ namespace App\Imports;
 use App\Models\booklist;
 use App\Models\copies;
 use App\Models\departmentList;
-use App\Models\ebooks;
 use App\Models\subjectList;
-use Illuminate\Mail\Message;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Illuminate\Support\Facades\Log;
 
 class BookListImport implements ToCollection
 {
@@ -18,95 +17,118 @@ class BookListImport implements ToCollection
      */
     public function collection(Collection $rows)
     {
-        // try {
-        //     foreach ($rows as $row) {
-        //         $books = Booklist::select('subject_lists.id as subjectID', 'department_lists.id as departmentID')
-        //             ->join('borrowpages', 'booklists.id', '=', 'borrowpages.bookid')
-        //             ->join('subject_lists', 'booklists.subject', '=', 'subject_lists.id')
-        //             ->join('department_lists', 'booklists.department', '=', 'department_lists.id')
-        //             ->where('subject', $row[5]) // Assuming subject is at index 5
-        //             ->where('department', $row[6]) // Assuming department is at index 6
-        //             ->get();
+        try {
+            foreach ($rows as $row) {
 
-        //         foreach ($books as $book) {
-        //             $subjectID = $book->subjectID;
-        //             $departmentID = $book->departmentID;
+                $existingSubject = null;
+                $existingDepartment = null;
 
-        //             if (empty($subjectID)) {
-        //                 $existingSubject = SubjectList::where('subjectName', $row[5])->first();
 
-        //                 if (!$existingSubject) {
-        //                     $newSubject = SubjectList::create([
-        //                         'subjectName' => $row[5]
-        //                     ]);
-        //                     $subjectID = $newSubject->id;
-        //                 } else {
-        //                     $subjectID = $existingSubject->id;
-        //                 }
-        //             }
+                if (!empty($row[6])) {
+                    $existingSubject = SubjectList::where('subjectName', $row[6])->first();
 
-        //             if (empty($departmentID)) {
-        //                 $existingDepartment = DepartmentList::where('departmentName', $row[6])->first();
+                    if (!$existingSubject) {
+                        $newSubject = SubjectList::create([
+                            'subjectName' => $row[6]
+                        ]);
+                        $existingSubject = $newSubject->id;
+                    } else {
+                        $existingSubject = $existingSubject->id;
+                    }
+                }
 
-        //                 if (!$existingDepartment) {
-        //                     $newDepartment = DepartmentList::create([
-        //                         'departmentName' => $row[6]
-        //                     ]);
-        //                     $departmentID = $newDepartment->id;
-        //                 } else {
-        //                     $departmentID = $existingDepartment->id;
-        //                 }
-        //             }
+                if (!empty($row[7])) {
+                    $existingDepartment = DepartmentList::where('departmentName', $row[7])->first();
 
-        //             Booklist::create([
-        //                 'title' => $row[0],
-        //                 'author' => $row[1],
-        //                 'copyright' => $row[2],
-        //                 'accession' => $row[3],
-        //                 'callnumber' => $row[4],
-        //                 'subject' => $subjectID,
-        //                 'department' => $departmentID,
-        //             ]);
+                    if (!$existingDepartment) {
+                        $newDepartment = DepartmentList::create([
+                            'departmentName' => $row[7] // Assuming department name is at index 7
+                        ]);
+                        $existingDepartment = $newDepartment->id; // Assigning the department ID, not departmentName
+                    } else {
+                        $existingDepartment = $existingDepartment->id;
+                    }
+                }
 
-        //             $copies = is_null($row[3]) ? 1 : $row[3];
+                // $subjectID = null;
+                // $departmentID = null;
 
-        //             Copies::create([
-        //                 'bookid' => $book->id,
-        //                 'action' => 'added',
-        //                 'copies' => $copies,
-        //             ]);
-        //         }
-        //     }
-        // } catch (\Exception $e) {
-        //     return $e->getMessage();
-        // }
-        foreach ($rows as $row) {
-            $booklist = booklist::create([
-                'title'     => $row[0],
-                'author'    => $row[1],
-                'copyright' => $row[2],
-                'accession' => $row[3],
-                'callnumber' => $row[4],
-                'subject' => $row[6],
-                'department' => $row[7],
-            ]);
-            if (!empty($row[6])) {
-                subjectList::create([
-                    'subjectName' => $row[6],
+                // $existingSubject = SubjectList::where('subjectName', $row[6])->first();
+                // if (!$existingSubject) {
+                //     $newSubject = SubjectList::create([
+                //         'subjectName' => $row[6]
+                //     ]);
+                //     $subjectID = $newSubject->id;
+                // } else {
+                //     $subjectID = $existingSubject->id;
+                // }
+
+                // $existingDepartment = DepartmentList::where('departmentName', $row[7])->first(); // Assuming department name is at index 7
+                // if (!$existingDepartment) {
+                //     $newDepartment = DepartmentList::create([
+                //         'departmentName' => $row[7] // Assuming department name is at index 7
+                //     ]);
+                //     $departmentID = $newDepartment->id; // Assigning the department ID, not departmentName
+                // } else {
+                //     $departmentID = $existingDepartment->id;
+                // }
+
+                $bookData = [
+                    'title' => $row[0],
+                    'author' => $row[1],
+                    'copyright' => $row[2],
+                    'accession' => $row[3],
+                    'callnumber' => $row[4],
+                    'subject' => $existingSubject,
+                    'department' => $existingDepartment,
+                ];
+
+
+                $book = Booklist::create($bookData);
+
+                // Define copies value based on column 5
+                $copies = is_null($row[5]) ? 1 : $row[5];
+
+                // Create entry in Copies table
+                Copies::create([
+                    'bookid' => $book->id,
+                    'action' => 'added',
+                    'copies' => $copies,
                 ]);
             }
-            if (!empty($row[7])) {
-                departmentList::create([
-                    'departmentName' => $row[7],
-                ]);
-            }
-            $copies = is_null($row[5]) ? 1 : $row[5];
-
-            copies::create([
-                'bookid' => $booklist->id,
-                'action' => 'added', // Assuming you have a foreign key column in your 'copies' table named 'booklist_id'
-                'copies' => $copies, // Use the $copies variable here
-            ]);
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
+
+
+
+        // foreach ($rows as $row) {
+        //     $booklist = booklist::create([
+        //         'title'     => $row[0],
+        //         'author'    => $row[1],
+        //         'copyright' => $row[2],
+        //         'accession' => $row[3],
+        //         'callnumber' => $row[4],
+        //         'subject' => $row[6] ?? '1',
+        //         'department' => $row[7] ?? '1',
+        //     ]);
+        // if (!empty($row[6])) {
+        //     subjectList::create([
+        //         'subjectName' => $row[6],
+        //     ]);
+        // }
+        // if (!empty($row[7])) {
+        //     departmentList::create([
+        //         'departmentName' => $row[7],
+        //     ]);
+        // }
+        // $copies = is_null($row[5]) ? 1 : $row[5];
+
+        // copies::create([
+        //     'bookid' => $booklist->id,
+        //     'action' => 'added', // Assuming you have a foreign key column in your 'copies' table named 'booklist_id'
+        //     'copies' => $copies, // Use the $copies variable here
+        // ]);
+        // }
     }
 }

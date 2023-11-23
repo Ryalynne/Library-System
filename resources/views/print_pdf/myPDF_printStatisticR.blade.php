@@ -12,7 +12,7 @@
         <img src="image/bmaheader.png" width="100%" alt="" class="d-inline-block align-middle mr-2">
         <h3>STATISTICS OF RETURNED BOOK</h3>
     </center>
-    <p>Date Start: {{$startingDate}}  Date End: {{$endDate}}</p>
+    <p>Date Start: {{ $startingDate }} Date End: {{ $endDate }}</p>
     <table class="table table-bordered myTable">
         <thead>
             <tr class="bg-success text-white">

@@ -322,18 +322,20 @@
                                 let departmentName = response.department.departmentName;
                                 let subjectName = response.subject.subjectName;
 
-                                tr.append($('<td>').text(departmentName));
-
+                                if (!departmentName) {
+                                    tr.append($('<td>').text("No department"));
+                                } else {
+                                    tr.append($('<td>').text(departmentName));
+                                }
 
                                 tr.append($('<td>').text(data.book.copyright));
                                 tr.append($('<td>').text(data.book.accession));
                                 tr.append($('<td>').text(data.book.callnumber));
-
-
-                                tr.append($('<td>').text(subjectName));
-
-
-
+                                if (!subjectName) {
+                                    tr.append($('<td>').text("No subject"));
+                                } else {
+                                    tr.append($('<td>').text(subjectName));
+                                }
 
                                 tr.append($('<td>').html(
                                     '<button type="button" class="btn btn-outline-success btn-success bg-success active custom-button1" data-id="' +

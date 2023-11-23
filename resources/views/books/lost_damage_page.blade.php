@@ -88,11 +88,11 @@
                             <td hidden>{{ $book->book->id }}</td>
                             <td>{{ $book->book->title }}</td>
                             <td>{{ $book->book->author }}</td>
-                            <td>{{ $book->book->departments->departmentName }}</td>
+                            <td>{{ $book->book->departments->departmentName ?? 'No Department' }}</td>
                             <td>{{ $book->book->copyright }}</td>
                             <td>{{ $book->book->accession }}</td>
                             <td>{{ $book->book->callnumber }}</td>
-                            <td>{{ $book->book->subjects->subjectName }}</td>
+                            <td>{{ $book->book->subjects->subjectName ?? 'No Subject' }}</td>
                             <td class="col-2">{{ date('Y-m-d', strtotime($book->created_at)) }}</td>
                             <td class="col-2">{{ $book->duedate }}</td>
                             <td>

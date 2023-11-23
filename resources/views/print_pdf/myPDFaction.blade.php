@@ -42,8 +42,7 @@
                         {{ $book->book->author }}
                     </td>
                     <td>
-                        {{ $book->book->departments->departmentName }}
-                    </td>
+                        {{ $book->book->departments->departmentName ?? 'No Department' }}</td>
                     <td>
                         {{ $book->book->copyright }}
                     </td>
@@ -54,8 +53,7 @@
                         {{ $book->book->callnumber }}
                     </td>
                     <td>
-                        {{ $book->book->subjects->subjectName }}
-                    </td>
+                        {{ $book->book->subjects->subjectName ?? 'No Subject' }}</td>
                     <td>
                         {{ date('Y-m-d', strtotime($book->created_at)) }}
                     </td>

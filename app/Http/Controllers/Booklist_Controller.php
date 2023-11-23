@@ -225,6 +225,12 @@ class Booklist_Controller extends Controller
     {
         $department = departmentList::where('id', $dep)->first();
         $subject = subjectList::where('id', $sub)->first();
+        if ($department == null) {
+            $department = "no department";
+        }
+        if ($subject == null) {
+            $subject = "no subject";
+        }
         return compact('department', 'subject');
     }
 

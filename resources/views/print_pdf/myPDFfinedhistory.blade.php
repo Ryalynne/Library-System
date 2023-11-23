@@ -37,11 +37,11 @@
                     <td>{{ $item->transaction }}</td>
                     <td>{{ $item->book->title }}</td>
                     <td>{{ $item->book->author }}</td>
-                    <td>{{ $item->book->departments->departmentName }}</td>
+                    <td>{{ $item->book->departments->departmentName ?? 'No Department' }}</td>
                     <td>{{ $item->book->copyright }}</td>
                     <td>{{ $item->book->accession }}</td>
                     <td>{{ $item->book->callnumber }}</td>
-                    <td>{{ $item->book->subjects->subjectName }}</td>
+                    <td>{{ $item->book->subjects->subjectName ?? 'No Subject' }}</td>
                     <td>{{ ($studentName = $item->student_list($item->borrower)) ?: ($staffName = $item->staff_list($item->borrower)) ?: 'no info' }}
                     </td>
                     <td>{{ date('Y-m-d', strtotime($item->created_at)) }}</td>

@@ -41,8 +41,7 @@
                         {{ $book->author }}
                     </td>
                     <td>
-                        {{ $book->departments->departmentName }}
-                    </td>
+                        {{ $book->departments->departmentName ?? 'No Department' }}</td>
                     <td>
                         {{ $book->copyright }}
                     </td>
@@ -53,8 +52,7 @@
                         {{ $book->callnumber }}
                     </td>
                     <td>
-                        {{ $book->subjects->subjectName}}
-                    </td>
+                        {{ $book->subjects->subjectName ?? 'No Subject' }}</td>
                     <td>
                         {{ date('Y-m-d', strtotime($book->created_at)) }}
                     </td>
@@ -82,47 +80,47 @@
 </html>
 
 <style>
-     hr {
-            display: block;
-            width: 20%;
-            border-top: 0px solid #000000;
-            margin: 1em 0;
-            padding: 0;
-        }
+    hr {
+        display: block;
+        width: 20%;
+        border-top: 0px solid #000000;
+        margin: 1em 0;
+        padding: 0;
+    }
 
-        .table-container {
-            overflow-x: auto;
-        }
+    .table-container {
+        overflow-x: auto;
+    }
 
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #727272;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        border: 1px solid #727272;
+        background-color: #20462c;
+        color: white;
+    }
+
+    h3 {
+        color: #20462c;
+    }
+
+    @media screen and (max-width: 768px) {
         table {
-            border-collapse: collapse;
-            width: 100%;
+            font-size: 12px;
         }
-
-        th,
-        td {
-            text-align: left;
-            padding: 8px;
-            border: 1px solid #727272;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2
-        }
-
-        th {
-            border: 1px solid #727272;
-            background-color: #20462c;
-            color: white;
-        }
-
-        h3 {
-            color: #20462c;
-        }
-
-        @media screen and (max-width: 768px) {
-            table {
-                font-size: 12px;
-            }
-        }
+    }
 </style>

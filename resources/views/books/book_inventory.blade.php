@@ -68,12 +68,7 @@
                                 {{ $book->author }}
                             </td>
                             <td class="px-6 py-3">
-                                @if ($book->department == null)
-                                    no department
-                                @else
-                                    {{ $book->departments->departmentName }}
-                                @endif
-                            </td>
+                                {{ $book->departments->departmentName ?? 'No Department' }}</td>
                             <td class="px-6 py-3">
                                 {{ $book->copyright }}
                             </td>
@@ -84,12 +79,7 @@
                                 {{ $book->callnumber }}
                             </td>
                             <td>
-                                @if ($book->subject == null)
-                                    no subject
-                                @else
-                                    {{ $book->subjects->subjectName }}
-                                @endif
-                            </td>
+                                {{ $book->subjects->subjectName ?? 'No Subject' }}</td>
                             <td class="px-6 py-3">
                                 {{ $book->numberofcopies() }}
                             </td>

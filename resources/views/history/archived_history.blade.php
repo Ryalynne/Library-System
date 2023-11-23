@@ -61,11 +61,7 @@
                                         {{ $adjust->author }}
                                     </td>
                                     <td>
-                                        @if ($item->book->department == null)
-                                            no department
-                                        @else
-                                            {{ $item->book->departments->departmentName }}
-                                        @endif
+                                        {{ $adjust->book->departments->departmentName ?? 'No Department' }}
                                     </td>
                                     <td>
                                         {{ $adjust->copyright }}
@@ -77,12 +73,9 @@
                                         {{ $adjust->callnumber }}
                                     </td>
                                     <td>
-                                        @if ($item->book->subject == null)
-                                            no subject
-                                        @else
-                                            {{ $item->book->subjects->subjectName }}
-                                        @endif
-                                    </td>
+
+                                        {{ $item->book->subjects->subjectName ?? 'No Subject' }}</td>
+
                                     <td>
                                         {{ date('F j, Y', strtotime($adjust->created_at)) }}
                                     </td>

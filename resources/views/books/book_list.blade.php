@@ -184,12 +184,7 @@
                                             {{ $book->author }}
                                         </td>
                                         <td>
-                                            @if ($book->department == null)
-                                                no department
-                                            @else
-                                                {{ $book->departments->departmentName }}
-                                            @endif
-                                        </td>
+                                            {{ $book->departments->departmentName ?? 'No Department' }}</td>
                                         <td>{{ $book->copyright }}</td>
                                         <td>
                                             {{ $book->accession }}
@@ -198,11 +193,7 @@
                                             {{ $book->callnumber }}
                                         </td>
                                         <td>
-                                            @if ($book->subject == null)
-                                                no subject
-                                            @else
-                                                {{ $book->subjects->subjectName }}
-                                            @endif
+                                            {{ $book->subjects->subjectName ?? 'No Subject' }}</td>
                                         </td>
                                         <td>
                                             {{ date('F j, Y', strtotime($book->created_at)) }}

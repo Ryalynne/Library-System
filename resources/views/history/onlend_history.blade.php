@@ -41,6 +41,7 @@
                                 <th scope="col">TRANSACTION</th>
                                 <th scope="col">TITLE</th>
                                 <th scope="col">AUTHORS/S</th>
+                                <th scope="col">DEPARTMENT</th>
                                 <th scope="col">COPYRIGHT</th>
                                 <th scope="col">ACCESSION NO</th>
                                 <th scope="col">CALL NO</th>
@@ -60,17 +61,12 @@
                                     {{-- <td>{{ $item->book->id }}</td> --}}
                                     <td>{{ $item->book->title }}</td>
                                     <td>{{ $item->book->author }}</td>
-
+                                    <td>{{ $item->book->departments->departmentName ?? 'No Department' }}</td>
                                     <td>{{ $item->book->copyright }}</td>
                                     <td>{{ $item->book->accession }}</td>
                                     <td>{{ $item->book->callnumber }}</td>
                                     <td>
-                                        @if ($item->book->subject == null)
-                                            no subject
-                                        @else
-                                            {{ $item->book->subjects->subjectName }}
-                                        @endif
-                                    </td>
+                                        {{ $item->book->subjects->subjectName ?? 'No Subject' }}</td>
                                     <td>
                                         @if ($item->student_list($item->borrower))
                                             {{ ucwords($item->borrower . ', ' . $item->student_list($item->borrower)) }}
