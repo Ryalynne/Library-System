@@ -22,10 +22,10 @@ class ExportCopies implements FromCollection, WithHeadings
             'booklists.callnumber',
             'subject_lists.subjectName'
         )
-            ->join('borrowpages', 'booklists.id', '=', 'borrowpages.bookid')
-            ->join('subject_lists', 'booklists.subject', '=', 'subject_lists.id')
-            ->join('department_lists', 'booklists.department', '=', 'department_lists.id')
-            ->get();;
+            ->leftJoin('borrowpages', 'booklists.id', '=', 'borrowpages.bookid')
+            ->leftJoin('subject_lists', 'booklists.subject', '=', 'subject_lists.id')
+            ->leftJoin('department_lists', 'booklists.department', '=', 'department_lists.id')
+            ->get();
     }
 
     /**
