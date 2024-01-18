@@ -2,14 +2,12 @@
 
 @section('content')
     <div class="container">
-
         <div class="mt-5">
             <button type="button" class="btn btn-success bg-success border-success mx-2 rounded" data-bs-toggle="modal"
                 data-bs-target="#modal_import">
                 IMPORT E-BOOKS
             </button>
         </div>
-
         <div class="table-responsive">
             <table class="table table-bordered border-dark myTable mt-3">
                 <thead>
@@ -25,7 +23,6 @@
                     @if ($ebook->count() > 0)
                         @foreach ($ebook as $item)
                             <tr>
-
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item->author }}</td>
                                 <td>{{ $item->copyright }}</td>
@@ -42,9 +39,6 @@
             </table>
             {{ $ebook->links() }}
         </div>
-
-
-
         <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

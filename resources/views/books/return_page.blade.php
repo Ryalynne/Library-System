@@ -8,14 +8,12 @@
             </ol>
         </nav>
     </div>
-
     <div class="container text-center">
         <div class="card mt-3 mb-4">
             <div class="card-body bg-success text-white">
                 <h2> RETURNER INFORMATION</h2>
             </div>
         </div>
-
         <center>
             <div class="image-container">
                 @if (request()->input('data'))
@@ -27,11 +25,9 @@
                 @endif
             </div>
         </center>
-
         @if (!$value && request()->input('data'))
             <span class="badge bg-danger w-100">No User Found.</span>
         @endif
-
         <form action="">
             <div class="form-group">
                 <label for="data">ENTER ID:</label>
@@ -45,23 +41,18 @@
                 </div>
             </div>
         </form>
-
         <label class="form-label">FULL NAME: </label>
         <input type="text" class="form-control mb-4" :value="old('data')"
             value="{{ request()->input('data') ? ($value ? $value->last_name . ', ' . $value->first_name . ', ' . $value->middle_name : '') : '' }}"
             disabled>
-
         <label class="form-label">DESIGNATED: </label>
         <input type="text" class="form-control mb-4" :value="old('data')"
             value="{{ request()->input('data') ? ($value ? $designated : '') : '' }}" disabled>
-
         <div class="card mb-5">
             <div class="card-body bg-success text-white">
                 <h2>BORROWED BOOK</h2>
             </div>
         </div>
-
-
         <table class="table table-responsive table-bordered table-striped myTable mb5" id="tbl">
             <thead class="bg-success text-white">
                 <tr>
@@ -112,14 +103,11 @@
                 @endif
             </tbody>
         </table>
-
         <button type="button" class="btn btn-success  w-40 btn-lg returnbook mb-4 mt-4 " data-bs-toggle="modal"
             data-bs-target="#tablemodal" data-submit="{{ request()->input('data') }}" data-token="{{ csrf_token() }}"
             id="bor">Submit
             Return</button></a>
     </div>
-
-
     <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
@@ -134,9 +122,6 @@
             </div>
         </div>
     </div>
-
-
-
     {{-- SEARCH BORROWER --}}
     <div class="modal fade" id="search_user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -157,40 +142,30 @@
                             <li><a class="dropdown-item" data-value="Employee">Employee</a></li>
                             <li><a class="dropdown-item" data-value="Student">Student</a></li>
                         </ul>
-                        <input type="hidden" name="TypeUser" id="TypeUser" value="Employee"> <!-- Default value -->
+                        <input type="hidden" name="TypeUser" id="TypeUser" value="Employee">
                     </div>
-
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" id="name" placeholder="ENTER LAST NAME">
                         <button class="input-group-text bg-success text-white" id="searchBtn">SEARCH</button>
                     </div>
-
-                    <!-- Table to display data -->
                     <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5"
                         id="tbl">
-                        <!-- Table headers here -->
                         <thead class="bg-success text-white">
                             <th hidden>ID</th>
                             <th>NAME</th>
                             <th>ACTION</th>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 @endsection
-
 @section('script')
     <script>
         const bookdata = [];
-
         $(".returnbook").on('click', function() {
             let token = $(this).data('token');
             let data = $(this).data('submit');
@@ -213,8 +188,6 @@
                 console.log(bookdata);
             }
         });
-
-
         $('.getbook').on('click', function() {
             var id = $(this).data('id');
             let check = $('#checkbox-' + id).is(':checked');
@@ -225,7 +198,6 @@
                 bookdata.splice(index, 1);
             }
         });
-
         $(document).ready(function() {
             $('#searchBtn').click(function() {
                 var name = $('#name').val();
@@ -253,7 +225,6 @@
                                 '</tr>';
                             $('.search-tbl tbody').append(row);
                         });
-
                         $('.custom-button').on('click', function(event) {
                             event
                                 .preventDefault();
@@ -272,7 +243,6 @@
                 });
             });
         });
-
         $(document).ready(function() {
             $('.dropdown-item').on('click', function() {
                 var selectedValue = $(this).data('value');
@@ -280,15 +250,5 @@
                 $('#TypeUser').val(selectedValue);
             });
         });
-
-        // var stud = document.getElementById("student").value;
-
-        // if (stud.trim().length > 1 && stud.trim().toUpperCase() !== "NOT ENROLLED") {
-        //     document.getElementById("myBtn").disabled = false;
-        // } else {
-        //     document.getElementById("myBtn").disabled = true;
-        //     var tableRow = document.getElementById('messageRow');
-        //     tableRow.innerHTML = '<td colspan="6">ENTER BORROWER ID FIRST</td>';
-        // }
     </script>
 @endsection

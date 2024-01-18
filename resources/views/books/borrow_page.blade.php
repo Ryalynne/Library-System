@@ -8,14 +8,12 @@
             </ol>
         </nav>
     </div>
-
     <div class="container text-center">
         <div class="card mt-3 mb-4">
             <div class="card-body bg-success text-white">
                 <h2> BORROWER INFORMATION</h2>
             </div>
         </div>
-
         <center>
             <div class="image-container">
                 @if (request()->input('data'))
@@ -27,7 +25,6 @@
                 @endif
             </div>
         </center>
-
         @if (!$value && request()->input('data'))
             <span class="badge bg-danger w-100">No User Found.</span>
         @endif
@@ -45,46 +42,37 @@
                 </div>
             </div>
         </form>
-
         <label class="form-label">FULL NAME: </label>
         <input type="text" class="form-control mb-4 " :value="old('data')"
             value="{{ request()->input('data') ? ($value ? $value->last_name . ', ' . $value->first_name . ', ' . $value->middle_name : '') : '' }}"
             disabled>
-
         <label class="form-label">DESIGNATED: </label>
         <input type="text" class="form-control mb-4" :value="old('data')"
             value="{{ request()->input('data') ? ($value ? $designated : '') : '' }}" disabled>
-
         <div class="card mb-5">
             <div class="card-body bg-success text-white">
                 <h2>BORROWING BOOK</h2>
             </div>
         </div>
-
         <div class="container text-center mb-5">
             <div class="text-start">
                 <div class="row align-items-start">
                     <div class="col">
-
                         <button type="button" class="btn btn-success  w-50" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop" id="myBtn">
                             Search Books
                         </button>
-
                     </div>
                     <div class="col">
-
                         <div class="mb-3">
                             <input type="text" class="form-control bookid myInput" id="exampleInputEmail1"
                                 data-user="{{ request()->input('data') }}">
                             <div class="form-text ">Scan QR Here...</div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
         <table class="table table-responsive table-bordered table-striped myTable mb5" id="tbl">
             <thead class="bg-success text-white">
                 <tr>
@@ -107,18 +95,11 @@
                 @endif
             </tbody>
         </table>
-
         <button type="button" class="btn btn-success  w-40 btn-lg borrowbook mb-4 mt-4 " data-bs-toggle="modal"
             data-bs-target="#tablemodal" data-submit="{{ request()->input('data') }}" data-token="{{ csrf_token() }}"
             id="bor">Submit
             Books</button></a>
-
     </div>
-
-    {{-- --------------------------------------------------------------------------------------------------------------------------------------- --}}
-    {{-- MODALS --}}
-
-
     {{-- SEARCH BORROWER --}}
     <div class="modal fade" id="search_user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -146,7 +127,6 @@
                         <input type="text" class="form-control" id="name" placeholder="ENTER LAST NAME">
                         <button class="input-group-text bg-success text-white" id="searchBtn">SEARCH</button>
                     </div>
-
                     <!-- Table to display data -->
                     <table class="search-tbl table table-responsive table-bordered table-striped myTable mb5"
                         id="tbl">
@@ -164,8 +144,6 @@
             </div>
         </div>
     </div>
-
-
     {{-- PRINT BORROWER --}}
     <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static"
         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -181,8 +159,6 @@
             </div>
         </div>
     </div>
-
-
     {{-- SEARCH BAR --}}
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -192,7 +168,6 @@
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Search Bar</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <div class="modal-body">
                     <div class="container">
                         <div class="d-flex mb-1">
@@ -208,7 +183,6 @@
                         <table class="table table-bordered myTable book-tbl" id="data">
                             <thead class="bg-success text-white">
                                 <tr>
-                                    {{-- <th class="text-center">ID</th> --}}
                                     <th class="text-center">TITLE</th>
                                     <th class="text-center">AUTHOR/S</th>
                                     <th class="text-center">DEPARTMENT</th>
@@ -237,8 +211,6 @@
         const bookList = [];
         const accessionList = [];
         var _changeInterval = null;
-
-
         $(".borrowbook").on('click', function() {
             let borrower = $(this).data('submit');
             let token = $(this).data('token');
@@ -256,26 +228,14 @@
                 }, function(response) {
                     console.log(response);
                 })
-
                 console.log(borrower + bookList);
                 const frame = $('#table-frame')
                 const link = '/generate-tblborrow/' + JSON.stringify(bookList) + '/' + borrower
                 frame.attr('src', link)
-                // var table = document.getElementById("tbl");
-                // for (var i = table.rows.length - 1; i > 0; i--) {
-                //     table.deleteRow(i);
-                // }
-                // bookList.splice(0, bookList.length);
-                // accessionList.splice(0, accessionList.length);
-                // location.reload();
                 alert('successfully borrowed');
-                //print borrow
             }
         });
-
-
         var _changeInterval;
-
         $(".bookid").on("keyup", function() {
             var id = $(this).val().trim().toLowerCase();
             var borrower = $(this).data('user');
@@ -374,8 +334,6 @@
             console.log(row);
             tbl.deleteRow(row);
         }
-
-
         $(document).ready(function() {
             $('#searchBtn').click(function() {
                 var name = $('#name').val();
@@ -403,7 +361,6 @@
                                 '</tr>';
                             $('.search-tbl tbody').append(row);
                         });
-
                         $('.custom-button').on('click', function(event) {
                             event.preventDefault();
                             var button = $(event.currentTarget);
@@ -421,9 +378,6 @@
                 });
             });
         });
-
-
-
         $(document).ready(function() {
             $('.dropdown-item').on('click', function() {
                 var selectedValue = $(this).data('value');
@@ -431,13 +385,10 @@
                 $('#TypeUser').val(selectedValue);
             });
         });
-
         $(document).ready(function() {
-
             $('#searchBtn1').click(function() {
                 var accessionName = $('#accessionName').val();
                 var borrowerName = $('.borrowerName').val();
-
                 $.ajax({
                     type: 'GET',
                     url: '/get-book',
@@ -469,14 +420,12 @@
 
                             $('.book-tbl tbody').append(row);
                         });
-
                         $('.book-tbl').on('click', '.custom-button1', function(event) {
                             var $row = $(this).closest(".trtr");
                             var $iddata = $row.find(".getidd").text().trim()
                                 .toLowerCase();
                             var $acc = $row.find(".getacc").text().trim().toLowerCase();
                             var $status = $row.find(".getstatus").text();
-
                             $.get("/book/" + $iddata, function(data, status) {
                                 if ($status.includes("onlend")) {
                                     alert('The Book Already Borrowed');
@@ -486,9 +435,6 @@
                                     bookList.push(data.book.id);
 
                                     var tr = document.createElement('tr');
-                                    // var td1 = tr.appendChild(document
-                                    //     .createElement(
-                                    //         'td'));
                                     var td2 = tr.appendChild(document
                                         .createElement(
                                             'td'));
@@ -523,8 +469,6 @@
                                         ');">Remove</button>';
                                     document.getElementById("tbl").appendChild(
                                         tr);
-                                    // $('.bookid').val("");
-
                                     alert('Added Successfully');
                                     console.log(bookList + "-/-" +
                                         accessionList);

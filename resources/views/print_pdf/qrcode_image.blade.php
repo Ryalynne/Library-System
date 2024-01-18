@@ -11,43 +11,40 @@
 <body>
     <p>{{ $book->title }}</p>
     <div class="text-center">
-        {{-- Display the QR code using the base64-encoded string --}}
         <img src="data:image/svg+xml;base64, {!! $qrcode !!}" alt="QR Code" id="qrcode">
-        <p>{{$book->accession}}</p>
+        <p>{{ $book->accession }}</p>
     </div>
     <p class="modal-book-title text-center"></p>
     <div class="text-center mt-2">
-        <button class="btn btn-success bg-success border-success mx-2 rounded" onclick="downloadImage()">DOWNLOAD</button>
+        <button class="btn btn-success bg-success border-success mx-2 rounded"
+            onclick="downloadImage()">DOWNLOAD</button>
     </div>
 
     <script>
         function downloadImage() {
             var img = document.getElementById('qrcode');
-
-            // Create a canvas to draw the image
             var canvas = document.createElement('canvas');
             canvas.width = img.width;
-            canvas.height = img.height;
+            canvas.height = img.height + 20;
             var ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, img.height, canvas.width, 20);
+
             ctx.drawImage(img, 0, 0);
 
-            // Convert the canvas to a data URL
-            var dataURL = canvas.toDataURL('image/png');
+            ctx.font = '10px Arial';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.fillText('{{ $book->accession }}', canvas.width / 2, img.height + 16);
 
-            // Create a temporary link element
+            var dataURL = canvas.toDataURL('image/png');
             var downloadLink = document.createElement('a');
             downloadLink.href = dataURL;
-            downloadLink.download = '{{$book->accession}}.png';
-
-            // Append the link to the document
+            downloadLink.download = '{{ $book->accession }}.png';
             document.body.appendChild(downloadLink);
-
-            // Trigger a click on the link to start the download
             downloadLink.click();
-
-            // Remove the temporary link element
             document.body.removeChild(downloadLink);
-
             alert('Image downloaded!');
         }
     </script>

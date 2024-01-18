@@ -2,9 +2,7 @@
 
 @section('content')
     <div class="container">
-
         <div class="container">
-
             <div class="d-flex mb-1">
                 <div class="row justify-content-start">
                     <div class="col-md-6">
@@ -27,7 +25,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -48,8 +45,6 @@
                     </div>
                 </div>
             </div>
-
-
             <table class="table table-bordered border-dark myTable">
                 <thead>
                     <tr class="bg-success text-white">

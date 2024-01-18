@@ -75,8 +75,6 @@
         </div>
     </div>
     </div>
-
-
     <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel" aria-hidden="true"
         data-order_id="">
         <div class="modal-dialog">
@@ -96,8 +94,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="modal fade" id="redirect" tabindex="-1" aria-labelledby="backdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -115,7 +111,6 @@
             </div>
         </div>
     </div>
-
 @section('script')
     <script>
         $(".printbtn").on('click', function() {
@@ -123,18 +118,12 @@
             const link = '/generate-tblonlend'
             frame.attr('src', link)
         });
-
-
         $('#redirect').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var transaction = button.data('transaction'); // Extract transaction from data-* attributes
             var redirectLink = $('#redirect-link'); // "Go to Order" link
-
-            // Set the href attribute of the link to the appropriate URL
             redirectLink.attr('href', '/receivepurchaseorder?transaction=' + transaction);
         });
-
-
         $('.remove-book').on('click', function() {
             var id = $(this).data('id');
             $.get("/gettransaction/" + id, function(data, status) {
@@ -145,9 +134,7 @@
                 }
             });
         });
-
         var transaction = "";
-
         $('.removenow').on('click', function() {
             var id = $(this).data('id');
             $.ajaxSetup({

@@ -246,10 +246,13 @@
                                             <button type="button" class="btn btn-sm btn-primary btn-qrs getbookid"
                                                 data-bs-toggle="modal" data-bs-target="#qrcodemodal1"
                                                 data-id={{ $book->id }}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
-                                                  </svg></button>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                                    <path
+                                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                                </svg></button>
                                         </td>
                                     </tr>
                                 @empty
@@ -297,22 +300,6 @@
                         </div>
                         <p id="msg1author" class="text-danger"> </p>
 
-                        {{-- <div class="mb-3">
-                            <div class="form-group">
-                                <label for="department">DEPARTMENT</label>
-                                <select name="updatedepartment" id="updatedepartment"
-                                    class="form-control t-department modal-book-department">
-                                    <option value="{{ $department->departmentName }}">Select Department</option>
-                                    @foreach (\App\Models\DepartmentList::select('departmentName')->distinct()->get() as $department)
-                                        <option value="{{ $department->departmentName }}"
-                                            {{ request('updatedepartment') == $department->departmentName ? 'selected' : '' }}>
-                                            {{ strtoupper($department->departmentName) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
-
                         <div class="mb-3">
                             <div class="form-group">
                                 <label for="updatedepartment">DEPARTMENT</label>
@@ -350,20 +337,7 @@
                                 :value="old('updatecallnumber')">
                         </div>
                         <p id="msg1callnumber" class="text-danger"> </p>
-                        {{-- <div class="mb-3">
-                            <div class="form-group">
-                                <label for="updatesubject">SUBJECT</label>
-                                <select name="updatesubject" id="updatesubject"
-                                    class="form-control t-subject modal-book-subject">
-                                    @foreach (\App\Models\subjectList::select('subjectName')->distinct()->get() as $subject)
-                                        <option value="{{ $subject->subjectName }}"
-                                            {{ request('updatesubject') == $subject->subjectName ? 'selected' : '' }}>
-                                            {{ strtoupper($subject->subjectName) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
+
                         <div class="mb-3">
                             <div class="form-group">
                                 <label for="updatesubject">SUBJECT</label>
@@ -434,13 +408,6 @@
                     </div>
                     <div class="modal-body">
                         <embed id="qrImage" src="" frameborder="0" width="100%" height="100%">
-                        {{-- <div class="text-center">
-                            {!! QrCode::size(50)->generate('') !!}
-                        </div>
-                        <p class="modal-book-title text-center" id="paccession"></p>
-                        <div class="text-center mt-2">
-                            <button class="btn btn-success bg-success border-success mx-2 rounded"> COPY</button>
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -553,7 +520,7 @@
 
             $('.btn-qrs').on('click', function() {
                 var id = $(this).data('id');
-                
+
                 const frame = $('#qrImage')
                 const link = '/qrImage/' + id
                 frame.attr('src', link)

@@ -127,9 +127,7 @@
             const link = '/generate-badorder/' + JSON.stringify(bookid) + '/' + JSON.stringify(quantity);
             frame.attr('src', link)
             bookid.splice(0, bookid.length);
-            // $('input:checked').parents("tr").remove();
             $('.getid').prop('checked', false);
-             // Uncheck all checkboxes
             alert('successfully Printed');
         });
 
@@ -159,35 +157,6 @@
             }
         });
 
-
-
-        // const bookid = [];
-        // const quantity = [];
-
-        // $(".badorder").on('click', function() {
-        //     const frame = $('#table-frame')
-        //     const link = '/generate-badorder/' + JSON.stringify(bookid) + '/' + JSON.stringify(quantity);
-        //     frame.attr('src', link)
-        //     bookid.splice(0, bookid.length);
-        //     // $('input:checked').parents("tr").remove();
-        //     alert('successfully Printed');
-        // });
-
-        // $('.getid').on('click', function() {
-        //     var id = $(this).data('id');
-        //     let check = $('#checkbox-' + id).is(':checked');
-        //     if (check) {
-        //         bookid.push(id)
-        //         console.log(bookid);
-        //     } else {
-        //         let index = bookid.indexOf(id);
-        //         bookid.splice(index, 1);
-        //         console.log(bookid);
-        //     }
-        // });
-
-
-
         function updateTotal(element) {
             var receivedQuantity = parseInt(element.innerText);
             var unitPrice = parseFloat(element.nextElementSibling.nextElementSibling.innerText);
@@ -209,7 +178,6 @@
             calculateGrandTotal();
         }
 
-
         function calculateGrandTotal() {
             var totalAmount = 0;
             var totalElements = document.querySelectorAll('.myTable tbody tr');
@@ -222,8 +190,6 @@
             var grandTotalElement = document.getElementById('grandTotal');
             grandTotalElement.innerText = "₱" + totalAmount.toFixed(2);
         }
-
-
         $('.transaction').on('keyup', function(event) {
             if (event.keyCode === 13) {
                 var id = $(this).val().trim().toLowerCase();
@@ -234,7 +200,6 @@
                 }
             }
         });
-
 
         function validateStudent(id) {
             $.get("/transactionBO/" + id, function(data, status) {

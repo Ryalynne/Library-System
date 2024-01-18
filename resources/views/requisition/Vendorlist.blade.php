@@ -55,7 +55,6 @@
         </table>
         <br>
         <br>
-
         <div class="modal fade" id="backdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -75,9 +74,6 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- Edit Modal -->
         <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -106,7 +102,6 @@
             </div>
         </div>
     @endsection
-
     @section('script')
         <script>
             $('.edit-button-vendor').on('click', function() {

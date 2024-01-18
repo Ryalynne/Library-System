@@ -110,22 +110,16 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            // ... your existing code ...
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // Handle click event on the "RECEIVE ORDER" button
             $('#receiveOrderButton').on('click', function() {
-                // Loop through each row in the table
                 $('.myTable tbody tr').each(function() {
-                    // ... your existing code ...
                     var row = $(this);
                     var receivedQuantity = parseInt(row.find('td:nth-child(3)').text());
                     var bookId = row.attr('data-book-id');
-
-                    // Send an AJAX request to update the received quantity
                     $.ajax({
                         url: '/update-received-quantityB/' + bookId,
                         type: 'PUT',
@@ -156,13 +150,11 @@
                 alert("Invalid quantity entered. Please enter a valid value.");
                 return;
             }
-
             var totalPrice = receivedQuantity * unitPrice;
             element.innerText = receivedQuantity;
             totalPriceElement.innerText = "₱" + totalPrice.toFixed(2);
 
             calculateGrandTotal();
-
         }
 
         function calculateGrandTotal() {
@@ -173,12 +165,9 @@
                 var totalPrice = parseFloat(totalPriceElement.innerText.replace('₱', ''));
                 totalAmount += totalPrice;
             });
-
             var grandTotalElement = document.getElementById('grandTotal');
             grandTotalElement.innerText = "₱" + totalAmount.toFixed(2);
         }
-
-
         $('.transaction').on('keyup', function(event) {
             if (event.keyCode === 13) {
                 var id = $(this).val().trim().toLowerCase();
@@ -189,7 +178,6 @@
                 }
             }
         });
-
 
         function validateStudent(id) {
             $.get("/transactionB/" + id, function(data, status) {
@@ -204,6 +192,5 @@
                 document.location.href = "backorder";
             });
         }
-        
     </script>
 @endsection

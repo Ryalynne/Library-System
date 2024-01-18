@@ -116,14 +116,6 @@
                                         </div>
                                         {{-- MODAL BODY --}}
                                         <div class="modal-body ">
-                                            {{-- <form method="POST" action="{{ route('books.update-copy') }}">
-                                                <fieldset> --}}
-                                            {{-- <div class="mb-3">
-                                                <label for="disabledTextInput" class="form-label">BOOK ID</label>
-                                                <input type="text" id="disabledTextInput"
-                                                    class="form-control modal-book-id" placeholder="Disabled input"
-                                                    readonly>
-                                            </div> --}}
                                             <div class="mb-3">
                                                 <label for="disabledTextInput" class="form-label">
                                                     TITLE</label>
@@ -137,14 +129,6 @@
                                                     class="form-control modal-book-author" placeholder="Disabled input"
                                                     readonly>
                                             </div>
-                                            {{-- department --}}
-                                            {{-- <div class="mb-3">
-                                                <label for="disabledTextInput" class="form-label">department</label>
-                                                <input type="text" id="disabledTextInput"
-                                                    class="form-control modal-book-department"
-                                                    placeholder="Disabled input" readonly>
-                                            </div> --}}
-                                            {{-- department --}}
                                             <div class="mb-3">
                                                 <label for="disabledTextInput" class="form-label">COPYRIGHT</label>
                                                 <input type="text" id="disabledTextInput"
@@ -185,7 +169,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="modal fade Lesscopiesmodal" id="back" data-bs-backdrop="static"
                                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="backrop" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -195,16 +178,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
-                                        {{-- MODAL BODY --}}
-
                                         <div class="modal-body ">
-                                            {{-- <form method="POST" action="{{ route('books.updatenegative-copy') }}">
-                                                <fieldset> --}}
-                                            {{-- <div class="mb-3">
-                                                <label class="form-label">BOOK ID</label>
-                                                <input type="text" id="disabledTextInput"
-                                                    class="form-control modal-book-id" readonly>
-                                            </div> --}}
                                             <div class="mb-3">
                                                 <label class="form-label">TITLE</label>
                                                 <input type="text" id="disabledTextInput"
@@ -250,7 +224,6 @@
                                             </div>
                                             <p id="msgcomment" class="text-danger"> </p>
                                         </div>
-                                        {{-- footermodal --}}
                                         <div class="modal-footer">
                                             @csrf
                                             <button type="button" class="btn btn-danger"
@@ -258,8 +231,6 @@
                                             <button type="submit" class="btn btn-success less-copies-btn">Adjust
                                                 copies</button>
                                         </div>
-                                        {{-- </form> --}}
-                                        {{-- end of form --}}
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +239,6 @@
                 </tbody>
                 <tfoot>
                 </tfoot>
-
             </table>
         </div>
         <br>
@@ -277,9 +247,7 @@
         </div>
         <br>
         <br>
-
     </div>
-
     <div class="modal fade" id="printcopies" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
@@ -338,7 +306,6 @@
                         $('.Addcopies').find('input').val('');
                         $('.add-copies-btn').text('Add Copies');
                         $('.Addcopies').modal('hide');
-                        // Refresh the page after 3 seconds
                         setTimeout(function() {
                             location.reload();
                         }, 1000);
@@ -346,8 +313,6 @@
                 }
             });
         });
-
-
         $(document).on('click', '.less-copies-btn', function(e) {
             e.preventDefault();
             $(this).text('Checking');

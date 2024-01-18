@@ -108,22 +108,16 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            // ... your existing code ...
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // Handle click event on the "RECEIVE ORDER" button
             $('#receiveOrderButton').on('click', function() {
-                // Loop through each row in the table
                 $('.myTable tbody tr').each(function() {
-                    // ... your existing code ...
                     var row = $(this);
                     var receivedQuantity = parseInt(row.find('td:nth-child(3)').text());
                     var bookId = row.attr('data-book-id');
-
-                    // Send an AJAX request to update the received quantity
                     $.ajax({
                         url: '/update-received-quantity/' + bookId,
                         type: 'PUT',

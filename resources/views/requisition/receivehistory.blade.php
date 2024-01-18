@@ -15,8 +15,8 @@
                 <div class="container">
                     <div class="d-flex mb-1 ">
                         <div class="me-auto p-2">
-                            <button type="button" class="btn btn-success bg-success border-success printbtn" data-bs-toggle="modal"
-                                data-bs-target="#tablemodal">
+                            <button type="button" class="btn btn-success bg-success border-success printbtn"
+                                data-bs-toggle="modal" data-bs-target="#tablemodal">
                                 Print Action
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-printer-fill" viewBox="0 0 16 16">
@@ -36,42 +36,42 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                    <table class="table table-bordered myTable">
-                        <thead>
-                            <tr class="bg-success text-white">
-                                <th scope="col" hidden>ID</th>
-                                <th scope="col">TRANSACTION</th>
-                                <th scope="col">TITLE</th>
-                                <th scope="col">REQUESTED BY</th>
-                                <th scope="col">DEPARTMENT</th>
-                                <th scope="col">DATE ORDER</th>
-                                <th scope="col">DATE DELIVERY</th>
-                                <th scope="col">DATE RECEIVE</th>
-                                <th scope="col">CREATED BY</th>
-                                <th scope="col">QUANTITY ORDER</th>
-                                <th scope="col">QUANTITY RECEIVE</th>
-                                <th scope="col">RECEIVE BY</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="tr">
-                                @foreach ($receive as $item)
-                                    <td>{{ $item->id }}</td>     
-                                    <td>{{ $item->transaction }}</td>   
-                                    <td>{{ $item->title }}</td> 
-                                    <td>{{ $item->requestedby}}</td>  
-                                    <td>{{ $item->department }}</td>  
-                                    <td>{{ $item->created_at }}</td>   
-                                    <td>{{ $item->dateofdelivery }}</td> 
-                                    <td>{{ $item->updated_at }}</td>  
-                                    <td>{{ $item->createdby }}</td> 
-                                    <td>{{ $item->quantity }}</td> 
-                                    <td>{{ $item->received }}</td> 
-                                    <td>{{ $item->receivedby }}</td> 
-                            </tr>
-                        </tbody>
-                        @endforeach
-                    </table>
+                        <table class="table table-bordered myTable">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th scope="col" hidden>ID</th>
+                                    <th scope="col">TRANSACTION</th>
+                                    <th scope="col">TITLE</th>
+                                    <th scope="col">REQUESTED BY</th>
+                                    <th scope="col">DEPARTMENT</th>
+                                    <th scope="col">DATE ORDER</th>
+                                    <th scope="col">DATE DELIVERY</th>
+                                    <th scope="col">DATE RECEIVE</th>
+                                    <th scope="col">CREATED BY</th>
+                                    <th scope="col">QUANTITY ORDER</th>
+                                    <th scope="col">QUANTITY RECEIVE</th>
+                                    <th scope="col">RECEIVE BY</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="tr">
+                                    @foreach ($receive as $item)
+                                        <td>{{ $item->id }}</td>
+                                        <td>{{ $item->transaction }}</td>
+                                        <td>{{ $item->title }}</td>
+                                        <td>{{ $item->requestedby }}</td>
+                                        <td>{{ $item->department }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>{{ $item->dateofdelivery }}</td>
+                                        <td>{{ $item->updated_at }}</td>
+                                        <td>{{ $item->createdby }}</td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>{{ $item->received }}</td>
+                                        <td>{{ $item->receivedby }}</td>
+                                </tr>
+                            </tbody>
+                            @endforeach
+                        </table>
                     </div>
                     <br>
                     <div class="pagination justify-content-center">
@@ -81,8 +81,8 @@
             </div>
         </div>
 
-        <div class="modal fade" id="tablemodal" data-bs-backdrop="static"
-            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="tablemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-fullscreen">
                 <div class="modal-content">
                     <div class="modal-header">

@@ -94,10 +94,8 @@
         <br>
         <hr>
     </div>
-
     <br>
     <br>
-
     <div class="modal fade" id="tablemodal" onClick="self.location.reload();" data-bs-backdrop="static"
         data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-fullscreen">
@@ -115,35 +113,25 @@
     <style>
         .myTable {
             max-width: 600px;
-            /* Adjust the value to your desired width */
             width: 100%;
             table-layout: fixed;
         }
-
         .myTable td {
             word-break: break-word;
         }
     </style>
 @section('script')
     <script>
-        // Get the current date
         var currentDate = new Date();
-
-        // Format the date as YYYY-MM-DD
         var year = currentDate.getFullYear();
         var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
         var day = ('0' + currentDate.getDate()).slice(-2);
         var formattedDate = year + '-' + month + '-' + day;
-
-        // Set the value of the date input to the current date
         document.getElementById('dateofdelivery').value = formattedDate;
-
-
         const id = [];
         const title = [];
         const quantity = [];
         const unitprice = [];
-
         $(".purchase").on('click', function() {
             let vendorID = $(this).data('vendor');
             let token = $(this).data('token');
@@ -152,13 +140,10 @@
             let department = $("#department").val();
 
             $("table tr").each(function() {
-                // const title = $(this).find(".title").text().trim();
                 const idd = $(this).find(".id").text().trim();
                 const booktitle = $(this).find(".title").text().trim();
                 const qty = parseInt($(this).find(".quantity").text().trim());
                 const price = parseFloat($(this).find(".unitPrice").text().trim());
-
-                // Add the values to the respective arrays
                 id.push(idd);
                 title.push(booktitle);
                 quantity.push(qty);
@@ -194,36 +179,6 @@
                 frame.attr('src', link)
             }
         });
-
-
-
-        // function validateVendor(id) {
-        //     $.get("/vendor/" + id, function(data, status) {
-        //         if (data && data.id && data.id == id) {
-        //             document.location.href = "purchase?vendor=" + id;
-        //         } else {
-        //             alert('No vendor found with ID: ' + id);
-        //             document.location.href = "purchase";
-        //         }
-        //     }).fail(function() {
-        //         alert('Error occurred while fetching vendor information.');
-        //         document.location.href = "purchase";
-        //     });
-        // }
-
-        // $('.getventor').on('keyup', function(event) {
-        //     if (event.keyCode === 13) {
-        //         var id = $(this).val().trim().toLowerCase();
-        //         if (id === "") {
-        //             $('.vendorname').val("");
-        //             $('.vendorcontact').val("");
-        //             document.location.href = "purchase";
-        //         } else {
-        //             validateVendor(id);
-        //         }
-        //     }
-        // });
-
         var startingId = <?php $maxId = DB::table('purchasemodels')->max('id');
         echo is_numeric($maxId) ? $maxId : 0; ?>;
 
@@ -250,11 +205,6 @@
                 });
                 $('#grandTotal').text('₱' + grandTotal.toFixed(2));
             }
-
-            // Retrieve the maximum ID value from the database
-
-
-            // Update total price when quantity or unit price changes
             $(document).on('input', '.quantity, .unitPrice', updateTotalPrice);
 
             $(document).on('input', '.title', function() {
