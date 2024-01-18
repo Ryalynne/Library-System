@@ -3,7 +3,9 @@
 namespace App\Imports;
 
 use App\Models\booklist;
+use App\Models\departmentList;
 use App\Models\ebooks;
+use App\Models\subjectList;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class UsersImport implements ToModel
@@ -36,6 +38,20 @@ class UsersImport implements ToModel
             'copyright'    => $row['COPYRIGHT'],
             'department'    => $row['DEPARTMENT'],
             'links'    => $row['LINKS'],
+        ]);
+    }
+
+    public function subject_import(array $row)
+    {
+        return new subjectList([
+            'subjectName' => $row['Subject Name']
+        ]);
+    }
+
+    public function department_import(array $row)
+    {
+        return new departmentList([
+            'departmentName' => $row['Department Name']
         ]);
     }
 }

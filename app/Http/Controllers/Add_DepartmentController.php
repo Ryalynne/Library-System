@@ -2,28 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DepartmentImport;
 use App\Models\departmentList;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Add_DepartmentController extends Controller
 {
     function index()
     {
-        $distinctSubjects = departmentList::select('departmentName')->distinct()->get()->pluck('departmentName')->toArray();
-        $page = request()->get('page', 1);
-        $perPage = 50;
-        $total = count($distinctSubjects);
-        $paginator = new LengthAwarePaginator(
-            array_slice($distinctSubjects, ($page - 1) * $perPage, $perPage),
-            $total,
-            $perPage,
-            $page
-        );
-
-        $paginator->withPath('/subject'); 
-
-        return view('books.add_department', compact('paginator'));
+        $department = departmentList::select('departmentName')->paginate(50);
+        return view('books.add_department', compact('department'));
     }
 
     public function store(Request $request)
@@ -33,5 +22,15 @@ class Add_DepartmentController extends Controller
         ]);
 
         return back();
+    }
+
+    public function department_import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
+        $file = $request->file('file');
+        Excel::import(new DepartmentImport, $file);
+        return redirect('/department')->with('success', 'Import completed successfully.');
     }
 }

@@ -2,28 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SubjectImport;
 use App\Models\subjectList;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Add_SubjectController extends Controller
 {
     function index()
     {
-        $distinctSubjects = subjectList::select('subjectName')->distinct()->get()->pluck('subjectName')->toArray();
-        $page = request()->get('page', 1);
-        $perPage = 50;
-        $total = count($distinctSubjects);
-        $paginator = new LengthAwarePaginator(
-            array_slice($distinctSubjects, ($page - 1) * $perPage, $perPage),
-            $total,
-            $perPage,
-            $page
-        );
-
-        $paginator->withPath('/subject'); 
-
-        return view('books.add_subject', compact('paginator'));
+        $subject = subjectList::select('subjectName')->paginate(50);
+        return view('books.add_subject', compact('subject'));
     }
 
     public function store(Request $request)
@@ -33,5 +22,15 @@ class Add_SubjectController extends Controller
         ]);
 
         return back();
+    }
+
+    public function subject_import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
+        $file = $request->file('file');
+        Excel::import(new SubjectImport, $file);
+        return redirect('/subject')->with('success', 'Import completed successfully.');
     }
 }

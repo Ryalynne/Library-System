@@ -28,6 +28,7 @@ use App\Http\Controllers\Vendor_ListController;
 use App\Http\Controllers\Statistic_ReportController;
 use App\Http\Controllers\Add_SubjectController;
 use App\Http\Controllers\EbookController;
+use App\Http\Controllers\qrImage;
 use App\Models\StudentDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -67,6 +68,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/returnhistory', [Return_HistoryController::class, 'index'])->name('returnhistory');
     Route::get('/archivedhistory', [Archived_HistoryController::class, 'index'])->name('archivedhistory');
     Route::get('/statisticReports', [Statistic_ReportController::class, 'index']);
+    Route::get('/qrImage/{id}', [qrImage::class, 'index']);
+
+
     Route::get('/student-details', function () {
         return StudentDetails::all();
     });
@@ -135,10 +139,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/import', [Booklist_Controller::class, 'import'])->name('import');
     Route::post('/add/department', [Add_DepartmentController::class, 'store']);
     Route::post('/add/subject', [Add_SubjectController::class, 'store']);
-
     Route::post('/importEbooks', [EbookController::class, 'importEbooks'])->name('importEbooks');
-
-
+    Route::post('/subjectImport', [Add_SubjectController::class, 'subject_import'])->name('subjectImport');
+    Route::post('/departmentImport', [Add_DepartmentController::class, 'department_import'])->name('departmentImport');
     Route::get('users-export', [Booklist_Controller::class, 'export'])->name('users.export');
-
 });

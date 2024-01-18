@@ -366,11 +366,12 @@
         function deleteRow(el, id) {
             if (!confirm("Are you sure you want to remove this?")) return;
             var bookID = $(el).data('id')
-            var row = el.parentNode.parentNode.rowIndex;
             var tbl = el.parentNode.parentNode.parentNode;
+            var row = el.parentNode.parentNode.rowIndex;
             let index = bookList.indexOf(bookID);
             bookList.splice(index, 1);
             accessionList.splice(index, 1);
+            console.log(row);
             tbl.deleteRow(row);
         }
 

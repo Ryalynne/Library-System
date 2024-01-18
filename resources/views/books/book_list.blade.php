@@ -51,6 +51,11 @@
                                 <!-- Your SVG icon code -->
                             </button>
                         </form>
+                        {{-- <button type="button" class="btn btn-success bg-success border-success mx-2 rounded"
+                            data-bs-toggle="modal" data-bs-target="#modal_import">
+                            Select to QR
+                            <!-- Your SVG icon code -->
+                        </button> --}}
                     </div>
                 </div>
                 <div class="p-2">
@@ -127,6 +132,7 @@
                                     <input type="text" class="form-control t-callnumber" id="callnumber"
                                         name="callnumber" :value="old('callnumber')" placeholder="ex.04313">
                                 </div>
+
                                 <div class="mb-3">
                                     <div class="form-group">
                                         <label for="subject">SUBJECT</label>
@@ -140,6 +146,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 {{-- subject --}}
                                 <div class="mb-3">
                                     <label for="copies" class="form-label">COPIES</label>
@@ -233,6 +240,16 @@
                                                     <path
                                                         d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                                                 </svg></button>
+
+
+
+                                            <button type="button" class="btn btn-sm btn-primary btn-qrs getbookid"
+                                                data-bs-toggle="modal" data-bs-target="#qrcodemodal1"
+                                                data-id={{ $book->id }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+                                                  </svg></button>
                                         </td>
                                     </tr>
                                 @empty
@@ -295,7 +312,7 @@
                                 </select>
                             </div>
                         </div> --}}
-                        
+
                         <div class="mb-3">
                             <div class="form-group">
                                 <label for="updatedepartment">DEPARTMENT</label>
@@ -406,6 +423,31 @@
                 </div>
             </div>
         </div>
+        {{-- QRCODE SELECT --}}
+        <div class="modal fade" id="qrcodemodal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-book-title fs-5" id="ptitle"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <embed id="qrImage" src="" frameborder="0" width="100%" height="100%">
+                        {{-- <div class="text-center">
+                            {!! QrCode::size(50)->generate('') !!}
+                        </div>
+                        <p class="modal-book-title text-center" id="paccession"></p>
+                        <div class="text-center mt-2">
+                            <button class="btn btn-success bg-success border-success mx-2 rounded"> COPY</button>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- QRCODE SELECT --}}
+
+
 
         <div class="modal fade" id="modal_import" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -507,6 +549,14 @@
                 const link = '/generate-pdf/' + id
                 frame.attr('src', link)
 
+            });
+
+            $('.btn-qrs').on('click', function() {
+                var id = $(this).data('id');
+                
+                const frame = $('#qrImage')
+                const link = '/qrImage/' + id
+                frame.attr('src', link)
             });
 
             $(document).on('click', '.btn-tr-update', function(e) {

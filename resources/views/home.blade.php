@@ -38,7 +38,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                       Booklist</div>
+                                        Booklist</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalofbooklist }}</div>
                                 </div>
                                 <div class="col-auto border-primary-subtle">
@@ -119,7 +119,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                      Onlend</div>
+                                        Onlend</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totaloflend }}</div>
                                 </div>
                                 <div class="col-auto">
@@ -192,7 +192,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                       Pending Purchase</div>
+                                        Pending Purchase</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $purchase }}</div>
                                 </div>
                                 <div class="col-auto">
@@ -218,7 +218,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                      Pending backorder</div>
+                                        Pending backorder</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $backorder }}</div>
                                 </div>
                                 <div class="col-auto">
@@ -244,13 +244,6 @@
                     <canvas id="myChart"></canvas>
                 </div>
             </div>
-
-            {{-- <div class="col-xs-12 text-center">
-                <h2 class="text-success">Donut Chart</h2>
-            </div>
-
-            <div id="donut-chart"></div> --}}
-
         </div>
 
     </body>
@@ -289,32 +282,6 @@
                 ],
             },
         });
-
-
-        // let chart = bb.generate({
-        //     data: {
-        //         columns: [
-        //             ["BSMAR-E", 2],
-        //             ["orange", 4],
-        //             ["green", 3],
-        //         ],
-        //         type: "donut",
-        //         onclick: function(d, i) {
-        //             console.log("onclick", d, i);
-        //         },
-        //         onover: function(d, i) {
-        //             console.log("onover", d, i);
-        //         },
-        //         onout: function(d, i) {
-        //             console.log("onout", d, i);
-        //         },
-        //     },
-        //     donut: {
-        //         title: "70",
-        //     },
-        //     bindto: "#donut-chart",
-        // });
-
 
         function booklist() {
             location.assign('/booklist');
